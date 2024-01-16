@@ -1,8 +1,12 @@
 function Home() {
   return (
-    <div>
-      <p className="font-mono text-6xl">Home Page</p>
-    </div>
+    <main className="
+    flex-col min-h-[81vh]
+    ">
+      <p className="
+      font-mono text-6xl
+      ">Home Page</p>
+    </main>
   )
 }
 
