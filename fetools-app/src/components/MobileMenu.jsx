@@ -1,39 +1,89 @@
-export default function MobileMenu({isHidden, toggleShow}){
+import { useState } from "react"
+import { Link } from "react-router-dom"
 
-    lockPageScroll()
+export default function MobileMenu({isClicked, updateMenuContextIcon}){
+   
+    const [isHidden, setIsHidden] = useState(isClicked)
 
-    return(
+    console.log(isHidden)
+    //    lockPageScroll()
+return(
+    <>
         <div id='mobile-menu' className={`
-        absolute block w-screen h-screen overscroll-none flex-1 bg-slate-400 top-0
-        max-sm:${isHidden?"hidden":""} 
+        absolute block w-screen flex-1 bg-slate-400 top-0
+        max-sm:${isClicked?'':'hidden'}
         sm:hidden
         `}>
+
             <nav>
-                <svg onClick={()=>toggleShow(isHidden)} xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 256 256"
-                className="
-                cursor-pointer flex-2 fill-current self-center
-                sm:hidden
+                <ul className="
+                flex flex-col h-full text-center
                 ">
-                    <path fill="currentColor" d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"/>
-                </svg>
-                <ul>
-                    <li>
-                        <p>test</p>
+                    <li  className='
+                    w-full 
+                    border-solid border-2 border-black'>
+                        <Link to="/unit-converter" 
+                        onClick={()=>{
+                            hideMenu()
+                            }
+                            
+                        } 
+                        className="                            
+                        block font-bold bg-[var(--bckgrnd-color)] leading-none
+                        p-5 cursor-pointer
+                        ">Unit Converter</Link>
                     </li>
-                    <li>
-                        <p>test</p>
+                    <li className='
+                    w-full 
+                    border-collapse border-solid border-2 border-black'>
+                        <Link to="/color-picker" 
+                        onClick={()=>hideMenu()}
+                        className="
+                        block font-bold bg-[var(--bckgrnd-color)] leading-none
+                        p-5 cursor-pointer
+                        ">Color Picker</Link>
+                    </li>
+                    <li className='
+                    w-full 
+                    border-solid border-2 border-black'>
+                        <Link to="/character-finder" 
+                        onClick={()=>hideMenu()}
+                        className="
+                        block font-bold bg-[var(--bckgrnd-color)] leading-none
+                        p-5 cursor-pointer
+                        ">Character Finder</Link>
+                    </li>
+                    <li className='
+                    w-full 
+                    border-solid border-2 border-black'>
+                        <Link to="/font-visualizer" 
+                        onClick={()=>hideMenu()}
+                        className="
+                        block font-bold bg-[var(--bckgrnd-color)] leading-none
+                        p-5 cursor-pointer
+                        ">Font Visualizer</Link>
+                    </li>
+                    <li className='
+                    w-full 
+                    border-solid border-2 border-black'>
+                        <Link to="/team" 
+                        onClick={()=>hideMenu()}
+                        className="
+                        block font-bold bg-[var(--bckgrnd-color)] leading-none
+                        p-5 cursor-pointer
+                        ">Team</Link>
                     </li>
                 </ul>
             </nav>
         </div>
+    </>
     )
 
-    function lockPageScroll(){
-        if(isHidden){
-            document.body.classList.remove('lockScroll')
-        } else{
-            document.body.classList.add('lockScroll')
-        }
+    function hideMenu(){
+        const menuElement = document.querySelector('#mobile-menu')
+
+        setIsHidden('hidden')
     }
+
 }
 

@@ -22,7 +22,3 @@
   -moz-osx-font-smoothing: grayscale;
 
 }
-
-.lockScroll{
-  overflow-y: hidden;  
-}

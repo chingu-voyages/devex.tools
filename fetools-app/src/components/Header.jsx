@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import {Link, Outlet} from 'react-router-dom';
+import { useState} from 'react';
+import {Link } from 'react-router-dom';
 import { appName } from "../pages/data"
-import Footer from './Footer';
 import MobileMenu from './MobileMenu'
 
 export default function Header(){
 
-const [show, toggleShow] = useState(false);
+    const [click, setClick] = useState(false);
 
     return(
         <div >
@@ -73,18 +72,47 @@ const [show, toggleShow] = useState(false);
                         </li>
                     </ul>
                 </nav>
-                <svg onClick={()=>toggleShow(!show)} width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg"
+                <div id='button-container'>
+                    {updateMenuContextIcon(click)}
+                </div>
+            </div>
+            <div className='relative'>
+                <MobileMenu
+                    isClicked={click}
+                    hideMenu={hideMenu}
+                    updateMenuContextIcon={updateMenuContextIcon}
+                />
+            </div>
+        </div>
+    )
+
+    function updateMenuContextIcon(isClicked){
+        if(!isClicked){
+            return(
+                <svg id='hamburguer-btn' onClick={()=>setClick(!click)} width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg"
                 className="
                 cursor-pointer flex-2 fill-current self-center
                 sm:hidden
                 ">
                     <path d="M4.875 27.625H34.125M4.875 19.5H34.125M4.875 11.375H34.125" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-            </div>
-            <MobileMenu isHidden={show?"":"hidden"} toggleShow={toggleShow}/>
-            <Outlet/>
-            <Footer/>
-        </div>
-    )
+            )
+        } else{
+            return(
+                <svg id='x-btn' onClick={()=>setClick(!click)} xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 256 256"
+                className="
+                cursor-pointer flex-2 fill-current self-center
+                sm:hidden
+                ">
+                    <path fill="currentColor" d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"/>
+                </svg>
+    
+            )
+        }
+    }
+
+    
+
 }
+
 
