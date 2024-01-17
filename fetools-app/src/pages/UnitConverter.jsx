@@ -1,4 +1,5 @@
 import "../index.css";
+import "../UnitConverter.css";
 
 import React, { useState } from "react";
 
@@ -34,7 +35,53 @@ function UnitConverter() {
 
   return (
     <>
-      <p className="font-mono text-6xl">Unit Converter Page</p>
+      <p className="font-mono text-6xl p-1">Unit Converter</p>
+      <div className="flex gap-2 p-4">
+        <div className="mb-3">
+          <label className="block mb-2 text-sm font-bold text-white">
+            Base Pixel Size
+          </label>
+          <input
+            type="number"
+            className="border rounded py-2 px-3 text-gray-700 leading-tight"
+            value={basePixelSize}
+            onChange={handleBasePixelSizeChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="block mb-2 text-sm font-bold text-white">
+            Pixels
+          </label>
+          <input
+            type="number"
+            className="border rounded py-2 px-3 text-gray-700 leading-tight"
+            value={pixels}
+            onChange={handlePixelChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="block mb-2 text-sm font-bold text-white">
+            REM/EM
+          </label>
+          <input
+            type="number"
+            className="border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            value={em}
+            onChange={handleEmChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="block mb-2 text-sm font-bold text-white">
+            Tailwind Size
+          </label>
+          <input
+            type="number"
+            className="border rounded py-2 px-3 text-gray-700 leading-tight"
+            value={tailwindSize}
+            onChange={handleTailwindChange}
+          />
+        </div>
+      </div>
     </>
   );
 }
