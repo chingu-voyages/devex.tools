@@ -33,7 +33,7 @@ export default function Footer(){
                 ">Site Copyright &copy; 2024 {appName}.</p>
                 <ul className="flex flex-row gap-4">
                     <li>
-                        <Link to="/Team" className="
+                        <Link to="/team" className="
                         font-bold block underline underline-offset-2 
                         ">About Us</Link>
                     </li>
