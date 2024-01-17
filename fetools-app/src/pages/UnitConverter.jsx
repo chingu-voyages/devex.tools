@@ -1,5 +1,4 @@
 import "../index.css";
-import "../UnitConverter.css";
 
 import React, { useState } from "react";
 
@@ -34,55 +33,69 @@ function UnitConverter() {
   };
 
   return (
-    <>
-      <p className="font-mono text-6xl p-1">Unit Converter</p>
-      <div className="flex gap-2 p-4">
+    <div>
+      <p className="font-mono text-5xl ml-3">Unit Converter</p>
+      <p className="font-mono text-1xl ml-3 mb-2">
+        Calculate PX, REM/EM, and Tailwind utility classes with ease.
+      </p>
+      <div className="flex gap-10 p-4">
         <div className="mb-3">
           <label className="block mb-2 text-sm font-bold text-white">
-            Base Pixel Size
+            Base Size
           </label>
           <input
             type="number"
-            className="border rounded py-2 px-3 text-gray-700 leading-tight"
+            className="border rounded w-28 py-2 px-3  text-gray-700 leading-tight"
             value={basePixelSize}
             onChange={handleBasePixelSizeChange}
           />
         </div>
-        <div className="mb-3">
-          <label className="block mb-2 text-sm font-bold text-white">
-            Pixels
-          </label>
-          <input
-            type="number"
-            className="border rounded py-2 px-3 text-gray-700 leading-tight"
-            value={pixels}
-            onChange={handlePixelChange}
-          />
-        </div>
-        <div className="mb-3">
+        <div className="mb-3 relative">
           <label className="block mb-2 text-sm font-bold text-white">
             REM/EM
           </label>
-          <input
-            type="number"
-            className="border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={em}
-            onChange={handleEmChange}
-          />
+          <div className="flex border rounded relative">
+            <input
+              type="number"
+              className="border rounded w-28 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={em}
+              onChange={handleEmChange}
+            />
+            <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none">
+              rem
+            </span>
+          </div>
         </div>
+        <div className="mb-3 relative">
+          <label className="block mb-2 text-sm font-bold text-white">
+            Pixels
+          </label>
+          <div className="flex border rounded relative">
+            <input
+              type="number"
+              className="border rounded w-28 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={pixels}
+              onChange={handlePixelChange}
+            />
+            <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none">
+              px
+            </span>
+          </div>
+        </div>
+
         <div className="mb-3">
           <label className="block mb-2 text-sm font-bold text-white">
             Tailwind Size
           </label>
           <input
             type="number"
-            className="border rounded py-2 px-3 text-gray-700 leading-tight"
+            className="border rounded w-28 py-2 px-3 text-gray-700 leading-tight"
             value={tailwindSize}
             onChange={handleTailwindChange}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
