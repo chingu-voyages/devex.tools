@@ -2,9 +2,9 @@ import '../index.css';
 
 function ColorPicker() {
     return (
-      <div>
+      <main>
         <p className="font-mono text-6xl">Color Picker Page</p>
-      </div>
+      </main>
     )
 }
   

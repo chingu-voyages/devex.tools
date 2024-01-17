@@ -1,6 +1,6 @@
 import { useState} from 'react';
 import { Link } from 'react-router-dom';
-import { appName } from "../pages/data"
+import { appName } from "../data"
 
 import MobileMenu from './MobileMenu'
 import closeIcon from '../assets/x-solid.svg'
