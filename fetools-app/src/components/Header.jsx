@@ -79,8 +79,7 @@ export default function Header(){
             <div className='relative'>
                 <MobileMenu
                     isClicked={click}
-                    hideMenu={hideMenu}
-                    updateMenuContextIcon={updateMenuContextIcon}
+                    handleState={handleState}
                 />
             </div>
         </div>
@@ -111,7 +110,9 @@ export default function Header(){
         }
     }
 
-    
+    function handleState(click){
+        setClick(!click)
+    }
 
 }
 
