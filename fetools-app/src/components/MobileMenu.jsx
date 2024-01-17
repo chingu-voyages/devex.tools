@@ -4,7 +4,7 @@ export default function MobileMenu({isClicked, handleState}){
    
 return(
     <div id='mobile-menu' className={`
-    absolute block w-screen flex-1 bg-slate-400 top-0
+    absolute block w-screen flex-1 top-0
     max-sm:${isClicked?'':'hidden'}
     sm:hidden
     `}>
@@ -15,7 +15,7 @@ return(
             ">
                 <li  className='
                 w-full 
-                border-solid border-2 border-black'>
+                border-solid border-4 border-b-2 border-black'>
                     <Link to="/unit-converter" 
                     onClick={()=>handleState(isClicked)} 
                     className="                            
@@ -25,7 +25,7 @@ return(
                 </li>
                 <li className='
                 w-full 
-                border-collapse border-solid border-2 border-black'>
+                border-collapse border-4 border-t-2 border-b-2 border-black'>
                     <Link to="/color-picker" 
                     onClick={()=>handleState(isClicked)} 
                     className="
@@ -35,7 +35,7 @@ return(
                 </li>
                 <li className='
                 w-full 
-                border-solid border-2 border-black'>
+                border-solid border-4 border-t-2 border-b-2 border-black'>
                     <Link to="/character-finder" 
                     onClick={()=>handleState(isClicked)} 
                     className="
@@ -45,7 +45,7 @@ return(
                 </li>
                 <li className='
                 w-full 
-                border-solid border-2 border-black'>
+                border-solid border-4 border-t-2 border-b-2 border-black'>
                     <Link to="/font-visualizer" 
                     onClick={()=>handleState(isClicked)} 
                     className="
@@ -55,7 +55,7 @@ return(
                 </li>
                 <li className='
                 w-full 
-                border-solid border-2 border-black'>
+                border-solid border-4 border-t-2 border-black'>
                     <Link to="/team" 
                     onClick={()=>handleState(isClicked)} 
                     className="
