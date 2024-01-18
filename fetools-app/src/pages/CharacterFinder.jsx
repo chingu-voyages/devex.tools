@@ -1,24 +1,20 @@
 import '../index.css';
-import React, {useState} from 'react';
-import he from 'he';
-
+import React from 'react';
+import CharacterFinderLetters from '../components/CharacterFinderComponents/Letters';
+import CharacterFinderPunctuation from '../components/CharacterFinderComponents/Punctuation';
+import CharacterFinderNumbers from '../components/CharacterFinderComponents/Numbers';
+import CharacterFinderMath from '../components/CharacterFinderComponents/Math';
 
 function CharacterFinder() {
-
-  const [inputValue, setInputValue] = useState("");
-  const [encodedValue, setEncodedvalue] = useState("");
-    return (
-      <><div>
-        <p className="font-mono text-6xl">Character Finder</p>
-      </div><div>
-          <input type="text" value={inputValue} />
-          <button onClick={""}>Encode</button>
-
-
-        </div></>
-
-      
-    )
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <h2>Character Finder</h2>
+      <CharacterFinderLetters />
+      <CharacterFinderPunctuation/>
+      <CharacterFinderNumbers/>
+      <CharacterFinderMath/>
+    </div>
+  );
 }
-  
-export default CharacterFinder
+
+export default CharacterFinder;
