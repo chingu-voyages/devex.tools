@@ -14,40 +14,35 @@ export default function Nav(){
                     <Link to="/unit-converter" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
-                    sm:py-[8px] sm:px-[16px]
-                    lg:py-[16px] lg:px-[32px]
+                    sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
                     ">Unit Converter</Link>
                 </li>
                 <li className='flex-1 max-w-min'>
                     <Link to="/color-picker" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
-                    sm:py-[8px] sm:px-[16px]
-                    lg:py-[16px] lg:px-[32px]
+                    sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
                     ">Color Picker</Link>
                 </li>
                 <li className='flex-1 max-w-min'>
                     <Link to="/character-finder" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
-                    sm:py-[8px] sm:px-[16px]
-                    lg:py-[16px] lg:px-[32px]
+                    sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
                     ">Character Finder</Link>
                 </li>
                 <li className='flex-1 max-w-min'>
                     <Link to="/font-visualizer" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
-                    sm:py-[8px] sm:px-[16px]
-                    lg:py-[16px] lg:px-[32px]
+                    sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
                     ">Font Visualizer</Link>
                 </li>
                 <li className='flex-1 max-w-min'>
                     <Link to="/team" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
-                    sm:py-[8px] sm:px-[16px]
-                    lg:py-[16px] lg:px-[32px]
+                    sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
                     ">Team</Link>
                 </li>
             </ul>
