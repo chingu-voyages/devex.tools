@@ -1,4 +1,6 @@
 import GoDeeper from "../components/GoDeeper"
+import ToolHeading from "../components/ToolHeading"
+
 function Home() {
   
   const linksData = [
@@ -17,17 +19,19 @@ function Home() {
   ]
   
   return (
-    <main className="
-    flex-col min-h-[81vh]
-    ">
-      <p className="
-      font-mono text-6xl
-      ">Home Page</p>
+    <main className="flex-col mt-8 sm:mt-12 lg:mt-20">
+      <section className="flex justify-between 
+      max-lg:flex-col max-lg:items-center max-lg:gap-y-4 max-lg:mx-6
+      lg:mx-48">
+          <ToolHeading title="Tool title" tagline="
+          Tool tag line Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline"/>
+      </section>
 
       <GoDeeper linksData={linksData}/>
     
     </main>
   )
 }
+
 
 export default Home

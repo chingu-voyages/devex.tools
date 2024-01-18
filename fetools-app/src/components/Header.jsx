@@ -16,17 +16,18 @@ export default function Header(){
         <div >
             <div className='
             bg-[var(--ui-contrast-color)] flex p-4 justify-between
-            sm:max-lg:flex-col sm:max-md:p-4 sm:justify-center
+            sm:max-lg:flex-col sm:max-md:p-4 sm:max-lg:justify-center
             md:max-lg:p-8
-            lg:items-center lg:px-16 lg:gap-2
-            xl:px-16 xl:gap-16 min-[1440px]:gap-48
+            lg:items-center lg:px-4
+            xl:px-16
             '>
                 <Link to="/"
                 onClick={()=>handleState(true)}
                 className="
-                flex-1 block min-w-fit max-w-fit font-bold text-3xl leading-none
+                flex-2 block font-bold text-3xl leading-none min-w-fit
                 cursor-pointer
                 sm:max-lg:self-center sm:max-lg:mb-4
+                lg:mr-2 xl:mr-36 2xl:mr-80
                 ">{appName}</Link>
                 <Nav/>
                 <div id='button-container'>
