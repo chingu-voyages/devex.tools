@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { appName } from "../pages/data"
+import { appName } from "../data"
 import arrowUp from "../assets/arrow-up.svg"
 
 export default function Footer(){
@@ -33,7 +33,7 @@ export default function Footer(){
                 ">Site Copyright &copy; 2024 {appName}.</p>
                 <ul className="flex flex-row gap-4">
                     <li>
-                        <Link to="/Team" className="
+                        <Link to="/team" className="
                         font-bold block underline underline-offset-2 
                         ">About Us</Link>
                     </li>

@@ -1,10 +1,10 @@
 import { useState} from 'react';
 import { Link } from 'react-router-dom';
-import { appName } from "../pages/data"
+import { appName } from "../data"
 
 import MobileMenu from './MobileMenu'
 import closeIcon from '../assets/x-solid.svg'
-import hambuerIcon from '../assets/hamburger.svg'
+import hamburgerIcon from '../assets/hamburger.svg'
 
 import Nav from './Nav';
 
@@ -46,7 +46,7 @@ export default function Header(){
         if(!isClicked){
             return(
                 <img onClick={()=>setClick(!click)}
-                src={hambuerIcon} alt='hamburger icon'
+                src={hamburgerIcon} alt='hamburger icon'
                 className='cursor-pointer sm:hidden'/>
             )
         } else{

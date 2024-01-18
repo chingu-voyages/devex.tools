@@ -2,9 +2,9 @@ import '../index.css';
 
 function CharacterFinder() {
     return (
-      <div>
+      <main>
         <p className="font-mono text-6xl">Character Finder Page</p>
-      </div>
+      </main>
     )
 }
   
