@@ -23,7 +23,7 @@ const FontVisualizer = () => {
     "Impact",
   ];
 
-  const fontStyles = ["normal", "italic", "oblique"];
+  const fontStyles = ["normal", "italic"];
   const fontWeights = ["normal", "bold", "bolder", "lighter"];
   const fontVariants = ["normal", "small-caps"];
   const textAligns = ["left", "center", "right"];
