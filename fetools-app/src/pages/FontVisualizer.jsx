@@ -82,6 +82,7 @@ const FontVisualizer = () => {
   };
 
   return (
+    <main>
     <div className="font-preview-container bg-gray-200 p-6 text-black">
       <div className="flex flex-wrap">
         <div className="font-preview w-full md:w-1/2 pr-0 md:pr-4 border border-gray-500 border-2 rounded p-4">
@@ -232,6 +233,7 @@ const FontVisualizer = () => {
         </div>
       </div>
     </div>
+    </main>
   );
 };
 
