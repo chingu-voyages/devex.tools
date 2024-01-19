@@ -44,7 +44,7 @@ const FontVisualizer = () => {
   };
 
   const handleLineHeightChange = (e) => {
-    handleFontChange("lineHeight", `${e.target.value}px`);
+    handleFontChange("lineHeight", `${e.target.value}`);
   };
 
   const generateFontStyles = () => {
