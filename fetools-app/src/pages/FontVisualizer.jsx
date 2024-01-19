@@ -186,7 +186,7 @@ const FontVisualizer = () => {
               onChange={handleLetterSpacingChange}
               className="mt-1"
             />
-            <span className="ml-2">{font.letterSpacing}px</span>
+            <span className="ml-2">{font.letterSpacing}</span>
           </label>
 
           <label className="block mb-4 text-black">
