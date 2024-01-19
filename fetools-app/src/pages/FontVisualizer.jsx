@@ -200,7 +200,7 @@ const FontVisualizer = () => {
               onChange={handleLineHeightChange}
               className="mt-1"
             />
-            <span className="ml-2">{font.lineHeight}px</span>
+            <span className="ml-2">{font.lineHeight}</span>
           </label>
         </div>
         <div className="preview-container bg-white p-4 rounded-lg shadow-md mt-4 w-full md:w-1/2">
