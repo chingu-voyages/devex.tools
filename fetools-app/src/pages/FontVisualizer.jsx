@@ -6,10 +6,10 @@ const FontVisualizer = () => {
     color: "#000000",
     style: "normal",
     weight: "normal",
-    variant: "normal",
+    textTransform: "none",
     textAlign: "left",
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: 1.2,
   });
 
   const fontFamilies = [
@@ -53,7 +53,7 @@ const FontVisualizer = () => {
       color: font.color,
       fontStyle: font.style,
       fontWeight: font.weight,
-      fontVariant: font.variant,
+      textTransform: font.textTransform,
       textAlign: font.textAlign,
       letterSpacing: font.letterSpacing,
       lineHeight: font.lineHeight,
@@ -75,7 +75,7 @@ const FontVisualizer = () => {
       color: ${font.color};
       font-style: ${font.style};
       font-weight: ${font.weight};
-      font-variant: ${font.variant};
+      text-transform: ${font.textTransform};
       text-align: ${font.textAlign};
       letter-spacing: ${font.letterSpacing};
       line-height: ${font.lineHeight};
@@ -194,9 +194,9 @@ const FontVisualizer = () => {
             <input
               type="range"
               value={String(parseInt(font.lineHeight))}
-              min={10}
-              max={100}
-              step={1}
+              min={0}
+              max={10}
+              step={0.1}
               onChange={handleLineHeightChange}
               className="mt-1"
             />
