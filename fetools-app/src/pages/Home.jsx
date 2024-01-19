@@ -1,3 +1,4 @@
+import ToolHeaderSection from "../components/ToolHeaderSection"
 import GoDeeper from "../components/GoDeeper"
 import ToolHeading from "../components/ToolHeading"
 
@@ -20,12 +21,13 @@ function Home() {
   
   return (
     <main className="flex-col mt-8 sm:mt-12 lg:mt-20">
-      <section className="flex justify-between 
-      max-lg:flex-col max-lg:items-center max-lg:gap-y-4 max-lg:mx-6
-      lg:mx-48">
-          <ToolHeading title="Tool title" tagline="
-          Tool tag line Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline"/>
-      </section>
+      
+      <ToolHeaderSection>
+        <ToolHeading title="Tool title" tagline="
+        Tool tag line Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline"/>
+        <ToolHeading title="Tool title" tagline="
+        Tool tag line Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline"/>
+      </ToolHeaderSection>
 
       <GoDeeper linksData={linksData}/>
     
