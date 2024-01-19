@@ -7,13 +7,13 @@ import CharacterFinderMath from '../components/CharacterFinderComponents/Math';
 
 function CharacterFinder() {
   return (
-    <div style={{ textAlign: 'center' }}>
+    <main style={{ textAlign: 'center' }}>
       <h2>Character Finder</h2>
       <CharacterFinderLetters />
       <CharacterFinderPunctuation/>
       <CharacterFinderNumbers/>
       <CharacterFinderMath/>
-    </div>
+    </main>
   );
 }
 
