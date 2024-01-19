@@ -11,7 +11,8 @@ export default function GoDeeper({linksData}){
       ))
 
     return(
-        <aside className="flex flex-col flex-1 gap-3md:p-48">
+        <aside className="flex flex-col flex-1 gap-5 p-6
+        sm:p-12 lg:px-48 lg:py-20">
             <h2 className="font-bold text-3xl leading-none">Go Deeper...</h2>
             <ul className="flex flex-col gap-3 list-none list-inside">
                {anchorElements(linksData)} 
