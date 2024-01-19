@@ -55,7 +55,7 @@ function UnitConverter() {
 
   // JSX for rendering the UI components.
   return (
-    <div>
+    <main>
       <p className="font-mono text-5xl ml-3">Unit Converter</p>
       <p className="font-mono text-1xl ml-3 mb-2">
         Calculate PX, REM/EM, and Tailwind utility classes with ease.
@@ -125,7 +125,7 @@ function UnitConverter() {
           />
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
