@@ -14,7 +14,6 @@ const FontVisualizer = () => {
 
   const fontFamilies = [
     "Arial",
-    "Roboto",
     "Sans-serif",
     "Courier New",
     "Times New Roman",
