@@ -24,7 +24,7 @@ const FontVisualizer = () => {
 
   const fontStyles = ["normal", "italic"];
   const fontWeights = ["normal", "bold", "bolder", "lighter"];
-  const fontVariants = ["normal", "small-caps"];
+  const textTransformations = ["none", "capitalize", "uppercase", "lowercase"];
   const textAligns = ["left", "center", "right"];
 
   const handleFontChange = (property, value) => {
@@ -147,11 +147,11 @@ const FontVisualizer = () => {
           <label className="block mb-4 text-black">
             Font Variant:
             <select
-              value={font.variant}
+              value={font.textTransform}
               onChange={(e) => handleFontChange("variant", e.target.value)}
               className="mt-1 p-2 border rounded"
             >
-              {fontVariants.map((variant) => (
+              {textTransformations.map((variant) => (
                 <option key={variant} value={variant}>
                   {variant}
                 </option>
