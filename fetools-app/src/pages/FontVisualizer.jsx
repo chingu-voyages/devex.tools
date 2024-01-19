@@ -148,7 +148,7 @@ const FontVisualizer = () => {
             Font Variant:
             <select
               value={font.textTransform}
-              onChange={(e) => handleFontChange("variant", e.target.value)}
+              onChange={(e) => handleFontChange("textTransform", e.target.value)}
               className="mt-1 p-2 border rounded"
             >
               {textTransformations.map((variant) => (
