@@ -1,33 +1,68 @@
-import {Link, Outlet} from 'react-router-dom';
+import { useState} from 'react';
+import { Link } from 'react-router-dom';
+import { appName } from "../data"
 
-function Header(){
+import MobileMenu from './MobileMenu'
+import closeIcon from '../assets/x-solid.svg'
+import hamburgerIcon from '../assets/hamburger.svg'
+
+import Nav from './Nav';
+
+export default function Header(){
+
+    const [click, setClick] = useState(false);
+
     return(
-        <div>
-            <nav>
-                <ul className="flex">
-                    <li className="mr-6">
-                        <Link to="/" className="text-blue-500 hover:text-blue-800">Home</Link>
-                    </li>
-                    <li className="mr-6">
-                        <Link to="/unit-converter" className="text-blue-500 hover:text-blue-800">Unit Converter</Link>
-                    </li>
-                    <li className="mr-6">
-                        <Link to="/color-picker" className="text-blue-500 hover:text-blue-800">Color Picker</Link>
-                    </li>
-                    <li className="mr-6">
-                        <Link to="/character-finder" className="text-blue-500 hover:text-blue-800">Character Finder</Link>
-                    </li>
-                    <li className="mr-6">
-                        <Link to="/font-visualizer" className="text-blue-500 hover:text-blue-800">Font Visualizer</Link>
-                    </li>
-                    <li className="mr-6">
-                        <Link to="/team" className="text-blue-500 hover:text-blue-800">Team</Link>
-                    </li>
-                </ul>
-            </nav>
-            <Outlet/>
+        <div >
+            <div className='
+            bg-[var(--ui-contrast-color)] flex p-4 justify-between
+            sm:max-lg:flex-col sm:max-md:p-4 sm:max-lg:justify-center
+            md:max-lg:p-8
+            lg:items-center lg:px-4
+            xl:px-16
+            '>
+                <Link to="/"
+                onClick={()=>handleState(true)}
+                className="
+                flex-2 block font-bold text-3xl leading-none min-w-fit
+                cursor-pointer
+                sm:max-lg:self-center sm:max-lg:mb-4
+                lg:mr-2 xl:mr-36 2xl:mr-80
+                ">{appName}</Link>
+                <Nav/>
+                <div id='button-container'>
+                    {updateMenuContextIcon(click)}
+                </div>
+            </div>
+            <div className='relative'>
+                <MobileMenu
+                    isClicked={click}
+                    handleState={handleState}
+                />
+            </div>
         </div>
     )
+
+    function updateMenuContextIcon(isClicked){
+        if(!isClicked){
+            return(
+                <img onClick={()=>setClick(!click)}
+                src={hamburgerIcon} alt='hamburger icon'
+                className='cursor-pointer sm:hidden'/>
+            )
+        } else{
+            return(
+                <img onClick={()=>setClick(!click)}
+                src={closeIcon} alt='hamburger icon'
+                className='cursor-pointer sm:hidden'/>
+            )
+        }
+    }
+
+    function handleState(click){
+        setClick(!click)
+    }
+
 }
 
-export default Header;
+
