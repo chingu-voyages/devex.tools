@@ -53,6 +53,14 @@ function UnitConverter() {
     setEditMode(!editMode);
   };
 
+  // Handler for the input field losing focus
+  const handleBaseSizeInputBlur = () => {
+    if (editMode) {
+      // If in edit mode, set editMode to false when the input loses focus
+      setEditMode(false);
+    }
+  };
+
   // JSX for rendering the UI components.
   return (
     <main>
@@ -62,16 +70,17 @@ function UnitConverter() {
       </p>
       <div className="flex gap-10 p-4">
         <div className="mb-3">
-          <label className="block mb-2 text-sm font-bold text-white">
+          <label className="block mb-2 text-sm font-bold text-black">
             Base Size
           </label>
-          {/*Tertiary operator used to differntiate when the Base Size input element should and should not be editable*/}
+          {/*Tertiary operator used to differentiate when the Base Size input element should and should not be editable*/}
           {editMode ? (
             <input
               type="number"
               className="border rounded w-28 py-2 px-3  text-gray-700 leading-tight"
               value={basePixelSize}
               onChange={handleBasePixelSizeChange}
+              onBlur={handleBaseSizeInputBlur}
             />
           ) : (
             <div className="flex items-center">
@@ -81,7 +90,7 @@ function UnitConverter() {
           )}
         </div>
         <div className="mb-3 relative">
-          <label className="block mb-2 text-sm font-bold text-white">
+          <label className="block mb-2 text-sm font-bold text-black">
             REM/EM
           </label>
           <div className="flex border rounded relative">
@@ -97,7 +106,7 @@ function UnitConverter() {
           </div>
         </div>
         <div className="mb-3 relative">
-          <label className="block mb-2 text-sm font-bold text-white">
+          <label className="block mb-2 text-sm font-bold text-black">
             Pixels
           </label>
           <div className="flex border rounded relative">
@@ -114,7 +123,7 @@ function UnitConverter() {
         </div>
 
         <div className="mb-3">
-          <label className="block mb-2 text-sm font-bold text-white">
+          <label className="block mb-2 text-sm font-bold text-black">
             Tailwind Size
           </label>
           <input
