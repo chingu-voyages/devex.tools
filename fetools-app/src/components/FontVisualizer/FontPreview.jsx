@@ -28,22 +28,21 @@ const FontPreview = ({
   return (
     <div className="font-preview-container p-6 text-black">
       <div className="flex">
-        <div className="font-preview flex-shrink p-4 flex flex-col items-start gap-16 flex-1">
+        <div className="font-preview flex-shrink p-4 flex flex-col items-start gap-4 sm:gap-16 flex-1">
           <h1 className="text-2xl font-bold mb-4">Font Preview</h1>
-          {/* Font Name */}
 
-          <div className="items-stretch self-stretch flex gap-4 max-md:flex-wrap">
-            <span className="items-stretch flex-grow flex flex-col px-5">
+          {/* Font Name */}
+          <div className="flex gap-4 max-md:flex-wrap">
+            <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Name:
               </div>
-
-              <span className="flex-grow border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
+              <div className="flex-grow border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
                 <div className="text-neutral-400 text-base">Name</div>
                 <select
                   value={font.name}
                   onChange={(e) => handleFontChange("name", e.target.value)}
-                  className="mt-1 p-1  flex-grow"
+                  className="mt-1 p-1 flex-grow"
                 >
                   {fontFamilies.map((family) => (
                     <option key={family} value={family}>
@@ -51,16 +50,17 @@ const FontPreview = ({
                     </option>
                   ))}
                 </select>
-              </span>
-            </span>
+              </div>
+            </div>
           </div>
 
-          <div className="items-stretch self-stretch flex gap-4 max-md:flex-wrap">
-            <span className="items-stretch flex-grow flex flex-col px-5">
+          {/* Font Color */}
+          <div className="flex gap-4 max-md:flex-wrap">
+            <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Color:
               </div>
-              <span className="items-stretch border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
+              <div className="border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
                 <div className="text-neutral-400 text-base">Color</div>
                 <input
                   type="color"
@@ -74,14 +74,15 @@ const FontPreview = ({
                   }}
                 />
                 <span className="ml-2">{font.color}</span>
-              </span>
-            </span>
+              </div>
+            </div>
 
-            <span className="items-stretch flex-grow flex flex-col px-5">
+            {/* Background Color */}
+            <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Background Color:
               </div>
-              <span className="items-stretch border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
+              <div className="border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
                 <div className="text-neutral-400 text-base">Color</div>
                 <input
                   type="color"
@@ -95,11 +96,12 @@ const FontPreview = ({
                   }}
                 />
                 <span className="ml-2">{backgroundColor}</span>
-              </span>
-            </span>
+              </div>
+            </div>
           </div>
 
-          <div className="items-stretch flex grow basis-[0%] flex-col px-5 py-3.5">
+          {/* Font Size */}
+          <div className="flex grow basis-[0%] flex-col px-5 py-3.5">
             <div className="text-neutral-400 text-base font-bold">
               Font Size: <span className="font-black">{font.fontSize}em</span>
             </div>
@@ -119,12 +121,13 @@ const FontPreview = ({
             </div>
           </div>
 
-          <div className="items-stretch self-stretch flex gap-4 max-md:flex-wrap">
-            <span className="items-stretch flex grow basis-[0%] flex-col px-5">
+          {/* Font Style */}
+          <div className="flex gap-4 max-md:flex-wrap">
+            <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Style:
               </div>
-              <span className="items-stretch border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
+              <div className="border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
                 <div className="text-neutral-400 text-base">Style</div>
                 <select
                   value={font.style}
@@ -137,14 +140,15 @@ const FontPreview = ({
                     </option>
                   ))}
                 </select>
-              </span>
-            </span>
+              </div>
+            </div>
 
-            <span className="items-stretch flex grow basis-[0%] flex-col px-5">
+            {/* Font Weight */}
+            <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Weight:
               </div>
-              <span className="items-stretch border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
+              <div className="border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
                 <div className="text-neutral-400 text-base">Weight</div>
                 <select
                   value={font.weight}
@@ -157,16 +161,17 @@ const FontPreview = ({
                     </option>
                   ))}
                 </select>
-              </span>
-            </span>
+              </div>
+            </div>
           </div>
 
-          <div className="items-stretch self-stretch flex gap-4 max-md:flex-wrap">
-            <span className="items-stretch flex grow basis-[0%] flex-col px-5">
+          {/* Font Variant */}
+          <div className="flex gap-4 max-md:flex-wrap">
+            <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Variant:
               </div>
-              <span className="items-stretch border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
+              <div className="border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
                 <div className="text-neutral-400 text-base">Style</div>
                 <select
                   value={font.textTransform}
@@ -181,14 +186,15 @@ const FontPreview = ({
                     </option>
                   ))}
                 </select>
-              </span>
-            </span>
+              </div>
+            </div>
 
-            <span className="items-stretch flex grow basis-[0%] flex-col px-5">
+            {/* Text Align */}
+            <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Text Align:
               </div>
-              <span className="items-stretch border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
+              <div className="border border-[color:var(--Design-Document-Outlines,#999)] flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
                 <div className="text-neutral-400 text-base">Alignment</div>
                 <select
                   value={font.textAlign}
@@ -203,13 +209,13 @@ const FontPreview = ({
                     </option>
                   ))}
                 </select>
-              </span>
-            </span>
+              </div>
+            </div>
           </div>
 
-          <div className="items-stretch self-stretch flex gap-4 max-md:flex-wrap">
-            {/* Letter Spacing */}
-            <div className="items-stretch flex grow basis-[0%] flex-col px-5 py-3.5">
+          {/* Letter Spacing */}
+          <div className="flex gap-4 max-md:flex-wrap">
+            <div className="flex-grow flex flex-col px-5 py-3.5">
               <div className="text-neutral-400 text-base font-bold">
                 Letter Spacing:{" "}
                 <span className="font-black">{font.letterSpacing}</span>
@@ -229,7 +235,7 @@ const FontPreview = ({
             </div>
 
             {/* Line Height */}
-            <div className="items-stretch flex grow basis-[0%] flex-col px-5 py-3.5">
+            <div className="flex-grow flex flex-col px-5 py-3.5">
               <div className="text-neutral-400 text-base font-bold">
                 Line Height:{" "}
                 <span className="font-black">{font.lineHeight}</span>
