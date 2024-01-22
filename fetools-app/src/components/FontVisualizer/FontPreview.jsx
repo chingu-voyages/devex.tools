@@ -32,8 +32,8 @@ const FontPreview = ({
           <h1 className="text-2xl font-bold mb-4">Font Preview</h1>
 
           {/* Font Name */}
-          <div className="flex gap-4 max-md:flex-wrap">
-            <div className="flex-grow flex flex-col px-5">
+          <div className="flex gap-4 max-md:flex-wrap w-full">
+            <div className="flex-grow flex flex-col px-5 ">
               <div className="text-neutral-400 text-base font-bold">
                 Font Name:
               </div>
@@ -55,7 +55,7 @@ const FontPreview = ({
           </div>
 
           {/* Font Color */}
-          <div className="flex gap-4 max-md:flex-wrap">
+          <div className="flex gap-4 max-md:flex-wrap w-full">
             <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Color:
@@ -102,7 +102,7 @@ const FontPreview = ({
 
           {/* Font Size */}
           <div className="flex grow basis-[0%] flex-col px-5 py-3.5">
-            <div className="text-neutral-400 text-base font-bold">
+            <div className="text-neutral-400 text-base font-bold ">
               Font Size: <span className="font-black">{font.fontSize}em</span>
             </div>
             <div className="flex justify-center items-center mt-1.5 px-16 py-0.5">
@@ -122,7 +122,7 @@ const FontPreview = ({
           </div>
 
           {/* Font Style */}
-          <div className="flex gap-4 max-md:flex-wrap">
+          <div className="flex gap-4 max-md:flex-wrap w-full">
             <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Style:
@@ -166,7 +166,7 @@ const FontPreview = ({
           </div>
 
           {/* Font Variant */}
-          <div className="flex gap-4 max-md:flex-wrap">
+          <div className="flex gap-4 max-md:flex-wrap w-full">
             <div className="flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Variant:
