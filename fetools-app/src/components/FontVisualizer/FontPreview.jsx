@@ -43,7 +43,7 @@ const FontPreview = ({
                 <select
                   value={font.name}
                   onChange={(e) => handleFontChange("name", e.target.value)}
-                  className="mt-1 p-2 border rounded flex-grow"
+                  className="mt-1 p-1  flex-grow"
                 >
                   {fontFamilies.map((family) => (
                     <option key={family} value={family}>
@@ -56,7 +56,7 @@ const FontPreview = ({
           </div>
 
           <div className="items-stretch self-stretch flex gap-4 max-md:flex-wrap">
-            <span className="items-stretch flex grow basis-[0%] flex-col px-5">
+            <span className="items-stretch flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Font Color:
               </div>
@@ -66,17 +66,18 @@ const FontPreview = ({
                   type="color"
                   value={font.color}
                   onChange={handleColorChange}
-                  className="mt-1 p-2 border rounded"
+                  className="mt-1 p-1"
                   id="fontColor"
                   name="fontColor"
                   style={{
                     backgroundColor: font.color,
                   }}
                 />
+                <span className="ml-2">{font.color}</span>
               </span>
             </span>
 
-            <span className="items-stretch flex grow basis-[0%] flex-col px-5">
+            <span className="items-stretch flex-grow flex flex-col px-5">
               <div className="text-neutral-400 text-base font-bold">
                 Background Color:
               </div>
@@ -86,13 +87,14 @@ const FontPreview = ({
                   type="color"
                   value={backgroundColor}
                   onChange={handleBackgroundColorChange}
-                  className="mt-1 p-2 border rounded"
+                  className="mt-1 p-1"
                   id="backgroundColor"
                   name="backgroundColor"
                   style={{
                     backgroundColor: backgroundColor,
                   }}
                 />
+                <span className="ml-2">{backgroundColor}</span>
               </span>
             </span>
           </div>
@@ -105,13 +107,13 @@ const FontPreview = ({
               <input
                 type="range"
                 value={font.fontSize}
-                min={8}
-                max={48}
-                step={1}
+                min={-10}
+                max={10}
+                step={0.01}
                 onChange={(e) =>
                   handleFontSizeChange(parseFloat(e.target.value))
                 }
-                className="flex-1"
+                className="flex-1 w-full"
               />
               <div className="stroke-[1px] flex w-3 shrink-0 h-3 flex-col ml-5 rounded-[50%]" />
             </div>
@@ -127,7 +129,7 @@ const FontPreview = ({
                 <select
                   value={font.style}
                   onChange={(e) => handleFontChange("style", e.target.value)}
-                  className="mt-1 p-2 border rounded"
+                  className="mt-1 p-1"
                 >
                   {fontStyles.map((style) => (
                     <option key={style} value={style}>
@@ -147,7 +149,7 @@ const FontPreview = ({
                 <select
                   value={font.weight}
                   onChange={(e) => handleFontChange("weight", e.target.value)}
-                  className="mt-1 p-2 border rounded"
+                  className="mt-1 p-1"
                 >
                   {fontWeights.map((weight) => (
                     <option key={weight} value={weight}>
@@ -171,7 +173,7 @@ const FontPreview = ({
                   onChange={(e) =>
                     handleFontChange("textTransform", e.target.value)
                   }
-                  className="mt-1 p-2 border rounded"
+                  className="mt-1 p-1"
                 >
                   {textTransformations.map((variant) => (
                     <option key={variant} value={variant}>
@@ -193,7 +195,7 @@ const FontPreview = ({
                   onChange={(e) =>
                     handleFontChange("textAlign", e.target.value)
                   }
-                  className="mt-1 p-2 border rounded"
+                  className="mt-1 p-1"
                 >
                   {textAligns.map((align) => (
                     <option key={align} value={align}>
