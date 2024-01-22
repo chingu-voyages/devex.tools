@@ -101,7 +101,7 @@ const FontPreview = ({
           </div>
 
           {/* Font Size */}
-          <div className="flex grow basis-[0%] flex-col px-5 py-3.5">
+          <div className="flex grow basis-[0%] flex-col px-5 py-3.5 w-full">
             <div className="text-neutral-400 text-base font-bold ">
               Font Size: <span className="font-black">{font.fontSize}em</span>
             </div>
@@ -214,7 +214,7 @@ const FontPreview = ({
           </div>
 
           {/* Letter Spacing */}
-          <div className="flex gap-4 max-md:flex-wrap">
+          <div className="flex gap-4 max-md:flex-wrap ">
             <div className="flex-grow flex flex-col px-5 py-3.5">
               <div className="text-neutral-400 text-base font-bold">
                 Letter Spacing:{" "}
@@ -228,7 +228,7 @@ const FontPreview = ({
                   max={10}
                   step={1}
                   onChange={handleLetterSpacingChange}
-                  className="flex-1"
+                  className="flex-1 "
                 />
                 <div className="stroke-[1px] flex w-3 shrink-0 h-3 flex-col ml-5 rounded-[50%]" />
               </div>
