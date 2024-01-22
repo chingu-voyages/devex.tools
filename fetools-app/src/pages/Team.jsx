@@ -2,9 +2,9 @@ import '../index.css';
 
 function Team() {
     return (
-      <div>
+      <main>
         <p className="font-mono text-6xl">Team Page</p>
-      </div>
+      </main>
     )
 }
   
