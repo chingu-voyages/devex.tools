@@ -1,6 +1,25 @@
 import ToolHeaderSection from "../components/ToolHeaderSection"
 import GoDeeper from "../components/GoDeeper"
 import ToolHeading from "../components/ToolHeading"
+import TabSwitcher from "../components/TabSwitcher"
+
+function TestContent1(){
+  return(
+    <p>Test Content 1</p>
+  )
+}
+
+function TestContent2(){
+  return(
+    <p>Test Content 2</p>
+  )
+}
+
+function TestContent3(){
+  return(
+    <p>Test Content 3</p>
+  )
+}
 
 function Home() {
   
@@ -18,7 +37,7 @@ function Home() {
     textValue: 'Dummy Link 3'
   }
   ]
-  
+
   return (
     <main className="flex-col mt-8 sm:mt-12 lg:mt-20">
       
@@ -28,6 +47,12 @@ function Home() {
         <ToolHeading title="Tool title" tagline="
         Tool tag line Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline"/>
       </ToolHeaderSection>
+
+      <TabSwitcher buttons={["rem", "em", "px"]}>
+            <TestContent1/>
+            <TestContent2/>
+            <TestContent3/>
+      </TabSwitcher>
 
       <GoDeeper linksData={linksData}/>
     

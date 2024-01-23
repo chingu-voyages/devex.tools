@@ -2,18 +2,18 @@ import { useState} from 'react';
 import { Link } from 'react-router-dom';
 import { appName } from "../data"
 
-import MobileMenu from './MobileMenu'
 import closeIcon from '../assets/x-solid.svg'
 import hamburgerIcon from '../assets/hamburger.svg'
 
 import Nav from './Nav';
+import MobileMenu from './MobileMenu'
 
 export default function Header(){
 
     const [click, setClick] = useState(false);
 
     return(
-        <div >
+        <header>
             <div className='
             bg-[var(--ui-contrast-color)] flex p-4 justify-between
             sm:max-lg:flex-col sm:max-md:p-4 sm:max-lg:justify-center
@@ -40,7 +40,7 @@ export default function Header(){
                     handleState={handleState}
                 />
             </div>
-        </div>
+        </header>
     )
 
     function updateMenuContextIcon(isClicked){
