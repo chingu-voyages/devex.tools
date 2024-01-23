@@ -13,11 +13,7 @@ function CopyButton({ onCopy }) {
     }
   };
 
-  return (
-    <button onClick={handleCopy} className="copy-button">
-      📋
-    </button>
-  );
+  return <button onClick={handleCopy}>📋</button>;
 }
 
 export default CopyButton;
