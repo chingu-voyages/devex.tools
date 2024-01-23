@@ -1,6 +1,7 @@
 import "../index.css";
 import GoDeeper from "../components/GoDeeper";
 import CopyButton from "../components/CopyButton";
+import TextField from "../components/TextField";
 
 import React, { useState } from "react";
 
@@ -128,62 +129,25 @@ function UnitConverter() {
             )}
           </div>
 
-          <div className="mb-3 relative">
-            <label className="block mb-2 text-sm font-bold text-gray-400">
-              REM/EM
-            </label>
-            <div className="flex border rounded relative">
-              <input
-                type="number"
-                className="border rounded border-black w-28 py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-                value={em}
-                onChange={handleEmChange}
-              />
-              <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none font-semibold">
-                rem
-              </span>
-              <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-full text-lg -mt-2">
-                <CopyButton onCopy={() => em.toString()} />
-              </span>
-            </div>
-          </div>
+          <TextField
+            title="REM/EM"
+            value={em}
+            unit="rem"
+            onValueChange={handleEmChange}
+          />
 
-          <div className="mb-3 relative">
-            <label className="block mb-2 text-sm font-bold text-gray-400">
-              Pixels
-            </label>
-            <div className="flex border rounded relative">
-              <input
-                type="number"
-                className="border rounded border-black w-28 py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-                value={pixels}
-                onChange={handlePixelChange}
-              />
-              <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none font-semibold">
-                px
-              </span>
-              <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-full text-lg -mt-2">
-                <CopyButton onCopy={() => pixels.toString()} />
-              </span>
-            </div>
-          </div>
+          <TextField
+            title="Pixels"
+            value={pixels}
+            unit="px"
+            onValueChange={handlePixelChange}
+          />
 
-          <div className="mb-3 relative">
-            <label className="block mb-2 text-sm font-bold text-gray-400">
-              Tailwind Size
-            </label>
-            <div className="flex border rounded relative">
-              <input
-                type="number"
-                className="border rounded border-black w-28 py-2 px-3 text-gray-400 leading-tight"
-                value={tailwindSize}
-                onChange={handleTailwindChange}
-              />
-              <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-full text-lg -mt-2">
-                <CopyButton onCopy={() => pixels.toString()} />
-              </span>
-            </div>
-          </div>
+          <TextField
+            title="Tailwind Size"
+            value={tailwindSize}
+            onValueChange={handleTailwindChange}
+          />
         </div>
 
         <div className="flex flex-col gap-4 items-start p-4">
