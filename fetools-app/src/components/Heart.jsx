@@ -19,18 +19,17 @@ export default function Heart({addClass, pageName, elementId}){
     }
 
     function handleClick(evt){
-        const currentElement = getElement(evt, elementId)
+        const currentElement = evt.target.closest(`#${elementId}`) //get element with id
 
         const favoriteItemsJSON = localStorage.getItem(`${pageName}-favorites`)
         const favoriteItems = JSON.parse(favoriteItemsJSON)
 
         if(!favoriteItems.includes(elementId)){
             favoriteItems.push(elementId)
-            console.log(favoriteItems)
             localStorage.setItem(`${pageName}-favorites`, JSON.stringify(favoriteItems))
         } else{
-            console.log(favoriteItems.pop())
-            localStorage.setItem(`${pageName}-favorites`, JSON.stringify(favoriteItems))
+            const newArray = favoriteItems.filter(element => element !== elementId)
+            localStorage.setItem(`${pageName}-favorites`, JSON.stringify(newArray))
         }
 
         handleState()
@@ -53,16 +52,13 @@ export default function Heart({addClass, pageName, elementId}){
         }
     }
 
-
-}
-
-function checkForLocalStorage(pageName){
-    if(!localStorage.getItem(`${pageName}-favorites`)){
-        localStorage.setItem(`${pageName}-favorites`, JSON.stringify([]))
+    function checkForLocalStorage(){
+        if(!localStorage.getItem(`${pageName}-favorites`)){
+            localStorage.setItem(`${pageName}-favorites`, JSON.stringify([]))
+        }
     }
 }
 
-function getElement(evt, elementId){
-    return evt.target.closest(`#${elementId}`)
-}
+
+
 
