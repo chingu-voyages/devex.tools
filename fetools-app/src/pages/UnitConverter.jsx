@@ -1,5 +1,6 @@
 import "../index.css";
 import GoDeeper from "../components/GoDeeper";
+import CopyButton from "../components/CopyButton";
 
 import React, { useState } from "react";
 
@@ -140,7 +141,7 @@ function UnitConverter() {
           </div>
 
           <div className="mb-3 relative">
-            <label className="block mb-2 text-lg font-bold text-black">
+            <label className="block text-lg mb-2 font-bold text-black">
               Pixels
             </label>
             <div className="flex border rounded relative">
@@ -152,6 +153,9 @@ function UnitConverter() {
               />
               <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none">
                 px
+              </span>
+              <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-full text-lg -mt-2">
+                <CopyButton onCopy={() => pixels.toString()} />
               </span>
             </div>
           </div>
