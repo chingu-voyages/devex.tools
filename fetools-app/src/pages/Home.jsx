@@ -2,6 +2,7 @@ import ToolHeaderSection from "../components/ToolHeaderSection"
 import GoDeeper from "../components/GoDeeper"
 import ToolHeading from "../components/ToolHeading"
 import TabSwitcher from "../components/TabSwitcher"
+import Toast from "../components/ToastWithTitle"
 
 function TestContent1(){
   return(
@@ -55,7 +56,9 @@ function Home() {
       </TabSwitcher>
 
       <GoDeeper linksData={linksData}/>
-    
+
+      <Toast/>
+
     </main>
   )
 }

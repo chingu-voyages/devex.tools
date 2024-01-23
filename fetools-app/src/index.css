@@ -4,6 +4,9 @@
  
 @layer base {
   :root {
+    --ui-contrast-color: #E8E8E8;
+    --bckgrnd-color: #fff;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
