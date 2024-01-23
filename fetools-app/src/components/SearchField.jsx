@@ -11,6 +11,10 @@ const SearchField = ({ placeholderText, links, search }) => {
     search(inputValue);
   };
 
+  const handleKeyPress = () => {
+    search(inputValue);
+  };
+
   return (
     <div className="flex justify-end pr-12">
       <input
@@ -18,6 +22,7 @@ const SearchField = ({ placeholderText, links, search }) => {
         placeholder={placeholderText}
         value={inputValue}
         onChange={handleInputChange}
+        onKeyDown={handleKeyPress}
         className="bg-gray-100 p-3 rounded-l-lg text-lg"
       />
       <button
