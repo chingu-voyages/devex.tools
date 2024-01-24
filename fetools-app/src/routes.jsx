@@ -6,7 +6,7 @@ import UnitConverter from './pages/UnitConverter';
 import ColorPicker from './pages/ColorPicker';
 import CharacterFinder from './pages/CharacterFinder';
 import FontVisualizer from './pages/FontVisualizer'
-import ColorGradient from './components/ColorGradient';
+import ColorGradient from './pages/ColorGradient';
 import Team from './pages/Team'
 import App from './App';
 
