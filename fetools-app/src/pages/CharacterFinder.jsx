@@ -93,7 +93,7 @@ function CharacterFinder() {
           selectCategory={displayCharacters}
         />
         <CharacterCategoryTab
-          category={"math"} //placeholder
+          category={"emojis"}
           categoryDisplayName={"Emoji"}
           char={"👍"}
           selectCategory={displayCharacters}

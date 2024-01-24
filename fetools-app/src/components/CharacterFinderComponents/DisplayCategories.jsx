@@ -11,6 +11,7 @@ function DisplayCategories({category}) {
     currency: htmlCharacters.currency,
     arrows: htmlCharacters.arrows,
     symbols: htmlCharacters.symbols,
+    emojis: htmlCharacters.emojis,
   };
 
   const characterArray = categoryMapping[category];
@@ -19,10 +20,10 @@ function DisplayCategories({category}) {
       {characterArray.map((character, index) => (
         <CharacterCard
           key={index}
-          char={character.character}
+          char={category === "emojis" ? character.emoji : character.character}
           name={character.name}
           unicode={character.unicode}
-          htmlcode={character.hex}
+          htmlcode={category === "emojis" ? character.html : character.hex}
           htmlEntity={character.entity}
           cssCode={character.css}
         />
