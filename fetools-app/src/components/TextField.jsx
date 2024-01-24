@@ -1,5 +1,5 @@
 import React from "react";
-import CopyButton from "./CopyButton"; // adjust the import path based on your project structure
+import CopyButton from "./CopyButton";
 
 function TextField({ title, value, unit, onValueChange }) {
   // Function to concatenate value and unit, used for the copy function

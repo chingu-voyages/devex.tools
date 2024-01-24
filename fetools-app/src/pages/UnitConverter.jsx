@@ -2,6 +2,7 @@ import "../index.css";
 import GoDeeper from "../components/GoDeeper";
 import CopyButton from "../components/CopyButton";
 import TextField from "../components/TextField";
+import CodeBlock from "../components/CodeBlock";
 
 import React, { useState } from "react";
 
@@ -89,6 +90,18 @@ function UnitConverter() {
     },
   ];
 
+  //CSS Properties - *still have to add position*
+  const cssProperties = [
+    { title: "Font Size", cssProperty: "font-size" },
+    { title: "Height", cssProperty: "height" },
+    { title: "Width", cssProperty: "width" },
+    { title: "Margin", cssProperty: "margin" },
+    { title: "Padding", cssProperty: "padding" },
+    { title: "Gap", cssProperty: "gap" },
+    { title: "Border Width", cssProperty: "border-width" },
+    { title: "Position", cssProperty: "top" },
+  ];
+
   // JSX for rendering the UI components.
   return (
     <>
@@ -96,12 +109,13 @@ function UnitConverter() {
         className="p-6
     sm:p-12 lg:px-48 lg:py-20"
       >
+        {/* Heading and Sub-Heading*/}
         <p className="font-arial font-bold text-6xl ml-4">Unit Converter</p>
-
         <p className="font-arial text-1xl ml-4 mb-2 text-gray-400">
           Calculate PX, REM/EM, and Tailwind utility classes with ease.
         </p>
 
+        {/* Section for Input Boxes*/}
         <div className="flex gap-10 p-4 ml-52">
           <div className="mb-3">
             <label className="block mb-2 text-sm font-bold text-gray-400">
@@ -150,6 +164,7 @@ function UnitConverter() {
           />
         </div>
 
+        {/* Section for Lorem Ipsum Preview*/}
         <div className="flex flex-col gap-4 items-start p-4">
           <p className="font-arial text-4xl">Preview</p>
           <div
@@ -165,6 +180,18 @@ function UnitConverter() {
               Lorem ipsum dolor sit amet
             </p>
           </div>
+        </div>
+
+        {/* Section for code blocks */}
+        <div className="grid grid-cols-4 gap-4">
+          {cssProperties.map((item, index) => (
+            <CodeBlock
+              key={index}
+              title={item.title}
+              code={item.cssProperty}
+              unit={`${pixels}px`}
+            />
+          ))}
         </div>
         {/* <GoDeeper linksData={linksData} /> */}
       </main>
