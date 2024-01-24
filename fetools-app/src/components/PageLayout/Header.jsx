@@ -1,9 +1,9 @@
 import { useState} from 'react';
 import { Link } from 'react-router-dom';
-import { appName } from "../data"
+import { appName } from "../../data"
 
-import closeIcon from '../assets/x-solid.svg'
-import hamburgerIcon from '../assets/hamburger.svg'
+import closeIcon from '../../assets/x-solid.svg'
+import hamburgerIcon from '../../assets/hamburger.svg'
 
 import Nav from './Nav';
 import MobileMenu from './MobileMenu'
@@ -16,10 +16,10 @@ export default function Header(){
         <header>
             <div className='
             bg-[var(--ui-contrast-color)] flex p-4 justify-between
-            sm:max-lg:flex-col sm:max-md:p-4 sm:max-lg:justify-center
+            sm:max-lg:flex-col sm:max-lg:justify-center
             md:max-lg:p-8
             lg:items-center lg:px-4
-            xl:px-16
+            2xl:px-16
             '>
                 <Link to="/"
                 onClick={()=>handleState(true)}
@@ -27,7 +27,7 @@ export default function Header(){
                 flex-2 block font-bold text-3xl leading-none min-w-fit
                 cursor-pointer
                 sm:max-lg:self-center sm:max-lg:mb-4
-                lg:mr-2 xl:mr-36 2xl:mr-80
+                lg:mr-2 xl:mr-16 2xl:mr-80
                 ">{appName}</Link>
                 <Nav/>
                 <div id='button-container'>

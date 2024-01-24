@@ -1,5 +1,5 @@
 import "../index.css";
-import GoDeeper from "../components/GoDeeper";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
 import CopyButton from "../components/CopyButton";
 import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";

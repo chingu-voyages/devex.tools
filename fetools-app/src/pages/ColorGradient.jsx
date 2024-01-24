@@ -1,8 +1,8 @@
 import tinycolor from "tinycolor2";
 
 import ColorGradientSlider from "../components/ColorGradientSlider";
-import ToolHeaderSection from "../components/ToolHeaderSection";
-import ToolHeading from "../components/ToolHeading";
+import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
+import ToolHeading from "../components/ToolsLayout/ToolHeading";
 
 import "./ColorGradient.css"
 

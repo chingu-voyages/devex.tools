@@ -7,7 +7,7 @@ export default function ColorGradientSlider({addKnob}){
                 <input id='thumb' className="slider" type="range" min='0' max='100' step='0.5' defaultValue='100' onChange={handleOnChange}></input>
             </label>
             <label className="flex-1 w-full absolute">
-                <input id='thumb' className="slider absolute" type="range" min='0' max='100' defaultValue='0' onChange={handleOnChange}></input>
+                <input id='thumb' className="slider absolute" type="range" min='0' max='100'step='0.5' defaultValue='0' onChange={handleOnChange}></input>
             </label>
         </div>
     </>
