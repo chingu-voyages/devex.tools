@@ -1,0 +1,63 @@
+.wrap{
+    background: linear-gradient(90deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 100%;
+    background: none;
+    outline: none;
+    pointer-events: none;
+}
+ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%; 
+    background: #04AA6D;
+    cursor: pointer;
+    pointer-events: auto;
+}
+  
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #04AA6D;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+
+.slider::-webkit-slider-runnable-track{
+    background: none; /* get rid of white Chrome background */
+    color: #000;
+    font: inherit; /* fix too small font-size in both Chrome & Firefox */
+    margin: 0;
+    pointer-events: none;
+}
+
+.slider::-moz-range-track {
+    background: none; /* get rid of white Chrome background */
+    color: #000;
+    font: inherit; /* fix too small font-size in both Chrome & Firefox */
+    margin: 0;
+    pointer-events: none;
+}
+
+
+.gradient{
+    background: hsla(356, 22%, 55%, 1);
+
+    background: linear-gradient(90deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+
+    background: -moz-linear-gradient(90deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+
+    background: -webkit-linear-gradient(90deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A47275", endColorstr="#FFC07C", GradientType=1 );
+}
