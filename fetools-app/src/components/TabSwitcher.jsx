@@ -1,4 +1,11 @@
 import { useState } from "react"
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
+  
 
 export default function TabSwitcher({buttons, children}){
 
@@ -23,16 +30,37 @@ export default function TabSwitcher({buttons, children}){
         <div id="tab-switcher" 
         className="flex flex-col flex-1 p-6 mb-2
         sm:p-12 lg:px-48 lg:py-20">
-            <div className="flex flex-1 justify-between">
-                <h2 className="font-bold text-3xl leading-none">Tab Switcher</h2>
-                <fieldset className="flex flex-wrap items-center gap-x-8">
-                    {radioButtons(buttons)}
-                </fieldset>
+            <div id="tab-switcher-sm" className="max-[420px]:hidden">
+                <div className="flex flex-1 justify-between ">
+                    <h2 className="font-bold text-3xl leading-none">Tab Switcher</h2>
+                    <fieldset className="flex flex-wrap items-center gap-x-8">
+                        {radioButtons(buttons)}
+                    </fieldset>
+                </div>
+
+                <div className="flex-1 flex-col">
+                    {children[displayedContent]}
+                </div>
             </div>
 
-            <div className="flex-1 flex-col">
-                {children[displayedContent]}
+            <div id="tab-switcher-mobile" className="min-[420px]:hidden">
+                <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger 
+                        className="font-bold text-3xl leading-none">Tab Switcher</AccordionTrigger>
+                        <AccordionContent>
+                            <fieldset className="flex flex-wrap items-center gap-x-8">
+                                {radioButtons(buttons)}
+                            </fieldset>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+
+                <div className="flex-1 flex-col mt-3">
+                    {children[displayedContent]}
+                </div>
             </div>
+
         </div>
     )
 

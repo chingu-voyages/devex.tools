@@ -2,6 +2,8 @@ import ToolHeaderSection from "../components/ToolHeaderSection"
 import GoDeeper from "../components/GoDeeper"
 import ToolHeading from "../components/ToolHeading"
 import TabSwitcher from "../components/TabSwitcher"
+import Toast from "../components/ToastWithTitle"
+import Heart from "../components/Heart"
 
 function TestContent1(){
   return(
@@ -48,6 +50,23 @@ function Home() {
         Tool tag line Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline Tool tagline"/>
       </ToolHeaderSection>
 
+      <div id="test-content-container" className="flex flex-1 flex-wrap p-32 gap-x-5">
+        <div id="item-0" className="flex flex-col bg-slate-500 h-48 w-48">
+          <Heart addClass={"self-end"} pageName={"CharacterFinder"} elementId={"item-0"}/>
+          <div>
+            <p>Test Test Test</p>
+          </div>
+        </div>
+
+        <div id="item-1" className="flex flex-col bg-slate-500 h-48 w-48">
+          <Heart addClass={"self-end"} pageName={"CharacterFinder"} elementId={"item-1"}/>
+          <div>
+            <p>Test Test Test</p>
+          </div>
+        </div>
+      </div>
+
+
       <TabSwitcher buttons={["rem", "em", "px"]}>
             <TestContent1/>
             <TestContent2/>
@@ -55,7 +74,9 @@ function Home() {
       </TabSwitcher>
 
       <GoDeeper linksData={linksData}/>
-    
+
+      <Toast/>
+
     </main>
   )
 }
