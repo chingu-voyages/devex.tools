@@ -123,7 +123,7 @@ const FontVisualizer = () => {
   return (
     <main className="flex flex-col items-start gap-10 self-stretch p-8 lg:p-20">
       <h1 className="text-4xl font-bold mb-8">Font Viewer</h1>
-      <div className="flex items-start gap-48 self-stretch">
+      <div className="flex items-start lg:gap-48 self-stretch max-lg:flex-col">
         <Preview generateFontStyles={generateFontStyles} />
         <FontPreview
           font={font}

@@ -20,7 +20,7 @@ const Preview = ({ generateFontStyles }) => {
 
   return (
     <div
-      className={`preview-container bg-gray-800 p-12 flex flex-col items-start gap-4 w-full border border-gray-500 rounded ${
+      className={`preview-container bg-gray-800 p-12 flex flex-col items-start gap-4 w-full min-h-[400px] border border-gray-500 rounded ${
         isEditing ? "cursor-text" : "cursor-pointer"
       }`}
       style={{
