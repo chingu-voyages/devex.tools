@@ -121,15 +121,36 @@ export default function ColorGradientSlider(){
     
                     updateCSSValues('--percentage1', `${currentThumbValue}%`)
                 }
-    
+
             } else{
                 const previousValue = parseInt(siblings.previous.value)   
+       
+                const currentColorIndex = updateColors.indexOf(currentThumbColor)
+    
+                const siblingColorIndex = colors.findIndex(
+                    color=>color===siblings.previous.dataset.color
+                )
     
                 console.log(currentThumbValue, previousValue)
                 
                 if(currentThumbValue < previousValue){
+
+                    if(updateColors[currentColorIndex]!==colors[siblingColorIndex]&&
+                        updateColors[siblingColorIndex]!==currentThumbColor){
+                            console.log('test')
+                        updateCSSValues('--percentage1', `${previousValue}%`)
+                        updateCSSValues('--percentage2', `${currentThumbValue}%`)
+                        setUpdateColors([colors[currentColorIndex], colors[siblingColorIndex]])
+                    }
+
                     updateCSSValues('--percentage1', `${currentThumbValue}%`)
-                }else{
+
+                }else if(currentThumbValue > previousValue){
+
+                    if(updateColors[currentColorIndex]!==colors[currentColorIndex]){
+                        setUpdateColors([colors[0], colors[1]])
+                    }
+
                     updateCSSValues('--percentage2', `${currentThumbValue}%`)
                 }
             }
