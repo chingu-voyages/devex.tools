@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
 
-export default function ColorGradientButtons({}){
+export default function ColorGradientInterface({}){
     
-    const [color,setColor] = useState('')
+    const [showValues, setShowValues] = useState()
     const colorInputRef = useRef()
 
     updateValues()

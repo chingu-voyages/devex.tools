@@ -4,7 +4,7 @@ import tinycolor from "tinycolor2";
 import ColorGradientSlider from "../components/ColorGradientSlider";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
-import ColorGradientButtons from "../components/ColorGradientButtons";
+import ColorGradientInterface from "../components/ColorGradientInterface";
 
 const colorsArr = [
     getRandomColor(), getRandomColor()
@@ -13,8 +13,9 @@ const colorsArr = [
 export default function ColorGradient(){
 
     const [updatedColors, setUpdatedColors] = useState(colorsArr)
-
-    let currentSelectedColor = null
+    const showValues = {
+        color: null
+    }
 
     updateCSSValues('--color1-thumb', colorsArr[0])
     updateCSSValues('--color2-thumb', colorsArr[1])
@@ -33,9 +34,12 @@ export default function ColorGradient(){
                 <ColorGradientSlider 
                 colorsArr={colorsArr} 
                 updatedColors={updatedColors}
-                getHexColor={getHexColor}
+                getHexColor={updateShowValues}
                 handleSetUpdatedColors={handleSetUpdatedColors}/>
-                <ColorGradientButtons currentSelectedColor={currentSelectedColor}/>
+                
+                <ColorGradientInterface 
+                showValues={showValues}
+                />
             </div>
 
             <div id="show-gradient" 
@@ -46,13 +50,12 @@ export default function ColorGradient(){
     </>    
     )
 
-
-    function getHexColor(){
+    function updateShowValues(){
         const currentKnob = document.querySelector('.isActive')
 
-        currentSelectedColor = tinycolor(currentKnob.dataset.color).toHexString()
+        showValues.color = tinycolor(currentKnob.dataset.color).toHexString()
 
-        console.log(currentSelectedColor)
+        console.log(showValues)
     }
 
     function handleSetUpdatedColors(newColorsArr){

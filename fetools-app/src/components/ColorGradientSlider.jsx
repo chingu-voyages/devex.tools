@@ -13,14 +13,7 @@ export default function ColorGradientSlider(
     const colorStyles = getCSSRules(':root')
 
     const [,setActiveKnob] = useState(false)
-/*
-    const [updatedColors, handleSetUpdatedColors] = useState(colorsArr)
 
-    updateCSSValues('--color1-thumb', colorsArr[0])
-    updateCSSValues('--color2-thumb', colorsArr[1])
-    updateCSSValues('--color1-gradient', updatedColors[0])
-    updateCSSValues('--color2-gradient', updatedColors[1])
-*/
     const checkColors = checkColorArraysMatch()
 
     return(
@@ -31,9 +24,7 @@ export default function ColorGradientSlider(
                     <label
                     className="flex-1 w-full h-max absolute ">
                             <input 
-                            data-color={
-                                Object.hasOwn(checkColors[0], 'sameColor')?updatedColors[0]:updatedColors[0]
-                            } 
+                            data-color={updatedColors[0]} 
                             id="thumb" type="range" min='0' max='100' step='1' defaultValue='0'
                             onChange={handleOnChange}
                             onFocus={handleOnFocus}
@@ -43,9 +34,7 @@ export default function ColorGradientSlider(
                     <label
                     className="flex-1 w-full h-max absolute">
                         <input 
-                        data-color={
-                                Object.hasOwn(checkColors[1], 'sameColor')?updatedColors[1]:updatedColors[1]
-                        }  
+                        data-color={updatedColors[1]}  
                         id="thumb" type="range" min='0' max='100' step='1' defaultValue='100'
                         onChange={handleOnChange}
                         onFocus={handleOnFocus}
