@@ -1,4 +1,4 @@
-@layer base{
+@layer ColorGradient{
     :root{
         --color1: hsla(356, 22%, 55%, 1);
         --color2: hsla(31, 100%, 74%, 1);
