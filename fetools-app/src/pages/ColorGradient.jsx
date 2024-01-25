@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import tinycolor from "tinycolor2";
 
 import ColorGradientSlider from "../components/ColorGradientSlider";
@@ -8,10 +9,7 @@ import "./ColorGradient.css"
 
 export default function ColorGradient(){
 
-    var color = tinycolor("red");
-
-    console.log(color.toHex8String(), color.toHslString())
-
+    const showGradient = useRef()
 
     return(
     <>
@@ -19,16 +17,20 @@ export default function ColorGradient(){
             <ToolHeading title="Color Gradient" tagline="Use this tool to create gradients for any project!"></ToolHeading>
         </ToolHeaderSection>
 
-        <div className="flex mx-48">
-            <ColorGradientSlider/>
-        </div>
+        <div className="flex flex-1 lg:mx-48 justify-between gap-x-2 h-[425px]">
+            <div 
+            className="flex-1 w-full rounded-lg border border-black">
+                <ColorGradientSlider/>
+            </div>
+            <div ref={showGradient} id="show-gradient" 
+            className="gradient flex-1 rounded-lg border border-black">         
+            </div>
 
+        </div>
     </>    
     )
 
-    function lockTracks(){
-        const tracks = document.querySelectorAll('#track')
-
-        console.log(tracks)
+    function updateShowGradient(){
+        showGradient.current
     }
 }
