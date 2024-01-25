@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import DisplayCategories from "../components/CharacterFinderComponents/DisplayCategories";
 import SearchField from "../components/SearchField";
 import DisplaySearchResults from "../components/CharacterFinderComponents/DisplaySearchResults";
-import ToolHeading from "../components/ToolHeading";
+import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import CharacterCategoryTab from "../components/CharacterFinderComponents/CharacterCategoryTab";
 import htmlCharacters from "../components/CharacterFinderComponents/htmlCharacters.json";
-import GoDeeper from "../components/GoDeeper";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
 
 function CharacterFinder() {
   const [selectedCategory, setSelectedCategory] = useState("symbols"); //placeholder for popular tab

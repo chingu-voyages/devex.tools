@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --ui-contrast-color: #E8E8E8;
@@ -75,5 +75,103 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer base{
+  @layer ColorGradient{
+    :root{
+      --color1-gradient: hsla(356, 22%, 55%, 1);
+      --color2-gradient: hsla(31, 100%, 74%, 1);
+      --color1-thumb: hsla(356, 22%, 55%, 1);
+      --color2-thumb: hsla(31, 100%, 74%, 1);
+     
+      --percentage1: 0%;
+      --percentage2: 100%;
+    }
+
+    .wrap{
+        display: relative;
+        z-index: 0;
+    }
+
+    .slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        z-index: 4;
+        cursor: copy;
+    }
+    
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%; 
+        cursor: -webkit-grab;
+        pointer-events: auto;
+        transform: scale(1.2);
+        box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
+    }
+
+    .wrap .isActive::-webkit-slider-thumb{
+        box-shadow: #0066ff 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
+        z-index: 10;
+    }
+
+    .slider::-moz-range-thumb{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%; 
+        cursor: -moz-grab;
+        pointer-events: auto;
+        transform: scale(1.2);
+    }
+
+    .wrap .isActive::-moz-range-thumb{
+        box-shadow: #0066ff 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
+        z-index: 10;
+    }
+
+    .wrap label:nth-child(1) ::-webkit-slider-thumb {
+        background: var(--color1-thumb);
+    }
+
+    .wrap label:nth-child(2) ::-webkit-slider-thumb {
+        background: var(--color2-thumb);
+    }
+
+    .slider::-webkit-slider-runnable-track{
+        background: none; /* get rid of white Chrome background */
+        font: inherit; /* fix too small font-size in both Chrome & Firefox */
+        margin: 0;
+        pointer-events: none;
+    }
+
+    .slider::-moz-range-track {
+        background: none; /* get rid of white Chrome background */
+        font: inherit; /* fix too small font-size in both Chrome & Firefox */
+        margin: 0;
+        pointer-events: none;
+    }
+
+    .gradient{
+        background: linear-gradient(90deg, var(--color1-gradient) var(--percentage1), var(--color2-gradient) var(--percentage2));
+    }
+
+    .gradientCSS{
+        background: hsla(356, 22%, 55%, 1);
+
+        background: linear-gradient(90deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+
+        background: -moz-linear-gradient(90deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+
+        background: -webkit-linear-gradient(0deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+
+        filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A47275", endColorstr="#FFC07C", GradientType=1 );
+    }
   }
 }
