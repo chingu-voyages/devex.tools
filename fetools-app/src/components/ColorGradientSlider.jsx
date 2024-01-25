@@ -67,10 +67,12 @@ export default function ColorGradientSlider(){
         ThumbElements.forEach((thumb) =>{
             thumb.activeHandle = false;
 
-            thumb.classList.remove('isActive', 'z-10')
+            thumb.parentElement.classList.remove('z-10')
+            thumb.classList.remove('isActive')
         })
     
-        currentThumbElement.classList.add('isActive', 'z-10')
+        currentThumbElement.parentElement.classList.add('z-10')
+        currentThumbElement.classList.add('isActive')
 
         handleActiveKnobState(currentThumbElement.activeHandle)
     }
