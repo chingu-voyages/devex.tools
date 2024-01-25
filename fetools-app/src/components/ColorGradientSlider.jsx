@@ -10,10 +10,17 @@ export default function ColorGradientSlider(){
     const colorStyles = getCSSRules(':root')
 
     const [,setActiveKnob] = useState(false)
-    const [knobsNumber, setKnobsNumber] = useState(2)
 
-    updateCSSValues('--color1', colors[0])
-    updateCSSValues('--color2', colors[1])
+    const [updateColors, setUpdateColors] = useState(colors)
+
+    updateCSSValues('--color1-thumb', colors[0])
+    updateCSSValues('--color2-thumb', colors[1])
+    updateCSSValues('--color1-gradient', updateColors[0])
+    updateCSSValues('--color2-gradient', updateColors[1])
+
+    console.log(updateColors)
+
+    const checkColors = checkColorArraysMatch()
 
     return(
     <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md ">
@@ -21,7 +28,11 @@ export default function ColorGradientSlider(){
         className="wrap gradient flex flex-col relative w-full h-5 justify-center">
                 <label
                 className="flex-1 w-full h-max absolute">
-                        <input data-color={colors[0]} id="thumb" type="range" min='0' max='100' step='1' defaultValue='0'
+                        <input 
+                        data-color={
+                            Object.hasOwn(checkColors[0], 'sameColor')?updateColors[0]:updateColors[0]
+                        } 
+                        id="thumb" type="range" min='0' max='100' step='1' defaultValue='0'
                         onChange={handleOnChange}
                         onFocus={handleOnFocus}
                         className="slider absolute"
@@ -29,7 +40,11 @@ export default function ColorGradientSlider(){
                 </label>
                 <label
                 className="flex-1 w-full h-max absolute">
-                    <input data-color={colors[1]} id="thumb" type="range" min='0' max='100' step='1' defaultValue='100'
+                    <input 
+                    data-color={
+                            Object.hasOwn(checkColors[1], 'sameColor')?updateColors[1]:updateColors[1]
+                    }  
+                    id="thumb" type="range" min='0' max='100' step='1' defaultValue='100'
                     onChange={handleOnChange}
                     onFocus={handleOnFocus}
                     className="slider absolute"></input>
@@ -50,13 +65,75 @@ export default function ColorGradientSlider(){
     function handleOnChange(evt){
 
         const currentThumbElement = evt.target;
-        const currentThumbColor = currentThumbElement.getAttribute('data-color')
- 
-        if(currentThumbColor === colorStyles.style.getPropertyValue('--color1')){
-            updateCSSValues('--percentage1', `${currentThumbElement.value}%`)
-        } else{
-            updateCSSValues('--percentage2', `${currentThumbElement.value}%`)
-        }   
+        const currentThumbColor = currentThumbElement.dataset.color
+        const siblings = isThereSiblings()
+        const currentThumbValue = parseInt(currentThumbElement.value)
+
+        checkKnobValues()
+
+        function isThereSiblings(){
+            const siblings = {next: null, previous: null}
+            
+            const nextSibling = currentThumbElement.parentElement.nextElementSibling
+            const previousSibling = currentThumbElement.parentElement.previousElementSibling
+
+            if(nextSibling){
+                siblings.next = nextSibling.children[0]
+            }
+
+            if(previousSibling){
+                siblings.previous = previousSibling.children[0]
+            }
+
+            return siblings
+        }
+
+        function checkKnobValues(){
+            if(siblings.next){
+                const nextValue = parseInt(siblings.next.value)
+    
+                const currentColorIndex = updateColors.indexOf(currentThumbColor)
+    
+                const siblingColorIndex = colors.findIndex(
+                    color=>color===siblings.next.dataset.color
+                )
+    
+                console.log(currentThumbValue, nextValue)
+                
+                if(currentThumbValue > nextValue){
+    
+                    if(updateColors[currentColorIndex]!==colors[siblingColorIndex]&&
+                        updateColors[siblingColorIndex]!==currentThumbColor){
+                            console.log('test')
+                        updateCSSValues('--percentage1', `${nextValue}%`)
+                        updateCSSValues('--percentage2', `${currentThumbValue}%`)
+                        setUpdateColors([colors[siblingColorIndex], colors[currentColorIndex]])
+                    }
+    
+                    updateCSSValues('--percentage2', `${currentThumbValue}%`)
+                    
+    
+                } else if(currentThumbValue < nextValue){
+                    
+                    if(updateColors[currentColorIndex]!==colors[currentColorIndex]){
+                        setUpdateColors([colors[0], colors[1]])
+                    }
+    
+                    updateCSSValues('--percentage1', `${currentThumbValue}%`)
+                }
+    
+            } else{
+                const previousValue = parseInt(siblings.previous.value)   
+    
+                console.log(currentThumbValue, previousValue)
+                
+                if(currentThumbValue < previousValue){
+                    updateCSSValues('--percentage1', `${currentThumbValue}%`)
+                }else{
+                    updateCSSValues('--percentage2', `${currentThumbValue}%`)
+                }
+            }
+        }
     }
 
     function handleOnFocus(evt){
@@ -83,6 +160,22 @@ export default function ColorGradientSlider(){
 
     function updateCSSValues(cssVariable, newValue){
         colorStyles.style.setProperty(cssVariable, newValue)
+    }
+
+    function checkColorArraysMatch(){
+        
+        const colorChanges = {}
+
+        colors.forEach((color,idx)=>{
+            if(color!==updateColors[idx]){
+                colorChanges[idx] = {original: color, changeTo: updateColors[0] }
+            } else{
+                colorChanges[idx] = {sameColor: color}
+            }
+        
+        })
+
+        return colorChanges
     }
 
 }

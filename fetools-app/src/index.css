@@ -81,8 +81,11 @@
 @layer base{
   @layer ColorGradient{
     :root{
-      --color1: hsla(356, 22%, 55%, 1);
-      --color2: hsla(31, 100%, 74%, 1);
+      --color1-gradient: hsla(356, 22%, 55%, 1);
+      --color2-gradient: hsla(31, 100%, 74%, 1);
+      --color1-thumb: hsla(356, 22%, 55%, 1);
+      --color2-thumb: hsla(31, 100%, 74%, 1);
+     
       --percentage1: 0%;
       --percentage2: 100%;
     }
@@ -128,18 +131,17 @@
         transform: scale(1.2);
     }
 
-
     .wrap .isActive::-moz-range-thumb{
         box-shadow: #0066ff 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
         z-index: 10;
     }
 
     .wrap label:nth-child(1) ::-webkit-slider-thumb {
-        background: var(--color1);
+        background: var(--color1-thumb);
     }
 
     .wrap label:nth-child(2) ::-webkit-slider-thumb {
-        background: var(--color2);
+        background: var(--color2-thumb);
     }
 
     .slider::-webkit-slider-runnable-track{
@@ -157,7 +159,7 @@
     }
 
     .gradient{
-        background: linear-gradient(90deg, var(--color1) var(--percentage1), var(--color2) var(--percentage2));
+        background: linear-gradient(90deg, var(--color1-gradient) var(--percentage1), var(--color2-gradient) var(--percentage2));
     }
 
     .gradientCSS{
