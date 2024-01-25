@@ -5,7 +5,7 @@ import ColorGradientSlider from "../components/ColorGradientSlider";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
 
-import "../ColorGradient.css"
+import "../colorGradient.css"
 
 export default function ColorGradient(){
 
