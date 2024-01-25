@@ -39,7 +39,7 @@ export default function ColorGradientSlider(){
     )
 
     function getCSSRules(CSSRule){
-        const styleSheet = document.styleSheets[1].cssRules
+        const styleSheet = document.styleSheets[0].cssRules
         for(let CSSStyle of styleSheet){
             if(CSSStyle.selectorText===CSSRule){
                 return CSSStyle
