@@ -4,7 +4,6 @@ import Header from './components/PageLayout/Header';
 import Footer from './components/PageLayout/Footer';
 
 import './index.css'
-import './pages/ColorGradient.css'
 
 function App(){
   return(
