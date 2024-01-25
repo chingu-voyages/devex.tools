@@ -1,58 +1,62 @@
 import { useState } from "react"
 import tinycolor from "tinycolor2";
 
-const colors = [
-    getRandomColor(), getRandomColor()
-]
-
-export default function ColorGradientSlider(){
+export default function ColorGradientSlider(
+    {
+        colorsArr, 
+        updatedColors, 
+        getHexColor, 
+        handleSetUpdatedColors
+    }
+    ){
 
     const colorStyles = getCSSRules(':root')
 
     const [,setActiveKnob] = useState(false)
+/*
+    const [updatedColors, handleSetUpdatedColors] = useState(colorsArr)
 
-    const [updateColors, setUpdateColors] = useState(colors)
-
-    updateCSSValues('--color1-thumb', colors[0])
-    updateCSSValues('--color2-thumb', colors[1])
-    updateCSSValues('--color1-gradient', updateColors[0])
-    updateCSSValues('--color2-gradient', updateColors[1])
-
-    console.log(updateColors)
-
+    updateCSSValues('--color1-thumb', colorsArr[0])
+    updateCSSValues('--color2-thumb', colorsArr[1])
+    updateCSSValues('--color1-gradient', updatedColors[0])
+    updateCSSValues('--color2-gradient', updatedColors[1])
+*/
     const checkColors = checkColorArraysMatch()
 
     return(
-    <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md ">
-        <div
-        className="wrap gradient flex flex-col relative w-full h-5 justify-center">
-                <label
-                className="flex-1 w-full h-max absolute">
+    <>
+        <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md ">
+            <div
+            className="wrap gradient flex flex-col relative w-full h-5 justify-center">
+                    <label
+                    className="flex-1 w-full h-max absolute ">
+                            <input 
+                            data-color={
+                                Object.hasOwn(checkColors[0], 'sameColor')?updatedColors[0]:updatedColors[0]
+                            } 
+                            id="thumb" type="range" min='0' max='100' step='1' defaultValue='0'
+                            onChange={handleOnChange}
+                            onFocus={handleOnFocus}
+                            className="slider absolute isActive"
+                            style={{background: 'red'}}></input>
+                    </label>
+                    <label
+                    className="flex-1 w-full h-max absolute">
                         <input 
                         data-color={
-                            Object.hasOwn(checkColors[0], 'sameColor')?updateColors[0]:updateColors[0]
-                        } 
-                        id="thumb" type="range" min='0' max='100' step='1' defaultValue='0'
+                                Object.hasOwn(checkColors[1], 'sameColor')?updatedColors[1]:updatedColors[1]
+                        }  
+                        id="thumb" type="range" min='0' max='100' step='1' defaultValue='100'
                         onChange={handleOnChange}
                         onFocus={handleOnFocus}
-                        className="slider absolute"
-                        style={{background: 'red'}}></input>
-                </label>
-                <label
-                className="flex-1 w-full h-max absolute">
-                    <input 
-                    data-color={
-                            Object.hasOwn(checkColors[1], 'sameColor')?updateColors[1]:updateColors[1]
-                    }  
-                    id="thumb" type="range" min='0' max='100' step='1' defaultValue='100'
-                    onChange={handleOnChange}
-                    onFocus={handleOnFocus}
-                    className="slider absolute"></input>
-                </label>
+                        className="slider absolute"></input>
+                    </label>
+            </div>
         </div>
-    </div>
+    </>
     )
 
+    
     function getCSSRules(CSSRule){
         const styleSheet = document.styleSheets[0].cssRules
         for(let CSSStyle of styleSheet){
@@ -92,31 +96,28 @@ export default function ColorGradientSlider(){
             if(siblings.next){
                 const nextValue = parseInt(siblings.next.value)
     
-                const currentColorIndex = updateColors.indexOf(currentThumbColor)
+                const currentColorIndex = updatedColors.indexOf(currentThumbColor)
     
-                const siblingColorIndex = colors.findIndex(
+                const siblingColorIndex = colorsArr.findIndex(
                     color=>color===siblings.next.dataset.color
                 )
-    
-                console.log(currentThumbValue, nextValue)
-                
+                 
                 if(currentThumbValue > nextValue){
     
-                    if(updateColors[currentColorIndex]!==colors[siblingColorIndex]&&
-                        updateColors[siblingColorIndex]!==currentThumbColor){
+                    if(updatedColors[currentColorIndex]!==colorsArr[siblingColorIndex]&&
+                        updatedColors[siblingColorIndex]!==currentThumbColor){
                             console.log('test')
                         updateCSSValues('--percentage1', `${nextValue}%`)
                         updateCSSValues('--percentage2', `${currentThumbValue}%`)
-                        setUpdateColors([colors[siblingColorIndex], colors[currentColorIndex]])
+                        handleSetUpdatedColors([colorsArr[siblingColorIndex], colorsArr[currentColorIndex]])
                     }
     
                     updateCSSValues('--percentage2', `${currentThumbValue}%`)
-                    
-    
+                       
                 } else if(currentThumbValue < nextValue){
                     
-                    if(updateColors[currentColorIndex]!==colors[currentColorIndex]){
-                        setUpdateColors([colors[0], colors[1]])
+                    if(updatedColors[currentColorIndex]!==colorsArr[currentColorIndex]){
+                        handleSetUpdatedColors([colorsArr[0], colorsArr[1]])
                     }
     
                     updateCSSValues('--percentage1', `${currentThumbValue}%`)
@@ -125,30 +126,28 @@ export default function ColorGradientSlider(){
             } else{
                 const previousValue = parseInt(siblings.previous.value)   
        
-                const currentColorIndex = updateColors.indexOf(currentThumbColor)
+                const currentColorIndex = updatedColors.indexOf(currentThumbColor)
     
-                const siblingColorIndex = colors.findIndex(
+                const siblingColorIndex = colorsArr.findIndex(
                     color=>color===siblings.previous.dataset.color
                 )
-    
-                console.log(currentThumbValue, previousValue)
-                
+
                 if(currentThumbValue < previousValue){
 
-                    if(updateColors[currentColorIndex]!==colors[siblingColorIndex]&&
-                        updateColors[siblingColorIndex]!==currentThumbColor){
+                    if(updatedColors[currentColorIndex]!==colorsArr[siblingColorIndex]&&
+                        updatedColors[siblingColorIndex]!==currentThumbColor){
                             console.log('test')
                         updateCSSValues('--percentage1', `${previousValue}%`)
                         updateCSSValues('--percentage2', `${currentThumbValue}%`)
-                        setUpdateColors([colors[currentColorIndex], colors[siblingColorIndex]])
+                        handleSetUpdatedColors([colorsArr[currentColorIndex], colorsArr[siblingColorIndex]])
                     }
 
                     updateCSSValues('--percentage1', `${currentThumbValue}%`)
 
                 }else if(currentThumbValue > previousValue){
 
-                    if(updateColors[currentColorIndex]!==colors[currentColorIndex]){
-                        setUpdateColors([colors[0], colors[1]])
+                    if(updatedColors[currentColorIndex]!==colorsArr[currentColorIndex]){
+                        handleSetUpdatedColors([colorsArr[0], colorsArr[1]])
                     }
 
                     updateCSSValues('--percentage2', `${currentThumbValue}%`)
@@ -172,6 +171,8 @@ export default function ColorGradientSlider(){
         currentThumbElement.parentElement.classList.add('z-10')
         currentThumbElement.classList.add('isActive')
 
+        getHexColor()
+
         handleActiveKnobState(currentThumbElement.activeHandle)
     }
 
@@ -187,9 +188,9 @@ export default function ColorGradientSlider(){
         
         const colorChanges = {}
 
-        colors.forEach((color,idx)=>{
-            if(color!==updateColors[idx]){
-                colorChanges[idx] = {original: color, changeTo: updateColors[0] }
+        colorsArr.forEach((color,idx)=>{
+            if(color!==updatedColors[idx]){
+                colorChanges[idx] = {original: color, changeTo: updatedColors[0] }
             } else{
                 colorChanges[idx] = {sameColor: color}
             }
@@ -199,11 +200,6 @@ export default function ColorGradientSlider(){
         return colorChanges
     }
 
+
 }
 
-function getRandomColor(){
-    const hNum = (Math.random()*361).toFixed(0)
-    const sNum = (Math.random()*101).toFixed(0)
-    const lNum = (Math.random()*101).toFixed(0)
-    return (`hsla(${hNum}, ${sNum}%, ${lNum}%, 1)`)
-}

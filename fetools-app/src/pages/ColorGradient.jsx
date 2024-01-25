@@ -1,13 +1,25 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import tinycolor from "tinycolor2";
 
 import ColorGradientSlider from "../components/ColorGradientSlider";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
+import ColorGradientButtons from "../components/ColorGradientButtons";
+
+const colorsArr = [
+    getRandomColor(), getRandomColor()
+]
 
 export default function ColorGradient(){
 
-    const showGradient = useRef()
+    const [updatedColors, setUpdatedColors] = useState(colorsArr)
+
+    let currentSelectedColor = null
+
+    updateCSSValues('--color1-thumb', colorsArr[0])
+    updateCSSValues('--color2-thumb', colorsArr[1])
+    updateCSSValues('--color1-gradient', updatedColors[0])
+    updateCSSValues('--color2-gradient', updatedColors[1])
 
     return(
     <>
@@ -17,10 +29,16 @@ export default function ColorGradient(){
 
         <div className="flex flex-1 lg:mx-48 justify-between gap-x-2 h-[425px]">
             <div 
-            className="flex-1 w-full rounded-lg border border-black">
-                <ColorGradientSlider/>
+            className="flex-1 flex-col w-full rounded-lg border border-black">
+                <ColorGradientSlider 
+                colorsArr={colorsArr} 
+                updatedColors={updatedColors}
+                getHexColor={getHexColor}
+                handleSetUpdatedColors={handleSetUpdatedColors}/>
+                <ColorGradientButtons currentSelectedColor={currentSelectedColor}/>
             </div>
-            <div ref={showGradient} id="show-gradient" 
+
+            <div id="show-gradient" 
             className="gradient flex-1 rounded-lg border border-black">         
             </div>
 
@@ -28,7 +46,39 @@ export default function ColorGradient(){
     </>    
     )
 
-    function updateShowGradient(){
-        showGradient.current
+
+    function getHexColor(){
+        const currentKnob = document.querySelector('.isActive')
+
+        currentSelectedColor = tinycolor(currentKnob.dataset.color).toHexString()
+
+        console.log(currentSelectedColor)
     }
+
+    function handleSetUpdatedColors(newColorsArr){
+        setUpdatedColors(newColorsArr)
+    }
+
+}
+
+function getRandomColor(){
+    const hNum = (Math.random()*361).toFixed(0)
+    const sNum = (Math.random()*101).toFixed(0)
+    const lNum = (Math.random()*101).toFixed(0)
+    return (`hsla(${hNum}, ${sNum}%, ${lNum}%, 1)`)
+}
+
+function getCSSRules(CSSRule){
+    const styleSheet = document.styleSheets[0].cssRules
+    for(let CSSStyle of styleSheet){
+        if(CSSStyle.selectorText===CSSRule){
+            return CSSStyle
+        }
+    }
+}
+
+function updateCSSValues(cssVariable, newValue){
+    const colorStyles = getCSSRules(':root')
+
+    colorStyles.style.setProperty(cssVariable, newValue)
 }
