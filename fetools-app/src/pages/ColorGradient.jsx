@@ -6,23 +6,21 @@ import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ColorGradientInterface from "../components/ColorGradientInterface";
 
-const colorsArr = [
-    getRandomColor(), getRandomColor()
-]
-
 export default function ColorGradient(){
+
+    const [colorsArr, setColorsArr] = useState([
+        getRandomColor(), getRandomColor()
+    ])
 
     const [updatedColors, setUpdatedColors] = useState(colorsArr)
     const [currentKnob, setCurrentKnob] = useState(false)
 
-    console.log(getHexString(updatedColors[0]))
+    const [inputValue, setInputValue] = useState({color: getHexString(updatedColors[0])});
 
-    const showValues = {
-        color: currentKnob?getHexString(currentKnob.dataset.color):getHexString(updatedColors[0])
-    }
+    console.log(getHexString(updatedColors[0]) + ' Color Gradient')
 
-    updateCSSValues('--color1-thumb', colorsArr[0])
-    updateCSSValues('--color2-thumb', colorsArr[1])
+    updateCSSValues('--color1-thumb', updatedColors[0])
+    updateCSSValues('--color2-thumb', updatedColors[1])
     updateCSSValues('--color1-gradient', updatedColors[0])
     updateCSSValues('--color2-gradient', updatedColors[1])
 
@@ -41,11 +39,12 @@ export default function ColorGradient(){
                 handleSetUpdatedColors={handleSetUpdatedColors}
                 updateCSSValues={updateCSSValues}
                 handleSetCurrentKnob={handleSetCurrentKnob}
+                handleSetInputValue={handleSetInputValue}
                 />
                 
                 <ColorGradientInterface
-                showValues={showValues}
-                handleColorChange={handleColorChange}
+                inputValue={inputValue}
+                handleColorInputChange={handleColorInputChange}
                 />
             </div>
 
@@ -67,19 +66,40 @@ export default function ColorGradient(){
 
     function handleColorChange(newColor){
         // Assuming updatedColors is an array with two color values
-        console.log(newColor)
         const newColorsArr = [...updatedColors];
 
         if(!currentKnob){
             newColorsArr[0] = getHslString(newColor);
             console.log(newColorsArr)
             setUpdatedColors(newColorsArr);
+            setColorsArr(newColorsArr)
             return
         }
+        
         newColorsArr[currentKnob.id] = getHslString(newColor); // Update the color at the current knob index
         setUpdatedColors(newColorsArr); // Update the colors state
+        setColorsArr(newColorsArr);
     }
 
+    function handleColorInputChange(evt){
+
+        const newColor = evt.target.value;
+        
+        setInputValue({...inputValue, color: newColor}); // Update input value
+
+        if (isValidHexColor(newColor)) {
+
+            handleColorChange(newColor); // Pass the new color to the parent component
+        }
+    }
+
+    function handleSetInputValue(key, value){
+        if(key==='color'){
+            setInputValue({...inputValue,[key]: getHexString(value)})
+            return
+        }
+        setInputValue({...inputValue,[key]: value})
+    }
 }
 
 function getRandomColor(){
@@ -112,4 +132,8 @@ function getHexString(color){
 function getHslString(color){
     const currentHexColor = tinycolor(color).toHslString()
     return currentHexColor
+}
+
+function isValidHexColor(color){
+    return tinycolor(color).isValid();
 }

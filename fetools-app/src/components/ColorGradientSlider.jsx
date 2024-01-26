@@ -1,12 +1,13 @@
 import {  useState } from "react"
+import tinycolor from "tinycolor2"
 
 export default function ColorGradientSlider({
     colorsArr, 
     updatedColors, 
-    getHexColor, 
     handleSetUpdatedColors,
     updateCSSValues,
-    handleSetCurrentKnob
+    handleSetCurrentKnob,
+    handleSetInputValue
 }){
 
     const [activeIndex, setActiveIndex] = useState(0)
@@ -45,7 +46,7 @@ export default function ColorGradientSlider({
                         data-color={updatedColors[i]} 
                         type="range" min='0' max='100' step='1' 
                         defaultValue={defaultValue}
-                        onChange={handleOnChange}
+                        onChange={(evt)=>handleOnChange(evt)}
                         onFocus={handleOnFocus}
                         className={`thumb slider absolute ${currentIndex===i?'isActive z-10':''}`}></input>
                 </label>
@@ -66,8 +67,15 @@ export default function ColorGradientSlider({
 
         const currentThumbElement = evt.target;
         const currentThumbColor = currentThumbElement.dataset.color
+
+        if(currentThumbColor!==updatedColors[evt.target.id]){
+            currentThumbElement.dataset.color = updatedColors[evt.target.id]
+        }
+
         const siblings = isThereSiblings()
         const currentThumbValue = parseInt(currentThumbElement.value)
+
+        console.log(tinycolor(currentThumbColor).toHexString(), ' inside Change')
 
         checkKnobValues()
 
@@ -89,6 +97,7 @@ export default function ColorGradientSlider({
         }
 
         function checkKnobValues(){
+
             if(siblings.next){
                 const nextValue = parseInt(siblings.next.value)
     
@@ -163,8 +172,11 @@ export default function ColorGradientSlider({
 
         currentThumbElement.classList.add('isActive', 'z-10')
     
+        console.log(tinycolor(currentThumbElement.dataset.color).toHexString())
+
+        handleSetInputValue('color', currentThumbElement.dataset.color)
         handleSetActiveIndex(currentThumbElement.id)
-        handleSetCurrentKnob(currentThumbElement)        
+        handleSetCurrentKnob(currentThumbElement)
     }
 
 }

@@ -2,21 +2,22 @@ import { useRef, useState, useEffect } from "react"
 import tinycolor from "tinycolor2";
 
 export default function ColorGradientInterface({
-    showValues,
-    handleColorChange
+    inputValue,
+    handleColorInputChange
 }){
     
-    const [displayData, setDisplayData] = useState(showValues)
-    const [inputValue, setInputValue] = useState({
-        color: showValues.color
-    });
+    const [displayData, setDisplayData] = useState(inputValue)
+    const [lastValidData, setLastValidData] = useState(inputValue)
     
     const colorInputRef = useRef()
 
     // Update displayData when showValues changes
     useEffect(() => {
-        setDisplayData(showValues);
-    }, [showValues]);
+        setDisplayData(inputValue);
+        if (tinycolor(inputValue.color).isValid()) {
+            setLastValidData({...lastValidData, color: tinycolor(inputValue.color).toHexString()});
+        }
+    }, [inputValue]);
 
     // Ensure input fields reflect the updated displayData
     useEffect(() => {
@@ -33,7 +34,7 @@ export default function ColorGradientInterface({
                 ref={colorInputRef} 
                 defaultValue={displayData.color}
                 onChange={handleColorInputChange} 
-                placeholder={displayData.color}
+                placeholder={lastValidData.color || displayData.color}
                 type="text" 
                 className="rounded-sm border border-gray-400 p-4 uppercase"/>
             </label>
@@ -50,18 +51,4 @@ export default function ColorGradientInterface({
         </>
     )
 
-    function isValidHexColor(color){
-        return tinycolor(color).isValid();
-    }
-
-    function handleColorInputChange(evt){
-        const newColor = evt.target.value;
-        setInputValue({...inputValue, color: newColor}); // Update input value
-
-        console.log(isValidHexColor(newColor))
-
-        if (isValidHexColor(newColor)) {
-            handleColorChange(newColor); // Pass the new color to the parent component
-        }
-    };
 }
