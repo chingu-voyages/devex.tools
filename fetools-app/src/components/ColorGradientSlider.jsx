@@ -12,40 +12,19 @@ export default function ColorGradientSlider(
 
     const colorStyles = getCSSRules(':root')
 
-    const [,setActiveKnob] = useState(false)
-
-    const checkColors = checkColorArraysMatch()
+    const [activeIndex, setActiveIndex] = useState(0)
 
     return(
     <>
-        <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md ">
+        <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md">
             <div
             className="wrap gradient flex flex-col relative w-full h-5 justify-center">
-                    <label
-                    className="flex-1 w-full h-max absolute ">
-                            <input 
-                            data-color={updatedColors[0]} 
-                            id="thumb" type="range" min='0' max='100' step='1' defaultValue='0'
-                            onChange={handleOnChange}
-                            onFocus={handleOnFocus}
-                            className="slider absolute isActive"
-                            style={{background: 'red'}}></input>
-                    </label>
-                    <label
-                    className="flex-1 w-full h-max absolute">
-                        <input 
-                        data-color={updatedColors[1]}  
-                        id="thumb" type="range" min='0' max='100' step='1' defaultValue='100'
-                        onChange={handleOnChange}
-                        onFocus={handleOnFocus}
-                        className="slider absolute"></input>
-                    </label>
+                {createHandles(activeIndex)}
             </div>
         </div>
     </>
     )
 
-    
     function getCSSRules(CSSRule){
         const styleSheet = document.styleSheets[0].cssRules
         for(let CSSStyle of styleSheet){
@@ -146,27 +125,20 @@ export default function ColorGradientSlider(
     }
 
     function handleOnFocus(evt){
+
+        console.log(evt)
+
         const currentThumbElement = evt.target;
  
-        const ThumbElements = document.querySelectorAll('#thumb');
+        const thumbElements = document.querySelectorAll('.thumb');
 
-        ThumbElements.forEach((thumb) =>{
-            thumb.activeHandle = false;
 
-            thumb.parentElement.classList.remove('z-10')
-            thumb.classList.remove('isActive')
-        })
-    
-        currentThumbElement.parentElement.classList.add('z-10')
-        currentThumbElement.classList.add('isActive')
 
-        getHexColor()
-
-        handleActiveKnobState(currentThumbElement.activeHandle)
+        handleActiveIndex(currentThumbElement.id)
     }
 
-    function handleActiveKnobState(){
-        setActiveKnob(true)
+    function handleActiveIndex(id){
+        setActiveIndex(id)
     }
 
     function updateCSSValues(cssVariable, newValue){
@@ -189,6 +161,30 @@ export default function ColorGradientSlider(
         return colorChanges
     }
 
+    function createHandles(currentIndex,knobs=2){
+
+        const knobsArr = []
+
+        for(let i=0; i<knobs; i++){
+            knobsArr.push(
+                <label key={`label-${i}`}
+                className="flex-1 w-full h-max absolute">
+                        <input id={`${i}`}
+                        data-color={updatedColors[i]} 
+                        type="range" min='0' max='100' step='1' 
+                        defaultValue={currentIndex===i?'0':'100'}
+                        onChange={handleOnChange}
+                        onFocus={handleOnFocus}
+                        className={`thumb slider absolute ${currentIndex===i?'isActive z-10':''}`}></input>
+                </label>
+            )
+        }
+
+        return(
+            <>{knobsArr}</>
+        )
+
+    }
 
 }
 

@@ -13,6 +13,8 @@ const colorsArr = [
 export default function ColorGradient(){
 
     const [updatedColors, setUpdatedColors] = useState(colorsArr)
+
+
     const showValues = {
         color: null
     }
@@ -34,7 +36,6 @@ export default function ColorGradient(){
                 <ColorGradientSlider 
                 colorsArr={colorsArr} 
                 updatedColors={updatedColors}
-                getHexColor={updateShowValues}
                 handleSetUpdatedColors={handleSetUpdatedColors}/>
                 
                 <ColorGradientInterface 
