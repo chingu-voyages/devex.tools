@@ -4,7 +4,7 @@ import CopyButton from "../components/CopyButton";
 import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 
@@ -62,9 +62,19 @@ function UnitConverter() {
     updateCssSize(newPixels);
   };
 
+  // A ref to the base size input element
+  const baseSizeInputRef = useRef(null);
+
   // Handler for the cog (settings) icon click. Toggles the edit mode state.
   const handleCogClick = () => {
-    setEditMode(!editMode);
+    const newEditMode = !editMode;
+    setEditMode(newEditMode);
+    if (newEditMode) {
+      setTimeout(() => {
+        baseSizeInputRef.current.focus();
+        baseSizeInputRef.current.select();
+      }, 0);
+    }
   };
 
   // Handler for the input field losing focus
@@ -114,6 +124,7 @@ function UnitConverter() {
             {editMode ? (
               <div className="flex border rounded relative">
                 <input
+                  ref={baseSizeInputRef}
                   type="number"
                   className="border rounded border-black w-28 py-2 px-3  text-gray-400 leading-tight"
                   value={basePixelSize}

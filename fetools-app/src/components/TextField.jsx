@@ -2,7 +2,8 @@ import React, { useRef } from "react";
 import CopyButton from "./CopyButton";
 
 function TextField({ title, value, unit, onValueChange }) {
-  const inputRef = useRef(null); // Create a ref to the input element
+  // A ref to the input element
+  const inputRef = useRef(null);
 
   // Function to concatenate value and unit, used for the copy function
   const getValueWithUnit = () => {
