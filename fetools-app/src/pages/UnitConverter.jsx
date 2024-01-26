@@ -19,7 +19,8 @@ function UnitConverter() {
 
   // Update CSS size whenever pixels, em, or Tailwind size changes
   const updateCssSize = (newSizeInPixels) => {
-    setCssSize(`${newSizeInPixels}px`); // Update CSS size
+    // Check if newSizeInPixels is a number, if not, set CSS size to "0px"
+    setCssSize(isNaN(newSizeInPixels) ? "0px" : `${newSizeInPixels}px`); // Update CSS size
   };
 
   // Handler for base pixel size changes
@@ -88,18 +89,6 @@ function UnitConverter() {
       url: "https://en.wikipedia.org/wiki/Half-Life:_Alyx",
       textValue: "Dummy Link 3",
     },
-  ];
-
-  //CSS Properties - *still have to add position*
-  const cssProperties = [
-    { title: "Font Size", cssProperty: "font-size" },
-    { title: "Height", cssProperty: "height" },
-    { title: "Width", cssProperty: "width" },
-    { title: "Margin", cssProperty: "margin" },
-    { title: "Padding", cssProperty: "padding" },
-    { title: "Gap", cssProperty: "gap" },
-    { title: "Border Width", cssProperty: "border-width" },
-    { title: "Position", cssProperty: "top" },
   ];
 
   // JSX for rendering the UI components.
@@ -184,14 +173,7 @@ function UnitConverter() {
 
         {/* Section for code blocks */}
         <div className="grid grid-cols-4 gap-4">
-          {cssProperties.map((item, index) => (
-            <CodeBlock
-              key={index}
-              title={item.title}
-              code={item.cssProperty}
-              unit={`${pixels}px`}
-            />
-          ))}
+          <CodeBlock title="Font Size" code={`font-size: ${pixels}px;`} />
         </div>
         {/* <GoDeeper linksData={linksData} /> */}
       </main>
