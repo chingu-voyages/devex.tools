@@ -1,3 +1,4 @@
+import test from "node:test";
 import { useState } from "react"
 import tinycolor from "tinycolor2";
 
@@ -32,6 +33,66 @@ export default function ColorGradientSlider(
                 return CSSStyle
             }
         }
+    }
+
+    function updateCSSValues(cssVariable, newValue){
+        colorStyles.style.setProperty(cssVariable, newValue)
+    }
+
+    function checkColorArraysMatch(){
+        
+        const colorChanges = {}
+
+        colorsArr.forEach((color,idx)=>{
+            if(color!==updatedColors[idx]){
+                colorChanges[idx] = {original: color, changeTo: updatedColors[0] }
+            } else{
+                colorChanges[idx] = {sameColor: color}
+            }
+        
+        })
+
+        return colorChanges
+    }
+
+    function createHandles(currentIndex,knobs=2){
+
+        const knobsArr = []
+
+        for(let i=0; i<knobs; i++){
+
+            let defaultValue = null
+
+            if(i===0){
+                defaultValue = '0'
+            } 
+
+            if(i===1){
+                defaultValue = '100'
+            }
+
+            knobsArr.push(
+                <label key={`label-${i}`}
+                className="flex-1 w-full h-max absolute">
+                        <input id={`${i}`}
+                        data-color={updatedColors[i]} 
+                        type="range" min='0' max='100' step='1' 
+                        defaultValue={defaultValue}
+                        onChange={handleOnChange}
+                        onFocus={handleOnFocus}
+                        className={`thumb slider absolute ${currentIndex===i?'isActive z-10':''}`}></input>
+                </label>
+            )
+        }
+
+        return(
+            <>{knobsArr}</>
+        )
+
+    }
+
+    function handleSetActiveIndex(index){
+        setActiveIndex(index)
     }
 
     function handleOnChange(evt){
@@ -126,63 +187,16 @@ export default function ColorGradientSlider(
 
     function handleOnFocus(evt){
 
-        console.log(evt)
-
         const currentThumbElement = evt.target;
- 
-        const thumbElements = document.querySelectorAll('.thumb');
+        const thumbElements = document.querySelectorAll('.thumb')
 
-
-
-        handleActiveIndex(currentThumbElement.id)
-    }
-
-    function handleActiveIndex(id){
-        setActiveIndex(id)
-    }
-
-    function updateCSSValues(cssVariable, newValue){
-        colorStyles.style.setProperty(cssVariable, newValue)
-    }
-
-    function checkColorArraysMatch(){
-        
-        const colorChanges = {}
-
-        colorsArr.forEach((color,idx)=>{
-            if(color!==updatedColors[idx]){
-                colorChanges[idx] = {original: color, changeTo: updatedColors[0] }
-            } else{
-                colorChanges[idx] = {sameColor: color}
-            }
-        
+        thumbElements.forEach(thumb=>{
+            thumb.classList.remove('isActive', 'z-10')
         })
 
-        return colorChanges
-    }
+        currentThumbElement.classList.add('isActive', 'z-10')
 
-    function createHandles(currentIndex,knobs=2){
-
-        const knobsArr = []
-
-        for(let i=0; i<knobs; i++){
-            knobsArr.push(
-                <label key={`label-${i}`}
-                className="flex-1 w-full h-max absolute">
-                        <input id={`${i}`}
-                        data-color={updatedColors[i]} 
-                        type="range" min='0' max='100' step='1' 
-                        defaultValue={currentIndex===i?'0':'100'}
-                        onChange={handleOnChange}
-                        onFocus={handleOnFocus}
-                        className={`thumb slider absolute ${currentIndex===i?'isActive z-10':''}`}></input>
-                </label>
-            )
-        }
-
-        return(
-            <>{knobsArr}</>
-        )
+        handleSetActiveIndex(currentThumbElement.id)
 
     }
 
