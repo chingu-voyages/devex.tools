@@ -1,59 +1,26 @@
-import test from "node:test";
-import { useState } from "react"
-import tinycolor from "tinycolor2";
+import {  useState } from "react"
 
-export default function ColorGradientSlider(
-    {
-        colorsArr, 
-        updatedColors, 
-        getHexColor, 
-        handleSetUpdatedColors
-    }
-    ){
-
-    const colorStyles = getCSSRules(':root')
+export default function ColorGradientSlider({
+    colorsArr, 
+    updatedColors, 
+    getHexColor, 
+    handleSetUpdatedColors,
+    updateCSSValues,
+    handleSetCurrentKnob
+}){
 
     const [activeIndex, setActiveIndex] = useState(0)
 
     return(
     <>
         <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md">
-            <div
+            <div 
             className="wrap gradient flex flex-col relative w-full h-5 justify-center">
                 {createHandles(activeIndex)}
             </div>
         </div>
     </>
     )
-
-    function getCSSRules(CSSRule){
-        const styleSheet = document.styleSheets[0].cssRules
-        for(let CSSStyle of styleSheet){
-            if(CSSStyle.selectorText===CSSRule){
-                return CSSStyle
-            }
-        }
-    }
-
-    function updateCSSValues(cssVariable, newValue){
-        colorStyles.style.setProperty(cssVariable, newValue)
-    }
-
-    function checkColorArraysMatch(){
-        
-        const colorChanges = {}
-
-        colorsArr.forEach((color,idx)=>{
-            if(color!==updatedColors[idx]){
-                colorChanges[idx] = {original: color, changeTo: updatedColors[0] }
-            } else{
-                colorChanges[idx] = {sameColor: color}
-            }
-        
-        })
-
-        return colorChanges
-    }
 
     function createHandles(currentIndex,knobs=2){
 
@@ -195,9 +162,9 @@ export default function ColorGradientSlider(
         })
 
         currentThumbElement.classList.add('isActive', 'z-10')
-
+    
         handleSetActiveIndex(currentThumbElement.id)
-
+        handleSetCurrentKnob(currentThumbElement)        
     }
 
 }

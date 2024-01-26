@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState} from "react";
 import tinycolor from "tinycolor2";
 
 import ColorGradientSlider from "../components/ColorGradientSlider";
@@ -13,10 +13,12 @@ const colorsArr = [
 export default function ColorGradient(){
 
     const [updatedColors, setUpdatedColors] = useState(colorsArr)
-    const [activeIndex, setActiveIndex] = useState(1)
+    const [currentKnob, setCurrentKnob] = useState(false)
+
+    console.log(getHexString(updatedColors[0]))
 
     const showValues = {
-        color: null
+        color: currentKnob?getHexString(currentKnob.dataset.color):getHexString(updatedColors[0])
     }
 
     updateCSSValues('--color1-thumb', colorsArr[0])
@@ -37,12 +39,13 @@ export default function ColorGradient(){
                 colorsArr={colorsArr} 
                 updatedColors={updatedColors}
                 handleSetUpdatedColors={handleSetUpdatedColors}
-                handleSetActiveIndex={handleSetActiveIndex}
-                activeIndex={activeIndex}
+                updateCSSValues={updateCSSValues}
+                handleSetCurrentKnob={handleSetCurrentKnob}
                 />
                 
-                <ColorGradientInterface 
+                <ColorGradientInterface
                 showValues={showValues}
+                handleColorChange={handleColorChange}
                 />
             </div>
 
@@ -54,20 +57,27 @@ export default function ColorGradient(){
     </>    
     )
 
-    function updateShowValues(){
-        const currentKnob = document.querySelector('.isActive')
-
-        showValues.color = tinycolor(currentKnob.dataset.color).toHexString()
-
-        console.log(showValues)
-    }
-
     function handleSetUpdatedColors(newColorsArr){
         setUpdatedColors(newColorsArr)
     }
 
-    function handleSetActiveIndex(index){
-        setActiveIndex(index)
+    function handleSetCurrentKnob(knob){
+        setCurrentKnob(knob)
+    }
+
+    function handleColorChange(newColor){
+        // Assuming updatedColors is an array with two color values
+        console.log(newColor)
+        const newColorsArr = [...updatedColors];
+
+        if(!currentKnob){
+            newColorsArr[0] = getHslString(newColor);
+            console.log(newColorsArr)
+            setUpdatedColors(newColorsArr);
+            return
+        }
+        newColorsArr[currentKnob.id] = getHslString(newColor); // Update the color at the current knob index
+        setUpdatedColors(newColorsArr); // Update the colors state
     }
 
 }
@@ -79,6 +89,12 @@ function getRandomColor(){
     return (`hsla(${hNum}, ${sNum}%, ${lNum}%, 1)`)
 }
 
+function updateCSSValues(cssVariable, newValue){
+    const colorStyles = getCSSRules(':root')
+
+    colorStyles.style.setProperty(cssVariable, newValue)
+}
+
 function getCSSRules(CSSRule){
     const styleSheet = document.styleSheets[0].cssRules
     for(let CSSStyle of styleSheet){
@@ -88,8 +104,12 @@ function getCSSRules(CSSRule){
     }
 }
 
-function updateCSSValues(cssVariable, newValue){
-    const colorStyles = getCSSRules(':root')
+function getHexString(color){
+    const currentHexColor = tinycolor(color).toHexString()
+    return currentHexColor
+}
 
-    colorStyles.style.setProperty(cssVariable, newValue)
+function getHslString(color){
+    const currentHexColor = tinycolor(color).toHslString()
+    return currentHexColor
 }
