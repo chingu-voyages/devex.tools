@@ -19,8 +19,8 @@ export default function ColorGradient(){
 
     console.log(getHexString(updatedColors[0]) + ' Color Gradient')
 
-    updateCSSValues('--color1-thumb', updatedColors[0])
-    updateCSSValues('--color2-thumb', updatedColors[1])
+    updateCSSValues('--color1-thumb', colorsArr[0])
+    updateCSSValues('--color2-thumb', colorsArr[1])
     updateCSSValues('--color1-gradient', updatedColors[0])
     updateCSSValues('--color2-gradient', updatedColors[1])
 
