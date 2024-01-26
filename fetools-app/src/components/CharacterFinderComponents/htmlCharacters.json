@@ -1,4 +1,168 @@
 {
+  "popular": [
+    {
+      "name": "left arrow",
+      "character": "←",
+      "unicode": "U+02190",
+      "hex": "&#x2190;",
+      "dec": "&#8592;",
+      "entity": "&larr;",
+      "css": "\\2190"
+    },
+    {
+      "character": "😂",
+      "name": "face with tears of joy",
+      "shortname": ":joy:",
+      "unicode": "1f602",
+      "html": "&#128514;",
+      "category": "Smileys & Emotion (face-smiling)",
+      "order": "3"
+    },
+    {
+      "character": "❤️",
+      "name": "red heart",
+      "shortname": ":heart:",
+      "unicode": "2764",
+      "html": "&#10084;",
+      "category": "Smileys & Emotion (emotion)",
+      "order": "1286"
+    },
+    {
+      "character": "😍",
+      "name": "smiling face with heart-eyes",
+      "shortname": ":heart_eyes:",
+      "unicode": "1f60d",
+      "html": "&#128525;",
+      "category": "Smileys & Emotion (face-affection)",
+      "order": "13"
+    },
+    {
+      "character": "😭",
+      "name": "loudly crying face",
+      "shortname": ":sob:",
+      "unicode": "1f62d",
+      "html": "&#128557;",
+      "category": "Smileys & Emotion (face-concerned)",
+      "order": "55"
+    },
+    {
+      "character": "😊",
+      "name": "smiling face with smiling eyes",
+      "shortname": ":blush:",
+      "unicode": "1f60a",
+      "html": "&#128522;",
+      "category": "Smileys & Emotion (face-smiling)",
+      "order": "10"
+    },
+    {
+      "character": "😒",
+      "name": "unamused face",
+      "shortname": ":unamused:",
+      "unicode": "1f612",
+      "html": "&#128530;",
+      "category": "Smileys & Emotion (face-neutral-skeptical)",
+      "order": "41"
+    },
+    {
+      "character": "😘",
+      "name": "face blowing a kiss",
+      "shortname": ":kissing_heart:",
+      "unicode": "1f618",
+      "html": "&#128536;",
+      "category": "Smileys & Emotion (face-affection)",
+      "order": "14"
+    },
+    {
+      "name": "left-side arc anticlockwise arrow",
+      "character": "⤹",
+      "unicode": "U+02939",
+      "hex": "&#x2939;",
+      "dec": "&#10553;",
+      "entity": "&larrpl;",
+      "css": "\\2939"
+    },
+    {
+      "name": "top arc anticlockwise arrow",
+      "character": "⤺",
+      "unicode": "U+0293A",
+      "hex": "&#x293A;",
+      "dec": "&#10554;",
+      "entity": " ",
+      "css": "\\293A"
+    },
+    {
+      "name": "division sign",
+      "character": "÷",
+      "unicode": "U+000F7",
+      "hex": "&#xf7;",
+      "dec": "&#247;",
+      "entity": "&divide;",
+      "css": "\\00F7"
+    },
+    {
+      "name": "equal sign",
+      "character": "=",
+      "unicode": "U+0003D",
+      "hex": "&#x3d;",
+      "dec": "&#61;",
+      "entity": "&equals;",
+      "css": "\\003D"
+    },
+    {
+      "character": "👌",
+      "name": "OK hand",
+      "shortname": ":ok_hand:",
+      "unicode": "1f44c",
+      "html": "&#128076;",
+      "category": "People & Body (hand-fingers-partial)",
+      "order": "1170"
+    },
+    {
+      "character": "😔",
+      "name": "pensive face",
+      "shortname": ":pensive:",
+      "unicode": "1f614",
+      "html": "&#128532;",
+      "category": "Smileys & Emotion (face-sleepy)",
+      "order": "43"
+    },
+    {
+      "character": "😏",
+      "name": "smirking face",
+      "shortname": ":smirk:",
+      "unicode": "1f60f",
+      "html": "&#128527;",
+      "category": "Smileys & Emotion (face-neutral-skeptical)",
+      "order": "26"
+    },
+    {
+      "character": "😁",
+      "name": "beaming face with smiling eyes",
+      "shortname": ":grin:",
+      "unicode": "1f601",
+      "html": "&#128513;",
+      "category": "Smileys & Emotion (face-smiling)",
+      "order": "2"
+    },
+    {
+      "character": "♻",
+      "name": "recycling symbol",
+      "shortname": ":recycle:",
+      "unicode": "267b",
+      "html": "&#9851;",
+      "category": "Symbols (other-symbol)",
+      "order": "2072"
+    },
+    {
+      "character": "😉",
+      "name": "winking face",
+      "shortname": ":wink:",
+      "unicode": "1f609",
+      "html": "&#128521;",
+      "category": "Smileys & Emotion (face-smiling)",
+      "order": "9"
+    }
+  ],
   "arrows": [
     {
       "name": "left arrow",
@@ -17313,411 +17477,194 @@
   ],
   "emojis": [
     {
-        "emoji": "😏",
-        "name": "smirking face",
-        "shortname": ":smirk:",
-        "unicode": "1f60f",
-        "html": "&#128527;",
-        "category": "Smileys & Emotion (face-neutral-skeptical)",
-        "order": "26"
-      },
-      {
-        "emoji": "😁",
-        "name": "beaming face with smiling eyes",
-        "shortname": ":grin:",
-        "unicode": "1f601",
-        "html": "&#128513;",
-        "category": "Smileys & Emotion (face-smiling)",
-        "order": "2"
-      },
-      {
-        "emoji": "♻",
-        "name": "recycling symbol",
-        "shortname": ":recycle:",
-        "unicode": "267b",
-        "html": "&#9851;",
-        "category": "Symbols (other-symbol)",
-        "order": "2072"
-      },
-      {
-        "emoji": "😉",
-        "name": "winking face",
-        "shortname": ":wink:",
-        "unicode": "1f609",
-        "html": "&#128521;",
-        "category": "Smileys & Emotion (face-smiling)",
-        "order": "9"
-      },
-      {
-        "emoji": "👍🏿",
-        "name": "thumbs up: dark skin tone",
-        "shortname": ":dark_skin_tone:",
-        "unicode": "1F44D 1F3FF",
-        "html": "&#128077;&#127999;",
-        "category": "People & Body (hand-fingers-closed)",
-        "order": ""
-      },
-      {
-        "emoji": "😂",
-        "name": "face with tears of joy",
-        "shortname": ":joy:",
-        "unicode": "1f602",
-        "html": "&#128514;",
-        "category": "Smileys & Emotion (face-smiling)",
-        "order": "3"
-      },
-      {
-        "emoji": "❤️",
-        "name": "red heart",
-        "shortname": ":heart:",
-        "unicode": "2764",
-        "html": "&#10084;",
-        "category": "Smileys & Emotion (emotion)",
-        "order": "1286"
-      },
-      {
-        "emoji": "♥️",
-        "name": "heart suit",
-        "shortname": ":heart_suit:",
-        "unicode": "2665 FE0F",
-        "html": "&hearts;️",
-        "category": "Activities (game)",
-        "order": ""
-      },
-      {
-        "emoji": "😍",
-        "name": "smiling face with heart-eyes",
-        "shortname": ":heart_eyes:",
-        "unicode": "1f60d",
-        "html": "&#128525;",
-        "category": "Smileys & Emotion (face-affection)",
-        "order": "13"
-      },
-      {
-        "emoji": "😭",
-        "name": "loudly crying face",
-        "shortname": ":sob:",
-        "unicode": "1f62d",
-        "html": "&#128557;",
-        "category": "Smileys & Emotion (face-concerned)",
-        "order": "55"
-      },
-      {
-        "emoji": "😊",
-        "name": "smiling face with smiling eyes",
-        "shortname": ":blush:",
-        "unicode": "1f60a",
-        "html": "&#128522;",
-        "category": "Smileys & Emotion (face-smiling)",
-        "order": "10"
-      },
-      {
-        "emoji": "😒",
-        "name": "unamused face",
-        "shortname": ":unamused:",
-        "unicode": "1f612",
-        "html": "&#128530;",
-        "category": "Smileys & Emotion (face-neutral-skeptical)",
-        "order": "41"
-      },
-      {
-        "emoji": "😘",
-        "name": "face blowing a kiss",
-        "shortname": ":kissing_heart:",
-        "unicode": "1f618",
-        "html": "&#128536;",
-        "category": "Smileys & Emotion (face-affection)",
-        "order": "14"
-      },
-      {
-        "emoji": "💕",
-        "name": "two hearts",
-        "shortname": ":two_hearts:",
-        "unicode": "1f495",
-        "html": "&#128149;",
-        "category": "Smileys & Emotion (emotion)",
-        "order": "1289"
-      },
-      {
-        "emoji": "☺️",
-        "name": "smiling face",
-        "shortname": ":smiling:",
-        "unicode": "263A FE0F",
-        "html": "&#9786;",
-        "category": "Smileys & Emotion (face-affection)",
-        "order": ""
-      },
-      {
-        "emoji": "😩",
-        "name": "weary face",
-        "shortname": ":weary:",
-        "unicode": "1f629",
-        "html": "&#128553;",
-        "category": "Smileys & Emotion (face-concerned)",
-        "order": "59"
-      },
-      {
-        "emoji": "👌🏿",
-        "name": "OK hand: dark skin tone",
-        "shortname": ":dark_skin_tone:",
-        "unicode": "1F44C 1F3FF",
-        "html": "&#128076;&#127999;",
-        "category": "People & Body (hand-fingers-partial)",
-        "order": ""
-      },
-      {
-        "emoji": "👍🏾",
-        "name": "thumbs up: medium-dark skin tone",
-        "shortname": ":mediumdark_skin_tone:",
-        "unicode": "1F44D 1F3FE",
-        "html": "&#128077;&#127998;",
-        "category": "People & Body (hand-fingers-closed)",
-        "order": ""
-      },
-      {
-        "emoji": "🙈",
-        "name": "see-no-evil monkey",
-        "shortname": ":see_no_evil:",
-        "unicode": "1f648",
-        "html": "&#128584;",
-        "category": "Smileys & Emotion (monkey-face)",
-        "order": "96"
-      },
-      {
-        "emoji": "😢",
-        "name": "crying face",
-        "shortname": ":cry:",
-        "unicode": "1f622",
-        "html": "&#128546;",
-        "category": "Smileys & Emotion (face-concerned)",
-        "order": "54"
-      },
-      {
-        "emoji": "😎",
-        "name": "smiling face with sunglasses",
-        "shortname": ":sunglasses:",
-        "unicode": "1f60e",
-        "html": "&#128526;",
-        "category": "Smileys & Emotion (face-glasses)",
-        "order": "12"
-      },
+      "emoji": "😏",
+      "name": "smirking face",
+      "shortname": ":smirk:",
+      "unicode": "1f60f",
+      "html": "&#128527;",
+      "category": "Smileys & Emotion (face-neutral-skeptical)",
+      "order": "26"
+    },
     {
-      "emoji": "👩‍👩‍👧‍👧",
-      "name": "family: woman, woman, girl, girl",
-      "shortname": ":woman_woman_girl_girl:",
-      "unicode": "1F469 200D 1F469 200D 1F467 200D 1F467",
-      "html": "&#128105;&zwj;&#128105;&zwj;&#128103;&zwj;&#128103;",
-      "category": "People & Body (family)",
+      "emoji": "😁",
+      "name": "beaming face with smiling eyes",
+      "shortname": ":grin:",
+      "unicode": "1f601",
+      "html": "&#128513;",
+      "category": "Smileys & Emotion (face-smiling)",
+      "order": "2"
+    },
+    {
+      "emoji": "♻",
+      "name": "recycling symbol",
+      "shortname": ":recycle:",
+      "unicode": "267b",
+      "html": "&#9851;",
+      "category": "Symbols (other-symbol)",
+      "order": "2072"
+    },
+    {
+      "emoji": "😉",
+      "name": "winking face",
+      "shortname": ":wink:",
+      "unicode": "1f609",
+      "html": "&#128521;",
+      "category": "Smileys & Emotion (face-smiling)",
+      "order": "9"
+    },
+    {
+      "emoji": "👍🏿",
+      "name": "thumbs up: dark skin tone",
+      "shortname": ":dark_skin_tone:",
+      "unicode": "1F44D 1F3FF",
+      "html": "&#128077;&#127999;",
+      "category": "People & Body (hand-fingers-closed)",
       "order": ""
     },
     {
-      "emoji": "👩‍👩‍👧‍👦",
-      "name": "family: woman, woman, girl, boy",
-      "shortname": ":woman_woman_girl_boy:",
-      "unicode": "1F469 200D 1F469 200D 1F467 200D 1F466",
-      "html": "&#128105;&zwj;&#128105;&zwj;&#128103;&zwj;&#128102;",
-      "category": "People & Body (family)",
+      "emoji": "😂",
+      "name": "face with tears of joy",
+      "shortname": ":joy:",
+      "unicode": "1f602",
+      "html": "&#128514;",
+      "category": "Smileys & Emotion (face-smiling)",
+      "order": "3"
+    },
+    {
+      "emoji": "❤️",
+      "name": "red heart",
+      "shortname": ":heart:",
+      "unicode": "2764",
+      "html": "&#10084;",
+      "category": "Smileys & Emotion (emotion)",
+      "order": "1286"
+    },
+    {
+      "emoji": "♥️",
+      "name": "heart suit",
+      "shortname": ":heart_suit:",
+      "unicode": "2665 FE0F",
+      "html": "&hearts;️",
+      "category": "Activities (game)",
       "order": ""
     },
     {
-      "emoji": "👩‍👩‍👦‍👦",
-      "name": "family: woman, woman, boy, boy",
-      "shortname": ":woman_woman_boy_boy:",
-      "unicode": "1F469 200D 1F469 200D 1F466 200D 1F466",
-      "html": "&#128105;&zwj;&#128105;&zwj;&#128102;&zwj;&#128102;",
-      "category": "People & Body (family)",
+      "emoji": "😍",
+      "name": "smiling face with heart-eyes",
+      "shortname": ":heart_eyes:",
+      "unicode": "1f60d",
+      "html": "&#128525;",
+      "category": "Smileys & Emotion (face-affection)",
+      "order": "13"
+    },
+    {
+      "emoji": "😭",
+      "name": "loudly crying face",
+      "shortname": ":sob:",
+      "unicode": "1f62d",
+      "html": "&#128557;",
+      "category": "Smileys & Emotion (face-concerned)",
+      "order": "55"
+    },
+    {
+      "emoji": "😊",
+      "name": "smiling face with smiling eyes",
+      "shortname": ":blush:",
+      "unicode": "1f60a",
+      "html": "&#128522;",
+      "category": "Smileys & Emotion (face-smiling)",
+      "order": "10"
+    },
+    {
+      "emoji": "😒",
+      "name": "unamused face",
+      "shortname": ":unamused:",
+      "unicode": "1f612",
+      "html": "&#128530;",
+      "category": "Smileys & Emotion (face-neutral-skeptical)",
+      "order": "41"
+    },
+    {
+      "emoji": "😘",
+      "name": "face blowing a kiss",
+      "shortname": ":kissing_heart:",
+      "unicode": "1f618",
+      "html": "&#128536;",
+      "category": "Smileys & Emotion (face-affection)",
+      "order": "14"
+    },
+    {
+      "emoji": "💕",
+      "name": "two hearts",
+      "shortname": ":two_hearts:",
+      "unicode": "1f495",
+      "html": "&#128149;",
+      "category": "Smileys & Emotion (emotion)",
+      "order": "1289"
+    },
+    {
+      "emoji": "☺️",
+      "name": "smiling face",
+      "shortname": ":smiling:",
+      "unicode": "263A FE0F",
+      "html": "&#9786;",
+      "category": "Smileys & Emotion (face-affection)",
       "order": ""
     },
     {
-      "emoji": "👨‍👩‍👧‍👧",
-      "name": "family: man, woman, girl, girl",
-      "shortname": ":man_woman_girl_girl:",
-      "unicode": "1F468 200D 1F469 200D 1F467 200D 1F467",
-      "html": "&#128104;&zwj;&#128105;&zwj;&#128103;&zwj;&#128103;",
-      "category": "People & Body (family)",
+      "emoji": "😩",
+      "name": "weary face",
+      "shortname": ":weary:",
+      "unicode": "1f629",
+      "html": "&#128553;",
+      "category": "Smileys & Emotion (face-concerned)",
+      "order": "59"
+    },
+    {
+      "emoji": "👌🏿",
+      "name": "OK hand: dark skin tone",
+      "shortname": ":dark_skin_tone:",
+      "unicode": "1F44C 1F3FF",
+      "html": "&#128076;&#127999;",
+      "category": "People & Body (hand-fingers-partial)",
       "order": ""
     },
     {
-      "emoji": "👨‍👩‍👧‍👦",
-      "name": "family: man, woman, girl, boy",
-      "shortname": ":man_woman_girl_boy:",
-      "unicode": "1F468 200D 1F469 200D 1F467 200D 1F466",
-      "html": "&#128104;&zwj;&#128105;&zwj;&#128103;&zwj;&#128102;",
-      "category": "People & Body (family)",
+      "emoji": "👍🏾",
+      "name": "thumbs up: medium-dark skin tone",
+      "shortname": ":mediumdark_skin_tone:",
+      "unicode": "1F44D 1F3FE",
+      "html": "&#128077;&#127998;",
+      "category": "People & Body (hand-fingers-closed)",
       "order": ""
     },
     {
-      "emoji": "👨‍👩‍👦‍👦",
-      "name": "family: man, woman, boy, boy",
-      "shortname": ":man_woman_boy_boy:",
-      "unicode": "1F468 200D 1F469 200D 1F466 200D 1F466",
-      "html": "&#128104;&zwj;&#128105;&zwj;&#128102;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
+      "emoji": "🙈",
+      "name": "see-no-evil monkey",
+      "shortname": ":see_no_evil:",
+      "unicode": "1f648",
+      "html": "&#128584;",
+      "category": "Smileys & Emotion (monkey-face)",
+      "order": "96"
     },
     {
-      "emoji": "👨‍👨‍👧‍👧",
-      "name": "family: man, man, girl, girl",
-      "shortname": ":man_man_girl_girl:",
-      "unicode": "1F468 200D 1F468 200D 1F467 200D 1F467",
-      "html": "&#128104;&zwj;&#128104;&zwj;&#128103;&zwj;&#128103;",
-      "category": "People & Body (family)",
-      "order": ""
+      "emoji": "😢",
+      "name": "crying face",
+      "shortname": ":cry:",
+      "unicode": "1f622",
+      "html": "&#128546;",
+      "category": "Smileys & Emotion (face-concerned)",
+      "order": "54"
     },
     {
-      "emoji": "👨‍👨‍👧‍👦",
-      "name": "family: man, man, girl, boy",
-      "shortname": ":man_man_girl_boy:",
-      "unicode": "1F468 200D 1F468 200D 1F467 200D 1F466",
-      "html": "&#128104;&zwj;&#128104;&zwj;&#128103;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
+      "emoji": "😎",
+      "name": "smiling face with sunglasses",
+      "shortname": ":sunglasses:",
+      "unicode": "1f60e",
+      "html": "&#128526;",
+      "category": "Smileys & Emotion (face-glasses)",
+      "order": "12"
     },
-    {
-      "emoji": "👨‍👨‍👦‍👦",
-      "name": "family: man, man, boy, boy",
-      "shortname": ":man_man_boy_boy:",
-      "unicode": "1F468 200D 1F468 200D 1F466 200D 1F466",
-      "html": "&#128104;&zwj;&#128104;&zwj;&#128102;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👩‍👩‍👧",
-      "name": "family: woman, woman, girl",
-      "shortname": ":woman_woman_girl:",
-      "unicode": "1F469 200D 1F469 200D 1F467",
-      "html": "&#128105;&zwj;&#128105;&zwj;&#128103;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👩‍👩‍👦",
-      "name": "family: woman, woman, boy",
-      "shortname": ":woman_woman_boy:",
-      "unicode": "1F469 200D 1F469 200D 1F466",
-      "html": "&#128105;&zwj;&#128105;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👩‍👧‍👧",
-      "name": "family: woman, girl, girl",
-      "shortname": ":woman_girl_girl:",
-      "unicode": "1F469 200D 1F467 200D 1F467",
-      "html": "&#128105;&zwj;&#128103;&zwj;&#128103;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👩‍👧‍👦",
-      "name": "family: woman, girl, boy",
-      "shortname": ":woman_girl_boy:",
-      "unicode": "1F469 200D 1F467 200D 1F466",
-      "html": "&#128105;&zwj;&#128103;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👩‍👦‍👦",
-      "name": "family: woman, boy, boy",
-      "shortname": ":woman_boy_boy:",
-      "unicode": "1F469 200D 1F466 200D 1F466",
-      "html": "&#128105;&zwj;&#128102;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👨‍👩‍👧",
-      "name": "family: man, woman, girl",
-      "shortname": ":man_woman_girl:",
-      "unicode": "1F468 200D 1F469 200D 1F467",
-      "html": "&#128104;&zwj;&#128105;&zwj;&#128103;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👨‍👨‍👧",
-      "name": "family: man, man, girl",
-      "shortname": ":man_man_girl:",
-      "unicode": "1F468 200D 1F468 200D 1F467",
-      "html": "&#128104;&zwj;&#128104;&zwj;&#128103;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👨‍👨‍👦",
-      "name": "family: man, man, boy",
-      "shortname": ":man_man_boy:",
-      "unicode": "1F468 200D 1F468 200D 1F466",
-      "html": "&#128104;&zwj;&#128104;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👨‍👧‍👧",
-      "name": "family: man, girl, girl",
-      "shortname": ":man_girl_girl:",
-      "unicode": "1F468 200D 1F467 200D 1F467",
-      "html": "&#128104;&zwj;&#128103;&zwj;&#128103;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👨‍👧‍👦",
-      "name": "family: man, girl, boy",
-      "shortname": ":man_girl_boy:",
-      "unicode": "1F468 200D 1F467 200D 1F466",
-      "html": "&#128104;&zwj;&#128103;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👨‍👦‍👦",
-      "name": "family: man, boy, boy",
-      "shortname": ":man_boy_boy:",
-      "unicode": "1F468 200D 1F466 200D 1F466",
-      "html": "&#128104;&zwj;&#128102;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👩‍👧",
-      "name": "family: woman, girl",
-      "shortname": ":woman_girl:",
-      "unicode": "1F469 200D 1F467",
-      "html": "&#128105;&zwj;&#128103;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👩‍👦",
-      "name": "family: woman, boy",
-      "shortname": ":woman_boy:",
-      "unicode": "1F469 200D 1F466",
-      "html": "&#128105;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👨‍👧",
-      "name": "family: man, girl",
-      "shortname": ":man_girl:",
-      "unicode": "1F468 200D 1F467",
-      "html": "&#128104;&zwj;&#128103;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    {
-      "emoji": "👨‍👦",
-      "name": "family: man, boy",
-      "shortname": ":man_boy:",
-      "unicode": "1F468 200D 1F466",
-      "html": "&#128104;&zwj;&#128102;",
-      "category": "People & Body (family)",
-      "order": ""
-    },
-    
     {
       "emoji": "👌🏾",
       "name": "OK hand: medium-dark skin tone",

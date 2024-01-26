@@ -9,7 +9,7 @@ import htmlCharacters from "../components/CharacterFinderComponents/htmlCharacte
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
 
 function CharacterFinder() {
-  const [selectedCategory, setSelectedCategory] = useState("symbols"); //placeholder for popular tab
+  const [selectedCategory, setSelectedCategory] = useState("popular"); //placeholder for popular tab
   const [searchQuery, setSearchQuery] = useState("");
   
 
@@ -45,7 +45,7 @@ function CharacterFinder() {
 
       <div className="pt-4 pb-4 flex justify-center">
         <CharacterCategoryTab
-          category={"symbols"} //placeholder
+          category={"popular"}
           categoryDisplayName={"Popular"}
           char={"🤩"}
           selectCategory={displayCharacters}

@@ -1,6 +1,7 @@
 import React from "react";
 import htmlCharacters from "./htmlCharacters.json";
 import CharacterCard from "./CharacterCard";
+import { LucideHandMetal } from "lucide-react";
 
 function DisplayCategories({category}) {
   const categoryMapping = {
@@ -12,6 +13,7 @@ function DisplayCategories({category}) {
     arrows: htmlCharacters.arrows,
     symbols: htmlCharacters.symbols,
     emojis: htmlCharacters.emojis,
+    popular: htmlCharacters.popular
   };
 
   const characterArray = categoryMapping[category];
