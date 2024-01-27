@@ -264,14 +264,15 @@ function UnitConverter() {
             className="flex flex-row justify-start items-center border border-black border-dashed p-3 
         min-h-[100px] w-full overflow-auto"
           >
-            <p
-              className="font-arial font-bold text-3xl break-words leading-none"
+            <div
+              contentEditable
+              className="font-arial font-bold text-3xl break-words leading-none focus:outline-none"
               style={{
                 fontSize: cssSize,
               }}
             >
               Lorem ipsum dolor sit amet
-            </p>
+            </div>
           </div>
         </div>
         {/* Section for code blocks */}
