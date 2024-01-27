@@ -1,8 +1,8 @@
 import "../index.css";
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
-import CopyButton from "../components/CopyButton";
 import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";
+import TabSwitcher from "../components/TabSwitcher";
 
 import React, { useState, useRef } from "react";
 
@@ -101,6 +101,96 @@ function UnitConverter() {
     },
   ];
 
+  //All Code Samples
+  const CodeSamples = {
+    px: [
+      { title: "Font Size", code: `font-size: ${pixels}px;` },
+      { title: "Height", code: `height: ${pixels}px;` },
+      { title: "Width", code: `width: ${pixels}px;` },
+      { title: "Margin", code: `margin: ${pixels}px;` },
+      { title: "Padding", code: `padding: ${pixels}px;` },
+      { title: "Gap", code: `gap: ${pixels}px;` },
+      { title: "Border Width", code: `border-width: ${pixels}px;` },
+      {
+        title: "Position",
+        code: `top: ${pixels}px;\nright: ${pixels}px;\nbottom: ${pixels}px;\nleft: ${pixels}px;`,
+      },
+    ],
+    rem: [
+      { title: "Font Size", code: `font-size: ${em}rem;` },
+      { title: "Height", code: `height: ${em}rem;` },
+      { title: "Width", code: `width: ${em}rem;` },
+      { title: "Margin", code: `margin: ${em}rem;` },
+      { title: "Padding", code: `padding: ${em}rem;` },
+      { title: "Gap", code: `gap: ${em}rem;` },
+      { title: "Border Width", code: `border-width: ${em}rem;` },
+      {
+        title: "Position",
+        code: `top: ${em}rem;\nright: ${em}rem;\nbottom: ${em}rem;\nleft: ${em}rem;`,
+      },
+    ],
+    em: [
+      { title: "Font Size", code: `font-size: ${em}em;` },
+      { title: "Height", code: `height: ${em}em;` },
+      { title: "Width", code: `width: ${em}em;` },
+      { title: "Margin", code: `margin: ${em}em;` },
+      { title: "Padding", code: `padding: ${em}em;` },
+      { title: "Gap", code: `gap: ${em}em;` },
+      { title: "Border Width", code: `border-width: ${em}em;` },
+      {
+        title: "Position",
+        code: `top: ${em}rem;\nright: ${em}rem;\nbottom: ${em}em;\nleft: ${em}rem;`,
+      },
+    ],
+    NaN: [
+      { title: "Font Size", code: "font-size: --" },
+      { title: "Height", code: "height: --" },
+      { title: "Width", code: "width: --" },
+      { title: "Margin", code: "margin: --" },
+      { title: "Padding", code: "padding: --" },
+      { title: "Gap", code: "gap: --" },
+      { title: "Border Width", code: "border-width: --" },
+      {
+        title: "Position",
+        code: `top: --\nright: --\nbottom: --\nleft: --`,
+      },
+    ],
+  };
+
+  //TabSwitcher Content
+
+  const tabButtons = ["px", "em", "rem"];
+
+  const tabContents = [
+    <div className="grid grid-cols-4 gap-4">
+      {isNaN(pixels)
+        ? CodeSamples["NaN"].map((sample) => (
+            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+          ))
+        : CodeSamples["px"].map((sample) => (
+            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+          ))}
+    </div>,
+    <div className="grid grid-cols-4 gap-4">
+      {isNaN(em)
+        ? CodeSamples["NaN"].map((sample) => (
+            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+          ))
+        : CodeSamples["em"].map((sample) => (
+            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+          ))}
+    </div>,
+    <div className="grid grid-cols-4 gap-4">
+      {isNaN(pixels)
+        ? CodeSamples["NaN"].map((sample) => (
+            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+          ))
+        : CodeSamples["rem"].map((sample) => (
+            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+          ))}
+    </div>,
+  ];
+
   // JSX for rendering the UI components.
   return (
     <>
@@ -113,7 +203,6 @@ function UnitConverter() {
         <p className="font-arial text-1xl ml-4 mb-2 text-gray-400">
           Calculate PX, REM/EM, and Tailwind utility classes with ease.
         </p>
-
         {/* Section for Input Boxes*/}
         <div className="flex gap-10 p-4 ml-52">
           <div className="mb-3">
@@ -137,7 +226,12 @@ function UnitConverter() {
               </div>
             ) : (
               <div className="flex items-center">
-                <span className="mr-2">{basePixelSize}px</span>
+                {/*Tertiary operator used to differentiate when the Base Size is NaN and Not NaN*/}
+                {isNaN(basePixelSize) ? (
+                  <span className="mr-2">--</span>
+                ) : (
+                  <span className="mr-2">{basePixelSize}px</span>
+                )}
                 <button onClick={handleCogClick}>⚙️</button>
               </div>
             )}
@@ -163,7 +257,6 @@ function UnitConverter() {
             onValueChange={handleTailwindChange}
           />
         </div>
-
         {/* Section for Lorem Ipsum Preview*/}
         <div className="flex flex-col gap-4 items-start p-4">
           <p className="font-arial text-4xl">Preview</p>
@@ -181,11 +274,15 @@ function UnitConverter() {
             </p>
           </div>
         </div>
-
         {/* Section for code blocks */}
-        <div className="grid grid-cols-4 gap-4">
-          <CodeBlock title="Font Size" code={`font-size: ${pixels}px;`} />
+
+        <div>
+          <TabSwitcher
+            buttons={tabButtons}
+            children={tabContents}
+          ></TabSwitcher>
         </div>
+
         {/* <GoDeeper linksData={linksData} /> */}
       </main>
     </>
