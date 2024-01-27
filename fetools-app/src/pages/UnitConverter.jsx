@@ -165,28 +165,28 @@ function UnitConverter() {
     <div className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample) => (
-            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+            <CodeBlock title={sample.title} code={sample.code} />
           ))
         : CodeSamples["px"].map((sample) => (
-            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+            <CodeBlock title={sample.title} code={sample.code} />
           ))}
     </div>,
     <div className="grid grid-cols-4 gap-4">
       {isNaN(em)
         ? CodeSamples["NaN"].map((sample) => (
-            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+            <CodeBlock title={sample.title} code={sample.code} />
           ))
         : CodeSamples["em"].map((sample) => (
-            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+            <CodeBlock title={sample.title} code={sample.code} />
           ))}
     </div>,
     <div className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample) => (
-            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+            <CodeBlock title={sample.title} code={sample.code} />
           ))
         : CodeSamples["rem"].map((sample) => (
-            <CodeBlock title={sample.title} code={<pre>{sample.code}</pre>} />
+            <CodeBlock title={sample.title} code={sample.code} />
           ))}
     </div>,
   ];
