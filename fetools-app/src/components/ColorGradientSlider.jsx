@@ -1,73 +1,81 @@
-import { useState } from "react"
-import tinycolor from "tinycolor2";
+import {  useState } from "react"
+import tinycolor from "tinycolor2"
 
-const colors = [
-    getRandomColor(), getRandomColor()
-]
+export default function ColorGradientSlider({
+    colorsArr, 
+    updatedColors, 
+    handleSetUpdatedColors,
+    updateCSSValues,
+    handleSetCurrentKnob,
+    handleSetInputValue
+}){
 
-export default function ColorGradientSlider(){
-
-    const colorStyles = getCSSRules(':root')
-
-    const [,setActiveKnob] = useState(false)
-
-    const [updateColors, setUpdateColors] = useState(colors)
-
-    updateCSSValues('--color1-thumb', colors[0])
-    updateCSSValues('--color2-thumb', colors[1])
-    updateCSSValues('--color1-gradient', updateColors[0])
-    updateCSSValues('--color2-gradient', updateColors[1])
-
-    console.log(updateColors)
-
-    const checkColors = checkColorArraysMatch()
+    const [activeIndex, setActiveIndex] = useState(0)
 
     return(
-    <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md ">
-        <div
-        className="wrap gradient flex flex-col relative w-full h-5 justify-center">
-                <label
-                className="flex-1 w-full h-max absolute">
-                        <input 
-                        data-color={
-                            Object.hasOwn(checkColors[0], 'sameColor')?updateColors[0]:updateColors[0]
-                        } 
-                        id="thumb" type="range" min='0' max='100' step='1' defaultValue='0'
-                        onChange={handleOnChange}
-                        onFocus={handleOnFocus}
-                        className="slider absolute"
-                        style={{background: 'red'}}></input>
-                </label>
-                <label
-                className="flex-1 w-full h-max absolute">
-                    <input 
-                    data-color={
-                            Object.hasOwn(checkColors[1], 'sameColor')?updateColors[1]:updateColors[1]
-                    }  
-                    id="thumb" type="range" min='0' max='100' step='1' defaultValue='100'
-                    onChange={handleOnChange}
-                    onFocus={handleOnFocus}
-                    className="slider absolute"></input>
-                </label>
+    <>
+        <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md">
+            <div 
+            className="wrap gradient flex flex-col relative w-full h-5 justify-center">
+                {createHandles(activeIndex)}
+            </div>
         </div>
-    </div>
+    </>
     )
 
-    function getCSSRules(CSSRule){
-        const styleSheet = document.styleSheets[0].cssRules
-        for(let CSSStyle of styleSheet){
-            if(CSSStyle.selectorText===CSSRule){
-                return CSSStyle
+    function createHandles(currentIndex,knobs=2){
+
+        const knobsArr = []
+
+        for(let i=0; i<knobs; i++){
+
+            let defaultValue = null
+
+            if(i===0){
+                defaultValue = '0'
+            } 
+
+            if(i===1){
+                defaultValue = '100'
             }
+
+            knobsArr.push(
+                <label key={`label-${i}`}
+                className="flex-1 w-full h-max absolute">
+                        <input id={`${i}`}
+                        data-color={updatedColors[i]} 
+                        type="range" min='0' max='100' step='1' 
+                        defaultValue={defaultValue}
+                        onChange={(evt)=>handleOnChange(evt)}
+                        onFocus={handleOnFocus}
+                        className={`thumb slider absolute ${currentIndex===i?'isActive z-10':''}`}></input>
+                </label>
+            )
         }
+
+        return(
+            <>{knobsArr}</>
+        )
+
+    }
+
+    function handleSetActiveIndex(index){
+        setActiveIndex(index)
     }
 
     function handleOnChange(evt){
 
         const currentThumbElement = evt.target;
         const currentThumbColor = currentThumbElement.dataset.color
+
+        if(currentThumbColor!==updatedColors[evt.target.id]){
+            currentThumbElement.dataset.color = updatedColors[evt.target.id]
+        }
+
         const siblings = isThereSiblings()
         const currentThumbValue = parseInt(currentThumbElement.value)
+
+        console.log(tinycolor(currentThumbColor).toHexString(), ' inside Change')
 
         checkKnobValues()
 
@@ -89,34 +97,32 @@ export default function ColorGradientSlider(){
         }
 
         function checkKnobValues(){
+
             if(siblings.next){
                 const nextValue = parseInt(siblings.next.value)
     
-                const currentColorIndex = updateColors.indexOf(currentThumbColor)
+                const currentColorIndex = updatedColors.indexOf(currentThumbColor)
     
-                const siblingColorIndex = colors.findIndex(
+                const siblingColorIndex = colorsArr.findIndex(
                     color=>color===siblings.next.dataset.color
                 )
-    
-                console.log(currentThumbValue, nextValue)
-                
+                 
                 if(currentThumbValue > nextValue){
     
-                    if(updateColors[currentColorIndex]!==colors[siblingColorIndex]&&
-                        updateColors[siblingColorIndex]!==currentThumbColor){
+                    if(updatedColors[currentColorIndex]!==colorsArr[siblingColorIndex]&&
+                        updatedColors[siblingColorIndex]!==currentThumbColor){
                             console.log('test')
                         updateCSSValues('--percentage1', `${nextValue}%`)
                         updateCSSValues('--percentage2', `${currentThumbValue}%`)
-                        setUpdateColors([colors[siblingColorIndex], colors[currentColorIndex]])
+                        handleSetUpdatedColors([colorsArr[siblingColorIndex], colorsArr[currentColorIndex]])
                     }
     
                     updateCSSValues('--percentage2', `${currentThumbValue}%`)
-                    
-    
+                       
                 } else if(currentThumbValue < nextValue){
                     
-                    if(updateColors[currentColorIndex]!==colors[currentColorIndex]){
-                        setUpdateColors([colors[0], colors[1]])
+                    if(updatedColors[currentColorIndex]!==colorsArr[currentColorIndex]){
+                        handleSetUpdatedColors([colorsArr[0], colorsArr[1]])
                     }
     
                     updateCSSValues('--percentage1', `${currentThumbValue}%`)
@@ -125,30 +131,28 @@ export default function ColorGradientSlider(){
             } else{
                 const previousValue = parseInt(siblings.previous.value)   
        
-                const currentColorIndex = updateColors.indexOf(currentThumbColor)
+                const currentColorIndex = updatedColors.indexOf(currentThumbColor)
     
-                const siblingColorIndex = colors.findIndex(
+                const siblingColorIndex = colorsArr.findIndex(
                     color=>color===siblings.previous.dataset.color
                 )
-    
-                console.log(currentThumbValue, previousValue)
-                
+
                 if(currentThumbValue < previousValue){
 
-                    if(updateColors[currentColorIndex]!==colors[siblingColorIndex]&&
-                        updateColors[siblingColorIndex]!==currentThumbColor){
+                    if(updatedColors[currentColorIndex]!==colorsArr[siblingColorIndex]&&
+                        updatedColors[siblingColorIndex]!==currentThumbColor){
                             console.log('test')
                         updateCSSValues('--percentage1', `${previousValue}%`)
                         updateCSSValues('--percentage2', `${currentThumbValue}%`)
-                        setUpdateColors([colors[currentColorIndex], colors[siblingColorIndex]])
+                        handleSetUpdatedColors([colorsArr[currentColorIndex], colorsArr[siblingColorIndex]])
                     }
 
                     updateCSSValues('--percentage1', `${currentThumbValue}%`)
 
                 }else if(currentThumbValue > previousValue){
 
-                    if(updateColors[currentColorIndex]!==colors[currentColorIndex]){
-                        setUpdateColors([colors[0], colors[1]])
+                    if(updatedColors[currentColorIndex]!==colorsArr[currentColorIndex]){
+                        handleSetUpdatedColors([colorsArr[0], colorsArr[1]])
                     }
 
                     updateCSSValues('--percentage2', `${currentThumbValue}%`)
@@ -158,52 +162,22 @@ export default function ColorGradientSlider(){
     }
 
     function handleOnFocus(evt){
+
         const currentThumbElement = evt.target;
- 
-        const ThumbElements = document.querySelectorAll('#thumb');
+        const thumbElements = document.querySelectorAll('.thumb')
 
-        ThumbElements.forEach((thumb) =>{
-            thumb.activeHandle = false;
-
-            thumb.parentElement.classList.remove('z-10')
-            thumb.classList.remove('isActive')
+        thumbElements.forEach(thumb=>{
+            thumb.classList.remove('isActive', 'z-10')
         })
+
+        currentThumbElement.classList.add('isActive', 'z-10')
     
-        currentThumbElement.parentElement.classList.add('z-10')
-        currentThumbElement.classList.add('isActive')
+        console.log(tinycolor(currentThumbElement.dataset.color).toHexString())
 
-        handleActiveKnobState(currentThumbElement.activeHandle)
-    }
-
-    function handleActiveKnobState(){
-        setActiveKnob(true)
-    }
-
-    function updateCSSValues(cssVariable, newValue){
-        colorStyles.style.setProperty(cssVariable, newValue)
-    }
-
-    function checkColorArraysMatch(){
-        
-        const colorChanges = {}
-
-        colors.forEach((color,idx)=>{
-            if(color!==updateColors[idx]){
-                colorChanges[idx] = {original: color, changeTo: updateColors[0] }
-            } else{
-                colorChanges[idx] = {sameColor: color}
-            }
-        
-        })
-
-        return colorChanges
+        handleSetInputValue('color', currentThumbElement.dataset.color)
+        handleSetActiveIndex(currentThumbElement.id)
+        handleSetCurrentKnob(currentThumbElement)
     }
 
 }
 
-function getRandomColor(){
-    const hNum = (Math.random()*361).toFixed(0)
-    const sNum = (Math.random()*101).toFixed(0)
-    const lNum = (Math.random()*101).toFixed(0)
-    return (`hsla(${hNum}, ${sNum}%, ${lNum}%, 1)`)
-}

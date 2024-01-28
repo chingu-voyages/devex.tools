@@ -112,7 +112,7 @@
         height: 30px;
         border-radius: 50%; 
         cursor: -webkit-grab;
-        pointer-events: auto;
+        pointer-events: visible;
         transform: scale(1.2);
         box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
     }
@@ -127,7 +127,7 @@
         height: 30px;
         border-radius: 50%; 
         cursor: -moz-grab;
-        pointer-events: auto;
+        pointer-events: visible;
         transform: scale(1.2);
     }
 
