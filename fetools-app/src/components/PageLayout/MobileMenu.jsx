@@ -56,6 +56,16 @@ return(
                 <li className='
                 w-full 
                 border-solid border-4 border-t-2 border-black'>
+                    <Link to="/color-gradient" 
+                    onClick={()=>handleState(isClicked)} 
+                    className="
+                    block font-bold bg-[var(--bckgrnd-color)] leading-none
+                    p-5 cursor-pointer
+                    ">Color Gradient</Link>
+                </li>
+                <li className='
+                w-full 
+                border-solid border-4 border-t-2 border-black'>
                     <Link to="/team" 
                     onClick={()=>handleState(isClicked)} 
                     className="

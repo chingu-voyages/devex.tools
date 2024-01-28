@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
-import { appName } from "../data"
-import arrowUp from "../assets/arrow-up.svg"
+import { appName } from "../../data"
+import arrowUp from "../../assets/arrow-up.svg"
 
 export default function Footer(){
     return(
