@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 
-const SearchField = ({ placeholderText, links, search }) => {
+const SearchField = ({ placeholderText, links, search, onChange }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+    onChange(e.target.value);
   };
 
-  const handleSearchClick = () => {
-    search(inputValue);
-  };
-
-  const handleKeyPress = () => {
-    search(inputValue);
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      search(inputValue);
+    }
   };
 
   return (
@@ -27,7 +26,6 @@ const SearchField = ({ placeholderText, links, search }) => {
       />
       <button
         className="bg-gray-100 text-black p-2 rounded-r-md"
-        onClick={handleSearchClick}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
