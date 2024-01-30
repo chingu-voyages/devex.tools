@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react"
-import tinycolor from "tinycolor2"
 
 export default function ColorGradientSlider({
     colorsArr, 
@@ -13,17 +12,20 @@ export default function ColorGradientSlider({
 
     const [activeIndex, setActiveIndex] = useState(0)
    
-    const sliderParentRef = useRef()
+    const trackRef = useRef()
+    const sliderContainerRef = useRef()
 
     useEffect(() => {
         const gradientRule = generateGradientRule(gradientColors);
+
+        createThumbColorRule()
         updateCSSValues('.gradient', 'background', gradientRule);
     }, [gradientColors]);
 
     return(
     <>
-        <div id="slider-container" className="flex flex-col flex-1 p-8 rounded-md">
-            <div ref={sliderParentRef} 
+        <div ref={sliderContainerRef}  id="slider-container" className="flex flex-col flex-1 p-8 rounded-md">
+            <div 
             className="wrap gradient flex flex-col relative w-full h-5 justify-center">
                 {createHandles()}
             </div>
@@ -52,7 +54,13 @@ export default function ColorGradientSlider({
         }
 
         return(
-            <>{knobsArr}</>
+            <>
+                <span id="track-handler"
+                ref={trackRef} 
+                onClick={addHandle}
+                className="block absolute w-full h-full"></span>
+            {knobsArr}
+            </>
         )
 
     }
@@ -109,7 +117,36 @@ export default function ColorGradientSlider({
         return gradientRule;
     }
  
-    function addHandle(){
-        
+    function createThumbColorRule(){
+        const wrapElement = sliderContainerRef.current.getElementsByClassName('wrap')[0]
+
+        const inputElements = wrapElement.querySelectorAll('.thumb')
+
+        inputElements.forEach((input,idx) => {
+            wrapElement.style.setProperty(`--thumb-color-${idx}`, input.dataset.color)
+        })
+    }
+
+    function addHandle(evt){
+        const thumbArr = [...sliderContainerRef.current.querySelectorAll('.thumb')]
+
+        const trackRect = evt.target.getBoundingClientRect()
+        const evtX = evt.clientX
+
+        const currentX = parseInt(( (evtX - trackRect.x) / trackRect.width ) * 100)
+
+        if(currentX<=50){
+            const thumbValuesArr = thumbArr.filter(thumb=>thumb.value<=50)
+    
+        } else{
+            const thumbValuesArr = thumbArr.filter(thumb=>thumb.value>50)
+        }
+
+
+
+    }
+
+    function getNeihboringKnobs(){
+
     }
 }
