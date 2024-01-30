@@ -19,10 +19,25 @@ function UnitConverter() {
   const [editMode, setEditMode] = useState(false);
   const [cssSize, setCssSize] = useState("16px");
 
+  // State variable to track if the alert has been shown
+  const [alertShown, setAlertShown] = useState(false);
+
   // Update CSS size whenever pixels, em, or Tailwind size changes
   const updateCssSize = (newSizeInPixels) => {
+    let finalSize = newSizeInPixels;
+
+    // Check if newSizeInPixels exceeds the maximum allowed size for the preview (1000)
+    if (newSizeInPixels > 1000 && !alertShown) {
+      finalSize = 1000;
+      // Notify the user that the preview is capped (you might want to throttle this or change the UX for a smoother experience)
+      alert(
+        "Preview is limited to 1000px. Conversion will still be accurate above this value."
+      );
+      setAlertShown(true);
+    }
+
     // Check if newSizeInPixels is a number, if not, set CSS size to "0px"
-    setCssSize(isNaN(newSizeInPixels) ? "0px" : `${newSizeInPixels}px`); // Update CSS size
+    setCssSize(isNaN(finalSize) ? "0px" : `${finalSize}px`); // Update CSS size
   };
 
   // Handler for base pixel size changes
@@ -60,7 +75,8 @@ function UnitConverter() {
     setTailwindSize(newTailwindSize);
     const newEm = newTailwindSize / 4;
     setEm(newEm);
-    setPixels(newEm * basePixelSize);
+    const newPixels = newEm * basePixelSize;
+    setPixels(newPixels);
     updateCssSize(newPixels);
   };
 
