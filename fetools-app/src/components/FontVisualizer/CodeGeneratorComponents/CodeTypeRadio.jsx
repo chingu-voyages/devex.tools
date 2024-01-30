@@ -1,7 +1,7 @@
 import React from "react";
 
 const CodeTypeRadio = ({ value, checked, onChange, label }) => (
-  <label className="mr-4 flex items-center cursor-pointer">
+  <label className="mr-2 flex  ">
     <input
       type="radio"
       value={value}
@@ -9,9 +9,9 @@ const CodeTypeRadio = ({ value, checked, onChange, label }) => (
       onChange={onChange}
       className="hidden"
     />
-    <div className="flex items-center">
+    <div className="flex items-center ">
       <div
-        className={`w-5 h-5 border-2 border-black rounded-full flex items-center justify-center ${
+        className={`w-3 h-3 border-2 border-black rounded-full ${
           checked ? "bg-black" : "bg-white"
         }`}
       >
@@ -28,7 +28,7 @@ const CodeTypeRadio = ({ value, checked, onChange, label }) => (
         )}
       </div>
     </div>
-    <span className="ml-2">{label}</span>
+    <span className="ml-1">{label}</span>
   </label>
 );
 

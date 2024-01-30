@@ -6,7 +6,7 @@ import Preview from "../components/FontVisualizer/Preview";
 const FontVisualizer = () => {
   const [font, setFont] = useState({
     name: "Arial",
-    color: "#000000",
+    color: "#999999",
     style: "normal",
     weight: "normal",
     textTransform: "none",
@@ -16,7 +16,7 @@ const FontVisualizer = () => {
     fontSize: 1,
   });
 
-  const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+  const [backgroundColor, setBackgroundColor] = useState("#333333");
   const [codeType, setCodeType] = useState("css");
 
   const handleFontChange = (property, value) => {
@@ -121,10 +121,14 @@ const FontVisualizer = () => {
   };
 
   return (
-    <main className="flex flex-col items-start gap-10 self-stretch p-8 lg:p-20">
-      <h1 className="text-4xl font-bold mb-8">Font Viewer</h1>
-      <div className="flex items-start lg:gap-48 self-stretch max-lg:flex-col">
+    <main className="flex flex-col items-start gap-10  p-8 lg:p-20">
+      <div className="flex pb-32 items-end self-stretch">
+        <h1 className="text-4xl font-bold">Font Viewer</h1>
+      </div>
+
+      <div className="flex  gap-12 ">
         <Preview generateFontStyles={generateFontStyles} />
+
         <FontPreview
           font={font}
           backgroundColor={backgroundColor}
@@ -137,13 +141,15 @@ const FontVisualizer = () => {
         />
       </div>
 
+      <div className="flex items-center gap-475 self-stretch">
+        <h2 className="text-2xl font-bold mb-4">Code</h2>
+      </div>
       <CodeGenerator
         generateCssCode={generateCssCode}
         generateTailwindCode={generateTailwindCode}
         handleCopyIcon={handleCopyClick}
         codeType={codeType}
         setCodeType={setCodeType}
-        className="flex flex-col justify-center items-center gap-32 self-stretch"
       />
     </main>
   );

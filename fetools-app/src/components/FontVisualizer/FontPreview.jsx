@@ -1,4 +1,14 @@
 import React from "react";
+import FontNameInput from "./FontPreviewComponenets/FontNameInput";
+import FontColorInput from "./FontPreviewComponenets/FontColorInput";
+import BackgroundColorInput from "./FontPreviewComponenets/BackgroundColorInput";
+import FontSizeInput from "./FontPreviewComponenets/FontSizeInput";
+import FontStyleInput from "./FontPreviewComponenets/FontStyleInput";
+import FontWeightInput from "./FontPreviewComponenets/FontWeightInput";
+import FontVariantInput from "./FontPreviewComponenets/FontVariantInput";
+import TextAlignInput from "./FontPreviewComponenets/TextAlignInput";
+import LetterSpacingInput from "./FontPreviewComponenets/LetterSpacingInput";
+import LineHeightInput from "./FontPreviewComponenets/LineHeightInput";
 
 const FontPreview = ({
   font,
@@ -10,239 +20,27 @@ const FontPreview = ({
   handleLineHeightChange,
   handleFontSizeChange,
 }) => {
-  const fontFamilies = [
-    "Arial",
-    "Sans-serif",
-    "Courier New",
-    "Times New Roman",
-    "Verdana",
-    "Georgia",
-    "Impact",
-  ];
-
-  const fontStyles = ["normal", "italic"];
-  const fontWeights = ["normal", "bold", "bolder", "lighter"];
-  const textTransformations = ["none", "capitalize", "uppercase", "lowercase"];
-  const textAligns = ["left", "center", "right"];
-
   return (
-    <div className="font-preview-container p-6 text-black flex flex-col md:flex-row md:items-start">
-      <div className="flex-shrink p-4 flex flex-col items-start gap-4 sm:gap-6 flex-1">
-        {/* Font Name */}
-        <div className="flex gap-4 w-full">
-          <div className="flex-grow flex flex-col px-5">
-            <div className="text-neutral-400 text-base font-bold">
-              Font Name:
-            </div>
-            <div className="flex-grow border border-neutral-500 flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
-              <div className="text-neutral-400 text-base">Name</div>
-              <select
-                value={font.name}
-                onChange={(e) => handleFontChange("name", e.target.value)}
-                className="mt-1 p-1 flex-grow"
-              >
-                {fontFamilies.map((family) => (
-                  <option key={family} value={family}>
-                    {family}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Font Color and Background Color */}
-        <div className="flex gap-4 w-full">
-          <div className="flex-grow flex flex-col px-5">
-            <div className="text-neutral-400 text-base font-bold">
-              Font Color:
-            </div>
-            <div className="border border-neutral-500 flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
-              <div className="text-neutral-400 text-base">Color</div>
-              <input
-                type="color"
-                value={font.color}
-                onChange={handleColorChange}
-                className="mt-1 p-1"
-                id="fontColor"
-                name="fontColor"
-                style={{
-                  backgroundColor: font.color,
-                }}
-              />
-              <span className="ml-2">{font.color}</span>
-            </div>
-          </div>
-
-          <div className="flex-grow flex flex-col px-5">
-            <div className="text-neutral-400 text-base font-bold">
-              Background Color:
-            </div>
-            <div className="border border-neutral-500 flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
-              <div className="text-neutral-400 text-base">Color</div>
-              <input
-                type="color"
-                value={backgroundColor}
-                onChange={handleBackgroundColorChange}
-                className="mt-1 p-1"
-                id="backgroundColor"
-                name="backgroundColor"
-                style={{
-                  backgroundColor: backgroundColor,
-                }}
-              />
-              <span className="ml-2">{backgroundColor}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Font Size */}
-        <div className="flex-grow flex flex-col px-5 py-3.5 w-full">
-          <div className="text-neutral-400 text-base font-bold ">
-            Font Size: <span className="font-black">{font.fontSize}em</span>
-          </div>
-          <div className="flex justify-center items-center mt-1.5 px-16 py-0.5">
-            <input
-              type="range"
-              value={font.fontSize}
-              min={-10}
-              max={10}
-              step={0.01}
-              onChange={(e) => handleFontSizeChange(parseFloat(e.target.value))}
-              className="flex-1 w-full"
-            />
-            <div className="stroke-[1px] flex w-3 shrink-0 h-3 flex-col ml-5 rounded-[50%]" />
-          </div>
-        </div>
-
-        {/* Font Style and Font Weight */}
-        <div className="flex gap-4 w-full">
-          <div className="flex-grow flex flex-col px-5">
-            <div className="text-neutral-400 text-base font-bold">
-              Font Style:
-            </div>
-            <div className="border border-neutral-500 flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
-              <div className="text-neutral-400 text-base">Style</div>
-              <select
-                value={font.style}
-                onChange={(e) => handleFontChange("style", e.target.value)}
-                className="mt-1 p-1"
-              >
-                {fontStyles.map((style) => (
-                  <option key={style} value={style}>
-                    {style}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="flex-grow flex flex-col px-5">
-            <div className="text-neutral-400 text-base font-bold">
-              Font Weight:
-            </div>
-            <div className="border border-neutral-500 flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
-              <div className="text-neutral-400 text-base">Weight</div>
-              <select
-                value={font.weight}
-                onChange={(e) => handleFontChange("weight", e.target.value)}
-                className="mt-1 p-1"
-              >
-                {fontWeights.map((weight) => (
-                  <option key={weight} value={weight}>
-                    {weight}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Font Variant and Text Align */}
-        <div className="flex gap-4 w-full">
-          <div className="flex-grow flex flex-col px-5">
-            <div className="text-neutral-400 text-base font-bold">
-              Font Variant:
-            </div>
-            <div className="border border-neutral-500 flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
-              <div className="text-neutral-400 text-base">Style</div>
-              <select
-                value={font.textTransform}
-                onChange={(e) =>
-                  handleFontChange("textTransform", e.target.value)
-                }
-                className="mt-1 p-1"
-              >
-                {textTransformations.map((variant) => (
-                  <option key={variant} value={variant}>
-                    {variant}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="flex-grow flex flex-col px-5">
-            <div className="text-neutral-400 text-base font-bold">
-              Text Align:
-            </div>
-            <div className="border border-neutral-500 flex justify-between gap-5 mt-1 pl-4 pr-1.5 py-3 border-solid">
-              <div className="text-neutral-400 text-base">Alignment</div>
-              <select
-                value={font.textAlign}
-                onChange={(e) => handleFontChange("textAlign", e.target.value)}
-                className="mt-1 p-1"
-              >
-                {textAligns.map((align) => (
-                  <option key={align} value={align}>
-                    {align}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Letter Spacing and Line Height */}
-        <div className="flex gap-4 w-full">
-          <div className="flex-grow flex flex-col px-5 py-3.5">
-            <div className="text-neutral-400 text-base font-bold">
-              Letter Spacing:{" "}
-              <span className="font-black">{font.letterSpacing}</span>
-            </div>
-            <div className="flex justify-center items-center mt-1.5 px-16 py-0.5">
-              <input
-                type="range"
-                value={String(parseInt(font.letterSpacing))}
-                min={-10}
-                max={10}
-                step={1}
-                onChange={handleLetterSpacingChange}
-                className="flex-1"
-              />
-              <div className="stroke-[1px] flex w-3 shrink-0 h-3 flex-col ml-5 rounded-[50%]" />
-            </div>
-          </div>
-
-          <div className="flex-grow flex flex-col px-5 py-3.5">
-            <div className="text-neutral-400 text-base font-bold">
-              Line Height: <span className="font-black">{font.lineHeight}</span>
-            </div>
-            <div className="flex justify-center items-center mt-1.5 px-16 py-0.5">
-              <input
-                type="range"
-                value={String(parseInt(font.lineHeight))}
-                min={0}
-                max={10}
-                step={0.1}
-                onChange={handleLineHeightChange}
-                className="flex-1"
-              />
-              <div className="stroke-[1px] flex w-3 shrink-0 h-3 flex-col ml-5 rounded-[50%]" />
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className=" grid grid-rows-5 grid-flow-col gap-4">
+      <FontNameInput font={font} handleFontChange={handleFontChange} />
+      <FontColorInput font={font} handleColorChange={handleColorChange} />
+      <BackgroundColorInput
+        backgroundColor={backgroundColor}
+        handleBackgroundColorChange={handleBackgroundColorChange}
+      />
+      <FontSizeInput font={font} handleFontSizeChange={handleFontSizeChange} />
+      <FontStyleInput font={font} handleFontChange={handleFontChange} />
+      <FontWeightInput font={font} handleFontChange={handleFontChange} />
+      <FontVariantInput font={font} handleFontChange={handleFontChange} />
+      <TextAlignInput font={font} handleFontChange={handleFontChange} />
+      <LetterSpacingInput
+        font={font}
+        handleLetterSpacingChange={handleLetterSpacingChange}
+      />
+      <LineHeightInput
+        font={font}
+        handleLineHeightChange={handleLineHeightChange}
+      />
     </div>
   );
 };

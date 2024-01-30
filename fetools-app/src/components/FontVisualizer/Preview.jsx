@@ -20,27 +20,16 @@ const Preview = ({ generateFontStyles }) => {
 
   return (
     <div
-      className={`preview-container bg-gray-800 p-12 flex flex-col items-start gap-4 w-full min-h-[400px] border border-gray-500 rounded ${
+      className={`  p-4 flex flex-col  gap-4 w-full border  rounded ${
         isEditing ? "cursor-text" : "cursor-pointer"
       }`}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        gap: "4px",
-        flex: "1 0 0",
-        alignSelf: "stretch",
-        borderRadius: "8px",
-        border: "1px solid var(--Design-Document-Outlines, #999)",
-        background: "var(--Design-Document-Text, #333)",
-      }}
       onDoubleClick={handleDoubleClick}
       onBlur={handleBlur}
     >
       {isEditing ? (
         <textarea
           style={generateFontStyles()}
-          className="font-preview-text text-white flex-grow outline-none bg-transparent"
+          className="font-preview-text text-white bg-transparent block w-full h-full p-4"
           value={editedText}
           onChange={handleInputChange}
           autoFocus
@@ -48,7 +37,7 @@ const Preview = ({ generateFontStyles }) => {
       ) : (
         <p
           style={generateFontStyles()}
-          className="font-preview-text text-white flex-grow"
+          className="font-preview-text text-white break-words p-4 w-full h-full"
         >
           {editedText}
         </p>
