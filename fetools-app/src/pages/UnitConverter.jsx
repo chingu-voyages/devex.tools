@@ -195,8 +195,8 @@ function UnitConverter() {
   return (
     <>
       <main
-        className="p-6
-    sm:p-12 lg:px-48 lg:py-20"
+      //     className="p-6
+      // sm:p-12 lg:px-48 lg:py-20"
       >
         {/* Heading and Sub-Heading*/}
         <p className="font-arial font-bold text-6xl ml-4">Unit Converter</p>
@@ -281,10 +281,11 @@ function UnitConverter() {
           <TabSwitcher
             buttons={tabButtons}
             children={tabContents}
+            title="Code Samples"
           ></TabSwitcher>
         </div>
 
-        {/* <GoDeeper linksData={linksData} /> */}
+        <GoDeeper linksData={linksData} />
       </main>
     </>
   );
