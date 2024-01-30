@@ -26,7 +26,6 @@ export default function ColorGradient(){
     }])
 
     const [currentKnob, setCurrentKnob] = useState(false)
-    const [currentRange, setCurrentRange] = useState([0,100])
 
     const [inputValue, setInputValue] = useState({color: getHexString(colorsArr[0])});
 
@@ -45,8 +44,6 @@ export default function ColorGradient(){
                 updateCSSValues={updateCSSValues}
                 handleSetCurrentKnob={handleSetCurrentKnob}
                 handleSetInputValue={handleSetInputValue}
-                handleSetCurrentRange={handleSetCurrentRange}
-                currentRange={currentRange}
                 gradientColors={gradientColors}
                 setGradientColors={setGradientColors}
                 />
@@ -71,10 +68,6 @@ export default function ColorGradient(){
 
     function handleSetCurrentKnob(knob){
         setCurrentKnob(knob)
-    }
-
-    function handleSetCurrentRange(range){
-        setCurrentRange(range)
     }
 
     function handleColorChange(newColor){
