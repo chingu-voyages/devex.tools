@@ -10,6 +10,9 @@ const FontNameInput = ({ font, handleFontChange }) => {
     { value: "Verdana", label: "Verdana" },
     { value: "Georgia", label: "Georgia" },
     { value: "Impact", label: "Impact" },
+    { value: "Brush Script MT", label: "Brush Script MT" },
+    { value: "Tahoma", label: "Tahoma" },
+    { value: "Trebuchet MS", label: "Trebuchet MS" },
   ];
 
   return (
