@@ -1,5 +1,7 @@
 import "../index.css";
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
+import ToolHeading from "../components/ToolsLayout/ToolHeading";
+import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
@@ -88,16 +90,16 @@ function UnitConverter() {
   //links for Go Deeper component
   const linksData = [
     {
-      url: "https://en.wikipedia.org/wiki/Gabe_Newell",
-      textValue: "Dummy Link 1",
+      url: "https://www.w3schools.com/cssref/css_units.php",
+      textValue: "Explore CSS units at W3Schools",
     },
     {
-      url: "https://en.wikipedia.org/wiki/SteamOS",
-      textValue: "Dummy Link 2",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+      textValue: "Learn more about CSS values and units at MDN",
     },
     {
-      url: "https://en.wikipedia.org/wiki/Half-Life:_Alyx",
-      textValue: "Dummy Link 3",
+      url: "https://www.youtube.com/watch?v=N5wpD9Ov_To&ab_channel=KevinPowell",
+      textValue: "Are you using the right CSS units? With Kevin Powell",
     },
   ];
 
@@ -194,17 +196,15 @@ function UnitConverter() {
   // JSX for rendering the UI components.
   return (
     <>
-      <main
-      //     className="p-6
-      // sm:p-12 lg:px-48 lg:py-20"
-      >
-        {/* Heading and Sub-Heading*/}
-        <p className="font-arial font-bold text-6xl ml-4">Unit Converter</p>
-        <p className="font-arial text-1xl ml-4 mb-2 text-gray-400">
-          Calculate PX, REM/EM, and Tailwind utility classes with ease.
-        </p>
+      <main>
+        <ToolHeaderSection>
+          <ToolHeading
+            title="Unit Converter"
+            tagline="Calculate PX, REM/EM, and Tailwind utility classes with ease."
+          />
+        </ToolHeaderSection>
         {/* Section for Input Boxes*/}
-        <div className="flex gap-10 p-4 ml-52">
+        <div className="flex gap-10 sm:py-8 sm:px-16 lg:px-80">
           <div className="mb-3">
             <label className="block mb-2 text-sm font-bold text-gray-400">
               Base Size
@@ -258,7 +258,7 @@ function UnitConverter() {
           />
         </div>
         {/* Section for Lorem Ipsum Preview*/}
-        <div className="flex flex-col gap-4 items-start p-4">
+        <div className="flex flex-col gap-4 items-start sm:p-8 lg:px-48">
           <p className="font-arial text-4xl">Preview</p>
           <div
             className="flex flex-row justify-start items-center border border-black border-dashed p-3 
