@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 
 export default function ColorGradientSlider({
-    colorsArr,
     setColorsArr,
     updateCSSValues,
     handleSetCurrentKnob,
@@ -19,6 +18,7 @@ export default function ColorGradientSlider({
         const gradientRule = generateGradientRule(gradientColors);
 
         createThumbColorRule()
+        updateHandleValuesOnGradientState()
         updateCSSValues('.gradient', 'background', gradientRule);
     }, [gradientColors]);
 
@@ -35,7 +35,6 @@ export default function ColorGradientSlider({
  
     function createHandles(){
         const knobsArr = []
-
         for(let i=0; i<gradientColors.length; i++){
             
             knobsArr.push(
@@ -72,17 +71,12 @@ export default function ColorGradientSlider({
     function handleOnChange(evt){
         
         const currentThumb = evt.target;
-        const currentColor = currentThumb.dataset.color;
         const currentValue = parseInt(currentThumb.value);
    
         updateGradientValues()
 
         function updateGradientValues(){
-            const colorObj = gradientColors.find(({colorStr},idx)=>(
-                currentColor===colorStr&& idx===currentThumb.id
-            ))
-            //const colorIndex = gradientColors.indexOf(colorObj)
-            
+
             gradientColors[currentThumb.id].value = currentValue
 
             setGradientColors([...gradientColors])
@@ -150,9 +144,8 @@ export default function ColorGradientSlider({
         const newColor = newColorObject(colors);
 
         const newGradientArr = checkIndicesForNewKnob(closestThumbs)
-        const updatedColors = newGradientArr.map(({r,g,b,colorStr})=>{r,g,b,colorStr})
+        const updatedColors = newGradientArr.map(({r,g,b,colorStr})=>({r,g,b,colorStr}))
         const gradientRule = generateGradientRule(newGradientArr)
-
 
         setColorsArr(updatedColors)
         setGradientColors(newGradientArr)
@@ -175,35 +168,18 @@ export default function ColorGradientSlider({
                         ...gradientColors.slice(0),
                         newColor
                     ];
-                }
-                
+                }   
                 
                 return newGradientArr;
-            }
-        /*
-            const lowestIndex = gradientColors.findIndex(({colorStr})=>colorStr===closestThumbs[0].colorStr);
-            const greatestIndex = gradientColors.findIndex(({colorStr})=>colorStr===closestThumbs[1].colorStr);
-            
-    
-    
-            if(lowestIndex===0 && gradientColors.length === 2){
-                console.log('first', newColor)
+            }else{
+   
                 newGradientArr = [
-                    gradientColors[0], 
-                    newColor, 
-                    ...gradientColors.slice(greatestIndex)
-                ];
-            } else if(lowestIndex > 0){
-                console.log('second')
-                newGradientArr = [
-                    ...gradientColors.slice(0, lowestIndex), 
-                    newColor, 
-                    ...gradientColors.slice(lowestIndex)
-                ];
+                    ...gradientColors,
+                    newColor
+                ]
+
+                return newGradientArr
             }
-    
-            console.log(newGradientArr)
-            */
         }
 
         function getColorObjects(closestThumbs){
@@ -217,18 +193,13 @@ export default function ColorGradientSlider({
 
                 return colors
             } else{
-                const colors = gradientColors.filter(colorObj=>{
-                    if(
-                        colorsObj.colorStr===closestThumbs[0].dataset.color||closestThumbs[1].dataset.color
-                    ){
-                        delete colorObj.value
-                        return colorObj
-                    }
-                    
-                })
+                const color1 = gradientColors[closestThumbs[0].id]
+                const color2 = gradientColors[closestThumbs[1].id]
 
+                delete color1.value
+                delete color2.value
 
-                return colors
+                return [color1, color2]
             }
         }
 
@@ -237,9 +208,9 @@ export default function ColorGradientSlider({
             if(colors.length===1){
                 return ({...colors[0], value: currentX})
             } else{
-                const newR = Math.floor(colors[0].r + .5 * (colors[1].r - colors[0].r));
-                const newG = Math.floor(colors[0].g + .5 * (colors[1].g - colors[0].g));
-                const newB = Math.floor(colors[0].b + .5 * (colors[1].b - colors[0].b));
+                const newR = Math.floor(colors[0].r + (colors[1].r - colors[0].r) * .5);
+                const newG = Math.floor(colors[0].g + (colors[1].g - colors[0].g) * .5);
+                const newB = Math.floor(colors[0].b + (colors[1].b - colors[0].b) * .5);
                 return {r: newR, g: newG, b: newB, colorStr: `rgba(${newR}, ${newG}, ${newB}, 1)`, value: currentX}
             }
         }
@@ -259,10 +230,18 @@ export default function ColorGradientSlider({
             } else if(nextGreatestThumb===undefined){
                 return [nextLowestThumb]
             } else{
-                return [nextLowestThumb, nextLowestThumb]
+                return [nextLowestThumb, nextGreatestThumb]
             }
         }
 
+    }
+
+    function updateHandleValuesOnGradientState(){
+        const thumbs = sliderContainerRef.current.querySelectorAll('.thumb')
+
+        thumbs.forEach((thumb,idx)=>{
+            gradientColors[idx].value = thumb.value
+        })
     }
 
 }
