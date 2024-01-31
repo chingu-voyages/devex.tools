@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react"
 
 export default function ColorGradientSlider({
+    colorsArr,
+    setColorsArr,
     updateCSSValues,
     handleSetCurrentKnob,
     handleSetInputValue,
     gradientColors,
     setGradientColors
 }){
-
-    console.log(gradientColors)
 
     const [activeIndex, setActiveIndex] = useState(0)
    
@@ -38,6 +38,23 @@ export default function ColorGradientSlider({
 
         for(let i=0; i<gradientColors.length; i++){
             
+            if(i!==0 || i!==gradientColors.length-1){
+                knobsArr.push(
+                    <label key={`label-${i}`}
+                    className="flex-1 w-full h-max absolute">
+                            <input id={`${i}`}
+                            data-color={gradientColors[i].colorStr}
+                            type="range" min='0' max='100' step='1' 
+                            value={`${gradientColors[i].value}`}
+                            onChange={handleOnChange}
+                            onFocus={handleOnFocus}
+                            onTouchStart={handleOnFocus}
+                            className={`thumb slider absolute ${activeIndex===i?'isActive z-10':''}`}></input>
+                    </label>
+                )
+                continue
+            }
+
             knobsArr.push(
                 <label key={`label-${i}`}
                 className="flex-1 w-full h-max absolute">
@@ -106,10 +123,22 @@ export default function ColorGradientSlider({
 
     function generateGradientRule(colorsArr) {
         
-        const colors = colorsArr.map(({colorStr,value}) => (`${colorStr} ${value}%`));
+        const sortedColors = [...colorsArr]
+        sortedColors.sort(( {value: color1Value}, {value: color2Value} ) => color1Value - color2Value)
 
-        colorsArr.sort(({value: color1Value},{value: color2Value})=> color1Value - color2Value)
+        const newColorObject = sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr}))
 
+        const isColorsArrSimilarToSorted = colorsArr.every(({colorStr}, idx)=>(
+            colorStr === newColorObject[idx].colorStr
+        ))
+
+        if(!isColorsArrSimilarToSorted){
+            console.log(sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr})))
+
+            setColorsArr(sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr})))
+        }
+
+        const colors = sortedColors.map(({colorStr,value}) => (`${colorStr} ${value}%`));
         const gradientRule = `linear-gradient(90deg, ${colors.join(', ')})`;
 
         return gradientRule;
