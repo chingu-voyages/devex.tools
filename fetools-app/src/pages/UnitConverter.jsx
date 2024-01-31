@@ -40,6 +40,23 @@ function UnitConverter() {
     setCssSize(isNaN(finalSize) ? "0px" : `${finalSize}px`); // Update CSS size
   };
 
+  // Tailwind Size Conversions
+  const tailwindSizes = [
+    0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20,
+    24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96,
+  ];
+
+  const TailwindCheck = (TailwindSize) => {
+    const nearestTailwindSize = tailwindSizes.find(
+      (size) => size == TailwindSize
+    );
+    if (nearestTailwindSize !== undefined) {
+      return nearestTailwindSize;
+    }
+    // Return rem value if no exact tailwind size is found
+    return `[${(TailwindSize / 4).toFixed(3)}rem]`;
+  };
+
   // Handler for base pixel size changes
   const handleBasePixelSizeChange = (e) => {
     const newBaseSize = parseFloat(e.target.value);
@@ -55,7 +72,7 @@ function UnitConverter() {
     setPixels(newPixels);
     const newEm = newPixels / basePixelSize;
     setEm(newEm);
-    setTailwindSize(newEm * 4);
+    setTailwindSize(TailwindCheck(newEm * 4));
     updateCssSize(newPixels);
   };
 
@@ -65,14 +82,14 @@ function UnitConverter() {
     setEm(newEm);
     const newPixels = newEm * basePixelSize;
     setPixels(newPixels);
-    setTailwindSize(newEm * 4);
+    setTailwindSize(TailwindCheck(newEm * 4));
     updateCssSize(newPixels);
   };
 
   // Handler for Tailwind size changes
   const handleTailwindChange = (e) => {
     const newTailwindSize = parseFloat(e.target.value);
-    setTailwindSize(newTailwindSize);
+    setTailwindSize(TailwindCheck(newTailwindSize));
     const newEm = newTailwindSize / 4;
     setEm(newEm);
     const newPixels = newEm * basePixelSize;
@@ -271,6 +288,7 @@ function UnitConverter() {
             title="Tailwind Size"
             value={tailwindSize}
             onValueChange={handleTailwindChange}
+            inputType={typeof tailwindSize === "string" ? "text" : "number"}
           />
         </div>
         {/* Section for Lorem Ipsum Preview*/}

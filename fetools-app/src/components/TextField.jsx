@@ -1,7 +1,13 @@
 import React, { useRef } from "react";
 import CopyButton from "./CopyButton";
 
-function TextField({ title, value, unit, onValueChange }) {
+function TextField({
+  title,
+  value,
+  unit,
+  onValueChange,
+  inputType = "number",
+}) {
   // A ref to the input element
   const inputRef = useRef(null);
 
@@ -25,7 +31,7 @@ function TextField({ title, value, unit, onValueChange }) {
       <div className="flex border rounded relative">
         <input
           ref={inputRef}
-          type="number"
+          type={inputType}
           className="border rounded border-black w-28 py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
           value={value}
           onChange={onValueChange}
