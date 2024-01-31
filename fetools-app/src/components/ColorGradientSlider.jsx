@@ -38,23 +38,6 @@ export default function ColorGradientSlider({
 
         for(let i=0; i<gradientColors.length; i++){
             
-            if(i!==0 || i!==gradientColors.length-1){
-                knobsArr.push(
-                    <label key={`label-${i}`}
-                    className="flex-1 w-full h-max absolute">
-                            <input id={`${i}`}
-                            data-color={gradientColors[i].colorStr}
-                            type="range" min='0' max='100' step='1' 
-                            value={`${gradientColors[i].value}`}
-                            onChange={handleOnChange}
-                            onFocus={handleOnFocus}
-                            onTouchStart={handleOnFocus}
-                            className={`thumb slider absolute ${activeIndex===i?'isActive z-10':''}`}></input>
-                    </label>
-                )
-                continue
-            }
-
             knobsArr.push(
                 <label key={`label-${i}`}
                 className="flex-1 w-full h-max absolute">
@@ -74,7 +57,7 @@ export default function ColorGradientSlider({
             <>
                 <span id="track-handler"
                 ref={trackRef} 
-                onClick={addHandle}
+                onClick={addThumb}
                 className="block absolute w-full h-full"></span>
             {knobsArr}
             </>
@@ -95,11 +78,13 @@ export default function ColorGradientSlider({
         updateGradientValues()
 
         function updateGradientValues(){
-            const colorObj = gradientColors.find(({colorStr})=>colorStr===currentColor)
-            const colorIndex = gradientColors.indexOf(colorObj)
+            const colorObj = gradientColors.find(({colorStr},idx)=>(
+                currentColor===colorStr&& idx===currentThumb.id
+            ))
+            //const colorIndex = gradientColors.indexOf(colorObj)
             
-            gradientColors[colorIndex].value = currentValue
-            
+            gradientColors[currentThumb.id].value = currentValue
+
             setGradientColors([...gradientColors])
         }
 
@@ -133,8 +118,6 @@ export default function ColorGradientSlider({
         ))
 
         if(!isColorsArrSimilarToSorted){
-            console.log(sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr})))
-
             setColorsArr(sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr})))
         }
 
@@ -154,89 +137,132 @@ export default function ColorGradientSlider({
         })
     }
 
-    function addHandle(evt){
+    function addThumb(evt){
         const thumbArr = [...sliderContainerRef.current.querySelectorAll('.thumb')]
-
-        const thumbArrDescending = [...thumbArr]
-        const thumbArrAscending = [...thumbArr]
-
-        thumbArrDescending.sort(({value: value1}, {value: value2})=> value2-value1)
-        thumbArrAscending.sort(({value: value1}, {value: value2})=> value1-value2)
 
         const trackRect = evt.target.getBoundingClientRect()
         const evtX = evt.clientX
-
         const currentX = parseInt(( (evtX - trackRect.x) / trackRect.width ) * 100)
 
-        const color1 = gradientColors.find(
-            ({colorStr})=>colorStr===(thumbArrDescending.find(({value})=>value<currentX)).dataset.color
-        )
-        const color2 = gradientColors.find(
-            ({colorStr})=>colorStr===(thumbArrAscending.find(({value})=>value>currentX)).dataset.color
-        )
-        
-        console.log(color1, color2)
+        const closestThumbs = findThumbs()
 
-        const newColor = newColorObject(color1, color2);
+        const colors = getColorObjects(closestThumbs)
+        const newColor = newColorObject(colors);
 
-        const lowestIndex = gradientColors.findIndex(({colorStr})=>colorStr===color2.colorStr);
-        const greatestIndex = gradientColors.findIndex(({colorStr})=>colorStr===color1.colorStr);
-        
-        console.log(lowestIndex, greatestIndex)
-
-        let newGradientArr = null;
-        
-
-
-        if(lowestIndex===0 && gradientColors.length === 2){
-            console.log('first', newColor)
-            newGradientArr = [
-                gradientColors[0], 
-                newColor, 
-                ...gradientColors.slice(greatestIndex)
-            ];
-        } else if(lowestIndex > 0){
-            console.log('second')
-            newGradientArr = [
-                ...gradientColors.slice(0, lowestIndex), 
-                newColor, 
-                ...gradientColors.slice(lowestIndex)
-            ];
-        }
-
-        console.log(newGradientArr)
-
+        const newGradientArr = checkIndicesForNewKnob(closestThumbs)
+        const updatedColors = newGradientArr.map(({r,g,b,colorStr})=>{r,g,b,colorStr})
         const gradientRule = generateGradientRule(newGradientArr)
-        setGradientColors(newGradientArr)   
+
+
+        setColorsArr(updatedColors)
+        setGradientColors(newGradientArr)
         updateCSSValues('.gradient', 'background', gradientRule);
 
-        function newColorObject(color1, color2=color1){
-            
-            const calculatePercentage = ()=>{
-                if(currentX >= 50){
-                    return (currentX/2)/100
+        function checkIndicesForNewKnob(closestThumbs){
+
+            let newGradientArr = null;
+
+            if(closestThumbs.length===1){
+                const nextIndex = gradientColors.findIndex(({colorStr})=>colorStr===closestThumbs[0].dataset.color);
+
+                if(nextIndex===0){
+                    newGradientArr = [
+                        ...gradientColors.slice(nextIndex),
+                        newColor
+                    ];
+                } else{
+                    newGradientArr = [
+                        ...gradientColors.slice(0),
+                        newColor
+                    ];
                 }
-                return currentX/100
+                
+                
+                return newGradientArr;
             }
-
-            const percentage = calculatePercentage()
-            console.log(percentage)
-
-            const newR = Math.floor(color1.r + .5 * (color2.r - color1.r));
-            const newG = Math.floor(color1.g + .5 * (color2.g - color1.g));
-            const newB = Math.floor(color1.b + .5 * (color2.b - color1.b));
-
-            return {r: newR, g: newG, b: newB, colorStr: `rgba(${newR}, ${newG}, ${newB}, 1)`, value: currentX}
+        /*
+            const lowestIndex = gradientColors.findIndex(({colorStr})=>colorStr===closestThumbs[0].colorStr);
+            const greatestIndex = gradientColors.findIndex(({colorStr})=>colorStr===closestThumbs[1].colorStr);
+            
+    
+    
+            if(lowestIndex===0 && gradientColors.length === 2){
+                console.log('first', newColor)
+                newGradientArr = [
+                    gradientColors[0], 
+                    newColor, 
+                    ...gradientColors.slice(greatestIndex)
+                ];
+            } else if(lowestIndex > 0){
+                console.log('second')
+                newGradientArr = [
+                    ...gradientColors.slice(0, lowestIndex), 
+                    newColor, 
+                    ...gradientColors.slice(lowestIndex)
+                ];
+            }
+    
+            console.log(newGradientArr)
+            */
         }
 
-        function findThumb(){
+        function getColorObjects(closestThumbs){
+
+            if(closestThumbs.length===1){
+                const colors = gradientColors.filter(({colorStr})=>(
+                    colorStr===closestThumbs[0].dataset.color
+                ))
+
+                delete colors[0].value
+
+                return colors
+            } else{
+                const colors = gradientColors.filter(colorObj=>{
+                    if(
+                        colorsObj.colorStr===closestThumbs[0].dataset.color||closestThumbs[1].dataset.color
+                    ){
+                        delete colorObj.value
+                        return colorObj
+                    }
+                    
+                })
+
+
+                return colors
+            }
+        }
+
+        function newColorObject(colors){
+            
+            if(colors.length===1){
+                return ({...colors[0], value: currentX})
+            } else{
+                const newR = Math.floor(colors[0].r + .5 * (colors[1].r - colors[0].r));
+                const newG = Math.floor(colors[0].g + .5 * (colors[1].g - colors[0].g));
+                const newB = Math.floor(colors[0].b + .5 * (colors[1].b - colors[0].b));
+                return {r: newR, g: newG, b: newB, colorStr: `rgba(${newR}, ${newG}, ${newB}, 1)`, value: currentX}
+            }
+        }
+
+        function findThumbs(){
             const thumbArrDescending = [...thumbArr]
             const thumbArrAscending = [...thumbArr]
     
+            thumbArrAscending.sort(({value: a}, {value: b})=> a-b)
+            thumbArrDescending.sort(({value: a}, {value: b})=> b-a)
 
-            const thumb1 = thumbArrDescending.find(({value})=>value<currentX)
-            const thumb2 = thumbArrAscending.find(({value})=>value>currentX)
+            const nextGreatestThumb = thumbArrAscending.find(({value})=>value>currentX)
+            const nextLowestThumb = thumbArrDescending.find(({value})=>value<currentX)
+
+            if(nextLowestThumb===undefined){
+                return [nextGreatestThumb]
+            } else if(nextGreatestThumb===undefined){
+                return [nextLowestThumb]
+            } else{
+                return [nextLowestThumb, nextLowestThumb]
+            }
         }
 
     }
+
 }
