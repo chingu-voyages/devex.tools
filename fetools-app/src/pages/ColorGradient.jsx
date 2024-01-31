@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
-import tinycolor from "tinycolor2";
+import { getRandomColor, getHexString, getHslString, isValidHexColor, getRgb } from "../components/ColorGradientComponents/ColorGradientUtils";
 
-import ColorGradientSlider from "../components/ColorGradientSlider";
+import ColorGradientSlider from "../components/ColorGradientComponents/ColorGradientSlider";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
-import ColorGradientInterface from "../components/ColorGradientInterface";
+import ColorGradientInterface from "../components/ColorGradientComponents/ColorGradientInterface";
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -28,7 +28,7 @@ export default function ColorGradient() {
   const [currentKnob, setCurrentKnob] = useState(false);
 
   const [inputValue, setInputValue] = useState({
-    color: getHexString(gradientColors[0].color),
+    color: getHexString(gradientColors[0].colorStr),
   });
 
   return (
@@ -81,18 +81,23 @@ export default function ColorGradient() {
   function handleColorChange(newColor) {
     // Assuming updatedColors is an array with two color values
     const newColorsArr = [...colorsArr];
+    const newGradientColors = [...gradientColors]
 
     if (!currentKnob) {
-      newColorsArr[0] = getHslString(newColor);
+      newColorsArr[0] = getRgb(newColor);
+      newGradientColors[0] = {...newColorsArr[0], value: 0}
+      
       console.log(newColorsArr);
+
       setColorsArr(newColorsArr);
-      setColorsArr(newColorsArr);
+      setGradientColors(newGradientColors)
       return;
     }
 
-    newColorsArr[currentKnob.id] = getHslString(newColor); // Update the color at the current knob index
-    setColorsArr(newColorsArr); // Update the colors state
+    newColorsArr[currentKnob.id] = getRgb(newColor); // Update the color at the current knob index
+    newGradientColors[currentKnob.id] = {...newColorsArr[currentKnob.id], value: currentKnob.value}; // Update the color at the current knob index
     setColorsArr(newColorsArr);
+    setGradientColors(newGradientColors);
   }
 
   function handleColorInputChange(evt) {
@@ -100,8 +105,10 @@ export default function ColorGradient() {
 
     setInputValue({ ...inputValue, color: newColor }); // Update input value
 
+    console.log(newColor, inputValue)
+
     if (isValidHexColor(newColor)) {
-      handleColorChange(newColor); // Pass the new color to the parent component
+        handleColorChange(newColor); // Pass the new color to the parent component
     }
   }
 
@@ -120,32 +127,4 @@ export default function ColorGradient() {
       element.style[propertyName] = newValue;
     });
   }
-}
-
-function getRandomColor() {
-  const rNum = (Math.random() * 255).toFixed(0);
-  const gNum = (Math.random() * 255).toFixed(0);
-  const bNum = (Math.random() * 255).toFixed(0);
-  const colorObj = {
-    r: parseInt(rNum),
-    g: parseInt(gNum),
-    b: parseInt(bNum),
-    colorStr: `rgba(${rNum}, ${gNum}, ${bNum}, 1)`,
-  };
-
-  return colorObj;
-}
-
-function getHexString(color) {
-  const currentHexColor = tinycolor(color).toHexString();
-  return currentHexColor;
-}
-
-function getHslString(color) {
-  const currentHexColor = tinycolor(color).toHslString();
-  return currentHexColor;
-}
-
-function isValidHexColor(color) {
-  return tinycolor(color).isValid();
 }
