@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CodeGenerator from "../components/FontVisualizer/CodeGenerator";
 import FontPreview from "../components/FontVisualizer/FontPreview";
 import Preview from "../components/FontVisualizer/Preview";
+import HtmlCodeGenerator from "../components/FontVisualizer/HtmlCodeGenerator";
 
 const FontVisualizer = () => {
   const [font, setFont] = useState({
@@ -76,6 +77,14 @@ const FontVisualizer = () => {
     `;
   };
 
+  const generateHtmlCode = () => {
+    return `
+      <div style="font-family: ${font.name}; color: ${font.color}; background-color: ${backgroundColor}; font-style: ${font.style}; font-weight: ${font.weight}; text-transform: ${font.textTransform}; text-align: ${font.textAlign}; letter-spacing: ${font.letterSpacing}; line-height: ${font.lineHeight}; font-size: ${font.fontSize}em;">
+        Your content goes here
+      </div>
+    `;
+  };
+
   const fontSizeToTailwindClass = (fontSize) => {
     if (fontSize === 1) {
       return "text-xs";
@@ -105,10 +114,14 @@ const FontVisualizer = () => {
 
   const handleCopyClick = async () => {
     try {
-      const codeToCopy =
-        generateCodeType() === "css"
-          ? generateCssCode()
-          : generateTailwindCode();
+      let codeToCopy;
+      if (codeType === "css") {
+        codeToCopy = generateCssCode();
+      } else if (codeType === "html") {
+        codeToCopy = generateHtmlCode();
+      } else {
+        codeToCopy = generateTailwindCode();
+      }
       await navigator.clipboard.writeText(codeToCopy);
       console.log("Text copied to clipboard");
     } catch (err) {
@@ -121,12 +134,12 @@ const FontVisualizer = () => {
   };
 
   return (
-    <main className="flex flex-col items-start gap-10  p-8 lg:p-20">
+    <main className="flex flex-col items-start gap-10 p-8 lg:p-20">
       <div className="flex pb-32 items-end self-stretch">
         <h1 className="text-4xl font-bold">Font Viewer</h1>
       </div>
 
-      <div className="flex  gap-12 ">
+      <div className="flex gap-12 ">
         <Preview generateFontStyles={generateFontStyles} />
 
         <FontPreview
@@ -144,13 +157,18 @@ const FontVisualizer = () => {
       <div className="flex items-center gap-475 self-stretch">
         <h2 className="text-2xl font-bold mb-4">Code</h2>
       </div>
-      <CodeGenerator
-        generateCssCode={generateCssCode}
-        generateTailwindCode={generateTailwindCode}
-        handleCopyIcon={handleCopyClick}
-        codeType={codeType}
-        setCodeType={setCodeType}
-      />
+
+      <div className="flex gap-12">
+        <CodeGenerator
+          generateCssCode={generateCssCode}
+          generateTailwindCode={generateTailwindCode}
+          handleCopyIcon={handleCopyClick}
+          codeType={codeType}
+          setCodeType={setCodeType}
+        />
+
+        <HtmlCodeGenerator generateHtmlCode={generateHtmlCode} />
+      </div>
     </main>
   );
 };
