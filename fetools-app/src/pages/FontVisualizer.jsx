@@ -158,7 +158,7 @@ const FontVisualizer = () => {
         <h2 className="text-2xl font-bold mb-4">Code</h2>
       </div>
 
-      <div className="flex gap-12">
+      <div className="flex  gap-12">
         <CodeGenerator
           generateCssCode={generateCssCode}
           generateTailwindCode={generateTailwindCode}
