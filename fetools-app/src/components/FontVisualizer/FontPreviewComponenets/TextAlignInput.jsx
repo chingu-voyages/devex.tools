@@ -10,8 +10,8 @@ const TextAlignInput = ({ font, handleFontChange }) => {
   const textAligns = ["left", "center", "right", "justify"];
 
   return (
-    <div className="flex flex-col px-5">
-      <div className="text-neutral-400 text-base">Align</div>
+    <div className="flex  items-center space-x-4 gap-4 w-full">
+      <div className="text-base font-bold">Align</div>
       <div className="flex mt-1 p-1">
         {textAligns.map((align) => (
           <button

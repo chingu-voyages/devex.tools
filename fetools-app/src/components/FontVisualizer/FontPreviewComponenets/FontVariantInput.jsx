@@ -5,9 +5,9 @@ const FontVariantInput = ({ font, handleFontChange }) => {
   const buttonTexts = ["Aa", "AA", "aa"];
 
   return (
-    <div className="flex-grow flex flex-col px-5">
-      <div className="text-neutral-400 text-base">Transform</div>
-      <div className="flex gap-2 mt-1">
+    <div className="flex  items-center space-x-4 gap-4 w-full">
+      <div className="text-base font-bold">Transform</div>
+      <div className="flex font-bold gap-2 mt-1 p-1">
         {textTransformations.map((variant, index) => (
           <button
             key={variant}

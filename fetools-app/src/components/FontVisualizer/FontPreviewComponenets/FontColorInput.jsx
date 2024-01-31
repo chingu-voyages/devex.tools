@@ -2,14 +2,12 @@ import React from "react";
 
 const FontColorInput = ({ font, handleColorChange }) => {
   return (
-    <div className="flex flex-col px-5 text-neutral-400 text-base">
-      <label htmlFor="fontColor" className="mb-2">
-        Color:
-      </label>
+    <div className="flex items-center space-x-4 gap-4 w-full">
+      <div className="text-base font-bold">Color</div>
 
-      <div className="border">
+      <div className="flex px-5 text-neutral-400 text-base">
         <div
-          className="border color-picker-toggle relative w-8 h-8"
+          className="border px-2 color-picker-toggle relative w-8 h-8"
           style={{
             cursor: "pointer",
             backgroundColor: font.color,

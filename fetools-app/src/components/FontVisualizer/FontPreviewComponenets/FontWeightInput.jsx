@@ -29,17 +29,19 @@ const FontWeightInput = ({ font, handleFontChange }) => {
   };
 
   return (
-    <div className="flex flex-col px-5 text-base">
-      Weight
-      <Select
-        value={selectedOption}
-        onChange={(selectedOption) =>
-          handleFontChange("weight", selectedOption.value)
-        }
-        options={fontWeights}
-        className="mt-1 p-1"
-        styles={customStyles}
-      />
+    <div className="flex  items-center space-x-4 gap-4 w-full">
+      <div className="text-base font-bold">Weight</div>
+      <div className="flex mt-1 p-1">
+        <Select
+          value={selectedOption}
+          onChange={(selectedOption) =>
+            handleFontChange("weight", selectedOption.value)
+          }
+          options={fontWeights}
+          className="mt-1 p-1"
+          styles={customStyles}
+        />
+      </div>
     </div>
   );
 };

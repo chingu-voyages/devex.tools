@@ -16,16 +16,19 @@ const FontNameInput = ({ font, handleFontChange }) => {
   ];
 
   return (
-    <div className="flex-grow flex flex-col px-5  text-base">
-      Font
-      <Select
-        value={{ value: font.name, label: font.name }}
-        onChange={(selectedOption) =>
-          handleFontChange("name", selectedOption.value)
-        }
-        options={fontFamilies}
-        className="mt-1 p-1 flex-grow"
-      />
+    <div className="flex items-center space-x-4 gap-4 w-full">
+      <div className="text-base font-bold">Font</div>
+      <div className="flex mt-1 p-1">
+        <Select
+          value={{ value: font.name, label: font.name }}
+          onChange={(selectedOption) =>
+            handleFontChange("name", selectedOption.value)
+          }
+          options={fontFamilies}
+          className="mt-1 p-2"
+          styles={{ control: (provided) => ({ ...provided, width: "200px" }) }}
+        />
+      </div>
     </div>
   );
 };
