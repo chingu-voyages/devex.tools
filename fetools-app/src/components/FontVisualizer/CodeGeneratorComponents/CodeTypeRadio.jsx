@@ -1,7 +1,8 @@
 import React from "react";
+import { FaDotCircle, FaCircle } from "react-icons/fa";
 
 const CodeTypeRadio = ({ value, checked, onChange, label }) => (
-  <label className="mr-2 flex  ">
+  <label className="mr-2 flex items-center">
     <input
       type="radio"
       value={value}
@@ -9,26 +10,14 @@ const CodeTypeRadio = ({ value, checked, onChange, label }) => (
       onChange={onChange}
       className="hidden"
     />
-    <div className="flex items-center ">
-      <div
-        className={`w-3 h-3 border-2 border-black rounded-full ${
-          checked ? "bg-black" : "bg-white"
-        }`}
-      >
-        {checked && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="13"
-            viewBox="0 0 12 13"
-            fill="none"
-          >
-            <circle cx="6" cy="6.5" r="6" fill="#333333" />
-          </svg>
-        )}
-      </div>
+    <div className="flex items-center">
+      {checked ? (
+        <FaDotCircle className="w-5 h-5 mr-1 text-black" />
+      ) : (
+        <FaCircle className="w-5 h-5 mr-1 text-gray-500" />
+      )}
     </div>
-    <span className="ml-1">{label}</span>
+    <span>{label}</span>
   </label>
 );
 

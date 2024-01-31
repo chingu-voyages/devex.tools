@@ -22,7 +22,7 @@ const CodeGenerator = ({ generateCssCode, generateTailwindCode }) => {
       style={{ width: "100%" }}
     >
       <h2 className="text-xl font-bold mb-2">
-        {codeType === "css" ? "CSS Code" : "Tailwind CSS Code"}
+        {codeType === "css" ? "CSS " : "Tailwind "}
       </h2>
       <textarea
         value={codeType === "css" ? generateCssCode() : generateTailwindCode()}
