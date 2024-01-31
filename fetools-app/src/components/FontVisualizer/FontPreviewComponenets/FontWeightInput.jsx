@@ -29,7 +29,7 @@ const FontWeightInput = ({ font, handleFontChange }) => {
   };
 
   return (
-    <div className="flex flex-col px-5 text-neutral-400 text-base">
+    <div className="flex flex-col px-5 text-base">
       Weight
       <Select
         value={selectedOption}

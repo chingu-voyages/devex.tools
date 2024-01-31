@@ -16,7 +16,7 @@ const FontNameInput = ({ font, handleFontChange }) => {
   ];
 
   return (
-    <div className="flex-grow flex flex-col px-5 text-neutral-400 text-base">
+    <div className="flex-grow flex flex-col px-5  text-base">
       Font
       <Select
         value={{ value: font.name, label: font.name }}

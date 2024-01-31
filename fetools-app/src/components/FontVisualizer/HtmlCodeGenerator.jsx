@@ -14,7 +14,7 @@ const HtmlCodeGenerator = ({ generateHtmlCode }) => {
 
   return (
     <div
-      className="code-generator flex flex-col mt-6 bg-white p-4 rounded-lg shadow-md w-full md:w-1/2 relative transition-all duration-300 border-0"
+      className="code-generator p-4 flex flex-col gap-4 w-full  relative"
       style={{ width: "100%" }}
     >
       <h2 className="text-xl font-bold mb-2">HTML Code</h2>
