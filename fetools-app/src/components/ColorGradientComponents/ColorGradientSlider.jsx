@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 
 export default function ColorGradientSlider({
+    inputValue,
     setColorsArr,
     updateCSSValues,
     handleSetCurrentKnob,
@@ -74,6 +75,8 @@ export default function ColorGradientSlider({
         const currentValue = parseInt(currentThumb.value);
    
         updateGradientValues()
+        handleSetInputValue({color: inputValue.color, position: currentValue})
+
 
         function updateGradientValues(){
 
@@ -95,9 +98,14 @@ export default function ColorGradientSlider({
 
         currentThumb.classList.add('isActive', 'z-10')
     
-        handleSetInputValue('color', currentThumb.dataset.color)
+        handleSetInputValue({
+            color: currentThumb.dataset.color,
+            position: currentThumb.value
+        })
+
         handleSetActiveIndex(currentThumb.id)
         handleSetCurrentKnob(currentThumb)
+
     }
 
     function generateGradientRule(colorsArr) {

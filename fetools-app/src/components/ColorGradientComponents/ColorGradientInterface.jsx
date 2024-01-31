@@ -3,12 +3,14 @@ import tinycolor from "tinycolor2";
 
 export default function ColorGradientInterface({
     inputValue,
-    handleColorInputChange
+    handleColorInputChange,
+    handlePositionInputChange
 }){
     
     const [displayData, setDisplayData] = useState(inputValue)
     const [lastValidData, setLastValidData] = useState(inputValue)
     
+    const parentRef = useRef() 
     const colorInputRef = useRef()
 
     // Update displayData when showValues changes
@@ -21,14 +23,20 @@ export default function ColorGradientInterface({
 
     // Ensure input fields reflect the updated displayData
     useEffect(() => {
-        if (colorInputRef.current) {
-            colorInputRef.current.value = inputValue.color;
+        if(parentRef.current){
+            [...parentRef.current.children].forEach(label=>{
+                if(label.id === 'color'){
+                    label.children[0].value = inputValue.color
+                } else if(label.id === 'position'){
+                    label.children[0].value = inputValue.position
+                }
+            })
         }
     }, [inputValue]);
 
     return(
         <>
-        <div className="grid grid-cols-2 grid-rows-3 gap-x-7 gap-y-12 px-5">
+        <div ref={parentRef} className="grid grid-cols-2 grid-rows-3 gap-x-7 gap-y-12 px-5">
             <label id="color" className="flex flex-col w-full font-bold ">Color
                 <input 
                 ref={colorInputRef} 
@@ -39,12 +47,17 @@ export default function ColorGradientInterface({
                 className="rounded-sm border border-gray-400 p-4 uppercase"/>
             </label>
             <label id="position" className="flex flex-col w-full font-bold">Position
+                <input
+                defaultValue={displayData.position}
+                onChange={handlePositionInputChange}
+                placeholder={lastValidData.position || displayData.position}
+                type="text" 
+                className="rounded-sm border border-gray-400 p-4 uppercase"/>
+            </label>
+            <label id="totation" className="flex flex-col w-full font-bold">Rotation
                 <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase"/>
             </label>
-            <label id="color" className="flex flex-col w-full font-bold">Rotation
-                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase"/>
-            </label>
-            <label id="position" className="flex flex-col w-full font-bold">Type
+            <label id="type" className="flex flex-col w-full font-bold">Type
                 <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase"/>
             </label>
         </div>

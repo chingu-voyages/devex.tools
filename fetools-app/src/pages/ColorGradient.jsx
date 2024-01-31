@@ -29,6 +29,7 @@ export default function ColorGradient() {
 
   const [inputValue, setInputValue] = useState({
     color: getHexString(gradientColors[0].colorStr),
+    position: gradientColors[0].value
   });
 
   return (
@@ -46,10 +47,10 @@ export default function ColorGradient() {
       >
         <div className="flex-1 flex-col w-full rounded-lg border border-black">
           <ColorGradientSlider
-            colorsArr={colorsArr}
             setColorsArr={setColorsArr}
-            handleSetColorsArr={handleSetColorsArr}
+            inputValue={inputValue}
             updateCSSValues={updateCSSValues}
+            handleColorChange={handleColorChange}
             handleSetCurrentKnob={handleSetCurrentKnob}
             handleSetInputValue={handleSetInputValue}
             gradientColors={gradientColors}
@@ -59,6 +60,7 @@ export default function ColorGradient() {
           <ColorGradientInterface
             inputValue={inputValue}
             handleColorInputChange={handleColorInputChange}
+            handlePositionInputChange={handlePositionInputChange}
           />
         </div>
 
@@ -70,12 +72,23 @@ export default function ColorGradient() {
     </>
   );
 
-  function handleSetColorsArr(newColorsArr) {
-    setColorsArr(newColorsArr);
-  }
+
 
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);
+  }
+
+  function handleColorInputChange(evt) {
+    const newColor = evt.target.value;
+
+    setInputValue({ ...inputValue, color: newColor }); // Update input value
+
+    console.log(newColor, inputValue)
+
+    if (isValidHexColor(newColor)) {
+        handleColorChange(newColor); // Pass the new color to the parent component
+    }
+
   }
 
   function handleColorChange(newColor) {
@@ -100,24 +113,19 @@ export default function ColorGradient() {
     setGradientColors(newGradientColors);
   }
 
-  function handleColorInputChange(evt) {
-    const newColor = evt.target.value;
+  function handlePositionInputChange(evt){
+    const regex = new RegExp('(^[\d]{0,3}%$)', 'gm')
 
-    setInputValue({ ...inputValue, color: newColor }); // Update input value
+    regex.test(evt.value)
 
-    console.log(newColor, inputValue)
-
-    if (isValidHexColor(newColor)) {
-        handleColorChange(newColor); // Pass the new color to the parent component
-    }
+    console.log(regex.test(evt.value))
   }
 
-  function handleSetInputValue(key, value) {
-    if (key === "color") {
-      setInputValue({ ...inputValue, [key]: getHexString(value) });
-      return;
-    }
-    setInputValue({ ...inputValue, [key]: value });
+  function handleSetInputValue(newValues) {
+    setInputValue({
+      color: getHexString(newValues.color),
+      position: `${newValues.position}%`,
+    })
   }
 
   function updateCSSValues(cssClassName, propertyName, newValue) {
