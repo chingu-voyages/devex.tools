@@ -140,6 +140,10 @@
         pointer-events: none;
     }
 
+    #track-handler {
+      cursor: copy;
+    }
+
     @layer thumbColorStyle{
       .wrap label:nth-of-type(1) ::-webkit-slider-thumb{
         background: var(--thumb-color-0);

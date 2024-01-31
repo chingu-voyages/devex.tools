@@ -17,17 +17,17 @@ export default function ColorGradient(){
 
     const [gradientColors, setGradientColors] = useState(
     [{
-        color: colorsArr[0],
+        ...getRandomColor(),
         value: 0
     },
     {
-        color: colorsArr[1],
+        ...getRandomColor(),
         value: 100
     }])
 
     const [currentKnob, setCurrentKnob] = useState(false)
 
-    const [inputValue, setInputValue] = useState({color: getHexString(colorsArr[0])});
+    const [inputValue, setInputValue] = useState({color: getHexString(gradientColors[0].color)});
 
     return(
     <>
@@ -117,10 +117,17 @@ export default function ColorGradient(){
 }
 
 function getRandomColor(){
-    const hNum = (Math.random()*361).toFixed(0)
-    const sNum = (Math.random()*101).toFixed(0)
-    const lNum = (Math.random()*101).toFixed(0)
-    return (`hsla(${hNum}, ${sNum}%, ${lNum}%, 1)`)
+    const rNum = (Math.random()*255).toFixed(0)
+    const gNum = (Math.random()*255).toFixed(0)
+    const bNum = (Math.random()*255).toFixed(0)
+    const colorObj = {
+        r: parseInt(rNum),
+        g: parseInt(gNum),
+        b: parseInt(bNum),
+        colorStr: `rgba(${rNum}, ${gNum}, ${bNum}, 1)`
+    }
+
+    return colorObj
 }
 
 function getHexString(color){

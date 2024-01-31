@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react"
 
 export default function ColorGradientSlider({
-    colorsArr, 
-    handleSetColorsArr,
     updateCSSValues,
     handleSetCurrentKnob,
     handleSetInputValue,
     gradientColors,
     setGradientColors
 }){
+
+    console.log(gradientColors)
 
     const [activeIndex, setActiveIndex] = useState(0)
    
@@ -36,13 +36,13 @@ export default function ColorGradientSlider({
     function createHandles(){
         const knobsArr = []
 
-        for(let i=0; i<2; i++){
+        for(let i=0; i<gradientColors.length; i++){
             
             knobsArr.push(
                 <label key={`label-${i}`}
                 className="flex-1 w-full h-max absolute">
                         <input id={`${i}`}
-                        data-color={colorsArr[i]}
+                        data-color={gradientColors[i].colorStr}
                         type="range" min='0' max='100' step='1' 
                         defaultValue={`${gradientColors[i].value}`}
                         onChange={handleOnChange}
@@ -78,7 +78,7 @@ export default function ColorGradientSlider({
         updateGradientValues()
 
         function updateGradientValues(){
-            const colorObj = gradientColors.find(({color})=>color===currentColor)
+            const colorObj = gradientColors.find(({colorStr})=>colorStr===currentColor)
             const colorIndex = gradientColors.indexOf(colorObj)
             
             gradientColors[colorIndex].value = currentValue
@@ -106,11 +106,9 @@ export default function ColorGradientSlider({
 
     function generateGradientRule(colorsArr) {
         
-        const colors = colorsArr.map(({color,value}) => (`${color} ${value}%`));
+        const colors = colorsArr.map(({colorStr,value}) => (`${colorStr} ${value}%`));
 
         colorsArr.sort(({value: color1Value},{value: color2Value})=> color1Value - color2Value)
-
-        console.log(colors)
 
         const gradientRule = `linear-gradient(90deg, ${colors.join(', ')})`;
 
@@ -130,23 +128,86 @@ export default function ColorGradientSlider({
     function addHandle(evt){
         const thumbArr = [...sliderContainerRef.current.querySelectorAll('.thumb')]
 
+        const thumbArrDescending = [...thumbArr]
+        const thumbArrAscending = [...thumbArr]
+
+        thumbArrDescending.sort(({value: value1}, {value: value2})=> value2-value1)
+        thumbArrAscending.sort(({value: value1}, {value: value2})=> value1-value2)
+
         const trackRect = evt.target.getBoundingClientRect()
         const evtX = evt.clientX
 
         const currentX = parseInt(( (evtX - trackRect.x) / trackRect.width ) * 100)
 
-        if(currentX<=50){
-            const thumbValuesArr = thumbArr.filter(thumb=>thumb.value<=50)
-    
-        } else{
-            const thumbValuesArr = thumbArr.filter(thumb=>thumb.value>50)
+        const color1 = gradientColors.find(
+            ({colorStr})=>colorStr===(thumbArrDescending.find(({value})=>value<currentX)).dataset.color
+        )
+        const color2 = gradientColors.find(
+            ({colorStr})=>colorStr===(thumbArrAscending.find(({value})=>value>currentX)).dataset.color
+        )
+        
+        console.log(color1, color2)
+
+        const newColor = newColorObject(color1, color2);
+
+        const lowestIndex = gradientColors.findIndex(({colorStr})=>colorStr===color2.colorStr);
+        const greatestIndex = gradientColors.findIndex(({colorStr})=>colorStr===color1.colorStr);
+        
+        console.log(lowestIndex, greatestIndex)
+
+        let newGradientArr = null;
+        
+
+
+        if(lowestIndex===0 && gradientColors.length === 2){
+            console.log('first', newColor)
+            newGradientArr = [
+                gradientColors[0], 
+                newColor, 
+                ...gradientColors.slice(greatestIndex)
+            ];
+        } else if(lowestIndex > 0){
+            console.log('second')
+            newGradientArr = [
+                ...gradientColors.slice(0, lowestIndex), 
+                newColor, 
+                ...gradientColors.slice(lowestIndex)
+            ];
         }
 
+        console.log(newGradientArr)
 
+        const gradientRule = generateGradientRule(newGradientArr)
+        setGradientColors(newGradientArr)   
+        updateCSSValues('.gradient', 'background', gradientRule);
 
-    }
+        function newColorObject(color1, color2=color1){
+            
+            const calculatePercentage = ()=>{
+                if(currentX >= 50){
+                    return (currentX/2)/100
+                }
+                return currentX/100
+            }
 
-    function getNeihboringKnobs(){
+            const percentage = calculatePercentage()
+            console.log(percentage)
+
+            const newR = Math.floor(color1.r + .5 * (color2.r - color1.r));
+            const newG = Math.floor(color1.g + .5 * (color2.g - color1.g));
+            const newB = Math.floor(color1.b + .5 * (color2.b - color1.b));
+
+            return {r: newR, g: newG, b: newB, colorStr: `rgba(${newR}, ${newG}, ${newB}, 1)`, value: currentX}
+        }
+
+        function findThumb(){
+            const thumbArrDescending = [...thumbArr]
+            const thumbArrAscending = [...thumbArr]
+    
+
+            const thumb1 = thumbArrDescending.find(({value})=>value<currentX)
+            const thumb2 = thumbArrAscending.find(({value})=>value>currentX)
+        }
 
     }
 }
