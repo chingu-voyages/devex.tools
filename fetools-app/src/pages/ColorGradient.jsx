@@ -26,7 +26,7 @@ export default function ColorGradient() {
   ]);
 
   const [currentKnob, setCurrentKnob] = useState(false);
-
+  
   const [inputValue, setInputValue] = useState({
     color: getHexString(gradientColors[0].colorStr),
     position: gradientColors[0].value,
@@ -40,6 +40,14 @@ export default function ColorGradient() {
     }
   },[currentKnob])
 
+
+  useEffect(()=>{
+    const gradientRuleSlider = generateGradientRule(gradientColors, null, true)
+    const gradientRule = generateGradientRule(gradientColors)
+    
+    updateCSSValues('.gradientSlider', 'background', gradientRuleSlider) 
+    updateCSSValues('.gradient', 'background', gradientRule)  
+  },[inputValue])
 
   return (
     <>
@@ -97,8 +105,6 @@ export default function ColorGradient() {
 
     setInputValue({ ...inputValue, color: newColor }); // Update input value
 
-    console.log(newColor, inputValue)
-
     if (isValidHexColor(newColor)) {
         handleColorChange(newColor); // Pass the new color to the parent component
     }
@@ -114,8 +120,6 @@ export default function ColorGradient() {
       newColorsArr[0] = getRgb(newColor);
       newGradientColors[0] = {...newColorsArr[0], value: 0}
       
-      console.log(newColorsArr);
-
       setColorsArr(newColorsArr);
       setGradientColors(newGradientColors)
       return;
@@ -136,18 +140,12 @@ export default function ColorGradient() {
     inputValue.position = newValue
 
     setGradientColors([...gradientColors])
-
-    const gradientRule = generateGradientRule(gradientColors)
-    updateCSSValues('.gradient', 'background', gradientRule);
   }
 
   function handleRotationInputChange(evt){
     inputValue.rotation =  parseInt(evt.target.value)
 
     setInputValue({...inputValue, rotation: parseInt(evt.target.value)})
-
-    const gradientRule = generateGradientRule(gradientColors)
-    updateCSSValues('.gradient', 'background', gradientRule);    
   }
 
   function handleSetInputValue(newValues) {
@@ -191,7 +189,7 @@ export default function ColorGradient() {
     const gradientRule = `linear-gradient(${rotationValue}deg, ${colors.join(', ')})`;
 
     return gradientRule;
-}
+  }   
 
   function updateCSSValues(cssClassName, propertyName, newValue) {
     const element = containerRef.current.querySelector(cssClassName);
