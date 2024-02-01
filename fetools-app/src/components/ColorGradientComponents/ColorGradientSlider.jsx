@@ -20,7 +20,7 @@ export default function ColorGradientSlider({
         createThumbColorRule()
         updateHandleValuesOnGradientState()
         updateCSSValues('.gradient', 'background', generateGradientRule(gradientColors));
-        updateCSSValues('.gradientSlider', 'background', generateGradientRule(gradientColors, '90'));
+        updateCSSValues('.gradientSlider', 'background', generateGradientRule(gradientColors, '90', true));
     }, [gradientColors]);
 
     return(
@@ -79,6 +79,7 @@ export default function ColorGradientSlider({
             ...inputValue,
             color: currentThumb.dataset.color, 
             position: currentValue,
+            type: inputValue.type
         })
 
 
@@ -107,7 +108,8 @@ export default function ColorGradientSlider({
         handleSetInputValue({
             color: currentThumb.dataset.color,
             position: currentThumb.value,
-            rotation: inputValue.rotation
+            rotation: inputValue.rotation,
+            type: inputValue.type
         })
 
         handleSetActiveIndex(currentThumb.id)

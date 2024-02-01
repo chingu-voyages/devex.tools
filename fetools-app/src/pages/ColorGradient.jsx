@@ -27,12 +27,11 @@ export default function ColorGradient() {
 
   const [currentKnob, setCurrentKnob] = useState(false);
 
-  const [currentRotation, setCurrentRotation] = useState(25)
-
   const [inputValue, setInputValue] = useState({
     color: getHexString(gradientColors[0].colorStr),
     position: gradientColors[0].value,
-    rotation: currentRotation
+    rotation: 25,
+    type: 'Linear'
   });
 
   useEffect(()=>{
@@ -41,13 +40,6 @@ export default function ColorGradient() {
     }
   },[currentKnob])
 
-  useEffect(()=>{
-    if(inputValue.rotation!==currentRotation){
-      setCurrentRotation(inputValue.rotation)
-      updateCSSValues('.gradient', 'background', generateGradientRule(colorsArr, (inputValue.rotation*3.6)))
-    }
-
-  },[inputValue, currentRotation])
 
   return (
     <>
@@ -77,10 +69,14 @@ export default function ColorGradient() {
 
           <ColorGradientInterface
             inputValue={inputValue}
+            setInputValue={setInputValue}
             handleColorInputChange={handleColorInputChange}
             handlePositionInputChange={handlePositionInputChange}
             handleRotationInputChange={handleRotationInputChange}
             updateValuesOnBlur={updateValuesOnBlur}
+            gradientColors={gradientColors}
+            generateGradientRule={generateGradientRule}
+            updateCSSValues={updateCSSValues}
           />
         </div>
 
@@ -148,7 +144,7 @@ export default function ColorGradient() {
   function handleRotationInputChange(evt){
     inputValue.rotation =  parseInt(evt.target.value)
 
-    setInputValue({...inputValue, rotatio: parseInt(evt.target.value)})
+    setInputValue({...inputValue, rotation: parseInt(evt.target.value)})
 
     const gradientRule = generateGradientRule(gradientColors)
     updateCSSValues('.gradient', 'background', gradientRule);    
@@ -158,7 +154,8 @@ export default function ColorGradient() {
     setInputValue({
       color: getHexString(newValues.color),
       position: newValues.position,
-      rotation: newValues.rotation
+      rotation: newValues.rotation,
+      type: newValues.type
     })
   }
 
@@ -166,9 +163,10 @@ export default function ColorGradient() {
     setInputValue({...inputValue})
   }
 
-  function generateGradientRule(colorsArr, newRotation=null) {
+  function generateGradientRule(colorsArr, newRotation=null, isSlider) {
         
     const rotationValue = newRotation||(parseInt(inputValue.rotation)*3.6)
+    const type = inputValue.type
 
     const sortedColors = [...colorsArr]
     sortedColors.sort(( {value: color1Value}, {value: color2Value} ) => color1Value - color2Value)
@@ -184,6 +182,12 @@ export default function ColorGradient() {
     }
 
     const colors = sortedColors.map(({colorStr,value}) => (`${colorStr} ${value}%`));
+
+    if(type==='Radial' && !isSlider){
+      const gradientRule = `${type}-gradient(${colors.join(', ')})`;
+      return gradientRule;
+    }
+
     const gradientRule = `linear-gradient(${rotationValue}deg, ${colors.join(', ')})`;
 
     return gradientRule;

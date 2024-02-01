@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "C:/Users/steve/OneDrive/Documents/Online Courses/Udemy/JS Bootcamp 2022"
+		},
+		{
+			"path": "C:/Users/steve/OneDrive/Documents/ElMcpapax"
+		},
+		{
+			"path": "C:/Users/steve/OneDrive/Documents/PhaserJSProjects"
+		},
+		{
+			"path": "C:/Users/steve/OneDrive/Documents/Online Courses/Udemy/React - THe Complete Guide 2024"
+		},
+		{
+			"path": "../../../.."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "PhaserJSProjects"
+	}
+}
