@@ -5,6 +5,9 @@ import ColorGradientSlider from "../components/ColorGradientComponents/ColorGrad
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ColorGradientInterface from "../components/ColorGradientComponents/ColorGradientInterface";
+import CodeBlock from "../components/CodeBlock";
+import TabSwitcher from "../components/TabSwitcher";
+import { Code } from "lucide-react";
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -60,7 +63,7 @@ export default function ColorGradient() {
 
       <div
         ref={containerRef}
-        className="flex flex-1 lg:mx-48 justify-between gap-x-2"
+        className="flex flex-1 lg:mx-48 justify-between gap-x-4"
       >
         <div className="flex-1 flex-col w-full rounded-lg border border-black">
           <ColorGradientSlider
@@ -94,6 +97,10 @@ export default function ColorGradient() {
           className="gradient flex-1 rounded-lg border border-black"
         ></div>
       </div>
+
+      <TabSwitcher title={'Code Sample'}>
+        <CodeBlock title={'CSS Snipet'}/>
+      </TabSwitcher>      
     </>
   );
 
