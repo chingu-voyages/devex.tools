@@ -206,4 +206,23 @@
         filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A47275", endColorstr="#FFC07C", GradientType=1 );
     }
   }
+
+  @layer colorPicker{
+    .saturation .react-colorful{
+      height: 15em;
+      width: 13em;
+    }
+    
+    .saturation .react-colorful__saturation {
+      height: 130px;
+      border-radius: 0;
+    }
+    
+    .saturation .react-colorful__hue {
+      margin-top: 1em;
+      border-radius: 1em;
+      height: 1em;
+    }
+  
+  }
 }
