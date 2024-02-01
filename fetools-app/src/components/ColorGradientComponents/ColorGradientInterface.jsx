@@ -3,12 +3,15 @@ import tinycolor from "tinycolor2";
 
 export default function ColorGradientInterface({
     inputValue,
-    handleColorInputChange
+    handleColorInputChange,
+    handlePositionInputChange,
+    updateValuesOnBlur
 }){
     
     const [displayData, setDisplayData] = useState(inputValue)
     const [lastValidData, setLastValidData] = useState(inputValue)
     
+    const parentRef = useRef() 
     const colorInputRef = useRef()
 
     // Update displayData when showValues changes
@@ -21,14 +24,20 @@ export default function ColorGradientInterface({
 
     // Ensure input fields reflect the updated displayData
     useEffect(() => {
-        if (colorInputRef.current) {
-            colorInputRef.current.value = inputValue.color;
+        if(parentRef.current){
+            [...parentRef.current.children].forEach(label=>{
+                if(label.id === 'color'){
+                    label.children[0].value = inputValue.color
+                } else if(label.id === 'position'){
+                    label.children[0].value = inputValue.position
+                }
+            })
         }
     }, [inputValue]);
 
     return(
         <>
-        <div className="grid grid-cols-2 grid-rows-3 gap-x-7 gap-y-12 px-5">
+        <div ref={parentRef} className="grid grid-cols-2 grid-rows-3 gap-x-7 gap-y-12 px-5">
             <label id="color" className="flex flex-col w-full font-bold ">Color
                 <input 
                 ref={colorInputRef} 
@@ -36,16 +45,24 @@ export default function ColorGradientInterface({
                 onChange={handleColorInputChange} 
                 placeholder={lastValidData.color || displayData.color}
                 type="text" 
+                maxLength={7}
                 className="rounded-sm border border-gray-400 p-4 uppercase"/>
             </label>
             <label id="position" className="flex flex-col w-full font-bold">Position
-                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase"/>
+                <input
+                defaultValue={displayData.position}
+                onChange={handlePositionInputChange}
+                onBlur={updateValuesOnBlur}
+                placeholder={lastValidData.position || displayData.position}
+                type="text" 
+                maxLength={4}
+                className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
-            <label id="color" className="flex flex-col w-full font-bold">Rotation
-                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase"/>
+            <label id="rotation" className="flex flex-col w-full font-bold">Rotation
+                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
-            <label id="position" className="flex flex-col w-full font-bold">Type
-                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase"/>
+            <label id="type" className="flex flex-col w-full font-bold">Type
+                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
         </div>
         </>
