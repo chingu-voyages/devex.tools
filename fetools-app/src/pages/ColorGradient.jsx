@@ -132,29 +132,26 @@ export default function ColorGradient() {
   }
 
   function handlePositionInputChange(evt){
-    const regex1 = /(^[\d]{0,3}%$)/gm;
-    const regex2 = /(^[\d]{0,3}$)/gm;
-    const newValue =  evt.target.value
 
-    if(newValue.match(regex1)||newValue.match(regex2)){
+    const newValue =  parseInt(evt.target.value)
 
-      const isMatch = newValue.match(regex1)||newValue.match(regex2);
-      
-      const value = parseInt(isMatch[0].replace('%',''))
-      
-      currentKnob.value = value
-      gradientColors[0].value = value
-      inputValue.position = value
+    currentKnob.value = newValue
+    gradientColors[0].value = newValue
+    inputValue.position = newValue
 
-      setGradientColors([...gradientColors])
-    }
+    setGradientColors([...gradientColors])
 
     const gradientRule = generateGradientRule(gradientColors)
     updateCSSValues('.gradient', 'background', gradientRule);
   }
 
   function handleRotationInputChange(evt){
-    inputValue.rotation =  evt.target.value
+    inputValue.rotation =  parseInt(evt.target.value)
+
+    setInputValue({...inputValue, rotatio: parseInt(evt.target.value)})
+
+    const gradientRule = generateGradientRule(gradientColors)
+    updateCSSValues('.gradient', 'background', gradientRule);    
   }
 
   function handleSetInputValue(newValues) {
