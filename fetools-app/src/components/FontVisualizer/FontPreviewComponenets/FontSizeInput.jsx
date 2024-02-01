@@ -8,7 +8,7 @@ const FontSizeInput = ({ font, handleFontSizeChange }) => {
         <input
           type="range"
           value={font.fontSize}
-          min={-10}
+          min={0.1}
           max={10}
           step={0.01}
           onChange={(e) => handleFontSizeChange(parseFloat(e.target.value))}
