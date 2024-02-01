@@ -58,7 +58,7 @@ export default function ColorGradientInterface({
                 maxLength={4}
                 className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
-            <label id="totation" className="flex flex-col w-full font-bold">Rotation
+            <label id="rotation" className="flex flex-col w-full font-bold">Rotation
                 <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
             <label id="type" className="flex flex-col w-full font-bold">Type
