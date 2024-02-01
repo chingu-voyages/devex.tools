@@ -62,9 +62,6 @@ export default function ColorGradientInterface({
                 className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
             <label id="rotation" className="flex flex-col w-full font-bold">Rotation
-<<<<<<< Updated upstream
-                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
-=======
                 <input
                 defaultValue={displayData.rotation} 
                 placeholder={lastValidData.rotation || displayData.rotation}
@@ -72,7 +69,6 @@ export default function ColorGradientInterface({
                 maxLength={4} 
                 onChange={handleRotationInputChange}
                 className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
->>>>>>> Stashed changes
             </label>
             <label id="type" className="flex flex-col w-full font-bold">Type
                 <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
