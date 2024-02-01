@@ -7,6 +7,7 @@ import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ColorGradientInterface from "../components/ColorGradientComponents/ColorGradientInterface";
 import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -107,7 +108,11 @@ export default function ColorGradient() {
         <CodeBlock title={'CSS Snipet'}
         code={'background'} unit={codeBlockRules.background}
         />
-      </TabSwitcher>      
+      </TabSwitcher>   
+
+      <GoDeeper linksData={[
+        {url: '#', textValue: 'Not a link available yet'}
+      ]}></GoDeeper>   
     </>
   );
 
