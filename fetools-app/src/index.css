@@ -176,7 +176,23 @@
       .wrap label:nth-of-type(8) ::-webkit-slider-thumb{
         background: var(--thumb-color-7);
       }
+
+      .wrap label:nth-of-type(9) ::-webkit-slider-thumb{
+        background: var(--thumb-color-8);
+      }
+
+      .wrap label:nth-of-type(10) ::-webkit-slider-thumb{
+        background: var(--thumb-color-9);
+      }
     }
+
+    @layer interfaceStyle{
+      input[type=text]:nth-of-type(2){
+        text-align: center;
+      
+      }
+    }
+
 
     .gradientCSS{
         background: hsla(356, 22%, 55%, 1);

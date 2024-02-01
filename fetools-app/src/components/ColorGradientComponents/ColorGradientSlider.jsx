@@ -7,7 +7,8 @@ export default function ColorGradientSlider({
     handleSetCurrentKnob,
     handleSetInputValue,
     gradientColors,
-    setGradientColors
+    setGradientColors,
+    generateGradientRule
 }){
 
     const [activeIndex, setActiveIndex] = useState(0)
@@ -108,26 +109,6 @@ export default function ColorGradientSlider({
 
     }
 
-    function generateGradientRule(colorsArr) {
-        
-        const sortedColors = [...colorsArr]
-        sortedColors.sort(( {value: color1Value}, {value: color2Value} ) => color1Value - color2Value)
-
-        const newColorObject = sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr}))
-
-        const isColorsArrSimilarToSorted = colorsArr.every(({colorStr}, idx)=>(
-            colorStr === newColorObject[idx].colorStr
-        ))
-
-        if(!isColorsArrSimilarToSorted){
-            setColorsArr(sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr})))
-        }
-
-        const colors = sortedColors.map(({colorStr,value}) => (`${colorStr} ${value}%`));
-        const gradientRule = `linear-gradient(90deg, ${colors.join(', ')})`;
-
-        return gradientRule;
-    }
  
     function createThumbColorRule(){
         const wrapElement = sliderContainerRef.current.getElementsByClassName('wrap')[0]

@@ -4,7 +4,8 @@ import tinycolor from "tinycolor2";
 export default function ColorGradientInterface({
     inputValue,
     handleColorInputChange,
-    handlePositionInputChange
+    handlePositionInputChange,
+    updateValuesOnBlur
 }){
     
     const [displayData, setDisplayData] = useState(inputValue)
@@ -44,21 +45,24 @@ export default function ColorGradientInterface({
                 onChange={handleColorInputChange} 
                 placeholder={lastValidData.color || displayData.color}
                 type="text" 
+                maxLength={7}
                 className="rounded-sm border border-gray-400 p-4 uppercase"/>
             </label>
             <label id="position" className="flex flex-col w-full font-bold">Position
                 <input
                 defaultValue={displayData.position}
                 onChange={handlePositionInputChange}
+                onBlur={updateValuesOnBlur}
                 placeholder={lastValidData.position || displayData.position}
                 type="text" 
-                className="rounded-sm border border-gray-400 p-4 uppercase"/>
+                maxLength={4}
+                className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
             <label id="totation" className="flex flex-col w-full font-bold">Rotation
-                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase"/>
+                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
             <label id="type" className="flex flex-col w-full font-bold">Type
-                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase"/>
+                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
         </div>
         </>

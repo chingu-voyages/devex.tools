@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { getRandomColor, getHexString, getHslString, isValidHexColor, getRgb } from "../components/ColorGradientComponents/ColorGradientUtils";
 
 import ColorGradientSlider from "../components/ColorGradientComponents/ColorGradientSlider";
@@ -29,8 +29,15 @@ export default function ColorGradient() {
 
   const [inputValue, setInputValue] = useState({
     color: getHexString(gradientColors[0].colorStr),
-    position: gradientColors[0].value
+    position: `${gradientColors[0].value}%`
   });
+
+  useEffect(()=>{
+    if(!currentKnob){
+      setCurrentKnob(containerRef.current.querySelector('.thumb'))
+    }
+
+  },[currentKnob])
 
   return (
     <>
@@ -53,6 +60,7 @@ export default function ColorGradient() {
             handleColorChange={handleColorChange}
             handleSetCurrentKnob={handleSetCurrentKnob}
             handleSetInputValue={handleSetInputValue}
+            generateGradientRule={generateGradientRule}
             gradientColors={gradientColors}
             setGradientColors={setGradientColors}
           />
@@ -61,6 +69,7 @@ export default function ColorGradient() {
             inputValue={inputValue}
             handleColorInputChange={handleColorInputChange}
             handlePositionInputChange={handlePositionInputChange}
+            updateValuesOnBlur={updateValuesOnBlur}
           />
         </div>
 
@@ -114,11 +123,29 @@ export default function ColorGradient() {
   }
 
   function handlePositionInputChange(evt){
-    const regex = new RegExp('(^[\d]{0,3}%$)', 'gm')
+    const regex1 = /(^[\d]{0,3}%$)/gm;
+    const regex2 = /(^[\d]{0,3}$)/gm;
+    const newValue =  evt.target.value
 
-    regex.test(evt.value)
+    if(newValue.match(regex1)||newValue.match(regex2)){
 
-    console.log(regex.test(evt.value))
+      const isMatch = newValue.match(regex1)||newValue.match(regex2);
+      
+      const value = parseInt(isMatch[0].replace('%',''))
+      
+      currentKnob.value = value
+      gradientColors[0].value = value
+      inputValue.position = `${value}%`
+
+      setGradientColors([...gradientColors])
+    }
+
+    const gradientRule = generateGradientRule(gradientColors)
+    updateCSSValues('.gradient', 'background', gradientRule);
+  }
+
+  function updateValuesOnBlur(){
+    setInputValue({...inputValue})
   }
 
   function handleSetInputValue(newValues) {
@@ -127,6 +154,27 @@ export default function ColorGradient() {
       position: `${newValues.position}%`,
     })
   }
+
+  function generateGradientRule(colorsArr) {
+        
+    const sortedColors = [...colorsArr]
+    sortedColors.sort(( {value: color1Value}, {value: color2Value} ) => color1Value - color2Value)
+
+    const newColorObject = sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr}))
+
+    const isColorsArrSimilarToSorted = colorsArr.every(({colorStr}, idx)=>(
+        colorStr === newColorObject[idx].colorStr
+    ))
+
+    if(!isColorsArrSimilarToSorted){
+        setColorsArr(sortedColors.map(({r,g,b,colorStr})=>({r,g,b,colorStr})))
+    }
+
+    const colors = sortedColors.map(({colorStr,value}) => (`${colorStr} ${value}%`));
+    const gradientRule = `linear-gradient(90deg, ${colors.join(', ')})`;
+
+    return gradientRule;
+}
 
   function updateCSSValues(cssClassName, propertyName, newValue) {
     const children = containerRef.current.querySelectorAll(cssClassName);
