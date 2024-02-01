@@ -16,7 +16,6 @@ export function Dropdown({setInputValue,inputValue, updateTypeOnCSS}) {
   const buttonRef = React.useRef()
 
   React.useEffect(()=>{
-    console.log(position)
     if(inputValue.type !== position){
       console.log(position)
       updateValues()

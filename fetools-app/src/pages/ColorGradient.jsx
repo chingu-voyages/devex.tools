@@ -42,7 +42,7 @@ export default function ColorGradient() {
 
 
   useEffect(()=>{
-    const gradientRuleSlider = generateGradientRule(gradientColors, null, true)
+    const gradientRuleSlider = generateGradientRule(gradientColors, 90, true)
     const gradientRule = generateGradientRule(gradientColors)
     
     updateCSSValues('.gradientSlider', 'background', gradientRuleSlider) 
