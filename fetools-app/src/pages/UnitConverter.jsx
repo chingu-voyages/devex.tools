@@ -88,14 +88,37 @@ function UnitConverter() {
 
   // Handler for Tailwind size changes
   const handleTailwindChange = (e) => {
-    const newTailwindSize = parseFloat(e.target.value);
-    setTailwindSize(TailwindCheck(newTailwindSize));
-    const newEm = newTailwindSize / 4;
+    const inputValue = e.target.value.toString();
+    let newTailwindSize;
+    let newEm;
+
+    // Checks if the input value is in the format [X.XXXrem] and parses it correctly
+    if (inputValue.startsWith("[") && inputValue.endsWith("rem]")) {
+      // Extracts the numeric part and parses it as float
+      const remValue = inputValue.slice(1, -4);
+      if (!isNaN(remValue)) {
+        newEm = remValue;
+        newTailwindSize = TailwindCheck(newEm * 4);
+      } else {
+        newTailwindSize = 0;
+        newEm = 0;
+      }
+    } else {
+      newTailwindSize = inputValue;
+      newEm = newTailwindSize / 4;
+    }
+
+    setTailwindSize(newTailwindSize);
     setEm(newEm);
     const newPixels = newEm * basePixelSize;
     setPixels(newPixels);
     updateCssSize(newPixels);
   };
+
+  //Tailwind Blur Function - handles entered tailwind sizes that don't exist
+  function onTailwindBlur() {
+    if (!isNaN(tailwindSize)) setTailwindSize(TailwindCheck(tailwindSize));
+  }
 
   // A ref to the base size input element
   const baseSizeInputRef = useRef(null);
@@ -288,7 +311,8 @@ function UnitConverter() {
             title="Tailwind Size"
             value={tailwindSize}
             onValueChange={handleTailwindChange}
-            inputType={typeof tailwindSize === "string" ? "text" : "number"}
+            inputType="text"
+            onBlur={onTailwindBlur}
           />
         </div>
         {/* Section for Lorem Ipsum Preview*/}

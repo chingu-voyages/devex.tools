@@ -7,6 +7,7 @@ function TextField({
   unit,
   onValueChange,
   inputType = "number",
+  onBlur,
 }) {
   // A ref to the input element
   const inputRef = useRef(null);
@@ -36,6 +37,7 @@ function TextField({
           value={value}
           onChange={onValueChange}
           onFocus={handleInputClick}
+          onBlur={onBlur}
         />
         {unit && (
           <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none font-semibold">
