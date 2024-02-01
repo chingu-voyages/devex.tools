@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
 import tinycolor from "tinycolor2";
+
 import { Dropdown } from "./Dropdown";
 
 export default function ColorGradientInterface({
@@ -11,7 +13,8 @@ export default function ColorGradientInterface({
     updateValuesOnBlur,
     gradientColors,
     generateGradientRule,
-    updateCSSValues
+    updateCSSValues,
+    onClickRandom
 }){
     
     const [displayData, setDisplayData] = useState(inputValue)
@@ -91,7 +94,10 @@ export default function ColorGradientInterface({
                 className="rounded-sm border border-gray-400 py-4 uppercase text-center"/>
                 <span className="block absolute bottom-0 left-24">{parseInt(displayData.rotation*3.6)}°</span>
             </label>
-
+            <Button 
+            onClick={onClickRandom}
+            variant="outline" 
+            className='col-span-2 rounded-sm border border-gray-400 h-14'>Random</Button>
         </div>
         </>
     )

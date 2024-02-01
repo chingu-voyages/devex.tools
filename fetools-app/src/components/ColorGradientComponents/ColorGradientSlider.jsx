@@ -103,8 +103,6 @@ export default function ColorGradientSlider({
 
         currentThumb.classList.add('isActive', 'z-10')
     
-        console.log(inputValue)
-
         handleSetInputValue({
             color: currentThumb.dataset.color,
             position: currentThumb.value,

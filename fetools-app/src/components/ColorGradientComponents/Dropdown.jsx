@@ -28,7 +28,7 @@ export function Dropdown({setInputValue,inputValue, updateTypeOnCSS}) {
       <span className="font-bold my-1">Type</span>
       <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button ref={buttonRef} variant="outline" className="w-full py-6 h-2/3 border border-gray-400 outline-none">{position}</Button>
+            <Button ref={buttonRef} variant="outline" className="rounded-sm w-full h-14 border border-gray-400 outline-none">{position}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56 outline-none">
             <DropdownMenuRadioGroup value={position} onValueChange={setPosition} className="outline-none">

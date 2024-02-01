@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { getRandomColor, getHexString, getHslString, isValidHexColor, getRgb } from "../components/ColorGradientComponents/ColorGradientUtils";
+import { getRandomColor, getHexString, isValidHexColor, getRgb } from "../components/ColorGradientComponents/ColorGradientUtils";
 
 import ColorGradientSlider from "../components/ColorGradientComponents/ColorGradientSlider";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
@@ -60,7 +60,7 @@ export default function ColorGradient() {
 
       <div
         ref={containerRef}
-        className="flex flex-1 lg:mx-48 justify-between gap-x-2 h-[425px]"
+        className="flex flex-1 lg:mx-48 justify-between gap-x-2"
       >
         <div className="flex-1 flex-col w-full rounded-lg border border-black">
           <ColorGradientSlider
@@ -85,6 +85,7 @@ export default function ColorGradient() {
             gradientColors={gradientColors}
             generateGradientRule={generateGradientRule}
             updateCSSValues={updateCSSValues}
+            onClickRandom={onClickRandom}
           />
         </div>
 
@@ -195,5 +196,19 @@ export default function ColorGradient() {
     const element = containerRef.current.querySelector(cssClassName);
 
     element.style[propertyName] = newValue;
+  }
+
+  function onClickRandom(){
+    const newColorArr = [getRandomColor(), getRandomColor()]
+    setColorsArr(newColorArr)
+    setGradientColors([
+    {
+      ...newColorArr[0],
+      value: 0
+    },
+    {
+      ...newColorArr[1],
+      value: 100
+    }])
   }
 } 
