@@ -135,7 +135,7 @@ const FontVisualizer = () => {
 
   return (
     <main className="flex flex-col items-start gap-10 p-8 lg:p-20">
-      <div className="flex pb-32 items-end self-stretch">
+      <div className="flex pb-4 items-end self-stretch">
         <h1 className="text-4xl font-bold">Font Viewer</h1>
       </div>
 
