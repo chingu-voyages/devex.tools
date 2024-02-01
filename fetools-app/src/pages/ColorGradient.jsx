@@ -7,7 +7,6 @@ import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ColorGradientInterface from "../components/ColorGradientComponents/ColorGradientInterface";
 import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
-import { Code } from "lucide-react";
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -37,12 +36,17 @@ export default function ColorGradient() {
     type: 'Linear'
   });
 
+  const [codeBlockRules, setCodeBlockRules] = useState(
+    {
+      background: generateGradientRule(colorsArr)
+    }
+  )
+
   useEffect(()=>{
     if(!currentKnob){
       setCurrentKnob(containerRef.current.querySelector('.isActive'))
     }
   },[currentKnob])
-
 
   useEffect(()=>{
     const gradientRuleSlider = generateGradientRule(gradientColors, 90, true)
@@ -50,7 +54,8 @@ export default function ColorGradient() {
     
     updateCSSValues('.gradientSlider', 'background', gradientRuleSlider) 
     updateCSSValues('.gradient', 'background', gradientRule)  
-  },[inputValue])
+    setCodeBlockRules({...codeBlockRules, background: getCssCode()})
+  },[inputValue, gradientColors])
 
   return (
     <>
@@ -99,7 +104,9 @@ export default function ColorGradient() {
       </div>
 
       <TabSwitcher title={'Code Sample'}>
-        <CodeBlock title={'CSS Snipet'}/>
+        <CodeBlock title={'CSS Snipet'}
+        code={'background'} unit={codeBlockRules.background}
+        />
       </TabSwitcher>      
     </>
   );
@@ -218,4 +225,11 @@ export default function ColorGradient() {
       value: 100
     }])
   }
+
+  function getCssCode(){
+    const currentStyle = containerRef.current.querySelector('.gradient').style.background
+  
+    return currentStyle
+  }
 } 
+
