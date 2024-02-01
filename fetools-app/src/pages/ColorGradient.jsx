@@ -183,4 +183,4 @@ export default function ColorGradient() {
       element.style[propertyName] = newValue;
     });
   }
-}
+} 
