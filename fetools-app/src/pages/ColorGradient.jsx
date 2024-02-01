@@ -27,18 +27,27 @@ export default function ColorGradient() {
 
   const [currentKnob, setCurrentKnob] = useState(false);
 
+  const [currentRotation, setCurrentRotation] = useState(25)
+
   const [inputValue, setInputValue] = useState({
     color: getHexString(gradientColors[0].colorStr),
-    position: `${gradientColors[0].value}%`,
-    rotation: '90°'
+    position: gradientColors[0].value,
+    rotation: currentRotation
   });
 
   useEffect(()=>{
     if(!currentKnob){
       setCurrentKnob(containerRef.current.querySelector('.isActive'))
     }
+  },[currentKnob])
 
-  },[currentKnob, gradientColors])
+  useEffect(()=>{
+    if(inputValue.rotation!==currentRotation){
+      setCurrentRotation(inputValue.rotation)
+      updateCSSValues('.gradient', 'background', generateGradientRule(colorsArr, (inputValue.rotation*3.6)))
+    }
+
+  },[inputValue, currentRotation])
 
   return (
     <>
@@ -135,7 +144,7 @@ export default function ColorGradient() {
       
       currentKnob.value = value
       gradientColors[0].value = value
-      inputValue.position = `${value}%`
+      inputValue.position = value
 
       setGradientColors([...gradientColors])
     }
@@ -145,26 +154,14 @@ export default function ColorGradient() {
   }
 
   function handleRotationInputChange(evt){
-    const regex1 = /(^[\d]{0,3}°$)/gm;
-    const regex2 = /(^[\d]{0,3}$)/gm;
-    const newValue =  evt.target.value
-
-    if(newValue.match(regex1)||newValue.match(regex2)){
-
-      const isMatch = newValue.match(regex1)||newValue.match(regex2);
-      
-      const value = parseInt(isMatch[0].replace('%',''))
-      
-      inputValue.rotation = `${value}°`
-
-    }
+    inputValue.rotation =  evt.target.value
   }
 
   function handleSetInputValue(newValues) {
     setInputValue({
       color: getHexString(newValues.color),
-      position: `${newValues.position}%`,
-      rotation: `${newValues.rotation}`
+      position: newValues.position,
+      rotation: newValues.rotation
     })
   }
 
@@ -174,7 +171,7 @@ export default function ColorGradient() {
 
   function generateGradientRule(colorsArr, newRotation=null) {
         
-    const rotationValue = newRotation||inputValue.rotation.replace('°', '')
+    const rotationValue = newRotation||(parseInt(inputValue.rotation)*3.6)
 
     const sortedColors = [...colorsArr]
     sortedColors.sort(( {value: color1Value}, {value: color2Value} ) => color1Value - color2Value)

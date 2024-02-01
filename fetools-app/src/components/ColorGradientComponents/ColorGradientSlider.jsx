@@ -115,7 +115,6 @@ export default function ColorGradientSlider({
 
     }
 
- 
     function createThumbColorRule(){
         const wrapElement = sliderContainerRef.current.getElementsByClassName('wrap')[0]
 

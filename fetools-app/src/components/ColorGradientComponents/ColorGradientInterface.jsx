@@ -42,8 +42,8 @@ export default function ColorGradientInterface({
     return(
         <>
         <div ref={parentRef} className="grid grid-cols-2 grid-rows-3 gap-x-7 gap-y-12 px-5">
-            <label id="color" className="relative flex flex-col w-full font-bold ">Color
-                <div className="relative w-full z-0">
+            <label id="color" className="flex flex-col font-bold ">Color
+                <div className="relative z-0 max-w-[228px]">
                     <input 
                     ref={colorInputRef} 
                     defaultValue={displayData.color}
@@ -51,39 +51,40 @@ export default function ColorGradientInterface({
                     placeholder={lastValidData.color || displayData.color}
                     type="text" 
                     maxLength={7}
-                    className="rounded-sm border border-gray-400 p-4 uppercase flex-2"/>
+                    className="rounded-sm border border-gray-400 p-4  uppercase flex-2 w-[228px]"/>
 
                     <input 
                     type="color" 
                     defaultValue={displayData.color} 
                     onChange={handleColorInputChange}
-                    className="absolute right-0 top-4"/>
+                    className="absolute right-3 top-4"/>
                 </div>
             </label>
-            <label id="position" className="flex flex-col w-full font-bold">Position
+            <label id="position" className="relative flex flex-col w-full font-bold">Position
                 <input
+                max={100}
                 defaultValue={displayData.position}
                 onChange={handlePositionInputChange}
                 onBlur={updateValuesOnBlur}
-                placeholder={lastValidData.position || displayData.position}
-                type="text" 
-                maxLength={4}
-                className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
-            </label>
-            <label id="rotation" className="flex flex-col w-full font-bold">Rotation
-                <input
-                defaultValue={displayData.rotation} 
-                placeholder={lastValidData.rotation || displayData.rotation}
-                type="text"
-                maxLength={4} 
-                onChange={handleRotationInputChange}
-                className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
+                type="range" 
+                className="rounded-sm border border-gray-400 py-5 uppercase text-center"/>
+                <span className="block absolute bottom-0 left-24">{displayData.position}%</span>
             </label>
             <label id="type" className="flex flex-col w-full font-bold">Type
                 <input 
                 type="text" 
-                className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
+                className="rounded-sm border border-gray-400 py-4 uppercase text-center"/>
             </label>
+            <label id="rotation" className="relative flex flex-col w-full font-bold">Rotation
+                <input
+                max={100}
+                defaultValue={displayData.rotation} 
+                type="range"
+                onChange={handleRotationInputChange}
+                className="rounded-sm border border-gray-400 py-4 uppercase text-center"/>
+                <span className="block absolute bottom-0 left-24">{parseInt(displayData.rotation*3.6)}°</span>
+            </label>
+
         </div>
         </>
     )
