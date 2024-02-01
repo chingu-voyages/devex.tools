@@ -29,15 +29,16 @@ export default function ColorGradient() {
 
   const [inputValue, setInputValue] = useState({
     color: getHexString(gradientColors[0].colorStr),
-    position: `${gradientColors[0].value}%`
+    position: `${gradientColors[0].value}%`,
+    rotation: '90°'
   });
 
   useEffect(()=>{
     if(!currentKnob){
-      setCurrentKnob(containerRef.current.querySelector('.thumb'))
+      setCurrentKnob(containerRef.current.querySelector('.isActive'))
     }
 
-  },[currentKnob])
+  },[currentKnob, gradientColors])
 
   return (
     <>
@@ -69,6 +70,7 @@ export default function ColorGradient() {
             inputValue={inputValue}
             handleColorInputChange={handleColorInputChange}
             handlePositionInputChange={handlePositionInputChange}
+            handleRotationInputChange={handleRotationInputChange}
             updateValuesOnBlur={updateValuesOnBlur}
           />
         </div>
@@ -80,8 +82,6 @@ export default function ColorGradient() {
       </div>
     </>
   );
-
-
 
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);
@@ -144,19 +144,38 @@ export default function ColorGradient() {
     updateCSSValues('.gradient', 'background', gradientRule);
   }
 
-  function updateValuesOnBlur(){
-    setInputValue({...inputValue})
+  function handleRotationInputChange(evt){
+    const regex1 = /(^[\d]{0,3}°$)/gm;
+    const regex2 = /(^[\d]{0,3}$)/gm;
+    const newValue =  evt.target.value
+
+    if(newValue.match(regex1)||newValue.match(regex2)){
+
+      const isMatch = newValue.match(regex1)||newValue.match(regex2);
+      
+      const value = parseInt(isMatch[0].replace('%',''))
+      
+      inputValue.rotation = `${value}°`
+
+    }
   }
 
   function handleSetInputValue(newValues) {
     setInputValue({
       color: getHexString(newValues.color),
       position: `${newValues.position}%`,
+      rotation: `${newValues.rotation}`
     })
   }
 
-  function generateGradientRule(colorsArr) {
+  function updateValuesOnBlur(){
+    setInputValue({...inputValue})
+  }
+
+  function generateGradientRule(colorsArr, newRotation=null) {
         
+    const rotationValue = newRotation||inputValue.rotation.replace('°', '')
+
     const sortedColors = [...colorsArr]
     sortedColors.sort(( {value: color1Value}, {value: color2Value} ) => color1Value - color2Value)
 
@@ -171,16 +190,14 @@ export default function ColorGradient() {
     }
 
     const colors = sortedColors.map(({colorStr,value}) => (`${colorStr} ${value}%`));
-    const gradientRule = `linear-gradient(90deg, ${colors.join(', ')})`;
+    const gradientRule = `linear-gradient(${rotationValue}deg, ${colors.join(', ')})`;
 
     return gradientRule;
 }
 
   function updateCSSValues(cssClassName, propertyName, newValue) {
-    const children = containerRef.current.querySelectorAll(cssClassName);
+    const element = containerRef.current.querySelector(cssClassName);
 
-    children.forEach((element) => {
-      element.style[propertyName] = newValue;
-    });
+    element.style[propertyName] = newValue;
   }
 } 

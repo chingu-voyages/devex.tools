@@ -17,18 +17,17 @@ export default function ColorGradientSlider({
     const sliderContainerRef = useRef()
 
     useEffect(() => {
-        const gradientRule = generateGradientRule(gradientColors);
-
         createThumbColorRule()
         updateHandleValuesOnGradientState()
-        updateCSSValues('.gradient', 'background', gradientRule);
+        updateCSSValues('.gradient', 'background', generateGradientRule(gradientColors));
+        updateCSSValues('.gradientSlider', 'background', generateGradientRule(gradientColors, '90'));
     }, [gradientColors]);
 
     return(
     <>
         <div ref={sliderContainerRef}  id="slider-container" className="flex flex-col flex-1 p-8 rounded-md">
             <div 
-            className="wrap gradient flex flex-col relative w-full h-5 justify-center">
+            className="wrap gradientSlider flex flex-col relative w-full h-5 justify-center">
                 {createHandles()}
             </div>
         </div>
@@ -76,7 +75,11 @@ export default function ColorGradientSlider({
         const currentValue = parseInt(currentThumb.value);
    
         updateGradientValues()
-        handleSetInputValue({color: inputValue.color, position: currentValue})
+        handleSetInputValue({
+            ...inputValue,
+            color: currentThumb.dataset.color, 
+            position: currentValue,
+        })
 
 
         function updateGradientValues(){
@@ -99,9 +102,12 @@ export default function ColorGradientSlider({
 
         currentThumb.classList.add('isActive', 'z-10')
     
+        console.log(inputValue)
+
         handleSetInputValue({
             color: currentThumb.dataset.color,
-            position: currentThumb.value
+            position: currentThumb.value,
+            rotation: inputValue.rotation
         })
 
         handleSetActiveIndex(currentThumb.id)

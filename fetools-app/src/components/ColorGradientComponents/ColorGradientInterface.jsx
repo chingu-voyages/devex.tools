@@ -5,6 +5,7 @@ export default function ColorGradientInterface({
     inputValue,
     handleColorInputChange,
     handlePositionInputChange,
+    handleRotationInputChange,
     updateValuesOnBlur
 }){
     
@@ -30,6 +31,8 @@ export default function ColorGradientInterface({
                     label.children[0].value = inputValue.color
                 } else if(label.id === 'position'){
                     label.children[0].value = inputValue.position
+                } else if(label.id === 'rotation'){
+                    label.children[0].value = inputValue.rotation
                 }
             })
         }
@@ -58,7 +61,7 @@ export default function ColorGradientInterface({
                 maxLength={4}
                 className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
-            <label id="rotation" className="flex flex-col w-full font-bold">Rotation
+            <label id="totation" className="flex flex-col w-full font-bold">Rotation
                 <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
             <label id="type" className="flex flex-col w-full font-bold">Type
