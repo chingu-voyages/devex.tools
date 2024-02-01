@@ -208,21 +208,14 @@
   }
 
   @layer colorPicker{
-    .saturation .react-colorful{
-      height: 15em;
-      width: 13em;
+    .IroColorPicker{
+      width: 100%;
     }
-    
-    .saturation .react-colorful__saturation {
-      height: 130px;
-      border-radius: 0;
+
+    #color-picker-container .IroBox {
+      height: 100px;
     }
-    
-    .saturation .react-colorful__hue {
-      margin-top: 1em;
-      border-radius: 1em;
-      height: 1em;
-    }
+
   
   }
 }
