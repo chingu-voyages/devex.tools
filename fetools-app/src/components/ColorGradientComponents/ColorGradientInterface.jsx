@@ -71,7 +71,9 @@ export default function ColorGradientInterface({
                 className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
             <label id="type" className="flex flex-col w-full font-bold">Type
-                <input type="text" className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
+                <input 
+                type="text" 
+                className="rounded-sm border border-gray-400 p-4 uppercase text-center"/>
             </label>
         </div>
         </>
