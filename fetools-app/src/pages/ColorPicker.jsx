@@ -6,11 +6,11 @@ import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection"
 import ToolHeading from "../components/ToolsLayout/ToolHeading"
 import ColorPickerTool from "../components/ColorPicker/ColorPickerTool"
 import ColorPickerInterface from "../components/ColorPicker/ColorPickerInterface"
+import { getRandomColor } from "../components/ColorGradientComponents/ColorGradientUtils"
 
-function ColorPicker() {
-
-    const [color, setColor] = useState({
-      background: '#000'
+export default function ColorPicker() {
+    const [colorData, setColorData] = useState({
+      color: getRandomColor().colorStr
     })
 
     return (
@@ -28,8 +28,8 @@ function ColorPicker() {
         max-lg:flex-col max-lg:items-center max-lg:gap-y-4 max-lg:mx-6
         lg:mx-48 lg:mt-20 lg:gap-x-24">
           <ColorPickerTool 
-          color={color}
-          setColor={setColor}
+          colorData={colorData}
+          setColorData={setColorData}
           />
           <ColorPickerInterface/>
         </div>
@@ -40,4 +40,3 @@ function ColorPicker() {
     )
 }
   
-export default ColorPicker

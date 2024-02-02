@@ -1,21 +1,21 @@
 import { useRef } from "react";
 import CustomPicker from './CustomPicker';
 
-export default function ColorPickerTool({ color, setColor }) {
+export default function ColorPickerTool({ colorData, setColorData }) {
   const parentRef = useRef();
 
-  const handleChange = (color) => {
-    console.log(color)
-    setColor(color);
+  const handleColorChange = (newColorData) => {
+    console.log(newColorData)
+    setColorData(newColorData)
   };
 
   return (
     <>
       <section ref={parentRef} id="color-picker-container" className="flex flex-1">
+        <div style={{backgroundColor: colorData.color, width: '50px', height: '50px'}}></div>
         <CustomPicker
-        updateSize={updateSize}
-        color={color}
-        handleChange={handleChange}/>
+        colorData={colorData}
+        handleColorChange={handleColorChange}/>
       </section>
     </>
   );
