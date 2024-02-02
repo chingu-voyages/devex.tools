@@ -6,12 +6,13 @@ import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection"
 import ToolHeading from "../components/ToolsLayout/ToolHeading"
 import ColorPickerTool from "../components/ColorPicker/ColorPickerTool"
 import ColorPickerInterface from "../components/ColorPicker/ColorPickerInterface"
-import { getRandomColor } from "../components/ColorGradientComponents/ColorGradientUtils"
 
+import { getRandomColor } from "../components/ColorGradientComponents/ColorGradientUtils"
+import { createColorObj } from "../components/ColorPicker/ColorPickerUtils"
 
 export default function ColorPicker() {
     
-  const [colorData, setColorData] = useState(createRandomColorObj())
+  const [colorData, setColorData] = useState(createColorObj())
 
     return (
     <>
@@ -39,20 +40,5 @@ export default function ColorPicker() {
 
     )
 
-
-    function createRandomColorObj(){
-      const color = getRandomColor().colorStr
-      const hue = getHue()
-
-      return {color: color, hue: hue}
-
-      function getHue(){
-        const hsl = new tinycolor(color).toHsl()
-        hsl.s = 1
-        hsl.l = 0.5
-        return tinycolor(hsl).toRgbString()
-      }
-
-    }
 }
   

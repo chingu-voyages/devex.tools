@@ -15,7 +15,7 @@ export default function CustomPicker({
 
   useEffect(()=>{
     createGradient()
-    console.log(mouseCoor)
+    console.log(mouseCoor, currentColor)
 
     return ()=>{
       stopInterval(intervalMouseMoveRef);
@@ -97,7 +97,26 @@ export default function CustomPicker({
     }
 
     function handleOnMouseMove(e){
+
+      trackColorOnMouse()
       setMouseCoor({x: e.clientX, y: e.clientY})
+
+      function trackColorOnMouse(){
+        const ColorCtx = canvasRef.current.getContext('2d')
+        const canvasRect = canvasRef.current.getBoundingClientRect()
+  
+        const x = mouseCoor.x - canvasRect.left;
+        const y = mouseCoor.y - canvasRect.top;
+  
+        const pixel = ColorCtx.getImageData(x,y,1,1)['data'];   // Read pixel Color
+        const rgb = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+        
+        console.log(ColorCtx)
+        console.log(x, y)
+        console.log(pixel)
+  
+        setCurrentColor(getHexString(rgb))
+      }
     }
 
   }
