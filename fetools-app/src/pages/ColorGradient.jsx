@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import { getRandomColor, getHexString, getHslString, isValidHexColor, getRgb } from "../components/ColorGradientComponents/ColorGradientUtils";
+import { getRandomColor, getHexString, isValidHexColor, getRgb } from "../components/ColorGradientComponents/ColorGradientUtils";
 
 import ColorGradientSlider from "../components/ColorGradientComponents/ColorGradientSlider";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ColorGradientInterface from "../components/ColorGradientComponents/ColorGradientInterface";
+import CodeBlock from "../components/CodeBlock";
+import TabSwitcher from "../components/TabSwitcher";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -26,19 +29,34 @@ export default function ColorGradient() {
   ]);
 
   const [currentKnob, setCurrentKnob] = useState(false);
-
+  
   const [inputValue, setInputValue] = useState({
     color: getHexString(gradientColors[0].colorStr),
-    position: `${gradientColors[0].value}%`,
-    rotation: '90°'
+    position: gradientColors[0].value,
+    rotation: 25,
+    type: 'Linear'
   });
+
+  const [codeBlockRules, setCodeBlockRules] = useState(
+    {
+      background: generateGradientRule(colorsArr)
+    }
+  )
 
   useEffect(()=>{
     if(!currentKnob){
       setCurrentKnob(containerRef.current.querySelector('.isActive'))
     }
+  },[currentKnob])
 
-  },[currentKnob, gradientColors])
+  useEffect(()=>{
+    const gradientRuleSlider = generateGradientRule(gradientColors, 90, true)
+    const gradientRule = generateGradientRule(gradientColors)
+    
+    updateCSSValues('.gradientSlider', 'background', gradientRuleSlider) 
+    updateCSSValues('.gradient', 'background', gradientRule)  
+    setCodeBlockRules({...codeBlockRules, background: getCssCode()})
+  },[inputValue, gradientColors])
 
   return (
     <>
@@ -51,7 +69,7 @@ export default function ColorGradient() {
 
       <div
         ref={containerRef}
-        className="flex flex-1 lg:mx-48 justify-between gap-x-2 h-[425px]"
+        className="flex flex-1 lg:mx-48 justify-between gap-x-4"
       >
         <div className="flex-1 flex-col w-full rounded-lg border border-black">
           <ColorGradientSlider
@@ -68,10 +86,15 @@ export default function ColorGradient() {
 
           <ColorGradientInterface
             inputValue={inputValue}
+            setInputValue={setInputValue}
             handleColorInputChange={handleColorInputChange}
             handlePositionInputChange={handlePositionInputChange}
             handleRotationInputChange={handleRotationInputChange}
             updateValuesOnBlur={updateValuesOnBlur}
+            gradientColors={gradientColors}
+            generateGradientRule={generateGradientRule}
+            updateCSSValues={updateCSSValues}
+            onClickRandom={onClickRandom}
           />
         </div>
 
@@ -80,6 +103,16 @@ export default function ColorGradient() {
           className="gradient flex-1 rounded-lg border border-black"
         ></div>
       </div>
+
+      <TabSwitcher title={'Code Sample'}>
+        <CodeBlock title={'CSS Snipet'}
+        code={'background'} unit={codeBlockRules.background}
+        />
+      </TabSwitcher>   
+
+      <GoDeeper linksData={[
+        {url: '#', textValue: 'Not a link available yet'}
+      ]}></GoDeeper>   
     </>
   );
 
@@ -91,8 +124,6 @@ export default function ColorGradient() {
     const newColor = evt.target.value;
 
     setInputValue({ ...inputValue, color: newColor }); // Update input value
-
-    console.log(newColor, inputValue)
 
     if (isValidHexColor(newColor)) {
         handleColorChange(newColor); // Pass the new color to the parent component
@@ -109,8 +140,6 @@ export default function ColorGradient() {
       newColorsArr[0] = getRgb(newColor);
       newGradientColors[0] = {...newColorsArr[0], value: 0}
       
-      console.log(newColorsArr);
-
       setColorsArr(newColorsArr);
       setGradientColors(newGradientColors)
       return;
@@ -123,48 +152,28 @@ export default function ColorGradient() {
   }
 
   function handlePositionInputChange(evt){
-    const regex1 = /(^[\d]{0,3}%$)/gm;
-    const regex2 = /(^[\d]{0,3}$)/gm;
-    const newValue =  evt.target.value
 
-    if(newValue.match(regex1)||newValue.match(regex2)){
+    const newValue =  parseInt(evt.target.value)
 
-      const isMatch = newValue.match(regex1)||newValue.match(regex2);
-      
-      const value = parseInt(isMatch[0].replace('%',''))
-      
-      currentKnob.value = value
-      gradientColors[0].value = value
-      inputValue.position = `${value}%`
+    currentKnob.value = newValue
+    gradientColors[0].value = newValue
+    inputValue.position = newValue
 
-      setGradientColors([...gradientColors])
-    }
-
-    const gradientRule = generateGradientRule(gradientColors)
-    updateCSSValues('.gradient', 'background', gradientRule);
+    setGradientColors([...gradientColors])
   }
 
   function handleRotationInputChange(evt){
-    const regex1 = /(^[\d]{0,3}°$)/gm;
-    const regex2 = /(^[\d]{0,3}$)/gm;
-    const newValue =  evt.target.value
+    inputValue.rotation =  parseInt(evt.target.value)
 
-    if(newValue.match(regex1)||newValue.match(regex2)){
-
-      const isMatch = newValue.match(regex1)||newValue.match(regex2);
-      
-      const value = parseInt(isMatch[0].replace('%',''))
-      
-      inputValue.rotation = `${value}°`
-
-    }
+    setInputValue({...inputValue, rotation: parseInt(evt.target.value)})
   }
 
   function handleSetInputValue(newValues) {
     setInputValue({
       color: getHexString(newValues.color),
-      position: `${newValues.position}%`,
-      rotation: `${newValues.rotation}`
+      position: newValues.position,
+      rotation: newValues.rotation,
+      type: newValues.type
     })
   }
 
@@ -172,9 +181,10 @@ export default function ColorGradient() {
     setInputValue({...inputValue})
   }
 
-  function generateGradientRule(colorsArr, newRotation=null) {
+  function generateGradientRule(colorsArr, newRotation=null, isSlider) {
         
-    const rotationValue = newRotation||inputValue.rotation.replace('°', '')
+    const rotationValue = newRotation||(parseInt(inputValue.rotation)*3.6)
+    const type = inputValue.type
 
     const sortedColors = [...colorsArr]
     sortedColors.sort(( {value: color1Value}, {value: color2Value} ) => color1Value - color2Value)
@@ -190,14 +200,41 @@ export default function ColorGradient() {
     }
 
     const colors = sortedColors.map(({colorStr,value}) => (`${colorStr} ${value}%`));
+
+    if(type==='Radial' && !isSlider){
+      const gradientRule = `${type}-gradient(${colors.join(', ')})`;
+      return gradientRule;
+    }
+
     const gradientRule = `linear-gradient(${rotationValue}deg, ${colors.join(', ')})`;
 
     return gradientRule;
-}
+  }   
 
   function updateCSSValues(cssClassName, propertyName, newValue) {
     const element = containerRef.current.querySelector(cssClassName);
 
     element.style[propertyName] = newValue;
   }
+
+  function onClickRandom(){
+    const newColorArr = [getRandomColor(), getRandomColor()]
+    setColorsArr(newColorArr)
+    setGradientColors([
+    {
+      ...newColorArr[0],
+      value: 0
+    },
+    {
+      ...newColorArr[1],
+      value: 100
+    }])
+  }
+
+  function getCssCode(){
+    const currentStyle = containerRef.current.querySelector('.gradient').style.background
+  
+    return currentStyle
+  }
 } 
+
