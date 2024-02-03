@@ -186,6 +186,14 @@
       }
     }
 
+    @layer interfaceStyle{
+      input[type=text]:nth-of-type(2){
+        text-align: center;
+      
+      }
+    }
+
+
     .gradientCSS{
         background: hsla(356, 22%, 55%, 1);
 
