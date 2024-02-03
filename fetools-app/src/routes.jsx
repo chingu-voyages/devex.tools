@@ -6,6 +6,7 @@ import UnitConverter from './pages/UnitConverter';
 import ColorPicker from './pages/ColorPicker';
 import CharacterFinder from './pages/CharacterFinder';
 import FontVisualizer from './pages/FontVisualizer'
+import ShadowGenerator from './pages/ShadowGenerator'
 import ColorGradient from './pages/ColorGradient';
 import Team from './pages/Team'
 import App from './App';
@@ -18,6 +19,7 @@ export const router = createBrowserRouter(
         <Route path="color-picker" element={<ColorPicker/>} />
         <Route path="character-finder" element={<CharacterFinder/>} />
         <Route path="font-visualizer" element={<FontVisualizer/>} />
+        <Route path="shadow-generator" element={<ShadowGenerator/>} />
         <Route path="color-gradient" element={<ColorGradient/>} />
         <Route path="team" element={<Team/>} />
       </Route>
