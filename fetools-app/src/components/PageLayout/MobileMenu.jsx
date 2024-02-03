@@ -73,10 +73,8 @@ return(
                     p-5 cursor-pointer
                     ">Team</Link>
                 </li>
-                
             </ul>
         </nav>
     </div>
     )
 }
-

@@ -2,6 +2,7 @@ import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import OptionsBox from "../components/ShadowGeneratorComponents/OptionsBox";
 import CodeBlock from "../components/CodeBlock";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
 import { useState, useRef, useEffect } from "react";
 import tinycolor from "tinycolor2";
 
@@ -79,7 +80,10 @@ const ShadowGenerator = () => {
       </section>
 
       <section className="lg:mx-48">
-        <CodeBlock title="Code" code={"box-shadow:" + currentStyle} />
+        <CodeBlock title="Code" code={"box-shadow"} unit={currentStyle} />
+
+
+       
       </section>
     </>
   );
