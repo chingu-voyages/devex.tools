@@ -1,67 +1,33 @@
-import React, { useState } from "react";
-import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
+import React from "react";
 
 const Preview = ({ generateFontStyles }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [editedText, setEditedText] = useState(
-    "This is a preview text. Joseph Kotvak Stevensaurus wviolinm Ingrig Madrigal d_avid7 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor quam, ac rhoncus risus accumsan vel. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque vel tellus vel arcu malesuada aliquam. Praesent enim justo, placerat at felis ac, dignissim bibendum turpis."
-  );
-
-  const handleDoubleClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
-
-  const handleInputChange = (e) => {
-    setEditedText(e.target.value);
-  };
-
-  const handleFullscreenToggle = () => {
-    setIsFullscreen(!isFullscreen);
-  };
-
   return (
     <div
-      className={`p-4 flex flex-col gap-4 w-full  relative ${
-        isEditing ? "cursor-text" : "cursor-pointer"
-      } ${isFullscreen ? "fixed top-0 left-0 right-0 bottom-0 z-50 " : ""} ${
-        isFullscreen ? "w-screen h-screen" : ""
-      }`}
-      onDoubleClick={handleDoubleClick}
-      onBlur={handleBlur}
+      className="preview-container bg-gray-800 p-12 flex flex-col items-start gap-4 w-full border border-gray-500 rounded"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: "4px",
+        flex: "1 0 0",
+        alignSelf: "stretch",
+        borderRadius: "8px",
+        border: "1px solid var(--Design-Document-Outlines, #999)",
+        background: "var(--Design-Document-Text, #333)",
+      }}
     >
-      <div
-        className={`absolute top-4 right-4 cursor-pointer ${
-          isFullscreen ? "text-white" : "text-black"
-        }`}
-        onClick={handleFullscreenToggle}
+      <h2 className="text-2xl font-bold mb-2 text-white">Preview:</h2>
+      <p
+        style={generateFontStyles()}
+        className="font-preview-text text-white flex-grow"
       >
-        {isFullscreen ? <FiMinimize2 size={20} /> : <FiMaximize2 size={20} />}
-      </div>
-      {isEditing ? (
-        <textarea
-          style={generateFontStyles()}
-          className={`font-preview-text text-white bg-transparent block w-full h-full p-4 ${
-            isFullscreen ? "text-2xl" : "text-base"
-          }`}
-          value={editedText}
-          onChange={handleInputChange}
-          autoFocus
-        />
-      ) : (
-        <p
-          style={generateFontStyles()}
-          className={`font-preview-text break-words p-4 w-full h-full ${
-            isFullscreen ? "text-2xl" : "text-base"
-          }`}
-        >
-          {editedText}
-        </p>
-      )}
+        This is a preview text. Joseph Kotvak Stevensaurus wviolinm Ingrig
+        Madrigal d_avid7 Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit. Aenean auctor tempor quam, ac rhoncus risus accumsan vel. Orci
+        varius natoque penatibus et magnis dis parturient montes, nascetur
+        ridiculus mus. Quisque vel tellus vel arcu malesuada aliquam. Praesent
+        enim justo, placerat at felis ac, dignissim bibendum turpis.
+      </p>
     </div>
   );
 };
