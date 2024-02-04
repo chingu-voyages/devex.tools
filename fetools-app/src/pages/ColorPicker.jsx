@@ -1,13 +1,10 @@
 import { useState } from "react"
 
-import tinycolor from "tinycolor2"
-
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection"
 import ToolHeading from "../components/ToolsLayout/ToolHeading"
 import ColorPickerTool from "../components/ColorPicker/ColorPickerTool"
 import ColorPickerInterface from "../components/ColorPicker/ColorPickerInterface"
 
-import { getRandomColor } from "../components/ColorGradientComponents/ColorGradientUtils"
 import { createColorObj } from "../components/ColorPicker/ColorPickerUtils"
 
 export default function ColorPicker() {

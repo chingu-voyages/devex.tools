@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
+import { createColorObj } from "./ColorPickerUtils";
 
 export default function CustomPicker({
   colorData,
@@ -15,6 +16,7 @@ export default function CustomPicker({
 
   useEffect(()=>{
     createGradient()
+    createMarker()
     console.log(mouseCoor, currentColor)
 
     return ()=>{
@@ -26,15 +28,19 @@ export default function CustomPicker({
   return(
     <>
     <div>
-      <canvas 
-      ref={canvasRef} 
-      id="color-picker"
-      onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
-      onMouseDown={handleClick}
-      onMouseUp={()=>stopInterval(intervalMouseClickRef)}
-      onMouseLeave={()=>stopInterval(intervalMouseClickRef)}
-      className="relative">
-      </canvas>
+      <div className="relative ">
+        <canvas 
+        ref={canvasRef} 
+        id="color-picker"
+        onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
+        onMouseDown={handleClick}
+        onMouseUp={()=>stopInterval(intervalMouseClickRef)}
+        onMouseLeave={()=>stopInterval(intervalMouseClickRef)}
+        className="relative z-0">
+        </canvas>
+        <div className="absolute top-0 leading-none">xd</div> 
+      </div>
+
     </div>  
     </>
   )
@@ -61,6 +67,11 @@ export default function CustomPicker({
     }
 
     function createMarker(){
+      const marker = document.createElement('div')
+
+      marker.classList.add('z-20', 'w-4', 'h-2', 'bg-gray-400', 'top-1', 'left-0')
+
+      canvasRef.current.append(marker)
     }
 
     function handleClick(){
@@ -78,8 +89,7 @@ export default function CustomPicker({
       console.log(x, y)
       console.log(pixel)
 
-      colorData.color = rgb
-      handleColorChange({...colorData})
+      handleColorChange(createColorObj(rgb))
     }
 
     function startInterval(e, func, ref){
