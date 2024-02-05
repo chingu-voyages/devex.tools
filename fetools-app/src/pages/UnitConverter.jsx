@@ -106,11 +106,20 @@ function UnitConverter() {
         newTailwindSize = 0;
         newEm = 0;
       }
+    } else if (inputValue.startsWith("[") && inputValue.endsWith("px]")) {
+      // Extracts the numeric part and parses it as float
+      const pxValue = inputValue.slice(1, -3);
+      if (!isNaN(pxValue)) {
+        let newPx = pxValue;
+        newEm = newPx / basePixelSize;
+        newTailwindSize = inputValue;
+      } else {
+        newTailwindSize = 0;
+        newEm = 0;
+      }
     } else {
       newTailwindSize = inputValue;
-      console.log(newTailwindSize);
       newEm = parseFloat(newTailwindSize) / 4;
-      console.log(newEm);
     }
 
     setTailwindSize(newTailwindSize);
@@ -127,11 +136,15 @@ function UnitConverter() {
     if (tailwindSize.startsWith("[") && tailwindSize.endsWith("rem]")) {
       const remValue = tailwindSize.slice(1, -4);
       let newEm = remValue;
-      newTailwindSize = TailwindCheck(newEm * 4);
+      newTailwindSize = newEm * 4;
+    } else if (tailwindSize.startsWith("[") && tailwindSize.endsWith("px]")) {
+      const pxValue = tailwindSize.slice(1, -3);
+      let newPx = pxValue;
+      let newEm = newPx / basePixelSize;
+      newTailwindSize = newEm * 4;
     } else {
       newTailwindSize = tailwindSize;
     }
-
     setTailwindSize(TailwindCheck(newTailwindSize));
   };
 
