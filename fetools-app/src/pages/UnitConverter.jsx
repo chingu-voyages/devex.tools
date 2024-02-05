@@ -47,6 +47,9 @@ function UnitConverter() {
   ];
 
   const TailwindCheck = (TailwindSize) => {
+    if (isNaN(TailwindSize) || TailwindSize === "") {
+      return "";
+    }
     const nearestTailwindSize = tailwindSizes.find(
       (size) => size == TailwindSize
     );
@@ -105,7 +108,9 @@ function UnitConverter() {
       }
     } else {
       newTailwindSize = inputValue;
-      newEm = newTailwindSize / 4;
+      console.log(newTailwindSize);
+      newEm = parseFloat(newTailwindSize) / 4;
+      console.log(newEm);
     }
 
     setTailwindSize(newTailwindSize);
