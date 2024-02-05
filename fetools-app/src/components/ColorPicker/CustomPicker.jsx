@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react"
 import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
-import { createColorObj } from "./ColorPickerUtils";
-import test from "node:test";
 
 export default function CustomPicker({
   colorData,
@@ -9,6 +7,7 @@ export default function CustomPicker({
 }){
 
   const canvasRef = useRef();
+  const markerRef = useRef();
   const intervalMouseMoveRef = useRef(null);
   const intervalMouseClickRef = useRef(null);
 
@@ -16,8 +15,8 @@ export default function CustomPicker({
   const [currentColor, setCurrentColor] = useState(getHexString(colorData.color))
 
   useEffect(()=>{
+    markerRef.current.children[0].style.background = colorData.color
     createCanvasGradients()
-    createMarker()
 
     canvasRef.current.currentColor = currentColor
 
@@ -35,12 +34,17 @@ export default function CustomPicker({
         ref={canvasRef} 
         id="color-picker"
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
+        onClick={(e)=>handleClick(e,true)}
         onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
         onMouseUp={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
         onMouseLeave={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
         className="relative z-0">
         </canvas>
-        <div className="absolute top-0 leading-none">xd</div> 
+        <div ref={markerRef} 
+        className={`
+        marker absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5`}>
+          {createPickerMarker()}
+        </div> 
       </div>
 
     </div>  
@@ -68,18 +72,20 @@ export default function CustomPicker({
 
     }
 
-    function createMarker(){
-      const marker = document.createElement('div')
-
-      marker.classList.add('z-20', 'w-4', 'h-2', 'bg-gray-400', 'top-1', 'left-0')
-
-      canvasRef.current.append(marker)
+    function createPickerMarker(){
+      return(
+        <div className={`rounded-full border border-slate-300 w-full h-full`}></div>
+      )
     }
 
-    function handleClick(){
+    function handleClick(e, firstClick){
       colorData.color = canvasRef.current.currentColor
       handleColorChange({...colorData})
-      canvasRef.current.click()
+
+      if(!firstClick){
+        canvasRef.current.click()
+      }
+      
     }
 
     function startInterval(e, func, ref){
