@@ -55,10 +55,10 @@ function CharacterFinder() {
 
       if (filteredResults.length === 0) {
         filteredResults = allCharacterArrays.filter(
-          (character) =>
+          (character) => {
             const name = character.name.toLowerCase();
-            name.includes(` ${query.toLowerCase()}`) || name.startsWith(`${query.toLowerCase()} `);
-        );
+            return name.includes(` ${query.toLowerCase()}`) || name.startsWith(`${query.toLowerCase()} `);
+          });
       }
     } else if (query.startsWith("&#")) {
       // search hex
