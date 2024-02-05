@@ -56,12 +56,8 @@ function CharacterFinder() {
       if (filteredResults.length === 0) {
         filteredResults = allCharacterArrays.filter(
           (character) =>
-            character.name.toLowerCase().includes(` ${query.toLowerCase()} `) ||
-            character.name
-              .toLowerCase()
-              .startsWith(`${query.toLowerCase()} `) ||
-            character.name.toLowerCase().endsWith(` ${query.toLowerCase()}`) ||
-            character.name.toLowerCase().includes(` ${query.toLowerCase()}`)
+            const name = character.name.toLowerCase();
+            name.includes(` ${query.toLowerCase()}`) || name.startsWith(`${query.toLowerCase()} `);
         );
       }
     } else if (query.startsWith("&#")) {
