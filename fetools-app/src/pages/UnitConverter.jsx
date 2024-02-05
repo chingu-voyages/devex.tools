@@ -262,6 +262,19 @@ function UnitConverter() {
         code: `top: ${em}rem;\nright: ${em}rem;\nbottom: ${em}em;\nleft: ${em}rem;`,
       },
     ],
+    tailwind: [
+      { title: "Font Size", code: `text-${tailwindSize}` },
+      { title: "Height", code: `h-${tailwindSize}` },
+      { title: "Width", code: `w-${tailwindSize}` },
+      { title: "Margin", code: `m-${tailwindSize}` },
+      { title: "Padding", code: `p-${tailwindSize}` },
+      { title: "Gap", code: `gap-${tailwindSize}` },
+      { title: "Border Width", code: `border-${tailwindSize}` },
+      {
+        title: "Position",
+        code: `top-${tailwindSize}\nright-${tailwindSize}\nbottom-${tailwindSize}\nleft-${tailwindSize}`,
+      },
+    ],
     NaN: [
       { title: "Font Size", code: "font-size: --" },
       { title: "Height", code: "height: --" },
@@ -279,7 +292,7 @@ function UnitConverter() {
 
   //TabSwitcher Content
 
-  const tabButtons = ["px", "em", "rem"];
+  const tabButtons = ["px", "em", "rem", "tailwind"];
 
   const tabContents = [
     <div className="grid grid-cols-4 gap-4">
@@ -300,12 +313,22 @@ function UnitConverter() {
             <CodeBlock title={sample.title} code={sample.code} />
           ))}
     </div>,
+
     <div className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample) => (
             <CodeBlock title={sample.title} code={sample.code} />
           ))
         : CodeSamples["rem"].map((sample) => (
+            <CodeBlock title={sample.title} code={sample.code} />
+          ))}
+    </div>,
+    <div className="grid grid-cols-4 gap-4">
+      {isNaN(pixels)
+        ? CodeSamples["NaN"].map((sample) => (
+            <CodeBlock title={sample.title} code={sample.code} />
+          ))
+        : CodeSamples["tailwind"].map((sample) => (
             <CodeBlock title={sample.title} code={sample.code} />
           ))}
     </div>,

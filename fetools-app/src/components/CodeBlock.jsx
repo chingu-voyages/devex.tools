@@ -9,7 +9,7 @@ function CodeBlock({ title, code }) {
     <div className="mb-4 relative group">
       <div className="mb-2 text-sm font-bold text-gray-400">{title}</div>
       <div className="p-3 bg-gray-200 rounded relative">
-        <pre>
+        <pre className="whitespace-pre-wrap overflow-x-auto">
           <code>{code}</code>
         </pre>
       </div>
