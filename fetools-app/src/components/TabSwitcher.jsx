@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
     Accordion,
     AccordionContent,
@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/accordion"
   
 
-export default function TabSwitcher({buttons, children}){
+export default function TabSwitcher({buttons=[], children, title}){
 
     const [ selectedButton, setSelectedButton] = useState(buttons[0])
     const [ displayedContent, setDisplayedContent] = useState(0)
@@ -26,20 +26,24 @@ export default function TabSwitcher({buttons, children}){
         )
     )
 
+    useEffect(()=>{
+
+    },[selectedButton])
+
     return(
         <div id="tab-switcher" 
         className="flex flex-col flex-1 p-6 mb-2
         sm:p-12 lg:px-48 lg:py-20">
             <div id="tab-switcher-sm" className="max-[420px]:hidden">
                 <div className="flex flex-1 justify-between ">
-                    <h2 className="font-bold text-3xl leading-none">Tab Switcher</h2>
+                    <h2 className="font-bold text-3xl leading-none">{title}</h2>
                     <fieldset className="flex flex-wrap items-center gap-x-8">
                         {radioButtons(buttons)}
                     </fieldset>
                 </div>
 
                 <div className="flex-1 flex-col">
-                    {children[displayedContent]}
+                    {children[displayedContent]||children}
                 </div>
             </div>
 
@@ -47,7 +51,7 @@ export default function TabSwitcher({buttons, children}){
                 <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
                         <AccordionTrigger 
-                        className="font-bold text-3xl leading-none">Tab Switcher</AccordionTrigger>
+                        className="font-bold text-3xl leading-none">{title}</AccordionTrigger>
                         <AccordionContent>
                             <fieldset className="flex flex-wrap items-center gap-x-8">
                                 {radioButtons(buttons)}
@@ -57,7 +61,7 @@ export default function TabSwitcher({buttons, children}){
                 </Accordion>
 
                 <div className="flex-1 flex-col mt-3">
-                    {children[displayedContent]}
+                    {children[displayedContent]||children}
                 </div>
             </div>
 
