@@ -89,13 +89,27 @@ function UnitConverter() {
     updateCssSize(newPixels);
   };
 
-  // Tailwind Size Input Character Validation
+  // Tailwind Size Character Validation
   const isValidCharacter = (char) => {
     const validChars = "[],pxrem.";
     return validChars.includes(char) || !isNaN(char);
   };
 
-  // Handler for Tailwind size changes
+  // Tailwind Size Format Check
+  const FormatCheck = (input) => {
+    // Check if input is in the allowed format [Xrem] or [Xpx], if so, return as is
+    if (
+      (input.startsWith("[") && input.endsWith("rem]")) ||
+      (input.startsWith("[") && input.endsWith("px]"))
+    ) {
+      return input;
+    }
+
+    // Remove all non-numeric characters except for the decimal point
+    return input.replace(/[^\d.]/g, "");
+  };
+
+  // Handler for Tailwind Size changes
   const handleTailwindChange = (e) => {
     const inputValue = e.target.value.toString();
     const lastChar = inputValue.slice(-1); // Get the last character
@@ -106,37 +120,43 @@ function UnitConverter() {
       return; // Stop handling if the last character is not valid
     }
 
+    // Validate format
+    let formattedValue = FormatCheck(inputValue);
+
     let newTailwindSize;
     let newEm;
 
     // Checks if the input value is in the format [X.XXXrem] and parses it correctly
-    if (inputValue.startsWith("[") && inputValue.endsWith("rem]")) {
+    if (formattedValue.startsWith("[") && formattedValue.endsWith("rem]")) {
       // Extracts the numeric part and parses it as float
-      const remValue = inputValue.slice(1, -4);
+      const remValue = formattedValue.slice(1, -4);
       if (!isNaN(remValue)) {
         newEm = remValue;
-        newTailwindSize = inputValue;
+        newTailwindSize = formattedValue;
       } else {
         newTailwindSize = 0;
         newEm = 0;
       }
-    } else if (inputValue.startsWith("[") && inputValue.endsWith("px]")) {
+    } else if (
+      formattedValue.startsWith("[") &&
+      formattedValue.endsWith("px]")
+    ) {
       // Extracts the numeric part and parses it as float
-      const pxValue = inputValue.slice(1, -3);
+      const pxValue = formattedValue.slice(1, -3);
       if (!isNaN(pxValue)) {
         let newPx = pxValue;
         newEm = newPx / basePixelSize;
-        newTailwindSize = inputValue;
+        newTailwindSize = formattedValue;
       } else {
         newTailwindSize = 0;
         newEm = 0;
       }
     } else {
-      newTailwindSize = inputValue;
+      newTailwindSize = formattedValue;
       newEm = parseFloat(newTailwindSize) / 4;
     }
 
-    setTailwindSize(newTailwindSize);
+    setTailwindSize(inputValue);
     setEm(newEm);
     const newPixels = newEm * basePixelSize;
     setPixels(newPixels);
@@ -159,7 +179,7 @@ function UnitConverter() {
     } else {
       newTailwindSize = tailwindSize;
     }
-    setTailwindSize(TailwindCheck(newTailwindSize));
+    setTailwindSize(TailwindCheck(FormatCheck(newTailwindSize)));
   };
 
   // A ref to the base size input element
