@@ -98,7 +98,7 @@ function UnitConverter() {
       const remValue = inputValue.slice(1, -4);
       if (!isNaN(remValue)) {
         newEm = remValue;
-        newTailwindSize = TailwindCheck(newEm * 4);
+        newTailwindSize = inputValue;
       } else {
         newTailwindSize = 0;
         newEm = 0;
@@ -116,9 +116,19 @@ function UnitConverter() {
   };
 
   //Tailwind Blur Function - handles entered tailwind sizes that don't exist
-  function onTailwindBlur() {
-    if (!isNaN(tailwindSize)) setTailwindSize(TailwindCheck(tailwindSize));
-  }
+  const onTailwindBlur = () => {
+    let newTailwindSize;
+
+    if (tailwindSize.startsWith("[") && tailwindSize.endsWith("rem]")) {
+      const remValue = tailwindSize.slice(1, -4);
+      let newEm = remValue;
+      newTailwindSize = TailwindCheck(newEm * 4);
+    } else {
+      newTailwindSize = tailwindSize;
+    }
+
+    setTailwindSize(TailwindCheck(newTailwindSize));
+  };
 
   // A ref to the base size input element
   const baseSizeInputRef = useRef(null);
