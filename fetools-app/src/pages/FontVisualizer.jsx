@@ -39,6 +39,14 @@ const FontVisualizer = () => {
     handleFontChange("fontSize", value);
   };
 
+  const handleBackgroundColorChange = (e) => {
+    setBackgroundColor(e.target.value);
+  };
+
+  const handleFontSizeChange = (value) => {
+    handleFontChange("fontSize", value);
+  };
+
   const handleLetterSpacingChange = (e) => {
     handleFontChange("letterSpacing", `${e.target.value}px`);
   };
@@ -102,12 +110,14 @@ const FontVisualizer = () => {
       fontFamily: font.name,
       color: font.color,
       backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       fontStyle: font.style,
       fontWeight: font.weight,
       textTransform: font.textTransform,
       textAlign: font.textAlign,
       letterSpacing: font.letterSpacing,
       lineHeight: font.lineHeight,
+      fontSize: `${font.fontSize}em`,
       fontSize: `${font.fontSize}em`,
     };
   };
