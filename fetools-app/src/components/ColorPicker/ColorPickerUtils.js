@@ -2,7 +2,14 @@ import { getRandomColor } from "../ColorGradientComponents/ColorGradientUtils"
 import tinycolor from "tinycolor2"
 
 export function createColorObj(newColor){
-    const color = newColor || getRandomColor().colorStr
+
+    let currentColor = getRandomColor().colorStr
+
+    if(newColor){
+      currentColor = tinycolor(newColor).toRgbString()
+    }
+
+    const color = currentColor
     const hue = getHue()
 
     return {color: color, hue: hue}

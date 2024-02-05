@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
 import { createColorObj } from "./ColorPickerUtils";
+import test from "node:test";
 
 export default function CustomPicker({
   colorData,
@@ -15,14 +16,15 @@ export default function CustomPicker({
   const [currentColor, setCurrentColor] = useState(getHexString(colorData.color))
 
   useEffect(()=>{
-    createGradient()
+    createCanvasGradients()
     createMarker()
-    console.log(mouseCoor, currentColor)
+
+    canvasRef.current.currentColor = currentColor
 
     return ()=>{
-      stopInterval(intervalMouseMoveRef);
-      stopInterval(intervalMouseClickRef);
+      stopInterval(intervalMouseMoveRef)
     }
+
   },[mouseCoor])
 
   return(
@@ -33,9 +35,9 @@ export default function CustomPicker({
         ref={canvasRef} 
         id="color-picker"
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
-        onMouseDown={handleClick}
-        onMouseUp={()=>stopInterval(intervalMouseClickRef)}
-        onMouseLeave={()=>stopInterval(intervalMouseClickRef)}
+        onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
+        onMouseUp={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
+        onMouseLeave={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
         className="relative z-0">
         </canvas>
         <div className="absolute top-0 leading-none">xd</div> 
@@ -45,7 +47,7 @@ export default function CustomPicker({
     </>
   )
 
-    function createGradient(){
+    function createCanvasGradients(){
       const ColorCtx = canvasRef.current.getContext('2d');  // This create a 2D context for the canvas
 
       const hue = colorData.hue;
@@ -75,21 +77,9 @@ export default function CustomPicker({
     }
 
     function handleClick(){
-
-      const ColorCtx = canvasRef.current.getContext('2d')
-      const canvasRect = canvasRef.current.getBoundingClientRect()
-
-      const x = mouseCoor.x - canvasRect.left;
-      const y = mouseCoor.y - canvasRect.top;
-
-      const pixel = ColorCtx.getImageData(x,y,1,1)['data'];   // Read pixel Color
-      const rgb = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
-      
-      console.log(ColorCtx)
-      console.log(x, y)
-      console.log(pixel)
-
-      handleColorChange(createColorObj(rgb))
+      colorData.color = canvasRef.current.currentColor
+      handleColorChange({...colorData})
+      canvasRef.current.click()
     }
 
     function startInterval(e, func, ref){
@@ -121,10 +111,6 @@ export default function CustomPicker({
         const pixel = ColorCtx.getImageData(x,y,1,1)['data'];   // Read pixel Color
         const rgb = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
         
-        console.log(ColorCtx)
-        console.log(x, y)
-        console.log(pixel)
-  
         setCurrentColor(getHexString(rgb))
       }
     }

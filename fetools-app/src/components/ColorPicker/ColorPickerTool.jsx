@@ -5,7 +5,6 @@ export default function ColorPickerTool({ colorData, setColorData }) {
   const parentRef = useRef();
 
   const handleColorChange = (newColorData) => {
-    console.log(newColorData)
     setColorData(newColorData)
   };
 
@@ -22,7 +21,6 @@ export default function ColorPickerTool({ colorData, setColorData }) {
 
     function updateSize(){
         const currentParentWidth = parentRef.current.offsetWidth;
-
     }
 
 }
