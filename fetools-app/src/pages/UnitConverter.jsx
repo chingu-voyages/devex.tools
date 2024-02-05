@@ -89,9 +89,23 @@ function UnitConverter() {
     updateCssSize(newPixels);
   };
 
+  // Tailwind Size Input Character Validation
+  const isValidCharacter = (char) => {
+    const validChars = "[],pxrem.";
+    return validChars.includes(char) || !isNaN(char);
+  };
+
   // Handler for Tailwind size changes
   const handleTailwindChange = (e) => {
     const inputValue = e.target.value.toString();
+    const lastChar = inputValue.slice(-1); // Get the last character
+
+    // Validate the last character
+    if (!isValidCharacter(lastChar)) {
+      e.preventDefault();
+      return; // Stop handling if the last character is not valid
+    }
+
     let newTailwindSize;
     let newEm;
 
