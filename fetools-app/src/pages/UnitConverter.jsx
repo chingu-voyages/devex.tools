@@ -1,10 +1,12 @@
 import "../index.css";
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
-import CopyButton from "../components/CopyButton";
+import ToolHeading from "../components/ToolsLayout/ToolHeading";
+import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";
+import TabSwitcher from "../components/TabSwitcher";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 
@@ -86,7 +88,7 @@ function UnitConverter() {
     setPixels(newPixels);
     const newEm = newPixels / basePixelSize;
     setEm(newEm);
-    setTailwindSize(newEm * 4);
+    setTailwindSize(TailwindCheck(newEm * 4));
     updateCssSize(newPixels);
   };
 
@@ -96,7 +98,7 @@ function UnitConverter() {
     setEm(newEm);
     const newPixels = newEm * basePixelSize;
     setPixels(newPixels);
-    setTailwindSize(newEm * 4);
+    setTailwindSize(TailwindCheck(newEm * 4));
     updateCssSize(newPixels);
   };
 
@@ -122,7 +124,6 @@ function UnitConverter() {
 
   // Handler for Tailwind Size changes
   const handleTailwindChange = (e) => {
-
     const inputValue = e.target.value.toString();
     const lastChar = inputValue.slice(-1); // Get the last character
 
@@ -169,9 +170,9 @@ function UnitConverter() {
     }
 
     setTailwindSize(inputValue);
-
     setEm(newEm);
-    setPixels(newEm * basePixelSize);
+    const newPixels = newEm * basePixelSize;
+    setPixels(newPixels);
     updateCssSize(newPixels);
   };
 
@@ -199,7 +200,14 @@ function UnitConverter() {
 
   // Handler for the cog (settings) icon click. Toggles the edit mode state.
   const handleCogClick = () => {
-    setEditMode(!editMode);
+    const newEditMode = !editMode;
+    setEditMode(newEditMode);
+    if (newEditMode) {
+      setTimeout(() => {
+        baseSizeInputRef.current.focus();
+        baseSizeInputRef.current.select();
+      }, 0);
+    }
   };
 
   // Handler for the input field losing focus
@@ -213,16 +221,16 @@ function UnitConverter() {
   //links for Go Deeper component
   const linksData = [
     {
-      url: "https://en.wikipedia.org/wiki/Gabe_Newell",
-      textValue: "Dummy Link 1",
+      url: "https://www.w3schools.com/cssref/css_units.php",
+      textValue: "Explore CSS units at W3Schools",
     },
     {
-      url: "https://en.wikipedia.org/wiki/SteamOS",
-      textValue: "Dummy Link 2",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+      textValue: "Learn more about CSS values and units at MDN",
     },
     {
-      url: "https://en.wikipedia.org/wiki/Half-Life:_Alyx",
-      textValue: "Dummy Link 3",
+      url: "https://www.youtube.com/watch?v=N5wpD9Ov_To&ab_channel=KevinPowell",
+      textValue: "Are you using the right CSS units? With Kevin Powell",
     },
   ];
 
@@ -384,24 +392,20 @@ function UnitConverter() {
             />
           ))}
     </div>,
-
   ];
 
   // JSX for rendering the UI components.
   return (
     <>
-      <main
-        className="p-6
-    sm:p-12 lg:px-48 lg:py-20"
-      >
-        {/* Heading and Sub-Heading*/}
-        <p className="font-arial font-bold text-6xl ml-4">Unit Converter</p>
-        <p className="font-arial text-1xl ml-4 mb-2 text-gray-400">
-          Calculate PX, REM/EM, and Tailwind utility classes with ease.
-        </p>
-
+      <main>
+        <ToolHeaderSection>
+          <ToolHeading
+            title="Unit Converter"
+            tagline="Calculate PX, REM/EM, and Tailwind utility classes with ease."
+          />
+        </ToolHeaderSection>
         {/* Section for Input Boxes*/}
-        <div className="flex gap-10 p-4 ml-52">
+        <div className="flex gap-10 sm:py-8 sm:px-16 lg:px-80">
           <div className="mb-3">
             <label className="block mb-2 text-sm font-bold text-gray-400">
               Base Size
@@ -410,6 +414,7 @@ function UnitConverter() {
             {editMode ? (
               <div className="flex border rounded relative">
                 <input
+                  ref={baseSizeInputRef}
                   type="number"
                   className="border rounded border-black w-28 py-2 px-3  text-gray-400 leading-tight"
                   value={basePixelSize}
@@ -422,7 +427,12 @@ function UnitConverter() {
               </div>
             ) : (
               <div className="flex items-center">
-                <span className="mr-2">{basePixelSize}px</span>
+                {/*Tertiary operator used to differentiate when the Base Size is NaN and Not NaN*/}
+                {isNaN(basePixelSize) ? (
+                  <span className="mr-2">--</span>
+                ) : (
+                  <span className="mr-2">{basePixelSize}px</span>
+                )}
                 <button onClick={handleCogClick}>⚙️</button>
               </div>
             )}
@@ -466,39 +476,19 @@ function UnitConverter() {
               onInput={handleContentChange} // Update state on input
               dangerouslySetInnerHTML={{ __html: editableContent }}
             ></div>
-          />
-        </div>
-
-        {/* Section for Lorem Ipsum Preview*/}
-        <div className="flex flex-col gap-4 items-start p-4">
-          <p className="font-arial text-4xl">Preview</p>
-          <div
-            className="flex flex-row justify-start items-center border border-black border-dashed p-3 
-        min-h-[100px] w-full overflow-auto"
-          >
-            <p
-              className="font-arial font-bold text-3xl break-words leading-none"
-              style={{
-                fontSize: cssSize,
-              }}
-              onInput={handleContentChange} // Update state on input
-              dangerouslySetInnerHTML={{ __html: editableContent }}
-            ></div>
           </div>
         </div>
-
         {/* Section for code blocks */}
-        <div className="grid grid-cols-4 gap-4">
-          {cssProperties.map((item, index) => (
-            <CodeBlock
-              key={index}
-              title={item.title}
-              code={item.cssProperty}
-              unit={`${pixels}px`}
-            />
-          ))}
+
+        <div>
+          <TabSwitcher
+            buttons={tabButtons}
+            children={tabContents}
+            title="Code Samples"
+          ></TabSwitcher>
         </div>
-        {/* <GoDeeper linksData={linksData} /> */}
+
+        <GoDeeper linksData={linksData} />
       </main>
     </>
   );
