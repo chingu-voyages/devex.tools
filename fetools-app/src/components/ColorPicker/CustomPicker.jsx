@@ -75,6 +75,8 @@ export default function CustomPicker({
     }
 
     function createCanvasGradients(){
+      canvasRef.current.style.background = 'none'
+
       const colorCtx = canvasRef.current.getContext('2d');  // This create a 2D context for the canvas
 
       const hue = colorData.hue;
@@ -96,16 +98,33 @@ export default function CustomPicker({
     }
 
     function createImagePicker(){
-      
+
+      canvasRef.current.style.background = '#cdcdcd'
+      const colorCtx = canvasRef.current.getContext('2d');
+
       if(!imgFile){
-        console.log('not image')
+        
+        colorCtx.font = '30pt Calibri';
+        colorCtx.textAlign = 'center';
+        colorCtx.fillStyle = 'blue';
+        colorCtx.fillText('Drop Image Here!', colorCtx.canvas.width/2, colorCtx.canvas.height/2);
+        
         return;
       }
-
-      const colorCtx = canvasRef.current.getContext('2d');
-      const currentImage = imgFile
       
-      colorCtx.drawImage(currentImage, 0, 0);
+      const imgWidth = imgFile.naturalWidth
+      const imgHeight = imgFile.naturalHeight
+
+      colorCtx.drawImage(imgFile, 
+        imgWidth<=(colorCtx.canvas.width*.8)?
+        colorCtx.canvas.width/4:0, 
+        imgHeight>(colorCtx.canvas.height*1.5)?
+        -colorCtx.canvas.height/3:0, 
+        imgWidth>=colorCtx.canvas.width?
+        colorCtx.canvas.width:imgWidth, 
+        imgFile.naturalHeight
+      )
+
     }
 
     function handleOnDrop(e){
@@ -114,16 +133,14 @@ export default function CustomPicker({
         return
       }
 
-      const colorCtx = canvasRef.current.getContext('2d');
-
-      if(imgFile){
-        console.log('remove older reference')
-        URL.revokeObjectURL(imgFile.src)
-      }
-
       e.stopPropagation()
       e.preventDefault();
 
+      if(imgFile){
+        URL.revokeObjectURL(imgFile.src)
+      }
+
+      const colorCtx = canvasRef.current.getContext('2d');
       const droppedImage = e.dataTransfer.files[0]
 
       if (typeof(droppedImage) === 'undefined'){
@@ -135,13 +152,23 @@ export default function CustomPicker({
       }
 
       const url = URL.createObjectURL(droppedImage)
-
       const img = new Image()
 
       img.src = url
-
+      
       img.onload = function(){
-        colorCtx.drawImage(this, 0, 0);
+        const imgWidth = this.naturalWidth
+        const imgHeight = this.naturalHeight
+
+        colorCtx.drawImage(this, 
+          imgWidth<=(colorCtx.canvas.width*.8)?
+          colorCtx.canvas.width/4:0, 
+          imgHeight>(colorCtx.canvas.height*1.5)?
+          -colorCtx.canvas.height/3:0, 
+          imgWidth>=colorCtx.canvas.width?
+          colorCtx.canvas.width:imgWidth, 
+          this.naturalHeight
+        );
       }
 
       setImgFile(img)
