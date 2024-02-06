@@ -18,7 +18,6 @@ export default function CustomPicker({
 
   useEffect(()=>{
     markerRef.current.children[0].style.background = colorData.color
-    createCanvasGradients()
     canvasRef.current.currentColor = currentColor
     return ()=>{
       stopInterval(intervalMouseMoveRef)
@@ -36,7 +35,6 @@ export default function CustomPicker({
         <canvas 
         ref={canvasRef} 
         id="color-picker"
-        height={'200px'}
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
         onClick={(e)=>handleClick(e,true)}
         onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
@@ -45,12 +43,12 @@ export default function CustomPicker({
           stopInterval(intervalMouseMoveRef), 
           handleQuery(currentColor))}
         onMouseLeave={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
-        className="relative z-0 w-full h-48"></canvas>
+        className="relative z-0 w-full h-48 rounded-b-2xl"></canvas>
         <div ref={markerRef} 
         className={`
         marker absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5 mt-[-11px] ml-[-8px] pointer-events-none`}>
           {createPickerMarker()}
-        </div> 
+        </div>
       </div>
 
     </div>  
