@@ -311,45 +311,71 @@ function UnitConverter() {
   const tabButtons = ["px", "em", "rem", "tailwind"];
 
   const tabContents = [
-    <div className="grid grid-cols-4 gap-4">
+    <div key="tab-px" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
-        ? CodeSamples["NaN"].map((sample) => (
-            <CodeBlock title={sample.title} code={sample.code} />
+        ? CodeSamples["NaN"].map((sample, index) => (
+            <CodeBlock
+              key={`${sample.title}-${index}`}
+              title={sample.title}
+              code={sample.code}
+            />
           ))
-        : CodeSamples["px"].map((sample) => (
-            <CodeBlock title={sample.title} code={sample.code} />
+        : CodeSamples["px"].map((sample, index) => (
+            <CodeBlock
+              key={`${sample.title}-${index}`}
+              title={sample.title}
+              code={sample.code}
+            />
           ))}
     </div>,
-    <div className="grid grid-cols-4 gap-4">
+    <div key="tab-em" className="grid grid-cols-4 gap-4">
       {isNaN(em)
-        ? CodeSamples["NaN"].map((sample) => (
-            <CodeBlock title={sample.title} code={sample.code} />
+        ? CodeSamples["NaN"].map((sample, index) => (
+            <CodeBlock
+              key={`${sample.title}-${index}`}
+              title={sample.title}
+              code={sample.code}
+            />
           ))
-        : CodeSamples["em"].map((sample) => (
-            <CodeBlock title={sample.title} code={sample.code} />
+        : CodeSamples["em"].map((sample, index) => (
+            <CodeBlock
+              key={`${sample.title}-${index}`}
+              title={sample.title}
+              code={sample.code}
+            />
           ))}
     </div>,
 
-    <div className="grid grid-cols-4 gap-4">
+    <div key="tab-rem" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
-        ? CodeSamples["NaN"].map((sample) => (
-            <CodeBlock title={sample.title} code={sample.code} />
+        ? CodeSamples["NaN"].map((sample, index) => (
+            <CodeBlock
+              key={`${sample.title}-${index}`}
+              title={sample.title}
+              code={sample.code}
+            />
           ))
-        : CodeSamples["rem"].map((sample) => (
-            <CodeBlock title={sample.title} code={sample.code} />
+        : CodeSamples["rem"].map((sample, index) => (
+            <CodeBlock
+              key={`${sample.title}-${index}`}
+              title={sample.title}
+              code={sample.code}
+            />
           ))}
     </div>,
-    <div className="grid grid-cols-4 gap-4">
+    <div key="tab-tailwind" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
-        ? CodeSamples["NaNtailwind"].map((sample) => (
+        ? CodeSamples["NaNtailwind"].map((sample, index) => (
             <CodeBlock
+              key={`${sample.title}-${index}`}
               title={sample.title}
               code={sample.code}
               lang="tailwind"
             />
           ))
-        : CodeSamples["tailwind"].map((sample) => (
+        : CodeSamples["tailwind"].map((sample, index) => (
             <CodeBlock
+              key={`${sample.title}-${index}`}
               title={sample.title}
               code={sample.code}
               lang="tailwind"
