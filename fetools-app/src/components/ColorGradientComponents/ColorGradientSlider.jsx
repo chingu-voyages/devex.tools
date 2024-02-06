@@ -20,7 +20,7 @@ export default function ColorGradientSlider({
         createThumbColorRule()
         updateHandleValuesOnGradientState()
         updateCSSValues('.gradient', 'background', generateGradientRule(gradientColors));
-        updateCSSValues('.gradientSlider', 'background', generateGradientRule(gradientColors, '90', true));
+        updateCSSValues('.gradientSlider', 'background', generateGradientRule(gradientColors, '90'));
     }, [gradientColors]);
 
     return(
@@ -79,7 +79,6 @@ export default function ColorGradientSlider({
             ...inputValue,
             color: currentThumb.dataset.color, 
             position: currentValue,
-            type: inputValue.type
         })
 
 
@@ -103,11 +102,12 @@ export default function ColorGradientSlider({
 
         currentThumb.classList.add('isActive', 'z-10')
     
+        console.log(inputValue)
+
         handleSetInputValue({
             color: currentThumb.dataset.color,
             position: currentThumb.value,
-            rotation: inputValue.rotation,
-            type: inputValue.type
+            rotation: inputValue.rotation
         })
 
         handleSetActiveIndex(currentThumb.id)
@@ -115,6 +115,7 @@ export default function ColorGradientSlider({
 
     }
 
+ 
     function createThumbColorRule(){
         const wrapElement = sliderContainerRef.current.getElementsByClassName('wrap')[0]
 
