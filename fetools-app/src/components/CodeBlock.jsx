@@ -23,7 +23,7 @@ function CodeBlock({ title, code, lang = "css" }) {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 relative group">
       <div className="mb-2 text-sm font-bold text-gray-400">{title}</div>
       <div className="p-3 bg-gray-200 rounded relative">
         <pre className="whitespace-pre-wrap overflow-x-auto">
