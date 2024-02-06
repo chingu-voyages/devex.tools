@@ -288,6 +288,19 @@ function UnitConverter() {
         code: `top: --\nright: --\nbottom: --\nleft: --`,
       },
     ],
+    NaNtailwind: [
+      { title: "Font Size", code: `text-` },
+      { title: "Height", code: `h-` },
+      { title: "Width", code: `w-` },
+      { title: "Margin", code: `m-` },
+      { title: "Padding", code: `p-` },
+      { title: "Gap", code: `gap-` },
+      { title: "Border Width", code: `border-` },
+      {
+        title: "Position",
+        code: `top-\nright-\nbottom-\nleft-`,
+      },
+    ],
   };
 
   //TabSwitcher Content
@@ -325,11 +338,19 @@ function UnitConverter() {
     </div>,
     <div className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
-        ? CodeSamples["NaN"].map((sample) => (
-            <CodeBlock title={sample.title} code={sample.code} />
+        ? CodeSamples["NaNtailwind"].map((sample) => (
+            <CodeBlock
+              title={sample.title}
+              code={sample.code}
+              lang="tailwind"
+            />
           ))
         : CodeSamples["tailwind"].map((sample) => (
-            <CodeBlock title={sample.title} code={sample.code} />
+            <CodeBlock
+              title={sample.title}
+              code={sample.code}
+              lang="tailwind"
+            />
           ))}
     </div>,
   ];
