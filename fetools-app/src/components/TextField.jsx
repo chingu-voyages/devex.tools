@@ -14,7 +14,7 @@ function TextField({
 
   // Function to concatenate value and unit, used for the copy function
   const getValueWithUnit = () => {
-    return unit ? `${value} ${unit}` : value.toString();
+    return unit ? `${value}${unit}` : value.toString();
   };
 
   // Function to handle click inside the input field
