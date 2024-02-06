@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import CopyButton from "./CopyButton";
 
 function TextField({
@@ -15,13 +15,6 @@ function TextField({
   // Function to concatenate value and unit, used for the copy function
   const getValueWithUnit = () => {
     return unit ? `${value}${unit}` : value.toString();
-  };
-
-  // Function to handle click inside the input field
-  const handleInputClick = () => {
-    if (inputRef.current) {
-      inputRef.current.select(); // Select all text in the input field
-    }
   };
 
   return (
@@ -59,6 +52,7 @@ function TextField({
           )}
           <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-full text-lg -mt-2">
             <CopyButton onCopy={getValueWithUnit} />
+
           </span>
         </div>
       </div>

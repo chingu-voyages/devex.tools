@@ -11,46 +11,46 @@ export default function Nav(){
             sm:flex sm:justify-between sm:items-center sm:text-center
             ">
                 <li className='flex-1 max-w-min'>
-                    <Link to="/unit-converter" className="
+                    <Link to="/character-finder" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
                     sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
-                    ">Unit Converter</Link>
+                    ">Characters</Link>
                 </li>
                 <li className='flex-1 max-w-min'>
                     <Link to="/color-picker" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
                     sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
-                    ">Color Picker</Link>
-                </li>
-                <li className='flex-1 max-w-min'>
-                    <Link to="/character-finder" className="
-                    block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
-                    cursor-pointer
-                    sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
-                    ">Character Finder</Link>
+                    ">Colors</Link>
                 </li>
                 <li className='flex-1 max-w-min'>
                     <Link to="/font-visualizer" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
                     sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
-                    ">Font Visualizer</Link>
+                    ">Fonts</Link>
                 </li>
                 <li className='flex-1 max-w-min'>
                     <Link to="/color-gradient" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
                     sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
-                    ">Color Gradient</Link>
+                    ">Gradients</Link>
                 </li>
                 <li className='flex-1 max-w-min'>
-                    <Link to="/team" className="
+                    <Link to="/shadow-generator" className="
                     block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
                     cursor-pointer
                     sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
-                    ">Team</Link>
+                    ">Shadows</Link>
+                </li>
+                <li className='flex-1 max-w-min'>
+                    <Link to="/unit-converter" className="
+                    block font-bold flex-1 bg-[var(--bckgrnd-color)] w-max leading-none
+                    cursor-pointer
+                    sm:py-2 sm:px-4 lg:px-4 xl:py-4 xl:px-8
+                    ">Units</Link>
                 </li>
             </ul>
         </nav>
