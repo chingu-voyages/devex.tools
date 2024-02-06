@@ -54,7 +54,6 @@ export default function CustomPicker({
           stopInterval(intervalMouseClickRef), 
           stopInterval(intervalMouseMoveRef), 
           handleQuery(currentColor))}
-        onMouseLeave={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
         className="relative z-0 w-full h-48 rounded-b-2xl"></canvas>
         <div ref={markerRef} 
         className={`
@@ -97,69 +96,56 @@ export default function CustomPicker({
     }
 
     function createImagePicker(){
-
+      
       if(!imgFile){
-        return
+        console.log('not image')
+        return;
       }
 
       const colorCtx = canvasRef.current.getContext('2d');
-      const reader = new FileReader();
-
-      colorCtx.clearRect(0, 0, colorCtx.canvas.width, colorCtx.canvas.height)
-
-      let imageCopiedData = imgFile
-      console.log(imgFile)
-
-      reader.onload = function(event) {
-        console.log(event.target.result)
-        const img = new Image(),
-            imgStr = imgFile || event.target.result,
-            imgData = colorCtx.getImageData(0,0, colorCtx.canvas.width, colorCtx.canvas.height);
-
-        img.src = event.target.result;
-        
-        img.onload = function(event) {
-            colorCtx.height = canvasRef.height = this.height;
-            colorCtx.width = canvasRef.width = this.width;
-            colorCtx.drawImage(this, 0, 0);
-        };
-    };
-    
-      reader.readAsDataURL(imageCopiedData);
+      const currentImage = imgFile
+      
+      colorCtx.drawImage(currentImage, 0, 0);
     }
 
     function handleOnDrop(e){
-
-      e.preventDefault();
+      
       if(isColorPicker){
         return
       }
 
       const colorCtx = canvasRef.current.getContext('2d');
-      const reader = new FileReader();
 
-      colorCtx.clearRect(0, 0, colorCtx.canvas.width, colorCtx.canvas.height)
+      if(imgFile){
+        console.log('remove older reference')
+        URL.revokeObjectURL(imgFile.src)
+      }
 
-      console.log(imgFile)
-      let imageCopiedData = imgFile || e.dataTransfer.files[0]
+      e.stopPropagation()
+      e.preventDefault();
 
-      reader.onload = function(event) {
-        console.log(event.target.result)
-        const img = new Image(),
-            imgStr = imgFile || event.target.result,
-            imgData = colorCtx.getImageData(0,0, colorCtx.canvas.width,colorCtx.canvas.height);
+      const droppedImage = e.dataTransfer.files[0]
 
-        img.src = event.target.result;
-        
-        img.onload = function(event) {
-            colorCtx.height = canvasRef.height = this.height;
-            colorCtx.width = canvasRef.width = this.width;
-            colorCtx.drawImage(this, 0, 0);
-        };
-    };
-    
-      reader.readAsDataURL(imageCopiedData);
-      setImgFile(e.dataTransfer.files[0])
+      if (typeof(droppedImage) === 'undefined'){
+        console.log('File is not an image.');
+        return;
+      } else if(droppedImage.type && !droppedImage.type.startsWith('image/')){
+        console.log('File is not an image.');
+        return
+      }
+
+      const url = URL.createObjectURL(droppedImage)
+
+      const img = new Image()
+
+      img.src = url
+
+      img.onload = function(){
+        colorCtx.drawImage(this, 0, 0);
+      }
+
+      setImgFile(img)
+
     }
 
     function createPickerMarker(){
