@@ -448,7 +448,24 @@ function UnitConverter() {
             onValueChange={handleTailwindChange}
             inputType="text"
             onBlur={onTailwindBlur}
-
+          />
+        </div>
+        {/* Section for Lorem Ipsum Preview*/}
+        <div className="flex flex-col gap-4 items-start sm:p-8 lg:px-48">
+          <p className="font-arial text-4xl">Preview</p>
+          <div
+            className="flex flex-row justify-start items-center border border-black border-dashed p-3 
+        min-h-[100px] w-full overflow-auto"
+          >
+            <div
+              contentEditable
+              className="font-arial font-bold text-3xl break-words leading-none focus:outline-none"
+              style={{
+                fontSize: cssSize,
+              }}
+              onInput={handleContentChange} // Update state on input
+              dangerouslySetInnerHTML={{ __html: editableContent }}
+            ></div>
           />
         </div>
 
