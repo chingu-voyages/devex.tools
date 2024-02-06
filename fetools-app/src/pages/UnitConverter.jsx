@@ -19,6 +19,16 @@ function UnitConverter() {
   const [editMode, setEditMode] = useState(false);
   const [cssSize, setCssSize] = useState("16px");
 
+  // State to hold the content of the contentEditable div
+  const [editableContent, setEditableContent] = useState(
+    "Lorem ipsum dolor sit amet"
+  );
+
+  // Function to handle changes in the contentEditable div
+  const handleContentChange = (e) => {
+    setEditableContent(e.currentTarget.textContent);
+  };
+
   // State variable to track if the alert has been shown
   const [alertShown, setAlertShown] = useState(false);
 
@@ -463,9 +473,9 @@ function UnitConverter() {
               style={{
                 fontSize: cssSize,
               }}
-            >
-              Lorem ipsum dolor sit amet
-            </div>
+              onInput={handleContentChange} // Update state on input
+              dangerouslySetInnerHTML={{ __html: editableContent }}
+            ></div>
           </div>
         </div>
         {/* Section for code blocks */}
