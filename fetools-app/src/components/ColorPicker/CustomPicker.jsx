@@ -17,7 +17,6 @@ export default function CustomPicker({
   useEffect(()=>{
     markerRef.current.children[0].style.background = colorData.color
     createCanvasGradients()
-
     canvasRef.current.currentColor = currentColor
 
     return ()=>{
@@ -29,7 +28,7 @@ export default function CustomPicker({
   return(
     <>
     <div>
-      <div className="relative ">
+      <div className="relative">
         <canvas 
         ref={canvasRef} 
         id="color-picker"
@@ -42,7 +41,7 @@ export default function CustomPicker({
         </canvas>
         <div ref={markerRef} 
         className={`
-        marker absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5`}>
+        marker absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5 mt-[-11px] ml-[-8px] pointer-events-none`}>
           {createPickerMarker()}
         </div> 
       </div>
@@ -81,7 +80,7 @@ export default function CustomPicker({
     function handleClick(e, firstClick){
       colorData.color = canvasRef.current.currentColor
       handleColorChange({...colorData})
-
+      calculateMarkerPosition()
       if(!firstClick){
         canvasRef.current.click()
       }
@@ -92,7 +91,7 @@ export default function CustomPicker({
       if (ref.current) return;
       ref.current = setInterval(() => {
         func(e)
-      }, 100);
+      }, 50);
     }
 
     function stopInterval(ref){
@@ -117,8 +116,20 @@ export default function CustomPicker({
         const pixel = ColorCtx.getImageData(x,y,1,1)['data'];   // Read pixel Color
         const rgb = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
         
+
         setCurrentColor(getHexString(rgb))
       }
     }
 
+    function calculateMarkerPosition(){
+      const canvasRect = canvasRef.current.getBoundingClientRect()
+
+      const x = parseInt(((mouseCoor.x - canvasRect.left)/canvasRef.current.offsetWidth)*100)
+      const y =  parseInt(((mouseCoor.y - canvasRect.top)/canvasRef.current.offsetHeight)*100)
+
+      console.log(x, y)
+
+      markerRef.current.style.top = `${y}%`
+      markerRef.current.style.left = `${x}%`
+    }
   }
