@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import CustomPicker from './CustomPicker';
 
-export default function ColorPickerTool({ colorData, setColorData }) {
+export default function ColorPickerTool({ colorData, setColorData, handleQuery }) {
   const parentRef = useRef();
 
   const handleColorChange = (newColorData) => {
@@ -14,7 +14,8 @@ export default function ColorPickerTool({ colorData, setColorData }) {
         <div style={{backgroundColor: colorData.color, width: '50px', height: '50px'}}></div>
         <CustomPicker
         colorData={colorData}
-        handleColorChange={handleColorChange}/>
+        handleColorChange={handleColorChange}
+        handleQuery={handleQuery}/>
       </section>
     </>
   );

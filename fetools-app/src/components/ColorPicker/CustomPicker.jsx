@@ -3,7 +3,8 @@ import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
 
 export default function CustomPicker({
   colorData,
-  handleColorChange
+  handleColorChange,
+  handleQuery
 }){
 
   const canvasRef = useRef();
@@ -35,7 +36,10 @@ export default function CustomPicker({
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
         onClick={(e)=>handleClick(e,true)}
         onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
-        onMouseUp={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
+        onMouseUp={()=>(
+          stopInterval(intervalMouseClickRef), 
+          stopInterval(intervalMouseMoveRef), 
+          handleQuery(currentColor))}
         onMouseLeave={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
         className="relative z-0">
         </canvas>
