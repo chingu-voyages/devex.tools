@@ -36,7 +36,7 @@ export default function CustomPicker({
       createImagePicker()
     }
 
-  },[isColorPicker])
+  },[isColorPicker, imgFile])
 
   return(
     <>
@@ -105,6 +105,8 @@ export default function CustomPicker({
       const colorCtx = canvasRef.current.getContext('2d');
       const reader = new FileReader();
 
+      colorCtx.clearRect(0, 0, colorCtx.canvas.width, colorCtx.canvas.height)
+
       let imageCopiedData = imgFile
       console.log(imgFile)
 
@@ -112,7 +114,7 @@ export default function CustomPicker({
         console.log(event.target.result)
         const img = new Image(),
             imgStr = imgFile || event.target.result,
-            imgData = colorCtx.getImageData(0,0, canvasRef.current.width,canvasRef.current.height);
+            imgData = colorCtx.getImageData(0,0, colorCtx.canvas.width, colorCtx.canvas.height);
 
         img.src = event.target.result;
         
@@ -127,7 +129,7 @@ export default function CustomPicker({
     }
 
     function handleOnDrop(e){
-      
+
       e.preventDefault();
       if(isColorPicker){
         return
@@ -136,6 +138,8 @@ export default function CustomPicker({
       const colorCtx = canvasRef.current.getContext('2d');
       const reader = new FileReader();
 
+      colorCtx.clearRect(0, 0, colorCtx.canvas.width, colorCtx.canvas.height)
+
       console.log(imgFile)
       let imageCopiedData = imgFile || e.dataTransfer.files[0]
 
@@ -143,7 +147,7 @@ export default function CustomPicker({
         console.log(event.target.result)
         const img = new Image(),
             imgStr = imgFile || event.target.result,
-            imgData = colorCtx.getImageData(0,0, canvasRef.current.width,canvasRef.current.height);
+            imgData = colorCtx.getImageData(0,0, colorCtx.canvas.width,colorCtx.canvas.height);
 
         img.src = event.target.result;
         
