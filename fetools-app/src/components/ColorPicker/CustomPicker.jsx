@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react"
+
 import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
+import switchSamplerIcon from "../../assets/switch-sampler-icon.svg"
 
 export default function CustomPicker({
   colorData,
@@ -32,7 +34,6 @@ export default function CustomPicker({
     if(isColorPicker){
       createCanvasGradients()
     } else{
-      console.log('img picker')
       createImagePicker()
     }
 
@@ -54,7 +55,6 @@ export default function CustomPicker({
           stopInterval(intervalMouseClickRef), 
           stopInterval(intervalMouseMoveRef), 
           handleQuery(currentColor))}
-        onMouseLeave={()=>(stopInterval(intervalMouseClickRef), stopInterval(intervalMouseMoveRef))}
         className="relative z-0 w-full h-48 rounded-b-2xl"></canvas>
         <div ref={markerRef} 
         className={`
@@ -62,8 +62,14 @@ export default function CustomPicker({
           {createPickerMarker()}
         </div>
       </div>
-          <button onClick={()=>setIsColorPicker(!isColorPicker)}>Switch sampler</button>
-    </div>  
+    </div>
+    <div className="flex self-center my-3">
+      <button 
+      onClick={()=>setIsColorPicker(!isColorPicker)}
+      className="flex items-center content-center"><img src={switchSamplerIcon}></img><span className="block font-bold text-sm leading-0">{isColorPicker?'Sample From an Image':'Sample From Color'}</span></button>
+    </div>
+
+
     </>
   )
 
@@ -76,6 +82,8 @@ export default function CustomPicker({
     }
 
     function createCanvasGradients(){
+      canvasRef.current.style.background = 'none'
+
       const colorCtx = canvasRef.current.getContext('2d');  // This create a 2D context for the canvas
 
       const hue = colorData.hue;
@@ -98,68 +106,78 @@ export default function CustomPicker({
 
     function createImagePicker(){
 
-      if(!imgFile){
-        return
-      }
-
+      canvasRef.current.style.background = '#cdcdcd'
       const colorCtx = canvasRef.current.getContext('2d');
-      const reader = new FileReader();
 
-      colorCtx.clearRect(0, 0, colorCtx.canvas.width, colorCtx.canvas.height)
-
-      let imageCopiedData = imgFile
-      console.log(imgFile)
-
-      reader.onload = function(event) {
-        console.log(event.target.result)
-        const img = new Image(),
-            imgStr = imgFile || event.target.result,
-            imgData = colorCtx.getImageData(0,0, colorCtx.canvas.width, colorCtx.canvas.height);
-
-        img.src = event.target.result;
+      if(!imgFile){
         
-        img.onload = function(event) {
-            colorCtx.height = canvasRef.height = this.height;
-            colorCtx.width = canvasRef.width = this.width;
-            colorCtx.drawImage(this, 0, 0);
-        };
-    };
-    
-      reader.readAsDataURL(imageCopiedData);
+        colorCtx.font = '30pt Calibri';
+        colorCtx.textAlign = 'center';
+        colorCtx.fillStyle = 'blue';
+        colorCtx.fillText('Drop Image Here!', colorCtx.canvas.width/2, colorCtx.canvas.height/2);
+        
+        return;
+      }
+      
+      const imgWidth = imgFile.naturalWidth
+      const imgHeight = imgFile.naturalHeight
+
+      colorCtx.drawImage(imgFile, 
+        imgWidth<=(colorCtx.canvas.width*.8)?
+        colorCtx.canvas.width/4:0, 
+        imgHeight>(colorCtx.canvas.height*1.5)?
+        -colorCtx.canvas.height/3:0, 
+        imgWidth>=colorCtx.canvas.width?
+        colorCtx.canvas.width:imgWidth, 
+        imgFile.naturalHeight
+      )
+
     }
 
     function handleOnDrop(e){
-
-      e.preventDefault();
+      
       if(isColorPicker){
         return
       }
 
+      e.stopPropagation()
+      e.preventDefault();
+
+      if(imgFile){
+        URL.revokeObjectURL(imgFile.src)
+      }
+
       const colorCtx = canvasRef.current.getContext('2d');
-      const reader = new FileReader();
+      const droppedImage = e.dataTransfer.files[0]
 
-      colorCtx.clearRect(0, 0, colorCtx.canvas.width, colorCtx.canvas.height)
+      if (typeof(droppedImage) === 'undefined'){
+        return;
+      } else if(droppedImage.type && !droppedImage.type.startsWith('image/')){
+        return;
+      }
 
-      console.log(imgFile)
-      let imageCopiedData = imgFile || e.dataTransfer.files[0]
+      const url = URL.createObjectURL(droppedImage)
+      const img = new Image()
 
-      reader.onload = function(event) {
-        console.log(event.target.result)
-        const img = new Image(),
-            imgStr = imgFile || event.target.result,
-            imgData = colorCtx.getImageData(0,0, colorCtx.canvas.width,colorCtx.canvas.height);
+      img.src = url
+      
+      img.onload = function(){
+        const imgWidth = this.naturalWidth
+        const imgHeight = this.naturalHeight
 
-        img.src = event.target.result;
-        
-        img.onload = function(event) {
-            colorCtx.height = canvasRef.height = this.height;
-            colorCtx.width = canvasRef.width = this.width;
-            colorCtx.drawImage(this, 0, 0);
-        };
-    };
-    
-      reader.readAsDataURL(imageCopiedData);
-      setImgFile(e.dataTransfer.files[0])
+        colorCtx.drawImage(this, 
+          imgWidth<=(colorCtx.canvas.width*.8)?
+          colorCtx.canvas.width/4:0, 
+          imgHeight>(colorCtx.canvas.height*1.5)?
+          -colorCtx.canvas.height/3:0, 
+          imgWidth>=colorCtx.canvas.width?
+          colorCtx.canvas.width:imgWidth, 
+          this.naturalHeight
+        );
+      }
+
+      setImgFile(img)
+
     }
 
     function createPickerMarker(){
@@ -217,8 +235,6 @@ export default function CustomPicker({
 
       const x = parseInt(((mouseCoor.x - canvasRect.left)/canvasRef.current.offsetWidth)*100)
       const y =  parseInt(((mouseCoor.y - canvasRect.top)/canvasRef.current.offsetHeight)*100)
-
-      console.log(x, y)
 
       markerRef.current.style.top = `${y}%`
       markerRef.current.style.left = `${x}%`
