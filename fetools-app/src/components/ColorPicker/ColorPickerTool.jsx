@@ -10,12 +10,15 @@ export default function ColorPickerTool({ colorData, setColorData, handleQuery }
 
   return (
     <>
-      <section ref={parentRef} id="color-picker-container" className="flex flex-1">
-        <div style={{backgroundColor: colorData.color, width: '50px', height: '50px'}}></div>
+      <section ref={parentRef} id="color-picker-container" className="flex flex-1 flex-col">
+        <div 
+        style={{backgroundColor: colorData.color}}
+        className="h-24"></div>
         <CustomPicker
         colorData={colorData}
         handleColorChange={handleColorChange}
-        handleQuery={handleQuery}/>
+        handleQuery={handleQuery}
+        className="w-full h-80"/>
       </section>
     </>
   );
