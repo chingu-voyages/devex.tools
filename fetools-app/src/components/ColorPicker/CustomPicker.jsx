@@ -61,7 +61,7 @@ export default function CustomPicker({
       ColorCtx.fillStyle = gradientH;
       ColorCtx.fillRect(0, 0, ColorCtx.canvas.width, ColorCtx.canvas.height);
 
-      // Create a Vertical Gradient(white to black)
+      // Create a Vertical Gradient(transparent to black)
       const gradientV = ColorCtx.createLinearGradient(0, 0, 0, ColorCtx.canvas.height);
       gradientV.addColorStop(0, 'rgba(0,0,0,0)');
       gradientV.addColorStop(1, '#000');
