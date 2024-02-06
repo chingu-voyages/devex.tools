@@ -13,6 +13,8 @@ export default function CustomPicker({
   const intervalMouseMoveRef = useRef(null);
   const intervalMouseClickRef = useRef(null);
 
+  const [imgFile, setImgFile] = useState(null)
+  const [isColorPicker, setIsColorPicker] = useState(true)
   const [mouseCoor, setMouseCoor] = useState({x:0,y:0})
   const [currentColor, setCurrentColor] = useState(getHexString(colorData.color))
 
@@ -26,7 +28,15 @@ export default function CustomPicker({
 
   useEffect(()=>{
     resizeCanvas()
-  },[])
+
+    if(isColorPicker){
+      createCanvasGradients()
+    } else{
+      console.log('img picker')
+      createImagePicker()
+    }
+
+  },[isColorPicker])
 
   return(
     <>
@@ -35,6 +45,8 @@ export default function CustomPicker({
         <canvas 
         ref={canvasRef} 
         id="color-picker"
+        onDragOver={(e)=>isColorPicker?"":e.preventDefault()}
+        onDrop={handleOnDrop}
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
         onClick={(e)=>handleClick(e,true)}
         onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
@@ -50,7 +62,7 @@ export default function CustomPicker({
           {createPickerMarker()}
         </div>
       </div>
-
+          <button onClick={()=>setIsColorPicker(!isColorPicker)}>Switch sampler</button>
     </div>  
     </>
   )
@@ -61,28 +73,89 @@ export default function CustomPicker({
 
       canvasRef.current.width = WIDTH
       canvasRef.current.height = HEIGHT
-      createCanvasGradients()
     }
 
     function createCanvasGradients(){
-      const ColorCtx = canvasRef.current.getContext('2d');  // This create a 2D context for the canvas
+      const colorCtx = canvasRef.current.getContext('2d');  // This create a 2D context for the canvas
 
       const hue = colorData.hue;
       //Make HueGradient
-      const gradientH = ColorCtx.createLinearGradient(0, 0, ColorCtx.canvas.width, 0);
+      const gradientH = colorCtx.createLinearGradient(0, 0, colorCtx.canvas.width, 0);
       gradientH.addColorStop(0, '#fff');
       gradientH.addColorStop(1, hue);
-      ColorCtx.fillStyle = gradientH;
-      ColorCtx.fillRect(0, 0, ColorCtx.canvas.width, ColorCtx.canvas.height);
+      colorCtx.fillStyle = gradientH;
+      colorCtx.fillRect(0, 0, colorCtx.canvas.width, colorCtx.canvas.height);
 
       // Create a Vertical Gradient(transparent to black)
-      const gradientV = ColorCtx.createLinearGradient(0, 0, 0, ColorCtx.canvas.height);
+      const gradientV = colorCtx.createLinearGradient(0, 0, 0, colorCtx.canvas.height);
       gradientV.addColorStop(0, 'rgba(0,0,0,0)');
       gradientV.addColorStop(1, '#000');
-      ColorCtx .fillStyle = gradientV;
-      ColorCtx .fillRect(0, 0, ColorCtx.canvas.width, 
-      ColorCtx .canvas.height); 
+      colorCtx .fillStyle = gradientV;
+      colorCtx .fillRect(0, 0, colorCtx.canvas.width, 
+      colorCtx .canvas.height); 
 
+    }
+
+    function createImagePicker(){
+
+      if(!imgFile){
+        return
+      }
+
+      const colorCtx = canvasRef.current.getContext('2d');
+      const reader = new FileReader();
+
+      let imageCopiedData = imgFile
+      console.log(imgFile)
+
+      reader.onload = function(event) {
+        console.log(event.target.result)
+        const img = new Image(),
+            imgStr = imgFile || event.target.result,
+            imgData = colorCtx.getImageData(0,0, canvasRef.current.width,canvasRef.current.height);
+
+        img.src = event.target.result;
+        
+        img.onload = function(event) {
+            colorCtx.height = canvasRef.height = this.height;
+            colorCtx.width = canvasRef.width = this.width;
+            colorCtx.drawImage(this, 0, 0);
+        };
+    };
+    
+      reader.readAsDataURL(imageCopiedData);
+    }
+
+    function handleOnDrop(e){
+      
+      e.preventDefault();
+      if(isColorPicker){
+        return
+      }
+
+      const colorCtx = canvasRef.current.getContext('2d');
+      const reader = new FileReader();
+
+      console.log(imgFile)
+      let imageCopiedData = imgFile || e.dataTransfer.files[0]
+
+      reader.onload = function(event) {
+        console.log(event.target.result)
+        const img = new Image(),
+            imgStr = imgFile || event.target.result,
+            imgData = colorCtx.getImageData(0,0, canvasRef.current.width,canvasRef.current.height);
+
+        img.src = event.target.result;
+        
+        img.onload = function(event) {
+            colorCtx.height = canvasRef.height = this.height;
+            colorCtx.width = canvasRef.width = this.width;
+            colorCtx.drawImage(this, 0, 0);
+        };
+    };
+    
+      reader.readAsDataURL(imageCopiedData);
+      setImgFile(e.dataTransfer.files[0])
     }
 
     function createPickerMarker(){
