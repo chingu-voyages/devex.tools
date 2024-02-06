@@ -1,4 +1,5 @@
-import { shadowPropertyValue } from "./ShadowGeneratorFN";
+import { shadowPropertyValue, unitChanger } from "./ShadowGeneratorFN";
+import { useState } from "react";
 
 export const ShadowInput = ({
   label,
@@ -8,11 +9,14 @@ export const ShadowInput = ({
   ShadowsStyles,
   ActiveShadow,
   inset = false,
-  range = {min: 0, max:0}
+  range = { min: 0, max: 0 },
 }) => {
-
+  const dropDownOptions = ["px", "em", "rem"];
+  let unit = ShadowsStyles[ActiveShadow][prop] + ShadowsStyles[ActiveShadow].units[prop]
+  const [activeUnit, setActiveUnit] = useState("px")
+  
   return (
-    <label className="flex flex-col gap-1 font-semibold lg:mx-w-[242px] w-full">
+    <label className="flex flex-col gap-1 font-semibold lg:mx-w-[242px] max-h-[51px] h-full w-full my-1">
       {label}
       <div className="flex gap-x-2">
         <img
@@ -20,14 +24,13 @@ export const ShadowInput = ({
           src={iconSrc}
           alt={`${label} Icon`}
         />
-        <span>{ShadowsStyles[ActiveShadow][prop]}px</span>
+        <span  >{unit} </span>
         <input
           type="range"
-          max={range.max}
+          max={activeUnit !== "px"? 20 : range.max  }
           min={range.min}
-          
           value={ShadowsStyles[ActiveShadow][prop]}
-          className="lg:min-w-[170px] w-full"
+          className="lg:min-w-[10px] w-full"
           onChange={(e) => {
             shadowPropertyValue(
               e,
@@ -38,6 +41,22 @@ export const ShadowInput = ({
             );
           }}
         />
+        <select
+          className="outline-none active:outline-none"
+          onChange={(e) => {
+            unitChanger(e, prop, setShadowsStyles, ShadowsStyles, ActiveShadow,activeUnit, setActiveUnit);
+          }}
+        >
+          {dropDownOptions.map((current, idx) => {
+            return (
+              <option key={idx} value={current}>
+                {" "}
+                {current}{" "}
+              </option>
+            );
+          })}
+        </select>
+
         {inset ? (
           <span className="flex gap-2">
             Inset
