@@ -91,7 +91,7 @@ export default function CustomPicker({
       if (ref.current) return;
       ref.current = setInterval(() => {
         func(e)
-      }, 50);
+      }, 10);
     }
 
     function stopInterval(ref){
