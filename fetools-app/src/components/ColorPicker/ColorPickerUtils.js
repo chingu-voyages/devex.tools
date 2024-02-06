@@ -5,7 +5,7 @@ export function createColorObj(newColor){
 
     let currentColor = getRandomColor().colorStr
 
-    if(newColor || newColor!==null){
+    if(newColor!==null){
       currentColor = tinycolor(newColor).toRgbString()
     }
 

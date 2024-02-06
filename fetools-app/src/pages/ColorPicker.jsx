@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useState } from "react"
+import { useSearchParams } from "react-router-dom"
 
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection"
 import ToolHeading from "../components/ToolsLayout/ToolHeading"
@@ -11,14 +11,8 @@ import { getRandomColor } from "../components/ColorGradientComponents/ColorGradi
 
 export default function ColorPicker() {
     
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams();
   const [colorData, setColorData] = useState(createColorObj(searchParams.get('color'))||getRandomColor().colorStr)
-
-  useEffect(()=>{
-    handleOnPageLoad()
-  },[])
-
 
     return (
     <>
@@ -47,18 +41,9 @@ export default function ColorPicker() {
 
     )
 
-
-  function handleOnPageLoad(){
-    console.log(searchParams.get('color')!==null?true:false)
-    if(searchParams.get('color')!==null){
-      navigate(`/color-picker?color=${encodeURIComponent(searchParams.get('color'))}`)
-      return
-    } 
-  }
-
-  function handleQuery(newColor){
-    //e.preventDefault()
-    setSearchParams({color: newColor})
+  function handleQuery(color){
+    color = color.slice(1);
+    setSearchParams({ color });
   }
 
 }
