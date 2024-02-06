@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react"
+
 import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
+import switchSamplerIcon from "../../assets/switch-sampler-icon.svg"
 
 export default function CustomPicker({
   colorData,
@@ -32,7 +34,6 @@ export default function CustomPicker({
     if(isColorPicker){
       createCanvasGradients()
     } else{
-      console.log('img picker')
       createImagePicker()
     }
 
@@ -61,8 +62,14 @@ export default function CustomPicker({
           {createPickerMarker()}
         </div>
       </div>
-          <button onClick={()=>setIsColorPicker(!isColorPicker)}>Switch sampler</button>
-    </div>  
+    </div>
+    <div className="flex self-center my-3">
+      <button 
+      onClick={()=>setIsColorPicker(!isColorPicker)}
+      className="flex items-center content-center"><img src={switchSamplerIcon}></img><span className="block font-bold text-sm leading-0">{isColorPicker?'Sample From an Image':'Sample From Color'}</span></button>
+    </div>
+
+
     </>
   )
 
@@ -144,11 +151,9 @@ export default function CustomPicker({
       const droppedImage = e.dataTransfer.files[0]
 
       if (typeof(droppedImage) === 'undefined'){
-        console.log('File is not an image.');
         return;
       } else if(droppedImage.type && !droppedImage.type.startsWith('image/')){
-        console.log('File is not an image.');
-        return
+        return;
       }
 
       const url = URL.createObjectURL(droppedImage)
@@ -230,8 +235,6 @@ export default function CustomPicker({
 
       const x = parseInt(((mouseCoor.x - canvasRect.left)/canvasRef.current.offsetWidth)*100)
       const y =  parseInt(((mouseCoor.y - canvasRect.top)/canvasRef.current.offsetHeight)*100)
-
-      console.log(x, y)
 
       markerRef.current.style.top = `${y}%`
       markerRef.current.style.left = `${x}%`

@@ -16,7 +16,7 @@ export default function ColorPicker() {
 
     return (
     <>
-      <main className="">
+      <main>
         <ToolHeaderSection>
           <ToolHeading 
           title="Color Picker"
