@@ -2,53 +2,61 @@ import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import OptionsBox from "../components/ShadowGeneratorComponents/OptionsBox";
 import CodeBlock from "../components/CodeBlock";
-import GoDeeper from "../components/ToolsLayout/GoDeeper";
 import { useState, useRef, useEffect } from "react";
-import tinycolor from "tinycolor2";
+import {
+  generateCssRule,
+  updateId,
+} from "../components/ShadowGeneratorComponents/ShadowGeneratorFN";
 
 const ShadowGenerator = () => {
+  const [firstRender, setFirstRender] = useState(false);
   const [ShadowsStyles, setShadowsStyles] = useState([
     {
-      id: 1,
-      shadowColor: "rgba(144, 4, 186, 30%)",
+      id: 0,
+      shadowColor: "rgba(51, 51, 51, 25%)",
       opacity: 30,
-      horizontalOffset: 5,
-      verticalOffset: 5,
-      spread: 5,
-      blur: 10,
+      horizontalOffset: 10,
+      verticalOffset: 10,
+      spread: 0,
+      blur: 5,
       inset: false,
+      units: {
+        horizontalOffset: "px",
+        verticalOffset: "px",
+        spread: "px",
+        blur: "px",
+      },
     },
   ]);
   const [currentStyle, setCurrentStyle] = useState([]);
   const [ActiveShadow, setActiveShadow] = useState(0);
   const [numOfShadows, setNumOfShadows] = useState(1);
+  const [removeShadow, setRemoveShadow] = useState(false);
 
   const box = useRef();
 
   useEffect(() => {
-    let color;
-    const cssRule = ShadowsStyles.map(
-      ({
-        inset,
-        horizontalOffset,
-        verticalOffset,
-        blur,
-        spread,
-        shadowColor,
-        opacity,
-      }) => {
-        color = tinycolor(shadowColor).setAlpha(opacity / 100);
+    const applyBoxShadow = (styles) => {
+      const cssRule = generateCssRule(styles);
+      box.current.style.boxShadow = cssRule.join(", ");
+      setCurrentStyle(cssRule);
+    };
 
-        return `${
-          inset ? "inset" : ""
-        } ${horizontalOffset}px ${verticalOffset}px ${blur}px ${spread}px ${color.toString()}`;
-      }
-    );
+    if (firstRender && localStorage.getItem("ShadowStyle")) {
+      const localStorageValue = JSON.parse(localStorage.getItem("ShadowStyle"));
+      const newState = localStorageValue.filter((obj) => obj.id !== 0);
+      setShadowsStyles(newState);
+      setShadowsStyles(localStorageValue);
+      setFirstRender(false);
+    }
 
-    
-    box.current.style.boxShadow = cssRule.join(", ");
-    setCurrentStyle(cssRule);
-    console.log(ShadowsStyles[ActiveShadow].shadowColor)
+    if (removeShadow) {
+      updateId(ShadowsStyles, setShadowsStyles, setRemoveShadow);
+    }
+
+    console.log(ShadowsStyles);
+
+    applyBoxShadow(ShadowsStyles);
   }, [ShadowsStyles, ActiveShadow]);
 
   return (
@@ -60,13 +68,13 @@ const ShadowGenerator = () => {
         ></ToolHeading>
       </ToolHeaderSection>
 
-      <section className="lg:mx-48 flex flex-col-reverse xl:flex-row 2xl:gap-16 justify-center   mx-6 md:mx-12">
-        <h2 className="lg:hidden" >Prewiev</h2>
+      <section className="lg:mx-48 flex flex-col-reverse xl:flex-row 2 justify-center   mx-6 md:mx-12">
+       
 
-        <div className=" lg:max-w-1/2 w-full aspect-square md:aspect-video xl:aspect-square max-h-[414px] xl:max-w-[600px] flex justify-center items-center border border-[color:var(--Design-Document-Outlines,#999)] border-solid">
+        <div className="bg-[#FFF2F8]  overflow-hidden text-base lg:max-w-1/2 w-full aspect-square md:aspect-video xl:aspect-square xl:max-h-[457px] xl:max-w-[600px] flex justify-center items-center border-l border-t border-b border-r xl:border-r-none border-[color:var(--Design-Document-Outlines,#999)] border-solid">
           <div
             ref={box}
-            className="box-shadow w-[280px] h-44 bg-[#D9D9D9] rounded-2xl"
+            className="box-shadow w-[280px] h-44  rounded-2xl bg-[#FF007A]"
           ></div>
         </div>
         <OptionsBox
@@ -76,17 +84,18 @@ const ShadowGenerator = () => {
           setNumOfShadows={setNumOfShadows}
           ActiveShadow={ActiveShadow}
           setActiveShadow={setActiveShadow}
+          setRemoveShadow={setRemoveShadow}
         />
       </section>
 
       <section className="lg:mx-48">
         <CodeBlock title="Code" code={"box-shadow"} unit={currentStyle} />
-
-
-       
       </section>
+
+      <section className="lg:mx-48">{/* <GoDeeper/> */}</section>
     </>
   );
 };
+
 
 export default ShadowGenerator;
