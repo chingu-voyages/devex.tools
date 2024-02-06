@@ -27,14 +27,17 @@ function UnitConverter() {
     let finalSize = newSizeInPixels;
 
     // Check if newSizeInPixels exceeds the maximum allowed size for the preview (1000)
-    if (newSizeInPixels > 1000 && !alertShown) {
+    if (newSizeInPixels > 1000) {
       finalSize = 1000;
-      // Notify the user that the preview is capped (you might want to throttle this or change the UX for a smoother experience)
-      alert(
-        "Preview is limited to 1000px. Conversion will still be accurate above this value."
-      );
-      setAlertShown(true);
+      if (!alertShown) {
+        alert(
+          "Preview is limited to 1000px. Conversion will still be accurate above this value."
+        );
+        setAlertShown(true);
+      }
     }
+
+    // Notify the user that the preview is capped
 
     // Check if newSizeInPixels is a number, if not, set CSS size to "0px"
     setCssSize(isNaN(finalSize) ? "0px" : `${finalSize}px`); // Update CSS size
