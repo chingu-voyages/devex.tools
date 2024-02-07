@@ -12,6 +12,7 @@ import LineHeightInput from "./FontPreviewComponenets/LineHeightInput";
 
 const FontPreview = ({
   font,
+
   backgroundColor,
   handleFontChange,
   handleColorChange,
