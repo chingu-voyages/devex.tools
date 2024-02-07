@@ -22,6 +22,7 @@ export default function CustomPicker({
   const [mouseCoor, setMouseCoor] = useState({x:0,y:0})
   const [currentColor, setCurrentColor] = useState(getColorString(colorData.color, 'hex'))
 
+  console.log(currentColor)
 
   useEffect(()=>{
     markerRef.current.children[0].style.background = getColorString(colorData.color,'hsl')
@@ -79,6 +80,9 @@ export default function CustomPicker({
     colorData={colorData}
     handleColorChange={handleColorChange}
     calculateMarkerPositionOnColor={calculateMarkerPositionOnColor}
+    currentColor={currentColor}
+    setCurrentColor={setCurrentColor}
+    handleQuery={handleQuery}
     />
     </>
   )

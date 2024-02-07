@@ -6,7 +6,10 @@ import alphaBckgrnd from '../../assets/transparency_background.svg'
 export default function PickerHandles({
     colorData,
     handleColorChange,
-    calculateMarkerPositionOnColor
+    calculateMarkerPositionOnColor,
+    handleQuery,
+    currentColor,
+    setCurrentColor
 }){
 
   useEffect(()=>{
@@ -15,6 +18,8 @@ export default function PickerHandles({
 
   useEffect(()=>{
     updateHandleValues()
+    setCurrentColor(getColorString(colorData.color, 'hex'))
+    handleQuery(getColorString(colorData.color, 'hex'))
   },[colorData])
 
   return (
