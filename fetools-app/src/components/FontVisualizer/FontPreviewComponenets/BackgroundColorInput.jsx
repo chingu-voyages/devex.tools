@@ -5,14 +5,11 @@ const BackgroundColorInput = ({
   handleBackgroundColorChange,
 }) => {
   return (
-    <div className="flex  flex-col px-5 text-neutral-400 ">
-      <label htmlFor="backgroundColor" className="mb-2">
-        Background:
-      </label>
-
-      <div className="border">
+    <div className="flex items-center space-x-4 gap-4 w-full">
+      <div className="text-base font-bold">Backgraund</div>
+      <div className="flex px-5 text-neutral-400 text-base">
         <div
-          className="border color-picker-toggle relative w-8 h-8"
+          className="border px-2 color-picker-toggle relative w-8 h-8"
           style={{
             cursor: "pointer",
             backgroundColor: backgroundColor,

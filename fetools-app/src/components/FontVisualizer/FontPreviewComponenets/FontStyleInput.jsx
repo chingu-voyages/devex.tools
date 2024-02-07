@@ -2,7 +2,11 @@ import React from "react";
 import { FaItalic, FaUnderline, FaStrikethrough } from "react-icons/fa";
 
 const FontStyleInput = ({ font, handleFontChange }) => {
-  const fontStyles = ["italic", "underlined", "strikethrough"];
+  const fontStyles = [
+    { label: "italic", value: "italic" },
+    { label: "underlined", value: "underlined" },
+    { label: "line-through", value: "line-through" },
+  ];
 
   return (
     <div className="flex items-center space-x-4 gap-4 w-full">
@@ -10,15 +14,17 @@ const FontStyleInput = ({ font, handleFontChange }) => {
       <div className="flex mt-1 p-1">
         {fontStyles.map((style) => (
           <button
-            key={style}
-            onClick={() => handleFontChange("fontStyle", style)}
-            className={`flex items-center justify-center p-2 mx-1  ${
-              font.fontStyle === style ? "bg-gray-300" : "bg-white"
+            key={style.label}
+            onClick={() => {
+              handleFontChange("style", style.value);
+            }}
+            className={`flex items-center justify-center p-2 mx-1 ${
+              font.style === style.value && "bg-gray-300"
             }`}
           >
-            {style === "italic" && <FaItalic />}
-            {style === "underlined" && <FaUnderline />}
-            {style === "strikethrough" && <FaStrikethrough />}
+            {style.label === "italic" && <FaItalic />}
+            {style.label === "underlined" && <FaUnderline />}
+            {style.label === "line-through" && <FaStrikethrough />}
           </button>
         ))}
       </div>

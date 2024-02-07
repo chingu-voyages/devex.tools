@@ -132,14 +132,13 @@ const FontVisualizer = () => {
   const generateCodeType = () => {
     return codeType;
   };
-
   return (
-    <main className="flex flex-col items-start gap-10 p-8 lg:p-20">
-      <div className="flex pb-4 items-end self-stretch">
+    <main className="flex flex-col items-start  self-stretch gap-10 p-8 lg:p-20">
+      <div className="flex pb-32 items-end self-stretch">
         <h1 className="text-4xl font-bold">Font Viewer</h1>
       </div>
 
-      <div className="flex gap-12 items-start">
+      <div className="flex flex-col lg:flex-row gap-12 w-full">
         <Preview generateFontStyles={generateFontStyles} />
 
         <FontPreview
@@ -154,11 +153,13 @@ const FontVisualizer = () => {
         />
       </div>
 
-      <div className="flex items-center gap-475 self-stretch">
+      <div className="flex items-center mb-4">
         <h2 className="text-2xl font-bold mb-4">Code</h2>
       </div>
 
-      <div className="flex  gap-12">
+      <div className="flex flex-col lg:flex-row gap-12 w-full">
+        <HtmlCodeGenerator generateHtmlCode={generateHtmlCode} />
+
         <CodeGenerator
           generateCssCode={generateCssCode}
           generateTailwindCode={generateTailwindCode}
@@ -166,11 +167,10 @@ const FontVisualizer = () => {
           codeType={codeType}
           setCodeType={setCodeType}
         />
-
-        <HtmlCodeGenerator generateHtmlCode={generateHtmlCode} />
       </div>
     </main>
   );
+  
 };
 
 export default FontVisualizer;

@@ -26,7 +26,7 @@ const Preview = ({ generateFontStyles }) => {
 
   return (
     <div
-      className={`p-4 flex flex-col gap-4 w-full  relative ${
+      className={`p-4 flex flex-col flex-1 gap-4 w-full  relative ${
         isEditing ? "cursor-text" : "cursor-pointer"
       } ${isFullscreen ? "fixed top-0 left-0 right-0 bottom-0 z-50 " : ""} ${
         isFullscreen ? "w-screen h-screen" : ""
