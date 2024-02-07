@@ -42,7 +42,7 @@ const FontNameInput = ({ font, handleFontChange }) => {
       const fonts = data.items.map(item => ({
         value: item.family,
         label: item.family,
-        url: item.files.regular,
+        url: item.files.regular?.replace('http', 'https'),
       }));
       console.log(fonts);
       setGoogleFonts(fonts);
