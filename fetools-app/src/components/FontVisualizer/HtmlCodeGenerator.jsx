@@ -13,10 +13,7 @@ const HtmlCodeGenerator = ({ generateHtmlCode }) => {
   };
 
   return (
-    <div
-      className="code-generator p-4 flex flex-col gap-4 w-full  relative"
-      style={{ width: "100%" }}
-    >
+    <div className="code-generator p-4 flex flex-col gap-4 w-full  relative">
       <h2 className="text-xl font-bold mb-2">HTML </h2>
       <textarea
         value={generateHtmlCode()}
