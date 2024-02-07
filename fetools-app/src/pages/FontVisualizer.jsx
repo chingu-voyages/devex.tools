@@ -138,7 +138,7 @@ const FontVisualizer = () => {
         <h1 className="text-4xl font-bold">Font Viewer</h1>
       </div>
 
-      <div className="flex gap-12 ">
+      <div className="flex gap-12 items-start">
         <Preview generateFontStyles={generateFontStyles} />
 
         <FontPreview
