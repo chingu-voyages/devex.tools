@@ -19,6 +19,7 @@ export default function ColorPickerTool({ colorData, setColorData, handleQuery }
         colorData={colorData}
         handleColorChange={handleColorChange}
         handleQuery={handleQuery}/>
+        
       </section>
     </>
   );
