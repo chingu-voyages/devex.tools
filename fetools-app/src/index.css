@@ -241,6 +241,8 @@
       --sat-slider-color: #fff;
       --light-thumb-color: #fff;
       --light-slider-color: #fff;
+      --alpha-thumb-color: #fff;
+      --alpha-slider-color: #fff;
     }
 
     .colorPickerSlider{
@@ -353,6 +355,22 @@
 
     .lightSlider::-moz-range-track{
       background: var(--light-slider-color);
+    }
+
+    .alphaSlider::-webkit-slider-thumb{
+      background: var(--alpha-thumb-color);
+    }
+    
+    .alphaSlider::-moz-range-thumb{
+      background: var(--alpha-thumb-color);
+    }
+
+    .alphaSlider::-webkit-slider-runnable-track{
+      background: var(--alpha-slider-color);
+    }
+
+    .lightSlider::-moz-range-track{
+      background: var(--alpha-slider-color);
     }
 
   }

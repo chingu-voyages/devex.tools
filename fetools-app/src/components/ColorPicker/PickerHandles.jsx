@@ -1,5 +1,7 @@
-import { useEffect, useState} from "react";
-import { createColorObj, getColorString } from "./ColorPickerUtils";
+import { useEffect} from "react";
+import { createColorObj, getColorString} from "./ColorPickerUtils";
+
+import alphaBckgrnd from '../../assets/transparency_background.svg'
 
 export default function PickerHandles({
     colorData,
@@ -7,16 +9,8 @@ export default function PickerHandles({
     calculateMarkerPositionOnColor
 }){
 
-  const [pickerData, setPickerData] = useState({
-    s: parseInt(colorData.color.s)*100, 
-    l: parseInt(colorData.color.l)*100
-  })
-
   useEffect(()=>{
-    calculateMarkerPositionOnColor(()=>{setPickerData({
-      s: parseInt(colorData.color.s)*100, 
-      l: parseInt(colorData.color.l)*100
-      })})
+    calculateMarkerPositionOnColor()
   },[])
 
   useEffect(()=>{
@@ -54,30 +48,38 @@ export default function PickerHandles({
             onChange={(e)=>handleOnChange(e, 'light')}
             className="colorPickerSlider lightSlider flex-1"></input>
           </li>
+          <li className="flex gap-x-3 justify-evenly">
+            <span className="block font-bold text-sm w-[10px]">A</span>
+            <span className="block font-medium text-sm text-gray-400 w-9">{parseInt(colorData.alpha*100)}%</span>
+            <input id="alpha" max={100} min={0} step={1}
+            type="range"
+            value={parseInt(colorData.alpha*100)}
+            onChange={(e)=>handleOnChange(e, 'alpha')}
+            className="colorPickerSlider alphaSlider flex-1"></input>
+          </li>
         </ul>
       </div>
     </>
   );
 
   function handleOnChange(e, property){
+
     if(property === 'hue'){
       colorData.hue.h = parseInt(e.target.value)
 
       const newColorObj = createColorObj(colorData.color, colorData.hue)
 
       updateColorData(property, newColorObj)
-    }else if(property === 'saturation'){
-
-      colorData.color.s = (parseFloat(e.target.value/100))
-      
-      console.log(colorData)
-      updateColorData(property, {...colorData, hue: colorData.hue})
-    } else if(property === 'light'){
-
-      colorData.color.l = (parseFloat(e.target.value/100))
-      
-      console.log(colorData)
-      updateColorData(property, {...colorData, hue: colorData.hue})
+    }else{
+      if(property === 'saturation'){
+        colorData.color.s = (parseFloat(e.target.value/100))
+      } else if(property === 'light'){
+        colorData.color.l = (parseFloat(e.target.value/100))      
+      }else{
+        colorData.alpha = (parseFloat(e.target.value/100))
+        console.log(colorData)
+      }
+      updateColorData(property, {...colorData})
     }
 
     calculateMarkerPositionOnColor()
@@ -99,6 +101,8 @@ export default function PickerHandles({
     classElement.style.setProperty('--sat-slider-color', getSatSliderColor())
     classElement.style.setProperty('--light-thumb-color', getColorString(colorData.color, 'hsl'))  
     classElement.style.setProperty('--light-slider-color', getLightSliderColor())  
+    classElement.style.setProperty('--alpha-thumb-color', getColorString(colorData.color, 'hsl'))  
+    classElement.style.setProperty('--alpha-slider-color', getAlphaSliderColor())  
 
     function getSatSliderColor(){
       const startColor = {...colorData.color}
@@ -127,6 +131,18 @@ export default function PickerHandles({
         ${getColorString(startColor, 'hsl')},
         ${getColorString(middleColor, 'hsl')}, 
         ${getColorString(endColor, 'hsl')})`
+
+      return rule
+    }
+
+    function getAlphaSliderColor(){
+      const startColor = {...colorData.color}
+      const endColor = {...colorData.color}
+    
+      startColor.a = 0
+      endColor.a = 1
+
+      const rule = `linear-gradient(90deg, ${getColorString(startColor, 'hsl')}, ${getColorString(endColor, 'hsl')}), url(${alphaBckgrnd})`
 
       return rule
     }

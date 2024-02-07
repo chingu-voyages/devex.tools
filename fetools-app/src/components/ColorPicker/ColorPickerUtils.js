@@ -15,6 +15,7 @@ export function createColorObj(newColor, newHue){
     const colorObj = {
       color: color, 
       hue: hue,
+      alpha: tinycolor(color).getAlpha()
     }
 
     if(newHue){
@@ -60,3 +61,4 @@ export function getColorString(color, type){
   }
   
 }
+
