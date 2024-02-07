@@ -3,16 +3,19 @@ import tinycolor from "tinycolor2"
 
 export function createColorObj(newColor, newHue){
 
-    let currentColor = getRandomColor().colorStr
+    let currentColor = tinycolor(getRandomColor().colorStr).toHsl()
 
     if(newColor!==null){
-      currentColor = tinycolor(newColor).toRgbString()
+      currentColor = tinycolor(newColor).toHsl()
     }
 
     const color = currentColor
     const hue = getHue()
 
-    const colorObj = {color: color, hue: hue}
+    const colorObj = {
+      color: color, 
+      hue: hue,
+    }
 
     if(newHue){
       updateHueInColor()
@@ -21,18 +24,18 @@ export function createColorObj(newColor, newHue){
     return colorObj
 
     function getHue(){
-      const hsl = new tinycolor(color).toHsl()
-      hsl.s = 1
-      hsl.l = 0.5
-      return tinycolor(hsl).toRgbString()
+      const hueHsl = {...color}
+      hueHsl.s = 1
+      hueHsl.l = 0.5
+      return hueHsl
     }
 
     function updateHueInColor(){
-      const originalColor = tinycolor(color).toHsl()
+      const originalColor = color
       originalColor.h = newHue.h
 
-      colorObj.color = tinycolor(originalColor).toRgbString()
-      colorObj.hue = tinycolor(newHue).toRgbString()
+      colorObj.color = originalColor
+      colorObj.hue = newHue
     }
 
 }
@@ -43,4 +46,17 @@ export function RgbToHsl(rgb){
 
 export function HslToRgb(hsl){
   return tinycolor(hsl).toRgb()
+}
+
+export function HexToHsl(hex){
+  return tinycolor(hex).toHsl()
+}
+
+export function getColorString(color, type){
+  if(type === 'hsl'){
+    return tinycolor(color).toHslString()
+  } else if (type === 'hex'){
+    return tinycolor(color).toHexString()
+  }
+  
 }

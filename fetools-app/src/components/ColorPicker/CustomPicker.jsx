@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
+import { getColorString, HexToHsl } from "./ColorPickerUtils";
 import switchSamplerIcon from "../../assets/switch-sampler-icon.svg"
 import PickerHandles from "./PickerHandles";
 
@@ -19,10 +20,12 @@ export default function CustomPicker({
   const [imgFile, setImgFile] = useState(null)
   const [isColorPicker, setIsColorPicker] = useState(true)
   const [mouseCoor, setMouseCoor] = useState({x:0,y:0})
-  const [currentColor, setCurrentColor] = useState(getHexString(colorData.color))
+  const [currentColor, setCurrentColor] = useState(getColorString(colorData.color, 'hex'))
+
+
 
   useEffect(()=>{
-    markerRef.current.children[0].style.background = colorData.color
+    markerRef.current.children[0].style.background = getColorString(colorData.color,'hsl')
     canvasRef.current.currentColor = currentColor
     return ()=>{
       stopInterval(intervalMouseMoveRef)
@@ -31,7 +34,8 @@ export default function CustomPicker({
 
   useEffect(()=>{
     
-    markerRef.current.children[0].style.background = colorData.color
+    markerRef.current.children[0].style.background = getColorString(colorData.color,'hsl')
+
     resizeCanvas()
 
     if(isColorPicker){
@@ -75,8 +79,8 @@ export default function CustomPicker({
     <PickerHandles
     colorData={colorData}
     handleColorChange={handleColorChange}
+    calculateMarkerPositionOnColor={calculateMarkerPositionOnColor}
     />
-
     </>
   )
 
@@ -93,7 +97,7 @@ export default function CustomPicker({
 
     const colorCtx = canvasRef.current.getContext('2d');  // This create a 2D context for the canvas
 
-    const hue = colorData.hue;
+    const hue = getColorString(colorData.hue, 'hsl');
     //Make HueGradient
     const gradientH = colorCtx.createLinearGradient(0, 0, colorCtx.canvas.width, 0);
     gradientH.addColorStop(0, '#fff');
@@ -194,9 +198,9 @@ export default function CustomPicker({
   }
 
   function handleClick(e, firstClick){
-    colorData.color = canvasRef.current.currentColor
+    colorData.color = HexToHsl(canvasRef.current.currentColor)
     handleColorChange({...colorData})
-    calculateMarkerPosition()
+    calculateMarkerPositionOnMouse()
     if(!firstClick){
       canvasRef.current.click()
     }
@@ -207,7 +211,7 @@ export default function CustomPicker({
     if (ref.current) return;
     ref.current = setInterval(() => {
       func(e)
-    }, 10);
+    }, 5);
   }
 
   function stopInterval(ref){
@@ -237,7 +241,19 @@ export default function CustomPicker({
     }
   }
 
-  function calculateMarkerPosition(){
+  function calculateMarkerPositionOnColor(){
+
+    let satValue = parseInt((colorData.color.s)*100)
+    let lightValue = parseInt((colorData.color.l)*100)
+
+    let x = satValue
+    let y = 100 - lightValue
+
+    markerRef.current.style.top = `${y}%`
+    markerRef.current.style.left = `${x}%`
+  }
+
+  function calculateMarkerPositionOnMouse(){
     const canvasRect = canvasRef.current.getBoundingClientRect()
 
     const x = parseInt(((mouseCoor.x - canvasRect.left)/canvasRef.current.offsetWidth)*100)
