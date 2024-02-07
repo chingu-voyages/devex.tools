@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --ui-contrast-color: #E8E8E8;
+    --ui-contrast-color: #e8e8e8;
     --bckgrnd-color: #fff;
 
     --background: 0 0% 100%;
@@ -12,166 +12,224 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
- 
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
- 
+
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
- 
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
- 
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
- 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
- 
+
+    --accent: 270 50% 40%;
+    --accent-foreground: 270 0% 100%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
- 
-    --radius: 0.5rem;
+
+    --radius: 1rem;
+
+    --devex-font: 'Lato', sans-serif;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
- 
+
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
- 
+
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
- 
-    --primary: 210 40% 98%;
+
+    --primary: 0 0% 13%;
     --primary-foreground: 222.2 47.4% 11.2%;
- 
+
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
- 
+
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
- 
+
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
- 
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
+    font-family: var(--devex-font);
+    color: var(--primary);
   }
   body {
     @apply bg-background text-foreground;
   }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  a:hover {
+    @apply text-accent;
+  }
 }
 
-@layer base{
-  @layer ColorGradient{
-    :root{
-      --color1-gradient: hsla(356, 22%, 55%, 1);
-      --color2-gradient: hsla(31, 100%, 74%, 1);
-      --color1-thumb: hsla(356, 22%, 55%, 1);
-      --color2-thumb: hsla(31, 100%, 74%, 1);
-     
-      --percentage1: 0%;
-      --percentage2: 100%;
-    }
-
-    .wrap{
-        display: relative;
-        z-index: 0;
+@layer base {
+  @layer ColorGradient {
+    .wrap {
+      display: relative;
+      z-index: 0;
     }
 
     .slider {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 100%;
-        height: 100%;
-        outline: none;
-        z-index: 4;
-        cursor: copy;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 100%;
+      outline: none;
+      z-index: 4;
+      cursor: copy;
     }
-    
+
     .slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%; 
-        cursor: -webkit-grab;
-        pointer-events: visible;
-        transform: scale(1.2);
-        box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: -webkit-grab;
+      pointer-events: visible;
+      transform: scale(1.2);
+      box-shadow:
+        rgba(0, 0, 0, 0.15) 0 0 0 1px,
+        rgba(0, 0, 0, 0.05) 0 10px 10px -5px,
+        inset #fff 0 0 0 6px;
     }
 
-    .wrap .isActive::-webkit-slider-thumb{
-        box-shadow: #0066ff 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
-        z-index: 10;
+    .wrap .isActive::-webkit-slider-thumb {
+      box-shadow:
+        #0066ff 0 0 0 1px,
+        rgba(0, 0, 0, 0.05) 0 10px 10px -5px,
+        inset #fff 0 0 0 6px;
+      z-index: 10;
     }
 
-    .slider::-moz-range-thumb{
-        width: 30px;
-        height: 30px;
-        border-radius: 50%; 
-        cursor: -moz-grab;
-        pointer-events: visible;
-        transform: scale(1.2);
+    .slider::-moz-range-thumb {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: -moz-grab;
+      pointer-events: visible;
+      transform: scale(1.2);
     }
 
-    .wrap .isActive::-moz-range-thumb{
-        box-shadow: #0066ff 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 10px 10px -5px, inset #fff 0 0 0 6px;
-        z-index: 10;
+    .wrap .isActive::-moz-range-thumb {
+      box-shadow:
+        #0066ff 0 0 0 1px,
+        rgba(0, 0, 0, 0.05) 0 10px 10px -5px,
+        inset #fff 0 0 0 6px;
+      z-index: 10;
     }
 
-    .wrap label:nth-child(1) ::-webkit-slider-thumb {
-        background: var(--color1-thumb);
-    }
-
-    .wrap label:nth-child(2) ::-webkit-slider-thumb {
-        background: var(--color2-thumb);
-    }
-
-    .slider::-webkit-slider-runnable-track{
-        background: none; /* get rid of white Chrome background */
-        font: inherit; /* fix too small font-size in both Chrome & Firefox */
-        margin: 0;
-        pointer-events: none;
+    .slider::-webkit-slider-runnable-track {
+      background: none; /* get rid of white Chrome background */
+      font: inherit; /* fix too small font-size in both Chrome & Firefox */
+      margin: 0;
+      pointer-events: none;
     }
 
     .slider::-moz-range-track {
-        background: none; /* get rid of white Chrome background */
-        font: inherit; /* fix too small font-size in both Chrome & Firefox */
-        margin: 0;
-        pointer-events: none;
+      background: none; /* get rid of white Chrome background */
+      font: inherit; /* fix too small font-size in both Chrome & Firefox */
+      margin: 0;
+      pointer-events: none;
     }
 
-    .gradient{
-        background: linear-gradient(90deg, var(--color1-gradient) var(--percentage1), var(--color2-gradient) var(--percentage2));
+    #track-handler {
+      cursor: copy;
     }
 
-    .gradientCSS{
-        background: hsla(356, 22%, 55%, 1);
+    @layer thumbColorStyle {
+      .wrap label:nth-of-type(1) ::-webkit-slider-thumb {
+        background: var(--thumb-color-0);
+      }
 
-        background: linear-gradient(90deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+      .wrap label:nth-of-type(2) ::-webkit-slider-thumb {
+        background: var(--thumb-color-1);
+      }
 
-        background: -moz-linear-gradient(90deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+      .wrap label:nth-of-type(3) ::-webkit-slider-thumb {
+        background: var(--thumb-color-2);
+      }
 
-        background: -webkit-linear-gradient(0deg, hsla(356, 22%, 55%, 1) 0%, hsla(31, 100%, 74%, 1) 100%);
+      .wrap label:nth-of-type(4) ::-webkit-slider-thumb {
+        background: var(--thumb-color-3);
+      }
 
-        filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A47275", endColorstr="#FFC07C", GradientType=1 );
+      .wrap label:nth-of-type(5) ::-webkit-slider-thumb {
+        background: var(--thumb-color-4);
+      }
+
+      .wrap label:nth-of-type(6) ::-webkit-slider-thumb {
+        background: var(--thumb-color-5);
+      }
+
+      .wrap label:nth-of-type(7) ::-webkit-slider-thumb {
+        background: var(--thumb-color-6);
+      }
+
+      .wrap label:nth-of-type(8) ::-webkit-slider-thumb {
+        background: var(--thumb-color-7);
+      }
+
+      .wrap label:nth-of-type(9) ::-webkit-slider-thumb {
+        background: var(--thumb-color-8);
+      }
+
+      .wrap label:nth-of-type(10) ::-webkit-slider-thumb {
+        background: var(--thumb-color-9);
+      }
+    }
+
+    .gradientCSS {
+      background: hsla(356, 22%, 55%, 1);
+
+      background: linear-gradient(
+        90deg,
+        hsla(356, 22%, 55%, 1) 0%,
+        hsla(31, 100%, 74%, 1) 100%
+      );
+
+      background: -moz-linear-gradient(
+        90deg,
+        hsla(356, 22%, 55%, 1) 0%,
+        hsla(31, 100%, 74%, 1) 100%
+      );
+
+      background: -webkit-linear-gradient(
+        0deg,
+        hsla(356, 22%, 55%, 1) 0%,
+        hsla(31, 100%, 74%, 1) 100%
+      );
+
+      filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A47275", endColorstr="#FFC07C", GradientType=1 );
     }
   }
 }

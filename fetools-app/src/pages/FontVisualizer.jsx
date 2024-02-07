@@ -180,6 +180,7 @@ const FontVisualizer = () => {
       />
     </main>
   );
+  
 };
 
 export default FontVisualizer;
