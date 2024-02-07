@@ -170,6 +170,7 @@ const FontVisualizer = () => {
       </div>
     </main>
   );
+  
 };
 
 export default FontVisualizer;
