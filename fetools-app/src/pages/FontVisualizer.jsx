@@ -3,6 +3,7 @@ import CodeGenerator from "../components/FontVisualizer/CodeGenerator";
 import FontPreview from "../components/FontVisualizer/FontPreview";
 import Preview from "../components/FontVisualizer/Preview";
 import HtmlCodeGenerator from "../components/FontVisualizer/HtmlCodeGenerator";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
 
 const FontVisualizer = () => {
   const [font, setFont] = useState({
@@ -168,6 +169,15 @@ const FontVisualizer = () => {
           setCodeType={setCodeType}
         />
       </div>
+
+      <GoDeeper
+        linksData={[
+          {
+            url: "",
+            textValue: "",
+          },
+        ]}
+      />
     </main>
   );
 };
