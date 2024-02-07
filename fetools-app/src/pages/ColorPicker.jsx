@@ -3,11 +3,12 @@ import { useSearchParams } from "react-router-dom"
 
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection"
 import ToolHeading from "../components/ToolsLayout/ToolHeading"
+import PageSection from "../components/PageLayout/PageSection"
 import ColorPickerTool from "../components/ColorPicker/ColorPickerTool"
 import ColorPickerInterface from "../components/ColorPicker/ColorPickerInterface"
 
 import { createColorObj } from "../components/ColorPicker/ColorPickerUtils"
-import { getRandomColor } from "../components/ColorGradientComponents/ColorGradientUtils"
+
 
 export default function ColorPicker() {
     
@@ -24,17 +25,19 @@ export default function ColorPicker() {
           ></ToolHeading>
         </ToolHeaderSection>
 
-        <div className="flex justify-between m-8 mb-10
-        md:mx-12 md:mt-12
-        max-lg:flex-col max-lg:items-center max-lg:gap-y-4 max-lg:mx-6
-        lg:mx-28 lg:mt-20 ">
-          <ColorPickerTool 
+      <section className="flex mx-44">
+        <ColorPickerTool 
           colorData={colorData}
           handleQuery={handleQuery}
           setColorData={setColorData}
-          />
-          <ColorPickerInterface/>
-        </div>
+          className='flex flex-1 flex-col'
+        />
+
+        <PageSection title="Color Codes" icon="integration_instructions" className="flex-1 p-0">
+          <ColorPickerInterface className='flex-1 h-[380px]'/>
+        </PageSection>
+
+      </section>
 
       </main>
     </>

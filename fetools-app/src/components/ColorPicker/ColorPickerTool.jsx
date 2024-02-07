@@ -3,7 +3,7 @@ import { getColorString } from "./ColorPickerUtils";
 import CustomPicker from './CustomPicker';
 import alphaBckgrnd from '../../assets/transparency_background.svg'
 
-export default function ColorPickerTool({ colorData, setColorData, handleQuery }) {
+export default function ColorPickerTool({ colorData, setColorData, handleQuery, className }) {
   const parentRef = useRef();
 
   const handleColorChange = (newColorData) => {
@@ -22,7 +22,7 @@ export default function ColorPickerTool({ colorData, setColorData, handleQuery }
 
   return (
     <>
-      <section ref={parentRef} id="color-picker-container" className="flex flex-1 flex-col">
+      <section ref={parentRef} id="color-picker-container" className={className}>
         <div id='preview-container' className="h-24 mb-3 rounded-tr-2xl">
         </div>
         <CustomPicker

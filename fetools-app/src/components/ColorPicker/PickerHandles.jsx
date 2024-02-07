@@ -82,7 +82,7 @@ export default function PickerHandles({
         colorData.color.l = (parseFloat(e.target.value/100))      
       }else{
         colorData.alpha = (parseFloat(e.target.value/100))
-        console.log(colorData)
+
       }
       updateColorData(property, {...colorData})
     }
@@ -125,8 +125,6 @@ export default function PickerHandles({
       const startColor = {...colorData.color}
       const middleColor = {...colorData.color}
       const endColor = {...colorData.color}
-
-      console.log(colorData)
 
       startColor.l = 0
       middleColor.l = .5

@@ -22,8 +22,6 @@ export default function CustomPicker({
   const [mouseCoor, setMouseCoor] = useState({x:0,y:0})
   const [currentColor, setCurrentColor] = useState(getColorString(colorData.color, 'hex'))
 
-  console.log(currentColor)
-
   useEffect(()=>{
     markerRef.current.children[0].style.background = getColorString(colorData.color,'hsl')
     canvasRef.current.currentColor = currentColor
@@ -248,8 +246,6 @@ export default function CustomPicker({
 
     let satValue = parseInt((colorData.color.s)*100)
     let lightValue = parseInt((colorData.color.l)*100)
-
-    console.log(satValue, lightValue)
 
     let x = satValue
     let y = 100 - (lightValue*2)
