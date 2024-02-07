@@ -1,6 +1,5 @@
 import { useEffect, useState} from "react";
 import { createColorObj, getColorString } from "./ColorPickerUtils";
-import tinycolor from "tinycolor2";
 
 export default function PickerHandles({
     colorData,
@@ -8,8 +7,16 @@ export default function PickerHandles({
     calculateMarkerPositionOnColor
 }){
 
+  const [pickerData, setPickerData] = useState({
+    s: parseInt(colorData.color.s)*100, 
+    l: parseInt(colorData.color.l)*100
+  })
+
   useEffect(()=>{
-    calculateMarkerPositionOnColor()
+    calculateMarkerPositionOnColor(()=>{setPickerData({
+      s: parseInt(colorData.color.s)*100, 
+      l: parseInt(colorData.color.l)*100
+      })})
   },[])
 
   useEffect(()=>{
