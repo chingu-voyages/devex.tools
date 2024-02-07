@@ -133,12 +133,12 @@ const FontVisualizer = () => {
     return codeType;
   };
   return (
-    <main className="flex flex-col items-start self-stretch gap-10 p-8 lg:p-20">
+    <main className="flex flex-col items-start  self-stretch gap-10 p-8 lg:p-20">
       <div className="flex pb-32 items-end self-stretch">
         <h1 className="text-4xl font-bold">Font Viewer</h1>
       </div>
 
-      <div className="flex gap-12 items-start">
+      <div className="flex flex-col lg:flex-row gap-12 w-full">
         <Preview generateFontStyles={generateFontStyles} />
 
         <FontPreview

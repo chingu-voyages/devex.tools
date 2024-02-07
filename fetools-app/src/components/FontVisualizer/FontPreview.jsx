@@ -21,7 +21,7 @@ const FontPreview = ({
   handleFontSizeChange,
 }) => {
   return (
-    <div className=" grid flex-1  grid-rows-5 grid-flow-col  gap-4">
+    <div className=" grid flex-1 grid-rows-5 grid-flow-col   gap-4 ">
       <FontNameInput font={font} handleFontChange={handleFontChange} />
       <FontColorInput font={font} handleColorChange={handleColorChange} />
       <FontWeightInput font={font} handleFontChange={handleFontChange} />
