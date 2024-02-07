@@ -30,7 +30,7 @@ export default function ColorPicker() {
           colorData={colorData}
           handleQuery={handleQuery}
           setColorData={setColorData}
-          className='flex flex-1 flex-col'
+          className='flex flex-1 flex-col min-w-[540px]'
         />
 
         <PageSection title="Color Codes" icon="integration_instructions" className="flex-1 p-0">
