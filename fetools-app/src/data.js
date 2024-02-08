@@ -1,1 +1,1 @@
-export const appName = 'Our App Name'
+export const appName = 'devex.tools';
