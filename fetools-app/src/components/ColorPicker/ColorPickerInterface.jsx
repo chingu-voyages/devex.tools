@@ -4,7 +4,8 @@ import { colorWithAlpha, createColorObj, getColorString, HslToRgb, isValidColor 
 export default function ColorPickerInterface({ 
     className,
     colorData,
-    setColorData
+    setColorData,
+    setInputOnFocus
 }){
   
     const codesContainerRef = useRef()
@@ -127,6 +128,7 @@ export default function ColorPickerInterface({
                 setInputValues({...inputValues, hexColor: e.target.value})
             }
         }
+        setInputOnFocus(true)
     }
 
     function handleOnBlur(e){

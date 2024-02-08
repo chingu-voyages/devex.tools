@@ -13,6 +13,7 @@ import { createColorObj } from "../components/ColorPicker/ColorPickerUtils"
 export default function ColorPicker() {
     
   const [searchParams, setSearchParams] = useSearchParams();
+  const [inputOnFocus, setInputOnFocus] = useState(false)
   const [colorData, setColorData] = useState(createColorObj(searchParams.get('color'))||createColorObj())
 
     return (
@@ -30,13 +31,17 @@ export default function ColorPicker() {
           colorData={colorData}
           handleQuery={handleQuery}
           setColorData={setColorData}
+          inputOnFocus={inputOnFocus}
+          setInputOnFocus={setInputOnFocus}
           className='flex flex-1 flex-col min-w-[540px]'
         />
 
         <PageSection title="Color Codes" icon="integration_instructions" className="flex-1 p-0">
           <ColorPickerInterface className='flex-1 h-[380px]'
           colorData={colorData}
-          setColorData={setColorData}/>
+          setColorData={setColorData}
+          inputOnFocus={inputOnFocus}
+          setInputOnFocus={setInputOnFocus}/>
         </PageSection>
 
       </section>

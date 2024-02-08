@@ -8,7 +8,9 @@ import PickerHandles from "./PickerHandles";
 export default function CustomPicker({
   colorData,
   handleColorChange,
-  handleQuery
+  handleQuery,
+  inputOnFocus,
+  setInputOnFocus
 }){
 
   const canvasContainerRef = useRef();
@@ -41,6 +43,10 @@ export default function CustomPicker({
       createCanvasGradients()
     } else{
       createImagePicker()
+    }
+
+    if(inputOnFocus){
+      calculateMarkerPositionOnColor()
     }
 
   },[colorData, isColorPicker, imgFile])
@@ -208,6 +214,7 @@ export default function CustomPicker({
       calculateMarkerPositionOnMouse()
 
       if(!firstClick){
+        setInputOnFocus(false)
         canvasRef.current.click()
       }
 
@@ -218,6 +225,7 @@ export default function CustomPicker({
       handleColorChange({...colorData})
       calculateMarkerPositionOnMouse()
       if(!firstClick){
+        setInputOnFocus(false)
         canvasRef.current.click()
       }
     }
