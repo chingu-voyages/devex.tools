@@ -77,6 +77,7 @@ export default function ColorPickerInterface({
                 <div className="relative w-1/4">
                     <span className="block absolute left-5 top-2 w-fit font-bold">R</span>
                     <input id="r" type="text" maxLength={3}
+                    placeholder={inputValues.rgb.r}
                     defaultValue={inputValues.rgb.r}
                     className="
                     border-y-2 border-l-2 border-r-2 
