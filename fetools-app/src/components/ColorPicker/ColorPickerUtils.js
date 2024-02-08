@@ -61,6 +61,8 @@ export function getColorString(color, type){
     return tinycolor(color).toHslString()
   } else if (type === 'hex'){
     return tinycolor(color).toHexString()
+  } else if (type === 'rgb'){
+    return tinycolor(color).toRgbString()
   }
   
 }

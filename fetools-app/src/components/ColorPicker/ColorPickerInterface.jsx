@@ -51,7 +51,7 @@ export default function ColorPickerInterface({
                 input.value = input.value
             }else if(input.id === 'a'){
                 input.value !== inputValues.alpha? 
-                input.value = parseFloat(inputValues.alpha*100).toFixed(0):
+                input.value = `${parseFloat(inputValues.alpha*100).toFixed(0)}%`:
                 input.value = input.value
             }
         })
@@ -80,6 +80,8 @@ export default function ColorPickerInterface({
                     <input id="r" type="text" maxLength={3}
                     placeholder={inputValues.rgb.r}
                     defaultValue={inputValues.rgb.r}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
                     className="
                     border-y-2 border-l-2 border-r-2 
                     h-10 rounded-l outline-none text-center w-full 
@@ -90,7 +92,10 @@ export default function ColorPickerInterface({
                 <div className="relative w-1/4">
                     <span className="block absolute left-5 top-2 w-fit font-bold">G</span>
                     <input id="g" type="text" maxLength={3}
+                    placeholder={inputValues.rgb.g}
                     defaultValue={inputValues.rgb.g}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
                     className="border-y-2 border-r-2 h-10 
                     outline-none text-center w-full
                     font-medium text-gray-500 text-sm"></input>
@@ -99,7 +104,10 @@ export default function ColorPickerInterface({
                 <div className="relative w-1/4">
                     <span className="block absolute left-5 top-2 w-fit font-bold">B</span>
                     <input id="b" type="text" maxLength={3}
+                    placeholder={inputValues.rgb.b}
                     defaultValue={inputValues.rgb.b}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
                     className="border-y-2 border-r-2 h-10 
                     outline-none text-center w-full
                     font-medium text-gray-500 text-sm"></input>
@@ -108,7 +116,10 @@ export default function ColorPickerInterface({
                 <div className="relative w-1/4">
                     <span className="block absolute left-5 top-2 w-fit font-bold">A</span>
                     <input id="a" type="text" maxLength={4}
-                    defaultValue={`${colorData.alpha*100}%`}
+                    placeholder={`${inputValues.alpha*100}%`}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    defaultValue={`${inputValues.alpha*100}%`}
                     className="border-y-2 border-r-2 h-10 rounded-r 
                     outline-none text-center w-full
                     font-medium text-gray-500 text-sm"></input>
@@ -122,10 +133,28 @@ export default function ColorPickerInterface({
     );
 
     function handleOnChange(e){
-        console.log(e.target.value)
         if(e.target.id==='hex'){
             if(isValidColor(e.target.value)){
                 setInputValues({...inputValues, hexColor: e.target.value})
+            }
+        }else if(
+            e.target.id==='r' || 
+            e.target.id==='g' || 
+            e.target.id==='b' 
+        ){
+            let value = e.target.value
+            if(value > 255){
+                value = 255
+            }
+            const newRgb = {...inputValues.rgb, [e.target.id]: value}
+
+            if(isValidColor(getColorString(newRgb, 'rgb'))){
+                setInputValues({...inputValues, rgb: newRgb})
+            }
+        }else if(e.target.id==='a'){
+            let  value = e.target.value
+            if(value > 100){
+                value = 100
             }
         }
         setInputOnFocus(true)
@@ -133,9 +162,30 @@ export default function ColorPickerInterface({
 
     function handleOnBlur(e){
         if(e.target.id==='hex'){
-            if(isValidColor(e.target.value)){
-                setColorData(createColorObj(e.target.value))
+            setColorData(createColorObj(inputValues.hexColor))
+        }else if(
+            e.target.id==='r' ||
+            e.target.id==='g' ||
+            e.target.id==='b' 
+        ){
+            setColorData(createColorObj(inputValues.rgb))
+        }else if(e.target.id==='a'){
+            let  value = e.target.value
+
+            if(value > 100){
+                value = 100
             }
+
+            setInputValues({
+                ...inputValues,
+                hexColor: colorWithAlpha(inputValues.hexColor, value/100),
+                alpha: value/100
+            })
+
+            colorData.alpha = value/100
+
+            setColorData({...colorData})
+
         }
     }
 }
