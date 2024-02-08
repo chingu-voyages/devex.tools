@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
     Accordion,
     AccordionContent,
@@ -26,11 +26,15 @@ export default function TabSwitcher({buttons=[], children, title}){
         )
     )
 
+    useEffect(()=>{
+
+    },[selectedButton])
+
     return(
         <div id="tab-switcher" 
         className="flex flex-col flex-1 p-6 mb-2
         sm:p-12 lg:px-48 lg:py-20">
-            <div id="tab-switcher-sm" className={buttons.length===0?'':"max-[420px]:hidden"}>
+            <div id="tab-switcher-sm" className="max-[420px]:hidden">
                 <div className="flex flex-1 justify-between ">
                     <h2 className="font-bold text-3xl leading-none">{title}</h2>
                     <fieldset className="flex flex-wrap items-center gap-x-8">
@@ -43,7 +47,7 @@ export default function TabSwitcher({buttons=[], children, title}){
                 </div>
             </div>
 
-            <div id="tab-switcher-mobile" className={buttons.length===0?'hidden':"min-[420px]:hidden"}>
+            <div id="tab-switcher-mobile" className="min-[420px]:hidden">
                 <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
                         <AccordionTrigger 

@@ -1,49 +1,81 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom"
 
-export default function MobileMenu({ isClicked, handleState }) {
-  return (
-    <div
-      id="mobile-menu"
-      className={`
-    absolute block w-screen flex-1 top-20 right-0 bg-white z-50 absolute max-sm:${
-      isClicked ? '' : 'hidden'
-    } sm:hidden
-    `}
-    >
-      <nav>
-        <ul className="flex flex-col h-full text-center border-1 border-gray-200 shadow-md font-bold">
-          <li className="w-full p-4 border border-gray-200 w-full">
-            <Link to="/units" onClick={() => handleState(isClicked)}>
-              Units
-            </Link>
-          </li>
-          <li className="w-full p-4 border border-gray-200 w-full">
-            <Link to="/colors" onClick={() => handleState(isClicked)}>
-              Colors
-            </Link>
-          </li>
-          <li className="w-full p-4 border border-gray-200 w-full">
-            <Link to="/characters" onClick={() => handleState(isClicked)}>
-              Characters
-            </Link>
-          </li>
-          <li className="w-full p-4 border border-gray-200 w-full">
-            <Link to="/fonts" onClick={() => handleState(isClicked)}>
-              Fonts
-            </Link>
-          </li>
-          <li className="w-full p-4 border border-gray-200 w-full">
-            <Link to="/gradients" onClick={() => handleState(isClicked)}>
-              Gradients
-            </Link>
-          </li>
-          <li className="w-full p-4 border border-gray-200 w-full">
-            <Link to="/shadows" onClick={() => handleState(isClicked)}>
-              Shadows
-            </Link>
-          </li>
-        </ul>
-      </nav>
+export default function MobileMenu({isClicked, handleState}){
+   
+return(
+    <div id='mobile-menu' className={`
+    absolute block w-screen flex-1 top-0
+    max-sm:${isClicked?'':'hidden'}
+    sm:hidden
+    `}>
+
+        <nav>
+            <ul className="
+            flex flex-col h-full text-center
+            ">
+                <li  className='
+                w-full 
+                border-solid border-4 border-b-2 border-black'>
+                    <Link to="/unit-converter" 
+                    onClick={()=>handleState(isClicked)} 
+                    className="                            
+                    block font-bold bg-[var(--bckgrnd-color)] leading-none
+                    p-5 cursor-pointer
+                    ">Unit Converter</Link>
+                </li>
+                <li className='
+                w-full 
+                border-collapse border-4 border-t-2 border-b-2 border-black'>
+                    <Link to="/color-picker" 
+                    onClick={()=>handleState(isClicked)} 
+                    className="
+                    block font-bold bg-[var(--bckgrnd-color)] leading-none
+                    p-5 cursor-pointer
+                    ">Color Picker</Link>
+                </li>
+                <li className='
+                w-full 
+                border-solid border-4 border-t-2 border-b-2 border-black'>
+                    <Link to="/character-finder" 
+                    onClick={()=>handleState(isClicked)} 
+                    className="
+                    block font-bold bg-[var(--bckgrnd-color)] leading-none
+                    p-5 cursor-pointer
+                    ">Character Finder</Link>
+                </li>
+                <li className='
+                w-full 
+                border-solid border-4 border-t-2 border-b-2 border-black'>
+                    <Link to="/font-visualizer" 
+                    onClick={()=>handleState(isClicked)} 
+                    className="
+                    block font-bold bg-[var(--bckgrnd-color)] leading-none
+                    p-5 cursor-pointer
+                    ">Font Visualizer</Link>
+                </li>
+                <li className='
+                w-full 
+                border-solid border-4 border-t-2 border-black'>
+                    <Link to="/color-gradient" 
+                    onClick={()=>handleState(isClicked)} 
+                    className="
+                    block font-bold bg-[var(--bckgrnd-color)] leading-none
+                    p-5 cursor-pointer
+                    ">Color Gradient</Link>
+                </li>
+                <li className='
+                w-full 
+                border-solid border-4 border-t-2 border-black'>
+                    <Link to="/team" 
+                    onClick={()=>handleState(isClicked)} 
+                    className="
+                    block font-bold bg-[var(--bckgrnd-color)] leading-none
+                    p-5 cursor-pointer
+                    ">Team</Link>
+                </li>
+            </ul>
+        </nav>
     </div>
-  );
+    )
 }
+
