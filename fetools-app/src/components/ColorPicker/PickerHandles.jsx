@@ -20,6 +20,7 @@ export default function PickerHandles({
     updateHandleValues()
     setCurrentColor(getColorString(colorData.color, 'hex'))
     handleQuery(getColorString(colorData.color, 'hex'))
+
   },[colorData])
 
   return (
@@ -28,16 +29,16 @@ export default function PickerHandles({
         <ul className="colorPickerSliderVar flex flex-1 flex-col gap-y-4 ">
           <li className="flex gap-x-3 justify-between">
             <span className="block font-bold text-sm w-[10px]">H</span>
-            <span className="block font-medium text-sm text-gray-400 w-9">{parseInt(colorData.hue.h)}°</span>
+            <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.hue.h)}°</span>
             <input id="hue" max={360} min={0} step={1}
             type="range"
-            defaultValue={parseInt(colorData.hue.h)}
+            value={parseInt(colorData.hue.h)}
             onChange={(e)=>handleOnChange(e, 'hue')}
             className="colorPickerSlider hueSlider flex-1 "></input>
           </li>
           <li className="flex gap-x-3 justify-evenly">
             <span className="block font-bold text-sm w-[10px]">S</span>
-            <span className="block font-medium text-sm text-gray-400 w-9">{parseInt(colorData.color.s*100)}%</span>
+            <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.color.s*100)}%</span>
             <input id="saturation" max={100} min={0} step={1}
             type="range"
             value={parseInt(colorData.color.s*100)}
@@ -46,7 +47,7 @@ export default function PickerHandles({
           </li>
           <li className="flex gap-x-3 justify-evenly">
             <span className="block font-bold text-sm w-[10px]">L</span>
-            <span className="block font-medium text-sm text-gray-400 w-9">{parseInt(colorData.color.l*100)}%</span>
+            <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.color.l*100)}%</span>
             <input id="light" max={100} min={0} step={1}
             type="range"
             value={parseInt(colorData.color.l*100)}
@@ -55,7 +56,7 @@ export default function PickerHandles({
           </li>
           <li className="flex gap-x-3 justify-evenly">
             <span className="block font-bold text-sm w-[10px]">A</span>
-            <span className="block font-medium text-sm text-gray-400 w-9">{parseInt(colorData.alpha*100)}%</span>
+            <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.alpha*100)}%</span>
             <input id="alpha" max={100} min={0} step={1}
             type="range"
             value={parseInt(colorData.alpha*100)}

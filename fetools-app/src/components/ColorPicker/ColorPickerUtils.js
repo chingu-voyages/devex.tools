@@ -18,6 +18,8 @@ export function createColorObj(newColor, newHue){
       alpha: tinycolor(color).getAlpha()
     }
 
+    colorObj.color.a = 1
+
     if(newHue){
       updateHueInColor()
     }
@@ -28,6 +30,7 @@ export function createColorObj(newColor, newHue){
       const hueHsl = {...color}
       hueHsl.s = 1
       hueHsl.l = 0.5
+      hueHsl.a = 1
       return hueHsl
     }
 
@@ -58,7 +61,16 @@ export function getColorString(color, type){
     return tinycolor(color).toHslString()
   } else if (type === 'hex'){
     return tinycolor(color).toHexString()
+  } else if (type === 'rgb'){
+    return tinycolor(color).toRgbString()
   }
   
 }
 
+export function isValidColor(color){
+  return tinycolor(color).isValid()
+}
+
+export function colorWithAlpha(color, alpha){
+  return tinycolor(color).setAlpha(alpha).toHex8String()
+}

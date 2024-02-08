@@ -1,9 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getColorString } from "./ColorPickerUtils";
 import CustomPicker from './CustomPicker';
 import alphaBckgrnd from '../../assets/transparency_background.svg'
 
-export default function ColorPickerTool({ colorData, setColorData, handleQuery, className }) {
+export default function ColorPickerTool({ 
+  colorData, 
+  setColorData, 
+  handleQuery,
+  setInputOnFocus,
+  inputOnFocus,
+  className 
+}) {
+
   const parentRef = useRef();
 
   const handleColorChange = (newColorData) => {
@@ -28,7 +36,10 @@ export default function ColorPickerTool({ colorData, setColorData, handleQuery, 
         <CustomPicker
         colorData={colorData}
         handleColorChange={handleColorChange}
-        handleQuery={handleQuery}/>
+        handleQuery={handleQuery}
+        inputOnFocus={inputOnFocus}
+        setInputOnFocus={setInputOnFocus}
+        />
       </section>
     </>
   );

@@ -14,7 +14,7 @@ export default function Nav() {
           <Link to="/fonts">Fonts</Link>
         </li>
         <li>
-          <Link to="/colors">Gradients</Link>
+          <Link to="/gradients">Gradients</Link>
         </li>
         <li>
           <Link to="/shadows">Shadows</Link>
