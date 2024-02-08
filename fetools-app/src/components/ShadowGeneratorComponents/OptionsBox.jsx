@@ -15,8 +15,6 @@ import {
   shadowPropertyValue,
   newShadow,
   switchShadow,
-  removeShadow,
-  ShareLink,
 } from "./ShadowGeneratorFN";
 
 const OptionsBox = ({
@@ -26,17 +24,13 @@ const OptionsBox = ({
   setNumOfShadows,
   setActiveShadow,
   ActiveShadow,
-  setRemoveShadow,
-  searchParams, 
-  setSearchParams
 }) => {
-  // debugger
+  //  console.log(ShadowsStyles[ActiveShadow])
   let color = tinycolor(ShadowsStyles[ActiveShadow].shadowColor).toHexString();
 
-  // xl:aspect-square  flex  xl:max-h-[457px]  h-full flex-col md:w-full  flex-1 gap-y-6 xl:mx-12 rounded-r-sm
   return (
-    <div className="md:aspect-video  lg:px-9 mx-2 lg:w-1/2  text-sm flex flex-col gap-6 lg:justify-evenly ">
-      <div className="flex justify-between  max-h-[36px]" id="Option1">
+    <div className="  flex lg:max-w-[600px]   justify-evenly flex-col md:w-full lg:w-1/2 gap-y-6  ">
+      <div className="flex justify-between  " id="Option1">
         <span className="flex items-center">
           <img
             src={optionMenu}
@@ -51,41 +45,28 @@ const OptionsBox = ({
             src={addbookmark}
             alt="book mark"
             className="w-[24px] h-[24px]  cursor-pointer "
-            onClick={() => {
-              localStorage.removeItem("ShadowStyle");
-              localStorage.setItem(
-                "ShadowStyle",
-                JSON.stringify(ShadowsStyles)
-              );
-            }}
           />
           <img
             src={share}
             alt="share Icon"
             className="w-[24px] h-[24px] cursor-pointer "
-            // onClick={()=> {ShareLink(searchParams,setSearchParams,ShadowsStyles)}}
-          
           />
         </span>
       </div>
 
       <div id="Option2" className="flex flex-col md:flex-row gap-8">
-        <div className="box-color md:w-1/2  h-10 flex items-center justify-start px-1 border border-[color:var(--Design-Document-Outlines,#999)] border-solid  ">
+        <div className="box-color w-full lg:w-1/2  lg:min-w-[242px] md:min-w-80   h-10 flex items-center justify-start px-1 border border-[color:var(--Design-Document-Outlines,#999)] border-solid  ">
           <input
             type="color"
             value={color}
             onChange={(e) => {
-              colorChanger(
-                e,
-                setShadowsStyles,
-                ShadowsStyles,
-                ActiveShadow,
-                false
-              );
+              
+              colorChanger(e, setShadowsStyles, ShadowsStyles, ActiveShadow, false);
             }}
           />
           <input
             type="text"
+            defaultValue={color}
             className="mx-2 border-none outline-none text-start flex-1"
             placeholder={color}
             onChange={(e) => {
@@ -94,7 +75,7 @@ const OptionsBox = ({
           />
         </div>
 
-        <span className="box-opacity  md:w-1/2   max-h-[43px]   flex items-end px-1 ">
+        <span className="box-opacity  w-full lg:min-w-[242px] md:min-w-80   h-10 flex items-end px-1 ">
           <div className="flex flex-col gap-1  ">
             <strong>Opacity</strong>
             <div className="flex gap-x-1">
@@ -141,7 +122,7 @@ const OptionsBox = ({
         />
       </div>
 
-      <div className="flex gap-8 flex-col md:flex-row" id="Option4">
+      <div className="flex gap-8 flex-col md:flex-row " id="Option4">
         <ShadowInput
           label="Spread"
           iconSrc={zoom}
@@ -162,12 +143,12 @@ const OptionsBox = ({
           ActiveShadow={ActiveShadow}
           onChange={shadowPropertyValue}
           inset={true}
-          range={{ min: 0, max: 100 }}
+          range={{ min: -100, max: 100 }}
         />
       </div>
 
       <div className="Option5  ">
-        <div className="boxAdd flex gap-2 justify-around text-[12px] ">
+        <div className="boxAdd flex gap-2 ">
           {ShadowsStyles.map((current, idx) => {
             return (
               <div
@@ -176,11 +157,9 @@ const OptionsBox = ({
                 onClick={(e) => {
                   switchShadow(e, setActiveShadow, idx, ActiveShadow);
                 }}
-                className={` ${
-                  ActiveShadow === idx ? "bg-black text-white" : ""
-                }  w-8 h-8 border cursor-pointer  border-[color:var(--Design-Document-Outlines,#999)] border-solid rounded-sm flex items-center justify-center`}
+                className="w-8 h-8 border cursor-pointer border-[color:var(--Design-Document-Outlines,#999)] border-solid rounded-sm flex items-center justify-center"
               >
-                <span> {idx + 1} </span>
+                <span> {current.id} </span>
               </div>
             );
           })}
@@ -196,27 +175,10 @@ const OptionsBox = ({
                 ActiveShadow
               );
             }}
-            className="flex flex-1 max-w-[130px] cursor-pointer  justify-center items-center gap-1  text-[12px]"
+            className="flex flex-1 max-w-[130px] cursor-pointer  justify-center items-center gap-1 "
           >
             <img src={addShadow} alt="Add Shadow Icon" />{" "}
             <strong className=""> Add Shadow</strong>
-          </button>
-
-          <button
-            onClick={() =>
-              removeShadow(
-                setShadowsStyles,
-                ShadowsStyles,
-                ActiveShadow,
-                setActiveShadow,
-                numOfShadows,
-                setNumOfShadows,
-                setRemoveShadow
-              )
-            }
-            className="font-semibold underline"
-          >
-            remove this shadow
           </button>
         </div>
       </div>
