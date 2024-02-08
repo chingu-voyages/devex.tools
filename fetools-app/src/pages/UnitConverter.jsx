@@ -7,6 +7,7 @@ import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
 
 import React, { useState, useRef } from "react";
+import { MdOutlineSettings } from "react-icons/md";
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 
@@ -433,7 +434,9 @@ function UnitConverter() {
                 ) : (
                   <span className="mr-2">{basePixelSize}px</span>
                 )}
-                <button onClick={handleCogClick}>⚙️</button>
+                <button onClick={handleCogClick} style={{ fontSize: "24px" }}>
+                  <MdOutlineSettings />
+                </button>
               </div>
             )}
           </div>
