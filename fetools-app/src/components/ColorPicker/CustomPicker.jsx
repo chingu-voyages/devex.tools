@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
-import { getColorString, HexToHsl } from "./ColorPickerUtils";
+import { createColorObj, getColorString, HexToHsl } from "./ColorPickerUtils";
 import switchSamplerIcon from "../../assets/switch-sampler-icon.svg"
 import PickerHandles from "./PickerHandles";
 
@@ -25,6 +25,7 @@ export default function CustomPicker({
   useEffect(()=>{
     markerRef.current.children[0].style.background = getColorString(colorData.color,'hsl')
     canvasRef.current.currentColor = currentColor
+
     return ()=>{
       stopInterval(intervalMouseMoveRef)
     }
@@ -199,12 +200,29 @@ export default function CustomPicker({
   }
 
   function handleClick(e, firstClick){
-    colorData.color = HexToHsl(canvasRef.current.currentColor)
-    handleColorChange({...colorData})
-    calculateMarkerPositionOnMouse()
-    if(!firstClick){
-      canvasRef.current.click()
+
+    if(!isColorPicker){
+      const newColorObj = createColorObj(canvasRef.current.currentColor)
+
+      handleColorChange(newColorObj)
+      calculateMarkerPositionOnMouse()
+
+      if(!firstClick){
+        canvasRef.current.click()
+      }
+
+      return;
+    } else{
+      colorData.color = HexToHsl(canvasRef.current.currentColor)
+
+      handleColorChange({...colorData})
+      calculateMarkerPositionOnMouse()
+      if(!firstClick){
+        canvasRef.current.click()
+      }
     }
+
+
     
   }
 

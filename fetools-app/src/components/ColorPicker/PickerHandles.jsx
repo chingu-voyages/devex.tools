@@ -20,6 +20,7 @@ export default function PickerHandles({
     updateHandleValues()
     setCurrentColor(getColorString(colorData.color, 'hex'))
     handleQuery(getColorString(colorData.color, 'hex'))
+
   },[colorData])
 
   return (
@@ -31,7 +32,7 @@ export default function PickerHandles({
             <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.hue.h)}°</span>
             <input id="hue" max={360} min={0} step={1}
             type="range"
-            defaultValue={parseInt(colorData.hue.h)}
+            value={parseInt(colorData.hue.h)}
             onChange={(e)=>handleOnChange(e, 'hue')}
             className="colorPickerSlider hueSlider flex-1 "></input>
           </li>
