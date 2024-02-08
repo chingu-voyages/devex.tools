@@ -62,3 +62,10 @@ export function getColorString(color, type){
   
 }
 
+export function isValidColor(color){
+  return tinycolor(color).isValid()
+}
+
+export function colorWithAlpha(color, alpha){
+  return tinycolor(color).setAlpha(alpha).toHex8String()
+}

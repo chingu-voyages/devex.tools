@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getColorString, HslToRgb } from "./ColorPickerUtils";
+import { colorWithAlpha, createColorObj, getColorString, HslToRgb, isValidColor } from "./ColorPickerUtils";
 
 export default function ColorPickerInterface({ 
     className,
@@ -15,11 +15,19 @@ export default function ColorPickerInterface({
     })
 
     useEffect(()=>{
-        setInputValues({
-            hexColor: getColorString(colorData.color, 'hex'),
-            rgb: HslToRgb(colorData.color),
-            alpha: colorData.alpha
-        })
+        if(colorData.alpha < 1){
+            setInputValues({
+                hexColor: colorWithAlpha(colorData.color, colorData.alpha),
+                rgb: HslToRgb(colorData.color),
+                alpha: colorData.alpha
+            })
+        } else{
+            setInputValues({
+                hexColor: getColorString(colorData.color, 'hex'),
+                rgb: HslToRgb(colorData.color),
+                alpha: colorData.alpha
+            })
+        }
     },[colorData])
   
     useEffect(()=>{
@@ -47,8 +55,6 @@ export default function ColorPickerInterface({
             }
         })
 
-        console.log(getColorString(colorData.color, 'hex'), inputValues.hexColor)
-
     },[inputValues])
 
     return (
@@ -58,7 +64,10 @@ export default function ColorPickerInterface({
           <li className="flex flex-col">
             <span className="block font-bold">HEX</span>
             <input id="hex" type="text" maxLength={9}
+            placeholder={inputValues.hexColor}
             defaultValue={inputValues.hexColor}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
             className="border-2 h-10 rounded outline-none 
             text-center font-medium text-gray-700 text-sm uppercase"></input>
           </li>
@@ -109,4 +118,21 @@ export default function ColorPickerInterface({
       </div>
     </>
     );
+
+    function handleOnChange(e){
+        console.log(e.target.value)
+        if(e.target.id==='hex'){
+            if(isValidColor(e.target.value)){
+                setInputValues({...inputValues, hexColor: e.target.value})
+            }
+        }
+    }
+
+    function handleOnBlur(e){
+        if(e.target.id==='hex'){
+            if(isValidColor(e.target.value)){
+                setColorData(createColorObj(e.target.value))
+            }
+        }
+    }
 }
