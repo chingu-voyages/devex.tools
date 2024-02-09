@@ -39,7 +39,7 @@ function TextField({
         `}
       </style>
       <div className="mb-3 relative">
-        <label className="block mb-2 text-sm font-bold text-gray-400">
+        <label className="block mb-2 text-sm font-bold text-black">
           {title}
         </label>
         <div className="flex border rounded relative">

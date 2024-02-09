@@ -5,6 +5,7 @@ import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
+import EditableInput from "../components/EditableInput";
 
 import React, { useState, useRef } from "react";
 import { MdOutlineSettings } from "react-icons/md";
@@ -407,8 +408,8 @@ function UnitConverter() {
         </ToolHeaderSection>
         {/* Section for Input Boxes*/}
         <div className="flex gap-10 sm:py-8 sm:px-16 lg:px-80">
-          <div className="mb-3">
-            <label className="block mb-2 text-sm font-bold text-gray-400">
+          <div className="mb-3 flex items-center">
+            <label className="text-sm font-bold text-black mr-2">
               Base Size
             </label>
             {/*Tertiary operator used to differentiate when the Base Size input element should and should not be editable*/}
@@ -430,9 +431,11 @@ function UnitConverter() {
               <div className="flex items-center">
                 {/*Tertiary operator used to differentiate when the Base Size is NaN and Not NaN*/}
                 {isNaN(basePixelSize) ? (
-                  <span className="mr-2">--</span>
+                  <span className="mr-2 bg-gray-200 px-2">--</span>
                 ) : (
-                  <span className="mr-2">{basePixelSize}px</span>
+                  <span className="mr-2 bg-gray-200 px-2">
+                    {basePixelSize}px
+                  </span>
                 )}
                 <button onClick={handleCogClick} style={{ fontSize: "24px" }}>
                   <MdOutlineSettings />
@@ -440,6 +443,15 @@ function UnitConverter() {
               </div>
             )}
           </div>
+
+          {/* <EditableInput
+            label="Base Size"
+            value={basePixelSize}
+            unit="px"
+            type="number"
+            onChange={handleBasePixelSizeChange}
+            onBlur={handleBaseSizeInputBlur}
+          /> */}
 
           <TextField
             title="REM/EM"
