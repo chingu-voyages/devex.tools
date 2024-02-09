@@ -81,7 +81,7 @@ function UnitConverter() {
     setBasePixelSize(newBaseSize);
     const newEm = pixels / newBaseSize;
     setEm(newEm);
-    setTailwindSize(newEm * 4);
+    setTailwindSize(TailwindCheck(newEm * 4));
   };
 
   // Handler for pixel value changes
