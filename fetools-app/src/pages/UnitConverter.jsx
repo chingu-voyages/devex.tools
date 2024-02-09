@@ -61,7 +61,7 @@ function UnitConverter() {
     24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96,
   ];
 
-  const TailwindCheck = (TailwindSize) => {
+  const tailwindCheck = (TailwindSize) => {
     if (isNaN(TailwindSize) || TailwindSize === "") {
       return "";
     }
@@ -81,7 +81,7 @@ function UnitConverter() {
     setBasePixelSize(newBaseSize);
     const newEm = pixels / newBaseSize;
     setEm(newEm);
-    setTailwindSize(TailwindCheck(newEm * 4));
+    setTailwindSize(tailwindCheck(newEm * 4));
   };
 
   // Handler for pixel value changes
@@ -90,7 +90,7 @@ function UnitConverter() {
     setPixels(newPixels);
     const newEm = newPixels / basePixelSize;
     setEm(newEm);
-    setTailwindSize(TailwindCheck(newEm * 4));
+    setTailwindSize(tailwindCheck(newEm * 4));
     updateCssSize(newPixels);
   };
 
@@ -100,7 +100,7 @@ function UnitConverter() {
     setEm(newEm);
     const newPixels = newEm * basePixelSize;
     setPixels(newPixels);
-    setTailwindSize(TailwindCheck(newEm * 4));
+    setTailwindSize(tailwindCheck(newEm * 4));
     updateCssSize(newPixels);
   };
 
@@ -111,7 +111,7 @@ function UnitConverter() {
   };
 
   // Tailwind Size Format Check
-  const FormatCheck = (input) => {
+  const formatCheck = (input) => {
     // Check if input is in the allowed format [Xrem] or [Xpx], if so, return as is
     if (
       (input.startsWith("[") && input.endsWith("rem]")) ||
@@ -136,7 +136,7 @@ function UnitConverter() {
     }
 
     // Validate format
-    let formattedValue = FormatCheck(inputValue);
+    let formattedValue = formatCheck(inputValue);
 
     let newTailwindSize;
     let newEm;
@@ -194,7 +194,7 @@ function UnitConverter() {
     } else {
       newTailwindSize = tailwindSize;
     }
-    setTailwindSize(TailwindCheck(FormatCheck(newTailwindSize)));
+    setTailwindSize(tailwindCheck(formatCheck(newTailwindSize)));
   };
 
   // A ref to the base size input element
