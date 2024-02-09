@@ -18,7 +18,6 @@ function UnitConverter() {
   const [pixels, setPixels] = useState(0);
   const [em, setEm] = useState(0);
   const [tailwindSize, setTailwindSize] = useState(0);
-  const [editMode, setEditMode] = useState(false);
   const [cssSize, setCssSize] = useState("16px");
 
   // State to hold the content of the contentEditable div
@@ -195,29 +194,6 @@ function UnitConverter() {
       newTailwindSize = tailwindSize;
     }
     setTailwindSize(tailwindCheck(formatCheck(newTailwindSize)));
-  };
-
-  // A ref to the base size input element
-  const baseSizeInputRef = useRef(null);
-
-  // Handler for the cog (settings) icon click. Toggles the edit mode state.
-  const handleCogClick = () => {
-    const newEditMode = !editMode;
-    setEditMode(newEditMode);
-    if (newEditMode) {
-      setTimeout(() => {
-        baseSizeInputRef.current.focus();
-        baseSizeInputRef.current.select();
-      }, 0);
-    }
-  };
-
-  // Handler for the input field losing focus
-  const handleBaseSizeInputBlur = () => {
-    if (editMode) {
-      // If in edit mode, set editMode to false when the input loses focus
-      setEditMode(false);
-    }
   };
 
   //links for Go Deeper component
@@ -406,52 +382,17 @@ function UnitConverter() {
             tagline="Calculate PX, REM/EM, and Tailwind utility classes with ease."
           />
         </ToolHeaderSection>
-        {/* Section for Input Boxes*/}
-        <div className="flex gap-10 sm:py-8 sm:px-16 lg:px-80">
-          <div className="mb-3 flex items-center">
-            <label className="text-sm font-bold text-black mr-2">
-              Base Size
-            </label>
-            {/*Tertiary operator used to differentiate when the Base Size input element should and should not be editable*/}
-            {editMode ? (
-              <div className="flex border rounded relative">
-                <input
-                  ref={baseSizeInputRef}
-                  type="number"
-                  className="border rounded border-black w-28 py-2 px-3  text-gray-400 leading-tight"
-                  value={basePixelSize}
-                  onChange={handleBasePixelSizeChange}
-                  onBlur={handleBaseSizeInputBlur}
-                />
-                <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none font-semibold">
-                  px
-                </span>
-              </div>
-            ) : (
-              <div className="flex items-center">
-                {/*Tertiary operator used to differentiate when the Base Size is NaN and Not NaN*/}
-                {isNaN(basePixelSize) ? (
-                  <span className="mr-2 bg-gray-200 px-2">--</span>
-                ) : (
-                  <span className="mr-2 bg-gray-200 px-2">
-                    {basePixelSize}px
-                  </span>
-                )}
-                <button onClick={handleCogClick} style={{ fontSize: "24px" }}>
-                  <MdOutlineSettings />
-                </button>
-              </div>
-            )}
-          </div>
 
-          {/* <EditableInput
+        {/* Section for Input Boxes*/}
+
+        <div className="flex gap-10 sm:py-8 sm:px-16 lg:px-80">
+          <EditableInput
             label="Base Size"
             value={basePixelSize}
             unit="px"
             type="number"
             onChange={handleBasePixelSizeChange}
-            onBlur={handleBaseSizeInputBlur}
-          /> */}
+          />
 
           <TextField
             title="REM/EM"
