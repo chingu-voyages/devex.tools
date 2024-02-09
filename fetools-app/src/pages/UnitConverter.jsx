@@ -7,7 +7,7 @@ import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
 import EditableInput from "../components/EditableInput";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MdOutlineSettings } from "react-icons/md";
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
@@ -26,9 +26,22 @@ function UnitConverter() {
   );
 
   // Function to handle changes in the contentEditable div
+  const editableRef = useRef(null);
+
   const handleContentChange = (e) => {
-    setEditableContent(e.currentTarget.textContent);
+    const newText = editableRef.current.innerText;
+    if (newText !== editableContent) {
+      setEditableContent(newText);
+    }
   };
+
+  // Use useEffect to set the initial content of the contentEditable div
+  useEffect(() => {
+    const currentText = editableRef.current.innerText;
+    if (editableContent !== currentText) {
+      editableRef.current.innerText = editableContent;
+    }
+  }, [editableContent]);
 
   // State variable to track if the alert has been shown
   const [alertShown, setAlertShown] = useState(false);
@@ -425,12 +438,12 @@ function UnitConverter() {
           >
             <div
               contentEditable
+              ref={editableRef}
               className="font-arial font-bold text-3xl break-words leading-none focus:outline-none"
               style={{
                 fontSize: cssSize,
               }}
               onInput={handleContentChange} // Update state on input
-              dangerouslySetInnerHTML={{ __html: editableContent }}
             ></div>
           </div>
         </div>
