@@ -465,7 +465,9 @@ function UnitConverter() {
           </PageSection>
         </div>
 
-        <GoDeeper linksData={linksData} />
+        <PageSection title="Go Deeper" icon="school">
+          <GoDeeper linksData={linksData} />
+        </PageSection>
       </main>
     </>
   );
