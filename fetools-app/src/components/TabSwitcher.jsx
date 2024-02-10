@@ -32,11 +32,7 @@ export default function TabSwitcher({ buttons = [], children, title }) {
     ));
 
   return (
-    <div
-      id="tab-switcher"
-      className="flex flex-col flex-1 p-6 mb-2
-        sm:p-12 lg:px-48 lg:py-20"
-    >
+    <div id="tab-switcher" className="flex flex-col flex-1 p-3 mb-2">
       <div
         id="tab-switcher-sm"
         className={buttons.length === 0 ? "" : "max-[420px]:hidden"}
