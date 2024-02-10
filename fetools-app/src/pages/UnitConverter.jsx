@@ -6,6 +6,7 @@ import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
 import EditableInput from "../components/EditableInput";
+import PageSection from "../components/PageLayout/PageSection";
 
 import React, { useState, useEffect, useRef } from "react";
 import { MdOutlineSettings } from "react-icons/md";
@@ -309,10 +310,10 @@ function UnitConverter() {
 
   //TabSwitcher Content
 
-  const tabButtons = ["px", "em", "rem", "tailwind"];
+  const tabButtons = ["rem", "em", "px", "tailwind"];
 
   const tabContents = [
-    <div key="tab-px" className="grid grid-cols-4 gap-4">
+    <div key="tab-rem" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample, index) => (
             <CodeBlock
@@ -321,7 +322,7 @@ function UnitConverter() {
               code={sample.code}
             />
           ))
-        : CodeSamples["px"].map((sample, index) => (
+        : CodeSamples["rem"].map((sample, index) => (
             <CodeBlock
               key={`${sample.title}-${index}`}
               title={sample.title}
@@ -329,6 +330,7 @@ function UnitConverter() {
             />
           ))}
     </div>,
+
     <div key="tab-em" className="grid grid-cols-4 gap-4">
       {isNaN(em)
         ? CodeSamples["NaN"].map((sample, index) => (
@@ -347,7 +349,7 @@ function UnitConverter() {
           ))}
     </div>,
 
-    <div key="tab-rem" className="grid grid-cols-4 gap-4">
+    <div key="tab-px" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample, index) => (
             <CodeBlock
@@ -356,7 +358,7 @@ function UnitConverter() {
               code={sample.code}
             />
           ))
-        : CodeSamples["rem"].map((sample, index) => (
+        : CodeSamples["px"].map((sample, index) => (
             <CodeBlock
               key={`${sample.title}-${index}`}
               title={sample.title}
@@ -364,6 +366,7 @@ function UnitConverter() {
             />
           ))}
     </div>,
+
     <div key="tab-tailwind" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaNtailwind"].map((sample, index) => (
@@ -450,11 +453,16 @@ function UnitConverter() {
         {/* Section for code blocks */}
 
         <div>
-          <TabSwitcher
-            buttons={tabButtons}
-            children={tabContents}
-            title="Code Samples"
-          ></TabSwitcher>
+          <PageSection
+            icon="integration_instructions"
+            title="Code Snippets"
+            className="w-full "
+          >
+            <TabSwitcher
+              buttons={tabButtons}
+              children={tabContents}
+            ></TabSwitcher>
+          </PageSection>
         </div>
 
         <GoDeeper linksData={linksData} />
