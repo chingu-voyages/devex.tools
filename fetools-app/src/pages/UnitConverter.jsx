@@ -5,8 +5,10 @@ import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
+import EditableInput from "../components/EditableInput";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { MdOutlineSettings } from "react-icons/md";
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 
@@ -16,7 +18,6 @@ function UnitConverter() {
   const [pixels, setPixels] = useState(0);
   const [em, setEm] = useState(0);
   const [tailwindSize, setTailwindSize] = useState(0);
-  const [editMode, setEditMode] = useState(false);
   const [cssSize, setCssSize] = useState("16px");
 
   // State to hold the content of the contentEditable div
@@ -25,9 +26,22 @@ function UnitConverter() {
   );
 
   // Function to handle changes in the contentEditable div
+  const editableRef = useRef(null);
+
   const handleContentChange = (e) => {
-    setEditableContent(e.currentTarget.textContent);
+    const newText = editableRef.current.innerText;
+    if (newText !== editableContent) {
+      setEditableContent(newText);
+    }
   };
+
+  // Use useEffect to set the initial content of the contentEditable div
+  useEffect(() => {
+    const currentText = editableRef.current.innerText;
+    if (editableContent !== currentText) {
+      editableRef.current.innerText = editableContent;
+    }
+  }, [editableContent]);
 
   // State variable to track if the alert has been shown
   const [alertShown, setAlertShown] = useState(false);
@@ -59,7 +73,7 @@ function UnitConverter() {
     24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96,
   ];
 
-  const TailwindCheck = (TailwindSize) => {
+  const tailwindCheck = (TailwindSize) => {
     if (isNaN(TailwindSize) || TailwindSize === "") {
       return "";
     }
@@ -79,7 +93,7 @@ function UnitConverter() {
     setBasePixelSize(newBaseSize);
     const newEm = pixels / newBaseSize;
     setEm(newEm);
-    setTailwindSize(newEm * 4);
+    setTailwindSize(tailwindCheck(newEm * 4));
   };
 
   // Handler for pixel value changes
@@ -88,7 +102,7 @@ function UnitConverter() {
     setPixels(newPixels);
     const newEm = newPixels / basePixelSize;
     setEm(newEm);
-    setTailwindSize(TailwindCheck(newEm * 4));
+    setTailwindSize(tailwindCheck(newEm * 4));
     updateCssSize(newPixels);
   };
 
@@ -98,7 +112,7 @@ function UnitConverter() {
     setEm(newEm);
     const newPixels = newEm * basePixelSize;
     setPixels(newPixels);
-    setTailwindSize(TailwindCheck(newEm * 4));
+    setTailwindSize(tailwindCheck(newEm * 4));
     updateCssSize(newPixels);
   };
 
@@ -109,7 +123,7 @@ function UnitConverter() {
   };
 
   // Tailwind Size Format Check
-  const FormatCheck = (input) => {
+  const formatCheck = (input) => {
     // Check if input is in the allowed format [Xrem] or [Xpx], if so, return as is
     if (
       (input.startsWith("[") && input.endsWith("rem]")) ||
@@ -134,7 +148,7 @@ function UnitConverter() {
     }
 
     // Validate format
-    let formattedValue = FormatCheck(inputValue);
+    let formattedValue = formatCheck(inputValue);
 
     let newTailwindSize;
     let newEm;
@@ -192,30 +206,7 @@ function UnitConverter() {
     } else {
       newTailwindSize = tailwindSize;
     }
-    setTailwindSize(TailwindCheck(FormatCheck(newTailwindSize)));
-  };
-
-  // A ref to the base size input element
-  const baseSizeInputRef = useRef(null);
-
-  // Handler for the cog (settings) icon click. Toggles the edit mode state.
-  const handleCogClick = () => {
-    const newEditMode = !editMode;
-    setEditMode(newEditMode);
-    if (newEditMode) {
-      setTimeout(() => {
-        baseSizeInputRef.current.focus();
-        baseSizeInputRef.current.select();
-      }, 0);
-    }
-  };
-
-  // Handler for the input field losing focus
-  const handleBaseSizeInputBlur = () => {
-    if (editMode) {
-      // If in edit mode, set editMode to false when the input loses focus
-      setEditMode(false);
-    }
+    setTailwindSize(tailwindCheck(formatCheck(newTailwindSize)));
   };
 
   //links for Go Deeper component
@@ -404,39 +395,17 @@ function UnitConverter() {
             tagline="Calculate PX, REM/EM, and Tailwind utility classes with ease."
           />
         </ToolHeaderSection>
+
         {/* Section for Input Boxes*/}
+
         <div className="flex gap-10 sm:py-8 sm:px-16 lg:px-80">
-          <div className="mb-3">
-            <label className="block mb-2 text-sm font-bold text-gray-400">
-              Base Size
-            </label>
-            {/*Tertiary operator used to differentiate when the Base Size input element should and should not be editable*/}
-            {editMode ? (
-              <div className="flex border rounded relative">
-                <input
-                  ref={baseSizeInputRef}
-                  type="number"
-                  className="border rounded border-black w-28 py-2 px-3  text-gray-400 leading-tight"
-                  value={basePixelSize}
-                  onChange={handleBasePixelSizeChange}
-                  onBlur={handleBaseSizeInputBlur}
-                />
-                <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none font-semibold">
-                  px
-                </span>
-              </div>
-            ) : (
-              <div className="flex items-center">
-                {/*Tertiary operator used to differentiate when the Base Size is NaN and Not NaN*/}
-                {isNaN(basePixelSize) ? (
-                  <span className="mr-2">--</span>
-                ) : (
-                  <span className="mr-2">{basePixelSize}px</span>
-                )}
-                <button onClick={handleCogClick}>⚙️</button>
-              </div>
-            )}
-          </div>
+          <EditableInput
+            label="Base Size"
+            value={basePixelSize}
+            unit="px"
+            type="number"
+            onChange={handleBasePixelSizeChange}
+          />
 
           <TextField
             title="REM/EM"
@@ -469,12 +438,12 @@ function UnitConverter() {
           >
             <div
               contentEditable
+              ref={editableRef}
               className="font-arial font-bold text-3xl break-words leading-none focus:outline-none"
               style={{
                 fontSize: cssSize,
               }}
               onInput={handleContentChange} // Update state on input
-              dangerouslySetInnerHTML={{ __html: editableContent }}
             ></div>
           </div>
         </div>

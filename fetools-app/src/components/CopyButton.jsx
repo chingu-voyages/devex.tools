@@ -1,3 +1,6 @@
+import React from "react";
+import { MdContentCopy } from "react-icons/md";
+
 function CopyButton({ onCopy }) {
   const handleCopy = () => {
     const textToCopy = onCopy();
@@ -13,7 +16,11 @@ function CopyButton({ onCopy }) {
     }
   };
 
-  return <button onClick={handleCopy}>📋</button>;
+  return (
+    <button onClick={handleCopy}>
+      <MdContentCopy />
+    </button>
+  );
 }
 
 export default CopyButton;
