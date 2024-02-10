@@ -9,7 +9,6 @@ import EditableInput from "../components/EditableInput";
 import PageSection from "../components/PageLayout/PageSection";
 
 import React, { useState, useEffect, useRef } from "react";
-import { MdOutlineSettings } from "react-icons/md";
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 

@@ -1,9 +1,11 @@
+import { FaLink } from "react-icons/fa6";
+
 export default function GoDeeper({ linksData }) {
   const anchorElements = (array) =>
     array.map(({ url, textValue }, idx) => (
       <li key={`GoLink-${idx}`}>
-        <div className="flex items-center">
-          <span className="material-symbols-rounded text-4xl">link</span>
+        <div className="flex items-center gap-2">
+          <FaLink />
           <a
             href={url}
             className="underline underline-offset-4 text-md font-bold"
