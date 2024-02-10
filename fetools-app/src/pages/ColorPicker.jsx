@@ -36,7 +36,7 @@ export default function ColorPicker() {
           className='flex flex-1 flex-col min-w-[540px]'
         />
 
-        <PageSection title="Color Codes" icon="integration_instructions" className="flex-1 p-0">
+        <PageSection title="Color Codes" icon="integration_instructions" className="flex-1 p-0 m-0">
           <ColorPickerInterface className='flex-1 h-[380px]'
           colorData={colorData}
           setColorData={setColorData}
