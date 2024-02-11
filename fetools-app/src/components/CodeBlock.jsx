@@ -24,11 +24,14 @@ function CodeBlock({ title, code, lang = "css" }) {
 
   return (
     <div className="mb-4 relative group">
-      <div className="mb-2 text-sm font-bold text-gray-400">{title}</div>
-      <div className="p-3 bg-gray-200 rounded relative">
-        <pre className="whitespace-pre-wrap overflow-x-auto">
-          <code>{renderCodeWithHighlight()}</code>
-        </pre>
+      <div className="mb-2 text-sm font-bold text-black">{title}</div>
+      <div className="relative rounded overflow-hidden">
+        <div className="absolute inset-y-0 left-0 w-1 bg-gray-600 z-10"></div>
+        <div className="p-3 bg-gray-200 rounded relative">
+          <pre className="whitespace-pre-wrap overflow-x-auto">
+            <code>{renderCodeWithHighlight()}</code>
+          </pre>
+        </div>
       </div>
       <div className="absolute top-0 right-0 mb-2 hidden group-hover:flex">
         <CopyButton onCopy={getCode} />
