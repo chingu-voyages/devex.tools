@@ -309,7 +309,7 @@ function UnitConverter() {
 
   //TabSwitcher Content
 
-  const tabButtons = ["rem", "em", "px", "tailwind"];
+  const tabButtons = ["Rem", "Em", "Px", "Tailwind"];
 
   const tabContents = [
     <div key="tab-rem" className="grid grid-cols-4 gap-4">
