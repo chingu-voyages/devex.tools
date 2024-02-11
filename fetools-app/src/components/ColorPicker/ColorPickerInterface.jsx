@@ -13,7 +13,7 @@ export default function ColorPickerInterface({
         hexColor: getColorString(colorData.color, 'hex'),
         rgb: HslToRgb(colorData.color),
         hsl: colorData.color,
-        cmyk: colorConverterCMYK(HslToRgb(colorData.color)),
+        cmyk: RGBtoCMYK(HslToRgb(colorData.color)),
         alpha: colorData.alpha
     })
 
@@ -23,7 +23,7 @@ export default function ColorPickerInterface({
                 hexColor: colorWithAlpha(colorData.color, colorData.alpha),
                 rgb: HslToRgb(colorData.color),
                 hsl: colorData.color,
-                cmyk: colorConverterCMYK(HslToRgb(colorData.color)),
+                cmyk: RGBtoCMYK(HslToRgb(colorData.color)),
                 alpha: colorData.alpha
             })
         } else{
@@ -31,7 +31,7 @@ export default function ColorPickerInterface({
                 hexColor: getColorString(colorData.color, 'hex'),
                 rgb: HslToRgb(colorData.color),
                 hsl: {...colorData.color},
-                cmyk: colorConverterCMYK(HslToRgb(colorData.color)),
+                cmyk: RGBtoCMYK(HslToRgb(colorData.color)),
                 alpha: colorData.alpha
             })
         }
@@ -262,9 +262,9 @@ export default function ColorPickerInterface({
                     <span className="block absolute left-5 top-2 w-fit font-bold">K</span>
                     <input id="k" type="text" maxLength={4}
                     placeholder={inputValues.cmyk.k}
+                    defaultValue={inputValues.cmyk.k}
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
-                    defaultValue={inputValues.cmyk.k}
                     className="border-y-2 border-r-2 h-10 rounded-r 
                     outline-none text-center w-full
                     font-medium text-gray-500 text-sm"></input>
@@ -329,8 +329,26 @@ export default function ColorPickerInterface({
                 setInputValues({...inputValues, hsl: newHsl})
             }
 
-        }
-        else if(e.target.id==='a'){
+        }else if(
+            e.target.id==='c' || 
+            e.target.id==='m' || 
+            e.target.id==='y' ||
+            e.target.id==='k'
+        ){
+            if(value > 100){
+                value = 100
+            } else if(value < 0 || isNaN(value)){
+                value = 0
+            }
+
+            const newCmyk = {...inputValues.cmyk, [e.target.id]: value}
+            const newRgb = {...inputValues.rgb, ...CMYKtoRgb(newCmyk)}  
+        
+            if(isValidColor(getColorString(newRgb, 'rgb'))){
+                setInputValues({...inputValues, cmyk: newCmyk})
+            }
+
+        }else if(e.target.id==='a'){
             let  value = e.target.value
             if(value > 100){
                 value = 100
@@ -356,6 +374,13 @@ export default function ColorPickerInterface({
             e.target.id==='l' 
         ){
             setColorData(createColorObj(inputValues.hsl))
+        }else if(
+            e.target.id==='c' ||
+            e.target.id==='m' ||
+            e.target.id==='y' ||
+            e.target.id==='k' 
+        ){
+            setColorData(CMYKtoRgb(inputValues.cmyk))
         }else if(e.target.id==='a'){
             let  value = e.target.value
 
@@ -372,12 +397,10 @@ export default function ColorPickerInterface({
             colorData.alpha = value/100
 
             setColorData({...colorData})
-
         }
     }
 
-    function colorConverterCMYK(rgbColor){
-
+    function RGBtoCMYK(rgbColor){
         const 
         R = rgbColor.r / 255,
         G = rgbColor.g / 255,
@@ -399,5 +422,26 @@ export default function ColorPickerInterface({
             y: parseInt(Y.toFixed(0)), 
             k: parseInt((K*100).toFixed(0))
         }
+    }
+
+    function CMYKtoRgb(CMYK){
+        const 
+        C = CMYK.c / 100,
+        M = CMYK.m / 100,
+        Y = CMYK.y / 100,
+        K = CMYK.k / 100,
+        R = 255 * (1-C) * (1-K),
+        G = 255 * (1-M) * (1-K),
+        B = 255 * (1-Y) * (1-K)
+
+
+        const newRgb = createColorObj({
+            ...inputValues.rgb,
+            r: parseInt(R.toFixed(0)),
+            g: parseInt(G.toFixed(0)),
+            b: parseInt(B.toFixed(0)),
+        })
+
+        return newRgb
     }
 }
