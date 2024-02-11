@@ -37,7 +37,7 @@ export default function TabSwitcher({ buttons = [], children, title }) {
         id="tab-switcher-sm"
         className={buttons.length === 0 ? "" : "max-[420px]:hidden"}
       >
-        <div className="flex flex-1 justify-between ">
+        <div className="flex flex-1 justify-end mb-2">
           <fieldset className="flex flex-wrap items-center gap-x-8 mb-3">
             {radioButtons(buttons)}
           </fieldset>
