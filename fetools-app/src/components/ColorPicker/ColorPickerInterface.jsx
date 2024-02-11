@@ -13,6 +13,7 @@ export default function ColorPickerInterface({
         hexColor: getColorString(colorData.color, 'hex'),
         rgb: HslToRgb(colorData.color),
         hsl: colorData.color,
+        cmyk: colorConverterCMYK(HslToRgb(colorData.color)),
         alpha: colorData.alpha
     })
 
@@ -22,6 +23,7 @@ export default function ColorPickerInterface({
                 hexColor: colorWithAlpha(colorData.color, colorData.alpha),
                 rgb: HslToRgb(colorData.color),
                 hsl: colorData.color,
+                cmyk: colorConverterCMYK(HslToRgb(colorData.color)),
                 alpha: colorData.alpha
             })
         } else{
@@ -29,12 +31,14 @@ export default function ColorPickerInterface({
                 hexColor: getColorString(colorData.color, 'hex'),
                 rgb: HslToRgb(colorData.color),
                 hsl: {...colorData.color},
+                cmyk: colorConverterCMYK(HslToRgb(colorData.color)),
                 alpha: colorData.alpha
             })
         }
     },[colorData])
   
     useEffect(()=>{
+        console.log(inputValues.cmyk)
         codesContainerRef.current.querySelectorAll('input').forEach(input=>{
             if(input.id==='hex'){
                 input.value !== inputValues.hexColor? 
@@ -63,6 +67,22 @@ export default function ColorPickerInterface({
             }else if(input.id === 'l'){
                 input.value !== parseFloat(inputValues.hsl.l)*100? 
                 input.value = Math.floor(parseFloat(inputValues.hsl.l)*100):
+                input.value = input.value
+            }else if(input.id === 'c'){
+                input.value !== inputValues.cmyk.c? 
+                input.value = inputValues.cmyk.c:
+                input.value = input.value
+            }else if(input.id === 'm'){
+                input.value !== inputValues.cmyk.m? 
+                input.value = inputValues.cmyk.m:
+                input.value = input.value
+            }else if(input.id === 'y'){
+                input.value !== inputValues.cmyk.y? 
+                input.value = inputValues.cmyk.y:
+                input.value = input.value   
+            }else if(input.id === 'k'){
+                input.value !== inputValues.cmyk.k? 
+                input.value = inputValues.cmyk.k:
                 input.value = input.value
             }else if(input.id === 'a'){
                 input.value !== inputValues.alpha? 
@@ -201,10 +221,10 @@ export default function ColorPickerInterface({
             <span className="block font-bold">CMYK</span>
             <div className="flex flex-1">
                 <div className="relative w-1/4">
-                    <span className="block absolute left-5 top-2 w-fit font-bold">R</span>
-                    <input id="r" type="text" maxLength={3}
-                    placeholder={inputValues.rgb.r}
-                    defaultValue={inputValues.rgb.r}
+                    <span className="block absolute left-5 top-2 w-fit font-bold">C</span>
+                    <input id="c" type="text" maxLength={3}
+                    placeholder={inputValues.cmyk.c}
+                    defaultValue={inputValues.cmyk.y}
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
                     className="
@@ -215,10 +235,10 @@ export default function ColorPickerInterface({
                 </div>
 
                 <div className="relative w-1/4">
-                    <span className="block absolute left-5 top-2 w-fit font-bold">G</span>
-                    <input id="g" type="text" maxLength={3}
-                    placeholder={inputValues.rgb.g}
-                    defaultValue={inputValues.rgb.g}
+                    <span className="block absolute left-5 top-2 w-fit font-bold">M</span>
+                    <input id="m" type="text" maxLength={3}
+                    placeholder={inputValues.cmyk.m}
+                    defaultValue={inputValues.cmyk.m}
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
                     className="border-y-2 border-r-2 h-10 
@@ -227,10 +247,10 @@ export default function ColorPickerInterface({
                 </div>
 
                 <div className="relative w-1/4">
-                    <span className="block absolute left-5 top-2 w-fit font-bold">B</span>
-                    <input id="b" type="text" maxLength={3}
-                    placeholder={inputValues.rgb.b}
-                    defaultValue={inputValues.rgb.b}
+                    <span className="block absolute left-5 top-2 w-fit font-bold">Y</span>
+                    <input id="y" type="text" maxLength={3}
+                    placeholder={inputValues.cmyk.y}
+                    defaultValue={inputValues.cmyk.y}
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
                     className="border-y-2 border-r-2 h-10 
@@ -239,12 +259,12 @@ export default function ColorPickerInterface({
                 </div>
 
                 <div className="relative w-1/4">
-                    <span className="block absolute left-5 top-2 w-fit font-bold">A</span>
-                    <input id="a" type="text" maxLength={4}
-                    placeholder={`${inputValues.alpha*100}%`}
+                    <span className="block absolute left-5 top-2 w-fit font-bold">K</span>
+                    <input id="k" type="text" maxLength={4}
+                    placeholder={inputValues.cmyk.k}
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
-                    defaultValue={`${inputValues.alpha*100}%`}
+                    defaultValue={inputValues.cmyk.k}
                     className="border-y-2 border-r-2 h-10 rounded-r 
                     outline-none text-center w-full
                     font-medium text-gray-500 text-sm"></input>
@@ -353,6 +373,31 @@ export default function ColorPickerInterface({
 
             setColorData({...colorData})
 
+        }
+    }
+
+    function colorConverterCMYK(rgbColor){
+
+        const 
+        R = rgbColor.r / 255,
+        G = rgbColor.g / 255,
+        B = rgbColor.b / 255,
+        K = 1 - Math.max(R,G,B)
+
+        let
+        C = ( (1 - R - K) / (1 - K) ) * 100,
+        M = ( (1 - G - K) / (1 - K) ) * 100,
+        Y = ( (1 - B - K) / (1 - K) ) * 100
+
+        if(isNaN(C)){C=0}
+        if(isNaN(M)){M=0}
+        if(isNaN(Y)){Y=0}
+
+        return {
+            c: parseInt(C.toFixed(0)), 
+            m: parseInt(M.toFixed(0)), 
+            y: parseInt(Y.toFixed(0)), 
+            k: parseInt((K*100).toFixed(0))
         }
     }
 }
