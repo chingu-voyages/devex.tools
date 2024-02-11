@@ -21,9 +21,7 @@ function UnitConverter() {
   const [cssSize, setCssSize] = useState("16px");
 
   // State to hold the content of the contentEditable div
-  const [editableContent, setEditableContent] = useState(
-    "Lorem ipsum dolor sit amet"
-  );
+  const [editableContent, setEditableContent] = useState("Aa");
 
   // Function to handle changes in the contentEditable div
   const editableRef = useRef(null);
@@ -395,66 +393,69 @@ function UnitConverter() {
           />
         </ToolHeaderSection>
 
-        {/* Section for Input Boxes*/}
+        <PageSection icon="Calculate" title="Calculator" className="w-full">
+          <div className="flex gap-10 mt-2">
+            {/*Text Preview*/}
 
-        <div className="flex gap-10 sm:py-8 sm:px-16 lg:px-80">
-          <EditableInput
-            label="Base Size"
-            value={basePixelSize}
-            unit="px"
-            type="number"
-            onChange={handleBasePixelSizeChange}
-          />
+            <div className="flex flex-col gap-4 items-start sm:p-8 lg:px-40">
+              {/* Inline Notification about Preview Limit */}
 
-          <TextField
-            title="REM/EM"
-            value={em}
-            unit="rem"
-            onValueChange={handleEmChange}
-          />
+              {alertShown && (
+                <div className="text-center py-2 px-4 bg-yellow-100 text-yellow-800 rounded-md">
+                  Preview is limited to 1000px. Conversion will still be
+                  accurate above this value.
+                </div>
+              )}
 
-          <TextField
-            title="Pixels"
-            value={pixels}
-            unit="px"
-            onValueChange={handlePixelChange}
-          />
-
-          <TextField
-            title="Tailwind Size"
-            value={tailwindSize}
-            onValueChange={handleTailwindChange}
-            inputType="text"
-            onBlur={onTailwindBlur}
-          />
-        </div>
-        {/* Section for Lorem Ipsum Preview*/}
-        <div className="flex flex-col gap-4 items-start sm:p-8 lg:px-48">
-          <p className="font-arial text-4xl">Preview</p>
-
-          {/* Inline Notification about Preview Limit */}
-          {alertShown && (
-            <div className="text-center py-2 px-4 bg-yellow-100 text-yellow-800 rounded-md">
-              Preview is limited to 1000px. Conversion will still be accurate
-              above this value.
-            </div>
-          )}
-
-          <div
-            className="flex flex-row justify-start items-center border border-black border-dashed p-3 
+              <div
+                className="flex flex-row justify-start items-center p-3 
         min-h-[100px] w-full overflow-auto"
-          >
-            <div
-              contentEditable
-              ref={editableRef}
-              className="font-arial font-bold text-3xl break-words leading-none focus:outline-none"
-              style={{
-                fontSize: cssSize,
-              }}
-              onInput={handleContentChange} // Update state on input
-            ></div>
+              >
+                <div
+                  contentEditable
+                  ref={editableRef}
+                  className="font-arial font-bold text-3xl break-words leading-none focus:outline-none"
+                  style={{
+                    fontSize: cssSize,
+                  }}
+                  onInput={handleContentChange} // Update state on input
+                ></div>
+              </div>
+            </div>
+
+            {/*Input Boxes*/}
+            <EditableInput
+              label="Base Size"
+              value={basePixelSize}
+              unit="px"
+              type="number"
+              onChange={handleBasePixelSizeChange}
+            />
+
+            <TextField
+              title="REM/EM"
+              value={em}
+              unit="rem"
+              onValueChange={handleEmChange}
+            />
+
+            <TextField
+              title="Pixels"
+              value={pixels}
+              unit="px"
+              onValueChange={handlePixelChange}
+            />
+
+            <TextField
+              title="Tailwind Size"
+              value={tailwindSize}
+              onValueChange={handleTailwindChange}
+              inputType="text"
+              onBlur={onTailwindBlur}
+            />
           </div>
-        </div>
+        </PageSection>
+
         {/* Section for code blocks */}
 
         <div>
