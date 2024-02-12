@@ -10,14 +10,15 @@ const CharacterCategoryTab = ({
     <div className="pt-4 pb-4">
       <button
         className={
-          "bg-white text-black py-2 px-4 rounded-md mr-4 outlined-button hover:bg-black hover:text-white"
+          "bg-white text-black py-2 px-4 mr-4 outlined-button hover:bg-gray-200 hover:text-black border border-gray-300 w-20"
         }
         onClick={() => selectCategory(category)}
+        style={{ minWidth: '50px' }}
       >
-        <p className="font-bold">{categoryDisplayName}</p>
-        <p className="font-bold text-xl text-gray-400 flex justify-left">
+        <p className="font-bold text-3xl text-black flex justify-center">
           {char}
         </p>
+        <p className="font-bold text-xs  flex justify-center">{categoryDisplayName}</p>
       </button>
     </div>
   );
