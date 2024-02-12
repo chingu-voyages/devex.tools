@@ -16,7 +16,6 @@ import {
   newShadow,
   switchShadow,
   removeShadow,
-  ShareLink,
 } from "./ShadowGeneratorFN";
 
 const OptionsBox = ({
@@ -27,8 +26,6 @@ const OptionsBox = ({
   setActiveShadow,
   ActiveShadow,
   setRemoveShadow,
-  searchParams, 
-  setSearchParams
 }) => {
   // debugger
   let color = tinycolor(ShadowsStyles[ActiveShadow].shadowColor).toHexString();
@@ -63,8 +60,6 @@ const OptionsBox = ({
             src={share}
             alt="share Icon"
             className="w-[24px] h-[24px] cursor-pointer "
-            // onClick={()=> {ShareLink(searchParams,setSearchParams,ShadowsStyles)}}
-          
           />
         </span>
       </div>
