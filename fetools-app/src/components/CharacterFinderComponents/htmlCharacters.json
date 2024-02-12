@@ -209,7 +209,8 @@
       "dec": "&#220;",
       "entity": "&Uuml;",
       "css": "\\00DC"
-    },{
+    },
+    {
       "name": "registered trade mark sign",
       "character": "®",
       "unicode": "U+000AE",
@@ -217,6 +218,15 @@
       "dec": "&#174;",
       "entity": "&reg;",
       "css": "\\00AE"
+    },
+    {
+      "name": "dollar sign",
+      "character": "$",
+      "unicode": "U+00024",
+      "hex": "&#x24;",
+      "dec": "&#36;",
+      "entity": "&dollar;",
+      "css": "\\0024"
     }
   ],
   "arrows": [
