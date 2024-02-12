@@ -209,6 +209,14 @@
       "dec": "&#220;",
       "entity": "&Uuml;",
       "css": "\\00DC"
+    },{
+      "name": "registered trade mark sign",
+      "character": "®",
+      "unicode": "U+000AE",
+      "hex": "&#xae;",
+      "dec": "&#174;",
+      "entity": "&reg;",
+      "css": "\\00AE"
     }
   ],
   "arrows": [

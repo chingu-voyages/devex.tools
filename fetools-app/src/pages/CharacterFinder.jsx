@@ -189,9 +189,9 @@ function CharacterFinder() {
               selectCategory={displayCharacters}
             />
             <CharacterCategoryTab
-              category={"numbers"} // place holder
+              category={"numbers"} // placeholder
               categoryDisplayName={"Collection"}
-              char={"☲"} // place hodler
+              char={"☲"} // placehodler
               selectCategory={displayCharacters}
             />
           </div>
