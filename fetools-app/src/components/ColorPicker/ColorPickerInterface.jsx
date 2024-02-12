@@ -12,6 +12,8 @@ export default function ColorPickerInterface({
     const [inputValues, setInputValues] = useState({
         hexColor: getColorString(colorData.color, 'hex'),
         rgb: HslToRgb(colorData.color),
+        hsl: colorData.color,
+        cmyk: RGBtoCMYK(HslToRgb(colorData.color)),
         alpha: colorData.alpha
     })
 
@@ -20,18 +22,23 @@ export default function ColorPickerInterface({
             setInputValues({
                 hexColor: colorWithAlpha(colorData.color, colorData.alpha),
                 rgb: HslToRgb(colorData.color),
+                hsl: colorData.color,
+                cmyk: RGBtoCMYK(HslToRgb(colorData.color)),
                 alpha: colorData.alpha
             })
         } else{
             setInputValues({
                 hexColor: getColorString(colorData.color, 'hex'),
                 rgb: HslToRgb(colorData.color),
+                hsl: {...colorData.color},
+                cmyk: RGBtoCMYK(HslToRgb(colorData.color)),
                 alpha: colorData.alpha
             })
         }
     },[colorData])
   
     useEffect(()=>{
+        console.log(inputValues.cmyk)
         codesContainerRef.current.querySelectorAll('input').forEach(input=>{
             if(input.id==='hex'){
                 input.value !== inputValues.hexColor? 
@@ -48,6 +55,34 @@ export default function ColorPickerInterface({
             }else if(input.id === 'b'){
                 input.value !== inputValues.rgb.b? 
                 input.value = inputValues.rgb.b:
+                input.value = input.value
+            }else if(input.id === 'h'){
+                input.value !== parseInt(inputValues.hsl.h)? 
+                input.value = parseInt(inputValues.hsl.h):
+                input.value = input.value
+            }else if(input.id === 's'){
+                input.value !== parseFloat(inputValues.hsl.s)*100? 
+                input.value = Math.floor(parseFloat(inputValues.hsl.s)*100):
+                input.value = input.value
+            }else if(input.id === 'l'){
+                input.value !== parseFloat(inputValues.hsl.l)*100? 
+                input.value = Math.floor(parseFloat(inputValues.hsl.l)*100):
+                input.value = input.value
+            }else if(input.id === 'c'){
+                input.value !== inputValues.cmyk.c? 
+                input.value = inputValues.cmyk.c:
+                input.value = input.value
+            }else if(input.id === 'm'){
+                input.value !== inputValues.cmyk.m? 
+                input.value = inputValues.cmyk.m:
+                input.value = input.value
+            }else if(input.id === 'y'){
+                input.value !== inputValues.cmyk.y? 
+                input.value = inputValues.cmyk.y:
+                input.value = input.value   
+            }else if(input.id === 'k'){
+                input.value !== inputValues.cmyk.k? 
+                input.value = inputValues.cmyk.k:
                 input.value = input.value
             }else if(input.id === 'a'){
                 input.value !== inputValues.alpha? 
@@ -72,7 +107,7 @@ export default function ColorPickerInterface({
             className="border-2 h-10 rounded outline-none 
             text-center font-medium text-gray-700 text-sm uppercase"></input>
           </li>
-          <li className="flex flex-col w-[540px]">
+          <li id="rgb" className="flex flex-col w-[540px]">
             <span className="block font-bold">RGB</span>
             <div className="flex flex-1">
                 <div className="relative w-1/4">
@@ -127,12 +162,124 @@ export default function ColorPickerInterface({
 
             </div>
           </li>
+          <li id="hsl" className="flex flex-col w-[540px]">
+            <span className="block font-bold">HSL</span>
+            <div className="flex flex-1">
+                <div className="relative w-1/4">
+                    <span className="block absolute left-5 top-2 w-fit font-bold">H</span>
+                    <input id="h" type="text" maxLength={3}
+                    placeholder={parseFloat(inputValues.hsl.h).toFixed(0)}
+                    defaultValue={parseInt(inputValues.hsl.h)}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    className="
+                    border-y-2 border-l-2 border-r-2 
+                    h-10 rounded-l outline-none text-center w-full 
+                    font-medium text-gray-500 text-sm">
+                    </input>
+                </div>
+
+                <div className="relative w-1/4">
+                    <span className="block absolute left-5 top-2 w-fit font-bold">S</span>
+                    <input id="s" type="text" maxLength={3}
+                    placeholder={inputValues.hsl.s}
+                    defaultValue={inputValues.hsl.s}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    className="border-y-2 border-r-2 h-10 
+                    outline-none text-center w-full
+                    font-medium text-gray-500 text-sm"></input>
+                </div>
+
+                <div className="relative w-1/4">
+                    <span className="block absolute left-5 top-2 w-fit font-bold">L</span>
+                    <input id="l" type="text" maxLength={3}
+                    placeholder={inputValues.hsl.l}
+                    defaultValue={inputValues.hsl.l}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    className="border-y-2 border-r-2 h-10 
+                    outline-none text-center w-full
+                    font-medium text-gray-500 text-sm"></input>
+                </div>
+
+                <div className="relative w-1/4">
+                    <span className="block absolute left-5 top-2 w-fit font-bold">A</span>
+                    <input id="a" type="text" maxLength={4}
+                    placeholder={`${inputValues.alpha*100}%`}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    defaultValue={`${inputValues.alpha*100}%`}
+                    className="border-y-2 border-r-2 h-10 rounded-r 
+                    outline-none text-center w-full
+                    font-medium text-gray-500 text-sm"></input>
+                </div>
+
+            </div>
+          </li>
+          <li id="cmyk" className="flex flex-col w-[540px]">
+            <span className="block font-bold">CMYK</span>
+            <div className="flex flex-1">
+                <div className="relative w-1/4">
+                    <span className="block absolute left-5 top-2 w-fit font-bold">C</span>
+                    <input id="c" type="text" maxLength={3}
+                    placeholder={inputValues.cmyk.c}
+                    defaultValue={inputValues.cmyk.y}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    className="
+                    border-y-2 border-l-2 border-r-2 
+                    h-10 rounded-l outline-none text-center w-full 
+                    font-medium text-gray-500 text-sm">
+                    </input>
+                </div>
+
+                <div className="relative w-1/4">
+                    <span className="block absolute left-5 top-2 w-fit font-bold">M</span>
+                    <input id="m" type="text" maxLength={3}
+                    placeholder={inputValues.cmyk.m}
+                    defaultValue={inputValues.cmyk.m}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    className="border-y-2 border-r-2 h-10 
+                    outline-none text-center w-full
+                    font-medium text-gray-500 text-sm"></input>
+                </div>
+
+                <div className="relative w-1/4">
+                    <span className="block absolute left-5 top-2 w-fit font-bold">Y</span>
+                    <input id="y" type="text" maxLength={3}
+                    placeholder={inputValues.cmyk.y}
+                    defaultValue={inputValues.cmyk.y}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    className="border-y-2 border-r-2 h-10 
+                    outline-none text-center w-full
+                    font-medium text-gray-500 text-sm"></input>
+                </div>
+
+                <div className="relative w-1/4">
+                    <span className="block absolute left-5 top-2 w-fit font-bold">K</span>
+                    <input id="k" type="text" maxLength={4}
+                    placeholder={inputValues.cmyk.k}
+                    defaultValue={inputValues.cmyk.k}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    className="border-y-2 border-r-2 h-10 rounded-r 
+                    outline-none text-center w-full
+                    font-medium text-gray-500 text-sm"></input>
+                </div>
+
+            </div>
+          </li>
         </ul>
       </div>
     </>
     );
 
     function handleOnChange(e){
+        let value = e.target.value
+
         if(e.target.id==='hex'){
             if(isValidColor(e.target.value)){
                 setInputValues({...inputValues, hexColor: e.target.value})
@@ -142,19 +289,71 @@ export default function ColorPickerInterface({
             e.target.id==='g' || 
             e.target.id==='b' 
         ){
-            let value = e.target.value
+            
             if(value > 255){
                 value = 255
+            } else if(value < 0){
+                value = 0
             }
             const newRgb = {...inputValues.rgb, [e.target.id]: value}
 
             if(isValidColor(getColorString(newRgb, 'rgb'))){
                 setInputValues({...inputValues, rgb: newRgb})
             }
+        }else if(
+            e.target.id==='h' || 
+            e.target.id==='s' || 
+            e.target.id==='l' 
+        ){
+
+            parseInt(e.target.value)
+            
+            if(e.target.id==='h'){
+                if(value > 360){
+                    value = 360
+                } else if(value < 0){
+                    value = 0
+                }
+            } else{
+                if(value > 100){
+                    value = 100
+                } else if(value < 0 || isNaN(value)){
+                    value = 0
+                }
+                value = parseFloat(value/100).toFixed(2)
+            }
+
+            const newHsl = {...inputValues.hsl, [e.target.id]: value}
+
+            if(isValidColor(getColorString(newHsl, 'hsl'))){
+                setInputValues({...inputValues, hsl: newHsl})
+            }
+
+        }else if(
+            e.target.id==='c' || 
+            e.target.id==='m' || 
+            e.target.id==='y' ||
+            e.target.id==='k'
+        ){
+            if(value > 100){
+                value = 100
+            } else if(value < 0 || isNaN(value)){
+                value = 0
+            }
+
+            const newCmyk = {...inputValues.cmyk, [e.target.id]: value}
+            const newRgb = {...inputValues.rgb, ...CMYKtoRgb(newCmyk)}  
+        
+            if(isValidColor(getColorString(newRgb, 'rgb'))){
+                setInputValues({...inputValues, cmyk: newCmyk})
+            }
+
         }else if(e.target.id==='a'){
             let  value = e.target.value
             if(value > 100){
                 value = 100
+            } else if(value < 0){
+                value = 0
             }
         }
         setInputOnFocus(true)
@@ -169,6 +368,19 @@ export default function ColorPickerInterface({
             e.target.id==='b' 
         ){
             setColorData(createColorObj(inputValues.rgb))
+        }else if(
+            e.target.id==='h' ||
+            e.target.id==='s' ||
+            e.target.id==='l' 
+        ){
+            setColorData(createColorObj(inputValues.hsl))
+        }else if(
+            e.target.id==='c' ||
+            e.target.id==='m' ||
+            e.target.id==='y' ||
+            e.target.id==='k' 
+        ){
+            setColorData(CMYKtoRgb(inputValues.cmyk))
         }else if(e.target.id==='a'){
             let  value = e.target.value
 
@@ -185,7 +397,51 @@ export default function ColorPickerInterface({
             colorData.alpha = value/100
 
             setColorData({...colorData})
-
         }
+    }
+
+    function RGBtoCMYK(rgbColor){
+        const 
+        R = rgbColor.r / 255,
+        G = rgbColor.g / 255,
+        B = rgbColor.b / 255,
+        K = 1 - Math.max(R,G,B)
+
+        let
+        C = ( (1 - R - K) / (1 - K) ) * 100,
+        M = ( (1 - G - K) / (1 - K) ) * 100,
+        Y = ( (1 - B - K) / (1 - K) ) * 100
+
+        if(isNaN(C)){C=0}
+        if(isNaN(M)){M=0}
+        if(isNaN(Y)){Y=0}
+
+        return {
+            c: parseInt(C.toFixed(0)), 
+            m: parseInt(M.toFixed(0)), 
+            y: parseInt(Y.toFixed(0)), 
+            k: parseInt((K*100).toFixed(0))
+        }
+    }
+
+    function CMYKtoRgb(CMYK){
+        const 
+        C = CMYK.c / 100,
+        M = CMYK.m / 100,
+        Y = CMYK.y / 100,
+        K = CMYK.k / 100,
+        R = 255 * (1-C) * (1-K),
+        G = 255 * (1-M) * (1-K),
+        B = 255 * (1-Y) * (1-K)
+
+
+        const newRgb = createColorObj({
+            ...inputValues.rgb,
+            r: parseInt(R.toFixed(0)),
+            g: parseInt(G.toFixed(0)),
+            b: parseInt(B.toFixed(0)),
+        })
+
+        return newRgb
     }
 }
