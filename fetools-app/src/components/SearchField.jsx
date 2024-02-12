@@ -1,33 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const SearchField = ({ placeholderText, links, search }) => {
+const SearchField = ({ placeholderText, links, search,clearInput }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+    search(e.target.value);
   };
 
-  const handleSearchClick = () => {
+  useEffect(() => {
+    if (clearInput){
+      setInputValue("");
+      search("");
+    }
+  }, [clearInput]);
+
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      search(inputValue);
+    }
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "ArrowUp" ||e.key === "ArrowDown" ||e.key === "Backspace") {
+      return;
+    }
     search(inputValue);
   };
 
-  const handleKeyPress = () => {
-    search(inputValue);
-  };
 
   return (
-    <div className="flex justify-end pr-12">
+    <div className="flex justify-end">
       <input
         type="text"
         placeholder={placeholderText}
         value={inputValue}
         onChange={handleInputChange}
-        onKeyDown={handleKeyPress}
-        className="bg-gray-100 p-3 rounded-l-lg text-lg"
+        onKeyDown={handleKeyDown}
+        className="bg-gray-100 p-3 text-lg"
       />
       <button
-        className="bg-gray-100 text-black p-2 rounded-r-md"
-        onClick={handleSearchClick}
+        className="bg-gray-100 text-black p-2"
+        onClick={() => search(inputValue)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
