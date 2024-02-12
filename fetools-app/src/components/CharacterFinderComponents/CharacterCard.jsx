@@ -20,20 +20,20 @@ const CharacterCard = ({
         <div className="flex flex-wrap">
           <div className="w-full lg:w-1/2">
             <p className="pt-2 text-xs text-left uppercase">
-              unicode: <p><span className="font-bold">{unicode || " -- "}</span></p>
+              unicode: <p><span className="font-bold normal-case">{unicode || " -- "}</span></p>
             </p>
           </div>
           
           <div className="w-full lg:w-1/2">
             <p className="pt-2 text-xs text-left uppercase">
-              html code: <p><span className="font-bold flex flex-wrap">{htmlcode || " -- "}</span></p>
+              html code: <p><span className="font-bold normal-case break-all">{htmlcode || " -- "}</span></p>
             </p>
             </div>
          
           <div className="w-full lg:w-1/2">
             <p className="pt-2 text-xs text-left uppercase">
               html entity:
-              <p><span className="font-bold">
+              <p><span className="font-bold normal-case">
                 {htmlEntity !== undefined && htmlEntity !== ""
                   ? htmlEntity
                   : " -- "}
@@ -42,7 +42,7 @@ const CharacterCard = ({
           </div>
           <div className="w-full lg:w-1/2">
             <p className="pt-2 text-xs text-left uppercase">
-              css code: <p><span className="font-bold">{cssCode || " -- "}</span></p>
+              css code: <p><span className="font-bold normal-case">{cssCode || " -- "}</span></p>
             </p>
           </div>
         </div>
