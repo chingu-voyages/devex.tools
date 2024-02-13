@@ -69,11 +69,11 @@ function UnitConverter() {
   useEffect(() => {
     const size = parseInt(cssSize); // Parse only the numeric part of cssSize
     if (!isNaN(size) && size > 0) {
-      const lineThickness = 1;
+      const lineThickness = 0.5;
       const backgroundStyle = {
         backgroundImage: `
-          linear-gradient(to right, lightgray ${lineThickness}px, transparent ${lineThickness}px),
-          linear-gradient(to bottom, lightgray ${lineThickness}px, transparent ${lineThickness}px)`,
+          linear-gradient(to right, #d8b8ff ${lineThickness}px, transparent ${lineThickness}px),
+          linear-gradient(to bottom, #d8b8ff ${lineThickness}px, transparent ${lineThickness}px)`,
         backgroundSize: `${size}px ${size}px`,
       };
       setGridBackgroundStyle(backgroundStyle);
