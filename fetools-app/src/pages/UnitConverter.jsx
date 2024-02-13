@@ -394,10 +394,10 @@ function UnitConverter() {
         </ToolHeaderSection>
 
         <PageSection icon="Calculate" title="Calculator" className="w-full">
-          <div className="flex gap-10 mt-2">
+          <div className="flex gap-2 mt-2 flex-wrap">
             {/*Text Preview*/}
 
-            <div className="flex flex-col gap-4 items-start sm:p-8 lg:px-40">
+            <div className="flex flex-col w-1/2 gap-4 items-start">
               {/* Inline Notification about Preview Limit */}
 
               {alertShown && (
@@ -407,10 +407,7 @@ function UnitConverter() {
                 </div>
               )}
 
-              <div
-                className="flex flex-row justify-start items-center p-3 
-        min-h-[100px] w-full overflow-auto"
-              >
+              <div className="flex flex-row justify-center items-center p-3 min-h-[100px] max-h-[500px] w-full overflow-auto">
                 <div
                   contentEditable
                   ref={editableRef}
@@ -424,35 +421,41 @@ function UnitConverter() {
             </div>
 
             {/*Input Boxes*/}
-            <EditableInput
-              label="Base Size"
-              value={basePixelSize}
-              unit="px"
-              type="number"
-              onChange={handleBasePixelSizeChange}
-            />
+            <div className="flex flex-col gap-10">
+              <div className="flex gap-8">
+                <TextField
+                  title="REM/EM"
+                  value={em}
+                  unit="rem"
+                  onValueChange={handleEmChange}
+                />
 
-            <TextField
-              title="REM/EM"
-              value={em}
-              unit="rem"
-              onValueChange={handleEmChange}
-            />
+                <TextField
+                  title="Pixels"
+                  value={pixels}
+                  unit="px"
+                  onValueChange={handlePixelChange}
+                />
 
-            <TextField
-              title="Pixels"
-              value={pixels}
-              unit="px"
-              onValueChange={handlePixelChange}
-            />
+                <TextField
+                  title="Tailwind Size"
+                  value={tailwindSize}
+                  onValueChange={handleTailwindChange}
+                  inputType="text"
+                  onBlur={onTailwindBlur}
+                />
+              </div>
 
-            <TextField
-              title="Tailwind Size"
-              value={tailwindSize}
-              onValueChange={handleTailwindChange}
-              inputType="text"
-              onBlur={onTailwindBlur}
-            />
+              <div className="flex justify-center items-center">
+                <EditableInput
+                  label="Base Size"
+                  value={basePixelSize}
+                  unit="px"
+                  type="number"
+                  onChange={handleBasePixelSizeChange}
+                />
+              </div>
+            </div>
           </div>
         </PageSection>
 
