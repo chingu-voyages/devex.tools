@@ -62,6 +62,26 @@ function UnitConverter() {
     setAlertShown(displayNote);
   };
 
+  // State hook for the grid background style
+  const [gridBackgroundStyle, setGridBackgroundStyle] = useState({});
+
+  //Update the grid background style when cssSize changes using useEffect hook
+  useEffect(() => {
+    const size = parseInt(cssSize); // Parse only the numeric part of cssSize
+    if (!isNaN(size) && size > 0) {
+      const lineThickness = 1;
+      const backgroundStyle = {
+        backgroundImage: `
+          linear-gradient(to right, lightgray ${lineThickness}px, transparent ${lineThickness}px),
+          linear-gradient(to bottom, lightgray ${lineThickness}px, transparent ${lineThickness}px)`,
+        backgroundSize: `${size}px ${size}px`,
+      };
+      setGridBackgroundStyle(backgroundStyle);
+    } else {
+      setGridBackgroundStyle({});
+    }
+  }, [cssSize]);
+
   // Tailwind Size Conversions
   const tailwindSizes = [
     0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20,
@@ -407,7 +427,10 @@ function UnitConverter() {
                 </div>
               )}
 
-              <div className="flex flex-row justify-center items-center p-3 min-h-[100px] max-h-[500px] w-full overflow-auto">
+              <div
+                className="flex flex-row justify-center items-center p-3 h-full w-full overflow-auto"
+                style={gridBackgroundStyle}
+              >
                 <div
                   contentEditable
                   ref={editableRef}
