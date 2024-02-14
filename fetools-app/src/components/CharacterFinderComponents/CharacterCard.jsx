@@ -1,5 +1,3 @@
-import React from "react";
-
 const CharacterCard = ({
   char,
   name,
@@ -9,40 +7,49 @@ const CharacterCard = ({
   cssCode,
 }) => {
   return (
-    <div className="p-6 bg-white h-7/8 w-50px">
-      <p className="text-6xl font-bold border-b-4 border-black text-left py-4">
+    <div className="p-6">
+      <p className="py-4 text-6xl font-bold text-left border-b-4 border-black">
         {char}
       </p>
       <div className="flex flex-wrap">
         <div className="w-full">
-          <p className="pt-2 text-s text-left font-bold uppercase">{name}</p>
+          <p className="pt-2 font-bold text-left uppercase text-s">{name}</p>
         </div>
         <div className="flex flex-wrap">
           <div className="w-full lg:w-1/2">
             <p className="pt-2 text-xs text-left uppercase">
-              unicode: <p><span className="font-bold normal-case">{unicode || " -- "}</span></p>
+              unicode:{' '}
+              <span className="block font-bold normal-case">
+                {unicode || ' -- '}
+              </span>
             </p>
           </div>
-          
+
           <div className="w-full lg:w-1/2">
             <p className="pt-2 text-xs text-left uppercase">
-              html code: <p><span className="font-bold normal-case break-all">{htmlcode || " -- "}</span></p>
+              html code:{' '}
+              <span className="block font-bold normal-case break-all">
+                {htmlcode || ' -- '}
+              </span>
             </p>
-            </div>
-         
+          </div>
+
           <div className="w-full lg:w-1/2">
             <p className="pt-2 text-xs text-left uppercase">
               html entity:
-              <p><span className="font-bold normal-case">
-                {htmlEntity !== undefined && htmlEntity !== ""
+              <span className="block font-bold normal-case">
+                {htmlEntity !== undefined && htmlEntity !== ''
                   ? htmlEntity
-                  : " -- "}
-              </span></p>
+                  : ' -- '}
+              </span>
             </p>
           </div>
           <div className="w-full lg:w-1/2">
             <p className="pt-2 text-xs text-left uppercase">
-              css code: <p><span className="font-bold normal-case">{cssCode || " -- "}</span></p>
+              css code:{' '}
+              <span className="block font-bold normal-case">
+                {cssCode || ' -- '}
+              </span>
             </p>
           </div>
         </div>
