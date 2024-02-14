@@ -75,13 +75,34 @@ export function colorWithAlpha(color, alpha){
   return tinycolor(color).setAlpha(alpha).toHex8String()
 }
 
-export function createMonochromatic(color){
+export function createMonochromatic(currentColor){
 
-  const colors = tinycolor(color).monochromatic(11);
+  const colors = tinycolor(currentColor).monochromatic(11);
 
   const colorsHsl = colors.map((color)=> color.toHsl());
 
   colorsHsl.sort((a,b)=> b.l-a.l)
 
   return colorsHsl.map(color=>tinycolor(color).toHexString())
+}
+
+export function createAnalogous(currentColor){
+
+  const colors = tinycolor(currentColor).analogous(3,2);
+
+  return colors.filter((color,idx)=>idx===0?false:true).map(color=>color.toHexString())
+}
+
+export function createComplimentary(currentColor){
+
+  const colors = tinycolor(currentColor).splitcomplement();
+
+  return colors[1].toHexString()
+}
+
+export function createTriadic(currentColor){
+
+  const colors = tinycolor(currentColor).triad();
+
+  return colors.filter((color,idx)=>idx===0?false:true).map(color=>color.toHexString())
 }
