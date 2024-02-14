@@ -10,14 +10,14 @@ export default function TabSwitcher({ buttons = [], children }) {
         key={`radioBtn-${idx}`}
         id={btn}
         name="tab-switcher-buttons"
-        className="text-sm font-bold leading-none"
+        className="flex text-sm font-bold leading-none"
       >
         <input
           type="radio"
           value={btn}
           checked={selectedButton === btn}
           onChange={evt => (handleOptionChange(evt), setDisplayedContent(idx))}
-          className="inline-block mr-1 align-middle"
+          className="inline-block mr-3 align-middle"
         />
         <p className="inline-block leading-none">{btn}</p>
       </label>
