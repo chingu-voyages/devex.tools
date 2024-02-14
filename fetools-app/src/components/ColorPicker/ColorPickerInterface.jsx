@@ -38,7 +38,6 @@ export default function ColorPickerInterface({
     },[colorData])
   
     useEffect(()=>{
-        console.log(inputValues.cmyk)
         codesContainerRef.current.querySelectorAll('input').forEach(input=>{
             if(input.id==='hex'){
                 input.value !== inputValues.hexColor? 
