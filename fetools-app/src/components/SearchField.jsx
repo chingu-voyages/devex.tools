@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 
-const SearchField = ({ placeholderText, links, search,clearInput }) => {
+const SearchField = ({ placeholderText, links, search, clearInput }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
@@ -9,7 +9,7 @@ const SearchField = ({ placeholderText, links, search,clearInput }) => {
   };
 
   useEffect(() => {
-    if (clearInput){
+    if (clearInput) {
       setInputValue("");
       search("");
     }
@@ -20,12 +20,17 @@ const SearchField = ({ placeholderText, links, search,clearInput }) => {
     if (e.key === "Enter") {
       search(inputValue);
     }
-    if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "ArrowUp" ||e.key === "ArrowDown" ||e.key === "Backspace") {
+    if (
+      e.key === "ArrowLeft" ||
+      e.key === "ArrowRight" ||
+      e.key === "ArrowUp" ||
+      e.key === "ArrowDown" ||
+      e.key === "Backspace"
+    ) {
       return;
     }
     search(inputValue);
   };
-
 
   return (
     <div className="flex justify-end">
@@ -36,6 +41,7 @@ const SearchField = ({ placeholderText, links, search,clearInput }) => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         className="bg-gray-100 p-3 text-lg"
+        autoFocus
       />
       <button
         className="bg-gray-100 text-black p-2"
