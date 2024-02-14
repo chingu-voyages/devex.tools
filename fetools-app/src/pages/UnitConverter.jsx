@@ -1,8 +1,6 @@
 import '../index.css';
 import GoDeeper from '../components/ToolsLayout/GoDeeper';
 import ToolHeading from '../components/ToolsLayout/ToolHeading';
-import CodeBlock from '../components/CodeBlock';
-import TabSwitcher from '../components/TabSwitcher';
 
 import { useState, useEffect, useRef } from 'react';
 import ToolMain from '../components/ToolsLayout/ToolMain';
@@ -13,6 +11,7 @@ import {
 import Calculator from '../components/UnitConverter/Calculator';
 import Preview from '../components/UnitConverter/Preview';
 import CodeSnippets from '../components/UnitConverter/CodeSnippets';
+import useExpander from '../hooks/useExpander';
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 
@@ -29,6 +28,9 @@ function UnitConverter() {
 
   // Function to handle changes in the contentEditable div
   const editableRef = useRef(null);
+
+  // Hook to manage expanding preview
+  const [isExpanded, toggleIsExpanded] = useExpander();
 
   const handleContentChange = () => {
     const newText = editableRef.current.innerText;
@@ -227,12 +229,6 @@ function UnitConverter() {
     }
     setTailwindSize(tailwindCheck(formatCheck(newTailwindSize)));
   };
-
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  function toggleIsExpanded() {
-    setIsExpanded(prev => !prev);
-  }
 
   // JSX for rendering the UI components.
   return (
