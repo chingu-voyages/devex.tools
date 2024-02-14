@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createAnalogous, createComplimentary, createMonochromatic, createTriadic, getColorString } from "./ColorPickerUtils";
+import CopyButton from "../CopyButton";
 
 export default function RelatedColors({ 
     colorData 
@@ -44,12 +45,15 @@ export default function RelatedColors({
 
     const previews = colors.map((color,idx)=>{
         return(
-            <div key={`mono-${idx}`} style={{backgroundColor: color}}
+            <div key={`mono-${idx}`} style={{backgroundColor: color}} data-color={color}
             className={`
-            h-24 
+            relative h-24 
             ${idx===0?'lg:rounded-bl-lg':''}
             ${idx===10?'lg:rounded-r-lg':''}
             `}>
+                <span id="hover-buttons" className="absolute right-2 top-1 text-white">
+                    <CopyButton onCopy={()=>color}></CopyButton>
+                </span>
             </div>
         )
     })
@@ -62,7 +66,7 @@ export default function RelatedColors({
 
     const previews = colors.map((color,idx)=>{
         return(
-            <div key={`analogic-${idx}`} style={{backgroundColor: color}}
+            <div key={`analogic-${idx}`} style={{backgroundColor: color}} data-color={color}
             className={`${idx===0?'rounded-tr-lg':'rounded-br-lg'}`}>
             </div>
         )
@@ -84,7 +88,7 @@ export default function RelatedColors({
     <div style={{backgroundColor: getColorString(colorData.color, 'hex')}}
     className="row-span-2 rounded-bl-lg">
     </div>
-    <div style={{backgroundColor: complimentaryColor}}
+    <div style={{backgroundColor: complimentaryColor}} data-color={complimentaryColor}
     className="row-span-2 rounded-r-lg">
     </div>
     </>)
@@ -96,7 +100,7 @@ export default function RelatedColors({
 
     const previews = colors.map((color,idx)=>{
         return(
-            <div key={`analogic-${idx}`} style={{backgroundColor: color}}
+            <div key={`analogic-${idx}`} style={{backgroundColor: color}} data-color={color}
             className={`${idx===0?'rounded-tr-lg':'rounded-br-lg'}`}>
             </div>
         )
