@@ -42,6 +42,7 @@ function CharacterFinder() {
   };
 
   const handleSearchChange = (query) => {
+
     setSearchQuery(query);
     setCurrentPage(0);
 
@@ -49,6 +50,7 @@ function CharacterFinder() {
       setSearchResults([]);
       return;
     }
+    
 
     updateSearchResults(query);
   };
@@ -72,7 +74,13 @@ function CharacterFinder() {
         (character) =>
           character.character.toLowerCase() === query.toLowerCase() ||
           removeLetterVariations(character.character.toLowerCase()) ===
-            removeLetterVariations(query.toLowerCase())
+            removeLetterVariations(query.toLowerCase()) ||
+          (character.entity &&
+            character.entity.toLowerCase() === query.toLowerCase()) ||
+          (character.hex &&
+            character.hex.toLowerCase() === query.toLowerCase()) ||
+          (character.unicode &&
+            character.unicode.toLowerCase() === query.toLowerCase())
       );
 
       if (filteredResults.length === 0) {
@@ -84,19 +92,19 @@ function CharacterFinder() {
           );
         });
       }
-    } else if (query.startsWith("&#")) {
-      // search hex
-      const hexQuery = query.slice(2);
-      filteredResults = allCharacterArrays.filter((character) =>
-        character.hex.toLowerCase().includes(hexQuery.toLowerCase())
-      );
     } else {
       filteredResults = allCharacterArrays.filter(
         (character) =>
           character.name.toLowerCase().includes(query.toLowerCase()) ||
           removeLetterVariations(character.name.toLowerCase()).includes(
             removeLetterVariations(query.toLowerCase())
-          )
+          ) ||
+          (character.entity &&
+            character.entity.toLowerCase().includes(query.toLowerCase())) ||
+          (character.hex &&
+            character.hex.toLowerCase().includes(query.toLowerCase())) ||
+          (character.unicode &&
+            character.unicode.toLowerCase().includes(query.toLowerCase()))
       );
     }
 
@@ -125,77 +133,75 @@ function CharacterFinder() {
           />
         </div>
         <div className="w-full md:w-3/4 mx-auto mt-12 mb-12">
-        <SearchField
-          placeholderText={"Search"}
-          search={handleSearchChange}
-          clearInput={clearInput}
-        />
+          <SearchField
+            placeholderText={"Search"}
+            search={handleSearchChange}
+            clearInput={clearInput}
+          />
         </div>
 
-        
-          <div className="grid grid-cols-10 w-full md:w-3/4 mx-auto">
-            <CharacterCategoryTab
-              category={"popular"}
-              categoryDisplayName={"Popular"}
-              char={"☆"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"letters"}
-              categoryDisplayName={"Letters"}
-              char={"Ü"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"punctuation"}
-              categoryDisplayName={"Punctuation"}
-              char={"%"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"numbers"}
-              categoryDisplayName={"Numbers"}
-              char={"①"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"math"}
-              categoryDisplayName={"Math"}
-              char={"÷"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"currency"}
-              categoryDisplayName={"Currency"}
-              char={"€"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"arrows"}
-              categoryDisplayName={"Arrows"}
-              char={"→"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"symbols"}
-              categoryDisplayName={"Symbols"}
-              char={"§"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"emojis"}
-              categoryDisplayName={"Emoji"}
-              char={"☺"}
-              selectCategory={displayCharacters}
-            />
-            <CharacterCategoryTab
-              category={"numbers"} // placeholder
-              categoryDisplayName={"Collection"}
-              char={"☲"} // placehodler
-              selectCategory={displayCharacters}
-            />
-          </div>
-        
+        <div className="grid grid-cols-10 w-full md:w-3/4 mx-auto">
+          <CharacterCategoryTab
+            category={"popular"}
+            categoryDisplayName={"Popular"}
+            char={"☆"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"letters"}
+            categoryDisplayName={"Letters"}
+            char={"Ü"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"punctuation"}
+            categoryDisplayName={"Punctuation"}
+            char={"%"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"numbers"}
+            categoryDisplayName={"Numbers"}
+            char={"①"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"math"}
+            categoryDisplayName={"Math"}
+            char={"÷"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"currency"}
+            categoryDisplayName={"Currency"}
+            char={"€"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"arrows"}
+            categoryDisplayName={"Arrows"}
+            char={"→"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"symbols"}
+            categoryDisplayName={"Symbols"}
+            char={"§"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"emojis"}
+            categoryDisplayName={"Emoji"}
+            char={"☺"}
+            selectCategory={displayCharacters}
+          />
+          <CharacterCategoryTab
+            category={"numbers"} // placeholder
+            categoryDisplayName={"Collection"}
+            char={"☲"} // placehodler
+            selectCategory={displayCharacters}
+          />
+        </div>
 
         <div className="grid grid-cols-4 mt-12 w-full md:w-3/4 mx-auto border border-gray-300 rounded">
           {currentCategoryData.map((character, index) => (
@@ -258,27 +264,26 @@ function CharacterFinder() {
             forcePage={currentPage}
           />
         </div>
-        
 
         <div className="mt-12 mb-12 w-full md:w-3/4 mx-auto border border-gray-300 rounded">
           <div className="">
-          <GoDeeper
-            linksData={[
-              {
-                url: "https://developer.mozilla.org/en-US/docs/Glossary/Entity",
-                textValue: "All about entities at MDN",
-              },
-              {
-                url: "https://deliciousbrains.com/how-unicode-works/",
-                textValue: "How Unicode works at Delicious Brain",
-              },
-              {
-                url: "https://daily-dev-tips.com/posts/tailwind-css-pseudo-elements/",
-                textValue:
-                  "Seeing special characters in pseudo-elements with Tailwind CSS",
-              },
-            ]}
-          />
+            <GoDeeper
+              linksData={[
+                {
+                  url: "https://developer.mozilla.org/en-US/docs/Glossary/Entity",
+                  textValue: "All about entities at MDN",
+                },
+                {
+                  url: "https://deliciousbrains.com/how-unicode-works/",
+                  textValue: "How Unicode works at Delicious Brain",
+                },
+                {
+                  url: "https://daily-dev-tips.com/posts/tailwind-css-pseudo-elements/",
+                  textValue:
+                    "Seeing special characters in pseudo-elements with Tailwind CSS",
+                },
+              ]}
+            />
           </div>
         </div>
       </div>
