@@ -6,9 +6,9 @@ import TextField from "../components/TextField";
 import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
 import EditableInput from "../components/EditableInput";
+import PageSection from "../components/PageLayout/PageSection";
 
 import React, { useState, useEffect, useRef } from "react";
-import { MdOutlineSettings } from "react-icons/md";
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 
@@ -21,9 +21,7 @@ function UnitConverter() {
   const [cssSize, setCssSize] = useState("16px");
 
   // State to hold the content of the contentEditable div
-  const [editableContent, setEditableContent] = useState(
-    "Lorem ipsum dolor sit amet"
-  );
+  const [editableContent, setEditableContent] = useState("Aa");
 
   // Function to handle changes in the contentEditable div
   const editableRef = useRef(null);
@@ -49,23 +47,40 @@ function UnitConverter() {
   // Update CSS size whenever pixels, em, or Tailwind size changes
   const updateCssSize = (newSizeInPixels) => {
     let finalSize = newSizeInPixels;
+    let displayNote = false;
 
     // Check if newSizeInPixels exceeds the maximum allowed size for the preview (1000)
     if (newSizeInPixels > 1000) {
       finalSize = 1000;
-      if (!alertShown) {
-        alert(
-          "Preview is limited to 1000px. Conversion will still be accurate above this value."
-        );
-        setAlertShown(true);
-      }
+      displayNote = true;
     }
-
-    // Notify the user that the preview is capped
 
     // Check if newSizeInPixels is a number, if not, set CSS size to "0px"
     setCssSize(isNaN(finalSize) ? "0px" : `${finalSize}px`); // Update CSS size
+
+    // Update the state to control the visibility of the inline notification
+    setAlertShown(displayNote);
   };
+
+  // State hook for the grid background style
+  const [gridBackgroundStyle, setGridBackgroundStyle] = useState({});
+
+  //Update the grid background style when cssSize changes using useEffect hook
+  useEffect(() => {
+    const size = parseInt(cssSize); // Parse only the numeric part of cssSize
+    if (!isNaN(size) && size > 0) {
+      const lineThickness = 0.5;
+      const backgroundStyle = {
+        backgroundImage: `
+          linear-gradient(to right, #d8b8ff ${lineThickness}px, transparent ${lineThickness}px),
+          linear-gradient(to bottom, #d8b8ff ${lineThickness}px, transparent ${lineThickness}px)`,
+        backgroundSize: `${size}px ${size}px`,
+      };
+      setGridBackgroundStyle(backgroundStyle);
+    } else {
+      setGridBackgroundStyle({});
+    }
+  }, [cssSize]);
 
   // Tailwind Size Conversions
   const tailwindSizes = [
@@ -309,10 +324,10 @@ function UnitConverter() {
 
   //TabSwitcher Content
 
-  const tabButtons = ["px", "em", "rem", "tailwind"];
+  const tabButtons = ["Rem", "Em", "Px", "Tailwind"];
 
   const tabContents = [
-    <div key="tab-px" className="grid grid-cols-4 gap-4">
+    <div key="tab-rem" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample, index) => (
             <CodeBlock
@@ -321,7 +336,7 @@ function UnitConverter() {
               code={sample.code}
             />
           ))
-        : CodeSamples["px"].map((sample, index) => (
+        : CodeSamples["rem"].map((sample, index) => (
             <CodeBlock
               key={`${sample.title}-${index}`}
               title={sample.title}
@@ -329,6 +344,7 @@ function UnitConverter() {
             />
           ))}
     </div>,
+
     <div key="tab-em" className="grid grid-cols-4 gap-4">
       {isNaN(em)
         ? CodeSamples["NaN"].map((sample, index) => (
@@ -347,7 +363,7 @@ function UnitConverter() {
           ))}
     </div>,
 
-    <div key="tab-rem" className="grid grid-cols-4 gap-4">
+    <div key="tab-px" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample, index) => (
             <CodeBlock
@@ -356,7 +372,7 @@ function UnitConverter() {
               code={sample.code}
             />
           ))
-        : CodeSamples["rem"].map((sample, index) => (
+        : CodeSamples["px"].map((sample, index) => (
             <CodeBlock
               key={`${sample.title}-${index}`}
               title={sample.title}
@@ -364,6 +380,7 @@ function UnitConverter() {
             />
           ))}
     </div>,
+
     <div key="tab-tailwind" className="grid grid-cols-4 gap-4">
       {isNaN(pixels)
         ? CodeSamples["NaNtailwind"].map((sample, index) => (
@@ -396,68 +413,93 @@ function UnitConverter() {
           />
         </ToolHeaderSection>
 
-        {/* Section for Input Boxes*/}
+        <PageSection icon="Calculate" title="Calculator" className="w-full">
+          <div className="flex gap-2 mt-2 flex-wrap">
+            {/*Text Preview*/}
 
-        <div className="flex gap-10 sm:py-8 sm:px-16 lg:px-80">
-          <EditableInput
-            label="Base Size"
-            value={basePixelSize}
-            unit="px"
-            type="number"
-            onChange={handleBasePixelSizeChange}
-          />
+            <div className="flex flex-col w-1/2 gap-4 items-start">
+              {/* Inline Notification about Preview Limit */}
 
-          <TextField
-            title="REM/EM"
-            value={em}
-            unit="rem"
-            onValueChange={handleEmChange}
-          />
+              {alertShown && (
+                <div className="text-center py-2 px-4 bg-yellow-100 text-yellow-800 rounded-md">
+                  Preview is limited to 1000px. Conversion will still be
+                  accurate above this value.
+                </div>
+              )}
 
-          <TextField
-            title="Pixels"
-            value={pixels}
-            unit="px"
-            onValueChange={handlePixelChange}
-          />
+              <div
+                className="flex flex-row justify-center items-center p-3 h-full w-full overflow-auto"
+                style={gridBackgroundStyle}
+              >
+                <div
+                  contentEditable
+                  ref={editableRef}
+                  className="font-arial font-bold text-3xl break-words leading-none focus:outline-none"
+                  style={{
+                    fontSize: cssSize,
+                  }}
+                  onInput={handleContentChange} // Update state on input
+                ></div>
+              </div>
+            </div>
 
-          <TextField
-            title="Tailwind Size"
-            value={tailwindSize}
-            onValueChange={handleTailwindChange}
-            inputType="text"
-            onBlur={onTailwindBlur}
-          />
-        </div>
-        {/* Section for Lorem Ipsum Preview*/}
-        <div className="flex flex-col gap-4 items-start sm:p-8 lg:px-48">
-          <p className="font-arial text-4xl">Preview</p>
-          <div
-            className="flex flex-row justify-start items-center border border-black border-dashed p-3 
-        min-h-[100px] w-full overflow-auto"
-          >
-            <div
-              contentEditable
-              ref={editableRef}
-              className="font-arial font-bold text-3xl break-words leading-none focus:outline-none"
-              style={{
-                fontSize: cssSize,
-              }}
-              onInput={handleContentChange} // Update state on input
-            ></div>
+            {/*Input Boxes*/}
+            <div className="flex flex-col gap-10">
+              <div className="flex gap-8">
+                <TextField
+                  title="REM/EM"
+                  value={em}
+                  unit="rem"
+                  onValueChange={handleEmChange}
+                />
+
+                <TextField
+                  title="Pixels"
+                  value={pixels}
+                  unit="px"
+                  onValueChange={handlePixelChange}
+                />
+
+                <TextField
+                  title="Tailwind Size"
+                  value={tailwindSize}
+                  onValueChange={handleTailwindChange}
+                  inputType="text"
+                  onBlur={onTailwindBlur}
+                />
+              </div>
+
+              <div className="flex justify-center items-center">
+                <EditableInput
+                  label="Base Size"
+                  value={basePixelSize}
+                  unit="px"
+                  type="number"
+                  onChange={handleBasePixelSizeChange}
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        </PageSection>
+
         {/* Section for code blocks */}
 
         <div>
-          <TabSwitcher
-            buttons={tabButtons}
-            children={tabContents}
-            title="Code Samples"
-          ></TabSwitcher>
+          <PageSection
+            icon="integration_instructions"
+            title="Code Snippets"
+            className="w-full "
+          >
+            <TabSwitcher
+              buttons={tabButtons}
+              children={tabContents}
+            ></TabSwitcher>
+          </PageSection>
         </div>
 
-        <GoDeeper linksData={linksData} />
+        <PageSection title="Go Deeper" icon="school">
+          <GoDeeper linksData={linksData} />
+        </PageSection>
       </main>
     </>
   );
