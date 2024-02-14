@@ -1,14 +1,15 @@
-import { FaLink } from "react-icons/fa6";
+import { FaLink } from 'react-icons/fa6';
+import { ToolSection } from './Sections';
 
 export default function GoDeeper({ linksData }) {
-  const anchorElements = (array) =>
+  const anchorElements = array =>
     array.map(({ url, textValue }, idx) => (
       <li key={`GoLink-${idx}`}>
         <div className="flex items-center gap-2">
           <FaLink />
           <a
             href={url}
-            className="underline underline-offset-4 text-md font-bold"
+            className="font-bold underline underline-offset-4 text-md"
           >
             {textValue}
           </a>
@@ -17,13 +18,12 @@ export default function GoDeeper({ linksData }) {
     ));
 
   return (
-    <aside
-      className="flex flex-col flex-1 gap-5 p-3
-        "
-    >
-      <ul className="flex flex-col gap-3 list-none list-inside">
-        {anchorElements(linksData)}
-      </ul>
-    </aside>
+    <ToolSection title="Go Deeper" icon="school">
+      <aside className="flex flex-col flex-1 gap-5 p-3 ">
+        <ul className="flex flex-col gap-3 list-none list-inside">
+          {anchorElements(linksData)}
+        </ul>
+      </aside>
+    </ToolSection>
   );
 }

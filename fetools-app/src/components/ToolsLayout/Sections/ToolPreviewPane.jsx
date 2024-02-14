@@ -10,7 +10,7 @@ export default function ToolPreviewPane({
 
   return (
     <section
-      className={`relative flex flex-row items-center justify-center w-full overflow-auto max-lg:border group center min-h-64 max-lg:rounded-r-lg max-lg:rounded-bl-lg
+      className={`relative items-center justify-center w-full overflow-auto max-lg:border group center min-h-64 max-lg:rounded-r-lg max-lg:rounded-bl-lg
       ${isExpanded ? internalExpandedLayoutClasses : ''}
       ${isExpanded ? expandedLayoutClasses : columnLayoutClasses}
       `}
