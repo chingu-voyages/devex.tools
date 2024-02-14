@@ -1,60 +1,75 @@
-import { useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection"
-import ToolHeading from "../components/ToolsLayout/ToolHeading"
-import PageSection from "../components/PageLayout/PageSection"
-import ColorPickerTool from "../components/ColorPicker/ColorPickerTool"
-import ColorPickerInterface from "../components/ColorPicker/ColorPickerInterface"
+import ToolHeading from '../components/ToolsLayout/ToolHeading';
+import ColorPickerTool from '../components/ColorPicker/ColorPickerTool';
+import ColorPickerInterface from '../components/ColorPicker/ColorPickerInterface';
 
-import { createColorObj } from "../components/ColorPicker/ColorPickerUtils"
-
+import { createColorObj } from '../components/ColorPicker/ColorPickerUtils';
+import RelatedColors from '../components/ColorPicker/RelatedColors';
+import useExpander from '../hooks/useExpander';
+import ToolMain from '../components/ToolsLayout/ToolMain';
+import {
+  ToolPane,
+  ToolSection,
+  ToolSectionColumns,
+} from '../components/ToolsLayout/Sections';
+import GoDeeper from '../components/ToolsLayout/GoDeeper';
 
 export default function ColorPicker() {
-    
   const [searchParams, setSearchParams] = useSearchParams();
-  const [inputOnFocus, setInputOnFocus] = useState(false)
-  const [colorData, setColorData] = useState(createColorObj(searchParams.get('color'))||createColorObj())
+  const [inputOnFocus, setInputOnFocus] = useState(false);
+  const [colorData, setColorData] = useState(
+    createColorObj(searchParams.get('color')) || createColorObj()
+  );
 
-    return (
-    <>
-      <main>
-        <ToolHeaderSection>
-          <ToolHeading 
-          title="Color Picker"
-          tagline="Get colors, tints, and shades, with CSS and Tailwind code you can copy and paste into your project."
-          ></ToolHeading>
-        </ToolHeaderSection>
+  const [isExpanded, toggleIsExpanded] = useExpander();
 
-      <section className="flex mx-44">
-        <ColorPickerTool 
+  return (
+    <ToolMain>
+      <ToolHeading
+        title="Color Picker"
+        tagline="Get colors, tints, and shades, with CSS and Tailwind code you can copy and paste into your project."
+        icon="colorize"
+      ></ToolHeading>
+
+      <ToolSectionColumns isExpanded={isExpanded} reverse={false}>
+        <ColorPickerTool
           colorData={colorData}
           handleQuery={handleQuery}
           setColorData={setColorData}
           inputOnFocus={inputOnFocus}
           setInputOnFocus={setInputOnFocus}
-          className='flex flex-1 flex-col min-w-[540px]'
+          isExpanded={isExpanded}
+          toggleIsExpanded={toggleIsExpanded}
         />
 
-        <PageSection title="Color Codes" icon="integration_instructions" className="flex-1 p-0 m-0">
-          <ColorPickerInterface className='flex-1 h-[380px]'
-          colorData={colorData}
-          setColorData={setColorData}
-          inputOnFocus={inputOnFocus}
-          setInputOnFocus={setInputOnFocus}/>
-        </PageSection>
+        <ToolPane
+          title="Color Codes"
+          icon="integration_instructions"
+          isPrimary={true}
+          bookmarkCallback={() => {}}
+          shareCallback={() => {}}
+        >
+          <ColorPickerInterface
+            colorData={colorData}
+            setColorData={setColorData}
+            inputOnFocus={inputOnFocus}
+            setInputOnFocus={setInputOnFocus}
+          />
+        </ToolPane>
+      </ToolSectionColumns>
 
-      </section>
+      <ToolSection title="Related Colors" icon="palette">
+        <RelatedColors colorData={colorData} />
+      </ToolSection>
 
-      </main>
-    </>
+      <GoDeeper linksData={[]}></GoDeeper>
+    </ToolMain>
+  );
 
-    )
-
-  function handleQuery(color){
+  function handleQuery(color) {
     color = color.slice(1);
     setSearchParams({ color });
   }
-
 }
-  
