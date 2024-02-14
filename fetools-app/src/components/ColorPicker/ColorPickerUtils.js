@@ -74,3 +74,14 @@ export function isValidColor(color){
 export function colorWithAlpha(color, alpha){
   return tinycolor(color).setAlpha(alpha).toHex8String()
 }
+
+export function createMonochromatic(color){
+
+  const colors = tinycolor(color).monochromatic(11);
+
+  const colorsHsl = colors.map((color)=> color.toHsl());
+
+  colorsHsl.sort((a,b)=> b.l-a.l)
+
+  return colorsHsl.map(color=>tinycolor(color).toHexString())
+}

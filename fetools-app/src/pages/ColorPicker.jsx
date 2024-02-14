@@ -8,6 +8,7 @@ import ColorPickerTool from "../components/ColorPicker/ColorPickerTool"
 import ColorPickerInterface from "../components/ColorPicker/ColorPickerInterface"
 
 import { createColorObj } from "../components/ColorPicker/ColorPickerUtils"
+import RelatedColors from "../components/ColorPicker/RelatedColors"
 
 
 export default function ColorPicker() {
@@ -43,8 +44,12 @@ export default function ColorPicker() {
           inputOnFocus={inputOnFocus}
           setInputOnFocus={setInputOnFocus}/>
         </PageSection>
-
       </section>
+
+      <PageSection title="Related Colors" icon="palette">
+        <RelatedColors 
+        colorData={colorData}/>
+      </PageSection>
 
       </main>
     </>
