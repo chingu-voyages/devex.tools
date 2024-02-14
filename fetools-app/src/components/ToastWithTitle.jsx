@@ -6,11 +6,14 @@ export default function CreateToast({
   children, 
   copiedCode, 
   onClickfun, 
-  btnClassName = ''
+  btnClassName = '',
+  buttonType
 }){
   
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef(null)
   const timerRef = useRef(0)
+
 
   useEffect(()=>{
     return () => clearTimeout(timerRef.current);
@@ -71,7 +74,7 @@ export default function CreateToast({
   } else{
     return (
     <Toast.Provider label='Notification' swipeDirection='down'>
-      <button className={btnClassName}
+      <button id={`button-${buttonType}`} ref={buttonRef} className={btnClassName}
       onClick={() => {
         onClickfun();
         setOpen(false);
@@ -86,7 +89,7 @@ export default function CreateToast({
       <Toast.Root
       type='foreground'
       className={`
-      ToastRoot ToastBottom
+      ToastRoot ToastBottom visible
       relative bg-white rounded-md text-black w-[360px] m-auto px-12 py-4 border border-gray-300
       shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] 
       items-center 
@@ -112,10 +115,11 @@ export default function CreateToast({
   
     <Toast.Viewport 
       className={`
+      visible
       ${isSmallScreen?'hidden':''}
       [--viewport-padding:_25px] fixed bottom-0 left-0
       flex flex-col p-[var(--viewport-padding)] gap-[10px] w-full 
-      m-0 list-none z-[2147483647] outline-none`}/>
+      m-0 list-none z-[100] outline-none`}/>
     </Toast.Provider>
     )
   }

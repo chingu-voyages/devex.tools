@@ -24,7 +24,7 @@ function CopyButton({ onCopy }) {
   };
 
   return (
-    <ToastWithTitle onClickfun={handleCopy} copiedCode={textToCopy}>
+    <ToastWithTitle onClickfun={handleCopy} copiedCode={textToCopy} buttonType={'copy'}>
       <MdContentCopy/>
     </ToastWithTitle>
   );

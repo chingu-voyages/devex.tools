@@ -60,11 +60,23 @@ export default function RelatedColors({ colorData }) {
     const colors = createMonochromatic(colorData.color);
 
     const previews = colors.map((color, idx) => {
+
       return (
         <div
           key={`mono-${idx}`}
           style={{ backgroundColor: color }}
           data-color={color}
+          onMouseEnter={(e)=>{
+            console.log(e.target.querySelector('#button-copy'))
+            if(!e.target.querySelector('#button-copy')){return}
+            e.target.querySelector('#button-copy').classList.remove('invisible'),
+            e.target.querySelector('#button-copy').classList.add('visible')
+          }}
+          onMouseLeave={(e)=>{
+            if(!e.target.querySelector('#button-copy')){return}
+            e.target.querySelector('#button-copy').classList.remove('visible'),
+            e.target.querySelector('#button-copy').classList.add('invisible')
+          }}
           className={`
             relative h-24 
             ${idx === 0 ? 'lg:rounded-bl-lg' : ''}
@@ -72,8 +84,7 @@ export default function RelatedColors({ colorData }) {
             `}
         >
           <span
-            id="hover-buttons"
-            className="absolute text-white right-2 top-1"
+            className="absolute text-white right-2 top-1 invisible"
           >
             <CopyButton onCopy={() => color}></CopyButton>
           </span>
