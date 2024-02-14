@@ -1,13 +1,20 @@
+"use client"
+
 import React from "react";
+
+import ToastWithTitle from "./ToastWithTitle"
 import { MdContentCopy } from "react-icons/md";
 
+
 function CopyButton({ onCopy }) {
+
+  const textToCopy = onCopy();
+
   const handleCopy = () => {
-    const textToCopy = onCopy();
     if (navigator.clipboard && textToCopy) {
       navigator.clipboard.writeText(textToCopy).then(
         () => {
-          console.log("Text copied to clipboard");
+
         },
         (err) => {
           console.error("Could not copy text: ", err);
@@ -17,10 +24,18 @@ function CopyButton({ onCopy }) {
   };
 
   return (
-    <button onClick={handleCopy}>
-      <MdContentCopy />
-    </button>
+    <ToastWithTitle onClickfun={handleCopy} copiedCode={textToCopy}>
+      <MdContentCopy/>
+    </ToastWithTitle>
   );
 }
 
 export default CopyButton;
+
+/*
+  const { toast } = useToast()
+  toast({
+    title: "Code Copied to Clipboard",
+    description: `${textToCopy}`,
+  })
+*/ 
