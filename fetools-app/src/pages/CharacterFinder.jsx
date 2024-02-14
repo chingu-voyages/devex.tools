@@ -148,6 +148,7 @@ function CharacterFinder() {
       categoryDisplayName={category.displayName}
       char={category.char}
       selectCategory={displayCharacters}
+      active={category.name === selectedCategory}
     />
   ));
 
@@ -166,7 +167,7 @@ function CharacterFinder() {
         />
       </div>
 
-      <div className="container flex flex-wrap justify-between gap-y-3">
+      <div className="container flex flex-wrap justify-between px-5 sm:px-8 gap-y-3">
         {categoryTabs}
       </div>
 
