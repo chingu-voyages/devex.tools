@@ -95,9 +95,9 @@ export function createAnalogous(currentColor){
 
 export function createComplimentary(currentColor){
 
-  const colors = tinycolor(currentColor).splitcomplement();
+  const color = tinycolor(currentColor).spin(180);
 
-  return colors[1].toHexString()
+  return color.toHexString()
 }
 
 export function createTriadic(currentColor){
