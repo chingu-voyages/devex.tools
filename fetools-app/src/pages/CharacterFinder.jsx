@@ -52,7 +52,6 @@ function CharacterFinder() {
       setSearchResults([]);
       return;
     }
-    
 
     updateSearchResults(query);
   };
@@ -155,7 +154,7 @@ function CharacterFinder() {
       categoryDisplayName={category.displayName}
       char={category.char}
       selectCategory={displayCharacters}
-      active={category.name === selectedCategory}
+      active={!searchQuery && category.name === selectedCategory}
     />
   ));
 
@@ -244,7 +243,6 @@ function CharacterFinder() {
             forcePage={currentPage}
           />
         </div>
-
       </ToolSection>
 
       <GoDeeper
