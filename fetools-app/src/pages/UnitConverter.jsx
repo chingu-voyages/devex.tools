@@ -268,24 +268,22 @@ function UnitConverter() {
         <CodeSnippets pixels={pixels} em={em} tailwindSize={tailwindSize} />
       </ToolSection>
 
-      <ToolSection title="Go Deeper" icon="school">
-        <GoDeeper
-          linksData={[
-            {
-              url: 'https://www.w3schools.com/cssref/css_units.php',
-              textValue: 'Explore CSS units at W3Schools',
-            },
-            {
-              url: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
-              textValue: 'Learn more about CSS values and units at MDN',
-            },
-            {
-              url: 'https://www.youtube.com/watch?v=N5wpD9Ov_To&ab_channel=KevinPowell',
-              textValue: 'Are you using the right CSS units? With Kevin Powell',
-            },
-          ]}
-        />
-      </ToolSection>
+      <GoDeeper
+        linksData={[
+          {
+            url: 'https://www.w3schools.com/cssref/css_units.php',
+            textValue: 'Explore CSS units at W3Schools',
+          },
+          {
+            url: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
+            textValue: 'Learn more about CSS values and units at MDN',
+          },
+          {
+            url: 'https://www.youtube.com/watch?v=N5wpD9Ov_To&ab_channel=KevinPowell',
+            textValue: 'Are you using the right CSS units? With Kevin Powell',
+          },
+        ]}
+      />
     </ToolMain>
   );
 }
