@@ -52,6 +52,7 @@ function CharacterFinder() {
       setSearchResults([]);
       return;
     }
+    
 
     updateSearchResults(query);
   };
@@ -75,7 +76,13 @@ function CharacterFinder() {
         character =>
           character.character.toLowerCase() === query.toLowerCase() ||
           removeLetterVariations(character.character.toLowerCase()) ===
-            removeLetterVariations(query.toLowerCase())
+            removeLetterVariations(query.toLowerCase()) ||
+          (character.entity &&
+            character.entity.toLowerCase() === query.toLowerCase()) ||
+          (character.hex &&
+            character.hex.toLowerCase() === query.toLowerCase()) ||
+          (character.unicode &&
+            character.unicode.toLowerCase() === query.toLowerCase())
       );
 
       if (filteredResults.length === 0) {
@@ -87,19 +94,19 @@ function CharacterFinder() {
           );
         });
       }
-    } else if (query.startsWith('&#')) {
-      // search hex
-      const hexQuery = query.slice(2);
-      filteredResults = allCharacterArrays.filter(character =>
-        character.hex.toLowerCase().includes(hexQuery.toLowerCase())
-      );
     } else {
       filteredResults = allCharacterArrays.filter(
         character =>
           character.name.toLowerCase().includes(query.toLowerCase()) ||
           removeLetterVariations(character.name.toLowerCase()).includes(
             removeLetterVariations(query.toLowerCase())
-          )
+          ) ||
+          (character.entity &&
+            character.entity.toLowerCase().includes(query.toLowerCase())) ||
+          (character.hex &&
+            character.hex.toLowerCase().includes(query.toLowerCase())) ||
+          (character.unicode &&
+            character.unicode.toLowerCase().includes(query.toLowerCase()))
       );
     }
 
@@ -237,6 +244,7 @@ function CharacterFinder() {
             forcePage={currentPage}
           />
         </div>
+
       </ToolSection>
 
       <GoDeeper
