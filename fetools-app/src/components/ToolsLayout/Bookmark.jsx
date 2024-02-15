@@ -22,6 +22,12 @@ export default function Bookmark({
         if(parentRef.current.children.length===0){
             setEditMode(false)
         }
+
+        parentRef.current
+        .parentElement
+        .parentElement
+        .parentElement.addEventListener('mouseleave', (e)=>{setEditMode(false)})
+
     },[])
 
 
@@ -59,8 +65,8 @@ export default function Bookmark({
                         {bookmarkChildren(item.color)}
                         <span onClick={deleteBookmarked} 
                         className={`
-                        cursor-pointer
-                        absolute right-2 top-1 font-bold text-sm text-red-500
+                        cursor-pointer hover:animate-wiggle
+                        absolute right-2 top-0 font-bold text-sm text-red-500
                         ${editMode?'':'hidden'}`}>Remove</span>
                     </div>
 
