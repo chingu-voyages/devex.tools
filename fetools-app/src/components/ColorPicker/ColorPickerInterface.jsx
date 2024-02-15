@@ -78,7 +78,7 @@ export default function ColorPickerInterface({
         <ul
           ref={codesContainerRef}
           id="codes-container"
-          className="flex flex-col mt-2 gap-y-7 w-fit"
+          className="flex flex-col mt-2 gap-y-7 w-full"
         >
           <li className="flex flex-col">
             <span className="block font-bold">HEX</span>
