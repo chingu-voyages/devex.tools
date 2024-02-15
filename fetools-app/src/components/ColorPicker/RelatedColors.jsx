@@ -9,10 +9,10 @@ import {
 import CopyButton from '../CopyButton';
 import EyeDropButton from './EyeDropButton';
 
-export default function RelatedColors({ colorData, setColorData, timerRef, setToastContent, setOpenToast }) {
+export default function RelatedColors({ colorData, setColorData, toastState }) {
   useEffect(() => {}, [colorData]);
 
-  const parentContainer = useRef(null)
+  const parentContainer = useRef(null);
 
   return (
     <div ref={parentContainer}>
@@ -38,7 +38,7 @@ export default function RelatedColors({ colorData, setColorData, timerRef, setTo
           </div>
         </div>
         <div>
-          <h2 className="pb-1 text-base">Complimentary</h2>
+          <h2 className="pb-1 text-base">Complementary</h2>
           <div
             id="analogous-colors"
             className="grid w-64 h-64 grid-cols-2 grid-rows-2 gap-x-3 gap-y-3"
@@ -69,13 +69,17 @@ export default function RelatedColors({ colorData, setColorData, timerRef, setTo
           key={`mono-${idx}`}
           style={{ backgroundColor: color }}
           data-color={color}
-          onMouseEnter={(e)=>{
-            if(!e.target.children[0]){return}
-            e.target.children[0].classList.remove('hidden')
+          onMouseEnter={e => {
+            if (!e.target.children[0]) {
+              return;
+            }
+            e.target.children[0].classList.remove('hidden');
           }}
-          onMouseLeave={(e)=>{
-            if(!e.target.children[0]){return}
-            e.target.children[0].classList.add('hidden')
+          onMouseLeave={e => {
+            if (!e.target.children[0]) {
+              return;
+            }
+            e.target.children[0].classList.add('hidden');
           }}
           className={`
             relative h-24 
@@ -83,15 +87,9 @@ export default function RelatedColors({ colorData, setColorData, timerRef, setTo
             ${idx === 10 ? 'lg:rounded-r-lg' : ''}
             `}
         >
-          <span className="absolute text-white right-2 top-1 hidden">
-            <CopyButton 
-            onCopy={()=>color} 
-            timerRef={timerRef} 
-            setOpenToast={setOpenToast}
-            setToastContent={setToastContent}/>
+          <span className="absolute hidden text-white right-2 top-1">
+            <CopyButton onCopy={() => color} toastState={toastState} />
           </span>
-
-
         </div>
       );
     });
@@ -105,45 +103,46 @@ export default function RelatedColors({ colorData, setColorData, timerRef, setTo
     const previews = colors.map((color, idx) => {
       return (
         <div
-        key={`analogic-${idx}`}
-        onMouseEnter={(e)=>{
-          if(e.target.id === 'hover-options'){
-            e.target.classList.remove('hidden')
-            return
-          }
-          e.target.children[0].classList.remove('hidden')
-        }}
-        onMouseLeave={(e)=>{
-          if(e.target.id === 'hover-options'){
-            e.target.classList.add('hidden')
-            return
-          }
-          e.target.children[0].classList.add('hidden')
-        }}
-        style={{ backgroundColor: color }}
-        data-color={color}
-        className={`relative ${idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'}`}>
-          <span id='hover-options' className="absolute w-full h-full px-8 flex flex-col text-white right-0 top-8 hidden">
+          key={`analogic-${idx}`}
+          onMouseEnter={e => {
+            if (e.target.id === 'hover-options') {
+              e.target.classList.remove('hidden');
+              return;
+            }
+            e.target.children[0].classList.remove('hidden');
+          }}
+          onMouseLeave={e => {
+            if (e.target.id === 'hover-options') {
+              e.target.classList.add('hidden');
+              return;
+            }
+            e.target.children[0].classList.add('hidden');
+          }}
+          style={{ backgroundColor: color }}
+          data-color={color}
+          className={`relative ${
+            idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'
+          }`}
+        >
+          <span
+            id="hover-options"
+            className="absolute right-0 flex flex-col hidden w-full h-full px-8 text-white top-8"
+          >
             <div>
-              <p className='font-medium'>{color}</p>
+              <p className="font-medium">{color}</p>
             </div>
-            <div className='flex'>
-              <span className='block flex-1 text-2xl text-center'>
+            <div className="flex">
+              <span className="flex-1 block text-2xl text-center">
                 <EyeDropButton
-                setColorData={setColorData}
-                newColor={color}
-                timerRef={timerRef} 
-                setOpenToast={setOpenToast}
-                setToastContent={setToastContent}/>
+                  setColorData={setColorData}
+                  newColor={color}
+                  toastState={toastState}
+                />
               </span>
-              <span className='block flex-1 text-left text-2xl leading-0'>              
-                <CopyButton 
-                onCopy={()=>color} 
-                timerRef={timerRef} 
-                setOpenToast={setOpenToast}
-                setToastContent={setToastContent}/>
+              <span className="flex-1 block text-2xl text-left leading-0">
+                <CopyButton onCopy={() => color} toastState={toastState} />
               </span>
-            </div>          
+            </div>
           </span>
         </div>
       );
