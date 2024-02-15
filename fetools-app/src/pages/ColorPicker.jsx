@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import ToolHeading from '../components/ToolsLayout/ToolHeading';
@@ -17,22 +17,19 @@ import {
 
 import GoDeeper from '../components/ToolsLayout/GoDeeper';
 import Toast from '../components/Toast';
-
-
+import useToastState from '../hooks/useToastState';
 
 export default function ColorPicker() {
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   const [inputOnFocus, setInputOnFocus] = useState(false);
   const [colorData, setColorData] = useState(
     createColorObj(searchParams.get('color')) || createColorObj()
   );
-  const [openToast, setOpenToast] = useState(false);
-  const [toastContent, setToastContent] = useState(false)
-  const timerRef = useRef(0);
+
+  const toastState = useToastState();
 
   const [isExpanded, toggleIsExpanded] = useExpander();
-
 
   return (
     <ToolMain>
@@ -70,16 +67,15 @@ export default function ColorPicker() {
       </ToolSectionColumns>
 
       <ToolSection title="Related Colors" icon="palette">
-        <RelatedColors 
-        colorData={colorData} 
-        setOpenToast={setOpenToast} 
-        timerRef={timerRef} 
-        setToastContent={setToastContent}
-        setColorData={setColorData}/>
+        <RelatedColors
+          colorData={colorData}
+          toastState={toastState}
+          setColorData={setColorData}
+        />
       </ToolSection>
 
       <GoDeeper linksData={[]}></GoDeeper>
-      <Toast openToast={openToast} setOpenToast={setOpenToast} toastContent={toastContent}></Toast>
+      <Toast toastState={toastState} />
     </ToolMain>
   );
 

@@ -1,14 +1,17 @@
-export default function ToastButton({onClickFun, children, setOpenToast, timerRef}) {
+export default function ToastButton({ onClickFun, children, toastState }) {
+  const { setOpenToast, toastTimerRef } = toastState;
 
   return (
-    <button onClick={()=>{
-        onClickFun()
+    <button
+      onClick={() => {
+        onClickFun();
         setOpenToast(false);
-        window.clearTimeout(timerRef.current);
-        timerRef.current = window.setTimeout(() => {
+        window.clearTimeout(toastTimerRef.current);
+        toastTimerRef.current = window.setTimeout(() => {
           setOpenToast(true);
         }, 100);
-        }}>
+      }}
+    >
       {children}
     </button>
   );
