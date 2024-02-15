@@ -219,16 +219,12 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
                 <EyeDropButton
                 setColorData={setColorData}
                 newColor={complimentaryColor}
-                timerRef={timerRef} 
-                setOpenToast={setOpenToast}
-                setToastContent={setToastContent}/>
+                toastState={toastState}/>
               </span>
               <span className='block flex-1 text-left text-2xl leading-0'>              
                 <CopyButton 
                 onCopy={()=>complimentaryColor} 
-                timerRef={timerRef} 
-                setOpenToast={setOpenToast}
-                setToastContent={setToastContent}/>
+                toastState={toastState}/>
               </span>
             </div>          
           </span>
