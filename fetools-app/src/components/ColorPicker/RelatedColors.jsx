@@ -29,14 +29,15 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
 
       <div
         id="other-colors"
-        className="flex flex-wrap justify-center flex-1 gap-6 md:justify-between gap-y-12"
+        className="flex flex-wrap justify-center flex-1 gap-x-6 md:justify-between gap-y-12 max-sm:flex-col"
       >
         <div>
           <h2 className="pb-1 text-base">Analogic</h2>
           <div
             id="analogous-colors"
-            className="grid w-64 h-64 grid-cols-2 grid-rows-2 max-w-64 gap-x-3 gap-y-3"
-          >
+            className="grid w-64 h-64 grid-cols-2 grid-rows-2 gap-x-3 gap-y-3
+            sm:max-w-64 
+            max-sm:w-full">
             {analogicPreview()}
           </div>
         </div>
@@ -44,7 +45,7 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           <h2 className="pb-1 text-base">Complimentary</h2>
           <div
             id="analogous-colors"
-            className="grid w-64 h-64 grid-cols-2 grid-rows-2 gap-x-3 gap-y-3"
+            className="grid w-64 h-64 grid-cols-2 grid-rows-2 gap-x-3 gap-y-3 max-sm:w-full"
           >
             {complimentaryPreview()}
           </div>
@@ -53,7 +54,7 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           <h2 className="pb-1 text-base">Triadic</h2>
           <div
             id="analogous-colors"
-            className="grid w-64 h-64 grid-cols-2 grid-rows-2 gap-x-3 gap-y-3"
+            className="grid w-64 h-64 grid-cols-2 grid-rows-2 gap-x-3 gap-y-3 max-sm:w-full"
           >
             {traidicPreview()}
           </div>
@@ -203,21 +204,21 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           }`}
         >
           <span
-            id="hover-options"
-            className="absolute right-0 flex flex-col hidden w-full h-full py-8 text-white px-7"
+          id="hover-options"
+          className="absolute right-0 flex flex-col hidden w-full h-full py-8 text-white px-7"
           >
             <div>
-              <p className="font-medium uppercase">{color}</p>
+              <p className="font-medium uppercase max-sm:text-center">{color}</p>
             </div>
             <div className="flex">
-              <span className="flex-1 block text-2xl text-center">
+              <span className="flex-1 block text-2xl text-center max-sm:text-center">
                 <EyeDropButton
                   setColorData={setColorData}
                   newColor={color}
                   toastState={toastState}
                 />
               </span>
-              <span className="flex-1 block text-2xl text-left leading-0">
+              <span className="flex-1 block text-2xl text-left leading-0 max-sm:text-center">
                 <CopyButton onCopy={() => color} toastState={toastState} />
               </span>
             </div>
@@ -230,7 +231,7 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
       <>
         <div
           style={{ backgroundColor: getColorString(colorData.color, 'hex') }}
-          className="row-span-2 rounded-bl-lg"
+          className="row-span-2 rounded-bl-lg max-sm:w-full"
         ></div>
         {previews}
       </>
@@ -283,16 +284,16 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
         >
           <span id='hover-options' className="absolute w-full h-full px-7 py-24 flex flex-col text-white right-0 hidden">
             <div>
-              <p className='font-medium uppercase'>{complimentaryColor}</p>
+              <p className='font-medium uppercase max-sm:text-center'>{complimentaryColor}</p>
             </div>
             <div className='flex'>
-              <span className='block flex-1 text-2xl text-center'>
+              <span className='block flex-1 text-2xl text-center max-sm:text-center'>
                 <EyeDropButton
                 setColorData={setColorData}
                 newColor={complimentaryColor}
                 toastState={toastState}/>
               </span>
-              <span className='block flex-1 text-left text-2xl leading-0'>              
+              <span className='block flex-1 text-left text-2xl leading-0 max-sm:text-center'>              
                 <CopyButton 
                 onCopy={()=>complimentaryColor} 
                 toastState={toastState}/>
@@ -339,21 +340,21 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           }`}
         >
           <span
-            id="hover-options"
-            className="absolute right-0 flex flex-col hidden w-full h-full py-8 text-white px-7"
+          id="hover-options"
+          className="absolute right-0 flex flex-col hidden w-full h-full py-8 text-white px-7"
           >
             <div>
-              <p className="font-medium uppercase">{color}</p>
+              <p className="font-medium uppercase max-sm:text-center">{color}</p>
             </div>
             <div className="flex">
-              <span className="flex-1 block text-2xl text-center">
+              <span className="flex-1 block text-2xl text-center max-sm:text-center">
                 <EyeDropButton
                   setColorData={setColorData}
                   newColor={color}
                   toastState={toastState}
                 />
               </span>
-              <span className="flex-1 block text-2xl text-left leading-0">
+              <span className="flex-1 block text-2xl text-left leading-0 max-sm:text-center">
                 <CopyButton onCopy={() => color} toastState={toastState} />
               </span>
             </div>
