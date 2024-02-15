@@ -74,7 +74,8 @@ export default function ColorPicker() {
         colorData={colorData} 
         setOpenToast={setOpenToast} 
         timerRef={timerRef} 
-        setToastContent={setToastContent}/>
+        setToastContent={setToastContent}
+        setColorData={setColorData}/>
       </ToolSection>
 
       <GoDeeper linksData={[]}></GoDeeper>

@@ -7,8 +7,9 @@ import {
   getColorString,
 } from './ColorPickerUtils';
 import CopyButton from '../CopyButton';
+import EyeDropButton from './EyeDropButton';
 
-export default function RelatedColors({ colorData, timerRef, setToastContent, setOpenToast }) {
+export default function RelatedColors({ colorData, setColorData, timerRef, setToastContent, setOpenToast }) {
   useEffect(() => {}, [colorData]);
 
   const parentContainer = useRef(null)
@@ -69,7 +70,6 @@ export default function RelatedColors({ colorData, timerRef, setToastContent, se
           style={{ backgroundColor: color }}
           data-color={color}
           onMouseEnter={(e)=>{
-            console.log(e.target.children[0])
             if(!e.target.children[0]){return}
             e.target.children[0].classList.remove('hidden')
           }}
@@ -105,11 +105,47 @@ export default function RelatedColors({ colorData, timerRef, setToastContent, se
     const previews = colors.map((color, idx) => {
       return (
         <div
-          key={`analogic-${idx}`}
-          style={{ backgroundColor: color }}
-          data-color={color}
-          className={`${idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'}`}
-        ></div>
+        key={`analogic-${idx}`}
+        onMouseEnter={(e)=>{
+          if(e.target.id === 'hover-options'){
+            e.target.classList.remove('hidden')
+            return
+          }
+          e.target.children[0].classList.remove('hidden')
+        }}
+        onMouseLeave={(e)=>{
+          if(e.target.id === 'hover-options'){
+            e.target.classList.add('hidden')
+            return
+          }
+          e.target.children[0].classList.add('hidden')
+        }}
+        style={{ backgroundColor: color }}
+        data-color={color}
+        className={`relative ${idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'}`}>
+          <span id='hover-options' className="absolute w-full h-full px-8 flex flex-col text-white right-0 top-8 hidden">
+            <div>
+              <p className='font-medium'>{color}</p>
+            </div>
+            <div className='flex'>
+              <span className='block flex-1 text-2xl text-center'>
+                <EyeDropButton
+                setColorData={setColorData}
+                newColor={color}
+                timerRef={timerRef} 
+                setOpenToast={setOpenToast}
+                setToastContent={setToastContent}/>
+              </span>
+              <span className='block flex-1 text-left text-2xl leading-0'>              
+                <CopyButton 
+                onCopy={()=>color} 
+                timerRef={timerRef} 
+                setOpenToast={setOpenToast}
+                setToastContent={setToastContent}/>
+              </span>
+            </div>          
+          </span>
+        </div>
       );
     });
 
