@@ -207,7 +207,7 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
             className="absolute right-0 flex flex-col hidden w-full h-full py-8 text-white px-7"
           >
             <div>
-              <p className="font-medium">{color}</p>
+              <p className="font-medium uppercase">{color}</p>
             </div>
             <div className="flex">
               <span className="flex-1 block text-2xl text-center">
@@ -283,7 +283,7 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
         >
           <span id='hover-options' className="absolute w-full h-full px-7 py-24 flex flex-col text-white right-0 hidden">
             <div>
-              <p className='font-medium'>{complimentaryColor}</p>
+              <p className='font-medium uppercase'>{complimentaryColor}</p>
             </div>
             <div className='flex'>
               <span className='block flex-1 text-2xl text-center'>
@@ -343,7 +343,7 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
             className="absolute right-0 flex flex-col hidden w-full h-full py-8 text-white px-7"
           >
             <div>
-              <p className="font-medium">{color}</p>
+              <p className="font-medium uppercase">{color}</p>
             </div>
             <div className="flex">
               <span className="flex-1 block text-2xl text-center">

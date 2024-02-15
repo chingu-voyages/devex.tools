@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { MdOutlineEdit } from "react-icons/md"
 import { checkForLocalStorage, saveNewArray } from "./BookmarkUtils"
 
@@ -10,20 +10,31 @@ export default function Bookmark({
     childClassName,
     deleteProperty,
     setBookmarkLength,
-    children
+    bookmarkChildren,
+    onMouseEnter,
+    onMouseLeave
 }){
 
     const [editMode, setEditMode] = useState(false)
+    const parentRef = useRef()
+
+    useEffect(()=>{
+        if(parentRef.current.children.length===0){
+            setEditMode(false)
+        }
+    },[])
+
 
     return(
     <>
-        <div >
+        <div>
             <div className="text-right pb-2">
-                <button 
+                <button
                 onClick={()=>setEditMode(!editMode)} 
                 className="text-2xl"><MdOutlineEdit></MdOutlineEdit></button>
             </div>
-            <div className={className}>{getBookmarked()}</div>
+            <div ref={parentRef} className={className}
+            >{getBookmarked()}</div>
         </div>
     </>
     )
@@ -32,17 +43,20 @@ export default function Bookmark({
         
         const stored = checkForLocalStorage(pageName)
         
+
         if(stored.length===0){return}
 
         const bookmarkedItems = stored.map((item, idx)=>{
             return (
-                <div 
+                <div
                 id={`bookmark-${idx}`}
                 key={`bookmark-${idx}`}
                 style={setStyles(item)}
+                onMouseEnter={onMouseEnter}            
+                onMouseLeave={onMouseLeave}
                 className={`relative ${childClassName}`}>
                     <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
-                        {children}
+                        {bookmarkChildren(item.color)}
                         <span onClick={deleteBookmarked} 
                         className={`
                         cursor-pointer
