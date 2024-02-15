@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   createAnalogous,
   createComplimentary,
@@ -8,11 +8,13 @@ import {
 } from './ColorPickerUtils';
 import CopyButton from '../CopyButton';
 
-export default function RelatedColors({ colorData }) {
+export default function RelatedColors({ colorData, timerRef, setToastContent, setOpenToast }) {
   useEffect(() => {}, [colorData]);
 
+  const parentContainer = useRef(null)
+
   return (
-    <>
+    <div ref={parentContainer}>
       <h2 className="pb-1 text-base">Tints & Shades (Monochromatic)</h2>
       <div
         id="monochromatic-colors"
@@ -53,29 +55,27 @@ export default function RelatedColors({ colorData }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 
   function monochromaticPreview() {
     const colors = createMonochromatic(colorData.color);
 
     const previews = colors.map((color, idx) => {
-
       return (
         <div
+          id={`mono-${idx}`}
           key={`mono-${idx}`}
           style={{ backgroundColor: color }}
           data-color={color}
           onMouseEnter={(e)=>{
-            console.log(e.target.querySelector('#button-copy'))
-            if(!e.target.querySelector('#button-copy')){return}
-            e.target.querySelector('#button-copy').classList.remove('invisible'),
-            e.target.querySelector('#button-copy').classList.add('visible')
+            console.log(e.target.children[0])
+            if(!e.target.children[0]){return}
+            e.target.children[0].classList.remove('hidden')
           }}
           onMouseLeave={(e)=>{
-            if(!e.target.querySelector('#button-copy')){return}
-            e.target.querySelector('#button-copy').classList.remove('visible'),
-            e.target.querySelector('#button-copy').classList.add('invisible')
+            if(!e.target.children[0]){return}
+            e.target.children[0].classList.add('hidden')
           }}
           className={`
             relative h-24 
@@ -83,11 +83,15 @@ export default function RelatedColors({ colorData }) {
             ${idx === 10 ? 'lg:rounded-r-lg' : ''}
             `}
         >
-          <span
-            className="absolute text-white right-2 top-1 invisible"
-          >
-            <CopyButton onCopy={() => color}></CopyButton>
+          <span className="absolute text-white right-2 top-1 hidden">
+            <CopyButton 
+            onCopy={()=>color} 
+            timerRef={timerRef} 
+            setOpenToast={setOpenToast}
+            setToastContent={setToastContent}/>
           </span>
+
+
         </div>
       );
     });
