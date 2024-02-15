@@ -86,11 +86,13 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
             e.target.children[0].classList.add('hidden');
           }}
           className={`
-            relative h-24 flex-1 min-w-16 w-20 max-w-40
+            relative h-24 flex-1 min-w-16 max-w-50 md:w-20 
             ${idx === 0 ? 'lg:rounded-bl-lg' : ''}
             ${idx === 5 ? 'sm:max-lg:rounded-tr-lg' : ''}
+            ${idx === 2 ? 'max-sm:rounded-tr-lg' : ''}
             ${idx === 6 ? 'sm:max-lg:rounded-bl-lg' : ''}
-            ${idx === 10 ? 'sm:max-lg:rounded-br-lg lg:rounded-r-lg' : ''}
+            ${idx === 9 ? 'max-sm:rounded-bl-lg' : ''}
+            ${idx === 10 ? 'max-sm:rounded-br-lg sm:max-lg:rounded-br-lg lg:rounded-r-lg' : ''}
             `}
         >
           <span className="absolute hidden text-white right-2 top-1">
@@ -107,7 +109,8 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           return(
           <div className='
           flex 
-          sm:gap-x-[10px] sm:basis-1/2 max-lg:pr-[5px]
+          max-sm:basis-full max-sm:gap-x-[10px]
+          sm:gap-x-[10px] sm:basis-1/2 sm:max-lg:pr-[5px]
           lg:gap-x-2 lg:flex-1'>
             {children}
           </div>
@@ -116,7 +119,8 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           return(
           <div className='
           flex 
-          sm:gap-x-[10px] sm:basis-1/2 max-lg:pl-[5px]
+          max-sm:basis-full max-sm:gap-x-[10px]
+          sm:gap-x-[10px] sm:basis-1/2 sm:max-lg:pl-[5px]
           lg:gap-x-2 lg:flex-1'>
             {children}
           </div>
@@ -125,7 +129,8 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           return(
           <div className='
           flex 
-          sm:gap-x-[10px] sm:basis-7/12 max-lg:pr-[5px]
+          max-sm:basis-full max-sm:gap-x-[10px]
+          sm:gap-x-[10px] sm:basis-7/12 sm:max-lg:pr-[5px]
           lg:gap-x-2 lg:flex-1 '>
             {children}
           </div>
@@ -134,7 +139,8 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           return(
           <div className='
           flex 
-          sm:gap-x-[10px] sm:basis-5/12 max-lg:pl-[5px]
+          max-sm:basis-full max-sm:gap-x-[10px]
+          sm:gap-x-[10px] sm:basis-5/12 sm:max-lg:pl-[5px]
           lg:gap-x-2 lg:flex-2'>
             {children}
           </div>
@@ -165,7 +171,6 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
       {previews[9]}
       {previews[10]}
     </SubGrid>
-    
     </>);
   }
 
