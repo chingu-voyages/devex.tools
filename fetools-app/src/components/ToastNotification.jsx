@@ -1,7 +1,7 @@
 import { Root, Title, Description } from '@radix-ui/react-toast';
 import { MdContentCopy } from "react-icons/md";
 
-export default function ToastNotification({copiedCode, setOpenToast, openToast}){
+export default function ToastNotification({title, copiedCode, setOpenToast, openToast}){
  
   return(
     <Root
@@ -21,7 +21,7 @@ export default function ToastNotification({copiedCode, setOpenToast, openToast})
       <span className='absolute left-5 top-5 text-gray-500'><MdContentCopy/></span>
       <div>
       <Title className="mb-[5px] font-sm font-bold">
-        Code Copied to Clipboard
+        {title}
       </Title>
       <Description asChild>
         <span>

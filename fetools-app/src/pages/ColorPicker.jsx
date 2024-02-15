@@ -28,7 +28,7 @@ export default function ColorPicker() {
     createColorObj(searchParams.get('color')) || createColorObj()
   );
   const [openToast, setOpenToast] = useState(false);
-  const [toastContent, setToastContent] = useState(null)
+  const [toastContent, setToastContent] = useState(false)
   const timerRef = useRef(0);
 
   const [isExpanded, toggleIsExpanded] = useExpander();

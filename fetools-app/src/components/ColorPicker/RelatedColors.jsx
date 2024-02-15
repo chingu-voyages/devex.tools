@@ -107,23 +107,29 @@ export default function RelatedColors({ colorData, setColorData, timerRef, setTo
         <div
         key={`analogic-${idx}`}
         onMouseEnter={(e)=>{
-          if(e.target.id === 'hover-options'){
-            e.target.classList.remove('hidden')
+          const hoverOptions = e.target.querySelector('#hover-options')
+          if(!hoverOptions){
             return
           }
-          e.target.children[0].classList.remove('hidden')
+          if(hoverOptions && hoverOptions.id === 'hover-options'){
+            hoverOptions.classList.remove('hidden')
+            return
+          }
         }}
         onMouseLeave={(e)=>{
-          if(e.target.id === 'hover-options'){
-            e.target.classList.add('hidden')
+          const hoverOptions = e.target.querySelector('#hover-options') || e.target
+          if(!hoverOptions){
             return
           }
-          e.target.children[0].classList.add('hidden')
+          if(hoverOptions && hoverOptions.id === 'hover-options'){
+            hoverOptions.classList.add('hidden')
+            return
+          }
         }}
         style={{ backgroundColor: color }}
         data-color={color}
         className={`relative ${idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'}`}>
-          <span id='hover-options' className="absolute w-full h-full px-8 flex flex-col text-white right-0 top-8 hidden">
+          <span id='hover-options' className="absolute w-full h-full px-7 py-8 flex flex-col text-white right-0 hidden">
             <div>
               <p className='font-medium'>{color}</p>
             </div>

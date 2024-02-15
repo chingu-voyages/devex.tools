@@ -8,7 +8,7 @@ function CopyButton({onCopy, timerRef, setOpenToast, setToastContent}) {
     if (navigator.clipboard && textToCopy) {
       navigator.clipboard.writeText(textToCopy).then(
         () => {
-          setToastContent(textToCopy)
+          setToastContent({title: 'Color Copied To Clipboard',content: textToCopy})
         },
         (err) => {
           console.error("Could not copy text: ", err);
