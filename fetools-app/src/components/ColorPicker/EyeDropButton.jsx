@@ -16,7 +16,7 @@ export default function EyeDropButton({newColor, setColorData, timerRef, setOpen
   );
 
   function changeCurrentColor(){
-    setToastContent({title: 'New Color Set!',content: `current color is ${newColor}`})
+    setToastContent({title: 'New Color Set!',content: `current color is ${newColor}`,icon: 'eyedrop'})
     setColorData(createColorObj(newColor))
   }
 }

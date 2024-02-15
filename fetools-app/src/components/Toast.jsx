@@ -25,8 +25,7 @@ export default function Toast({
                 openToast={openToast} 
                 setOpenToast={setOpenToast} 
                 timerRef={timerRef} 
-                copiedCode={toastContent.content||''}
-                title={toastContent.title||''}/>
+                toastContent={toastContent}/>
                 <ToastViewport/>
             </Provider>
         </>    

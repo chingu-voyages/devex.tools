@@ -1,8 +1,9 @@
 import { Root, Title, Description } from '@radix-ui/react-toast';
-import { MdContentCopy } from "react-icons/md";
+import { MdColorize, MdContentCopy } from 'react-icons/md';
 
-export default function ToastNotification({title, copiedCode, setOpenToast, openToast}){
- 
+export default function ToastNotification({toastContent, setOpenToast, openToast}){
+  
+  const {title, content, icon} = toastContent
   return(
     <Root
     type='foreground'
@@ -18,17 +19,29 @@ export default function ToastNotification({title, copiedCode, setOpenToast, open
     data-[swipe=cancel]:transition-[transform_200ms_ease-out]`}
     open={openToast}
     onOpenChange={setOpenToast}>
-      <span className='absolute left-5 top-5 text-gray-500'><MdContentCopy/></span>
+      <span className='absolute left-5 top-5 text-gray-500'>{getIcon(icon)}</span>
       <div>
       <Title className="mb-[5px] font-sm font-bold">
         {title}
       </Title>
       <Description asChild>
         <span>
-          {copiedCode}
+          {content}
         </span>
       </Description>
       </div>
     </Root>
   );
+
+
+  function getIcon(iconType){
+    switch (iconType) {
+      case 'copy':
+        return (<MdContentCopy/>)   
+      case 'eyedrop':
+        return (<MdColorize/>)   
+      default:
+        break;
+    }
+  }
 }
