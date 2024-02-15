@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Select, { components } from 'react-select';
 import GoogleFontButton from '../FontPreviewComponenets/GoogleFontButton';
 
@@ -60,9 +60,8 @@ const FontNameInput = ({ font, handleFontChange }) => {
   }, [useGoogleFont]);
 
   return (
-    <div className="flex items-center space-x-4 gap-4 w-full">
-      <div className="text-base font-bold">Font</div>
-      <div className="flex mt-1 p-1 items-center  w-full">
+    <div className="flex items-center w-full gap-4 space-x-4">
+      <div className="flex items-stretch gap-2">
         <Select
           value={{ value: font.name, label: font.name }}
           onChange={selectedOption => {
@@ -70,8 +69,7 @@ const FontNameInput = ({ font, handleFontChange }) => {
             useGoogleFont && loadFont(selectedOption.value, selectedOption.url);
           }}
           options={useGoogleFont ? googleFonts : fontFamilies}
-          className="mt-1 p-2"
-          styles={{ control: provided => ({ ...provided, width: '200px' }) }}
+          styles={{ control: provided => ({ ...provided, width: '10rem' }) }}
           components={{ Option }}
         />
         <GoogleFontButton onClick={() => setUseGoogleFont(!useGoogleFont)} />

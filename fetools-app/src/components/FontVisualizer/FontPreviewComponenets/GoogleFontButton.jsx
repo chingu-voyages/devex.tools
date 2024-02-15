@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from 'react';
 
 const GoogleFontButton = ({ onClick }) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -11,7 +11,7 @@ const GoogleFontButton = ({ onClick }) => {
   return (
     <button
       className={`flex items-center justify-center border w-10 h-10 ${
-        isPressed ? "bg-gray-300" : "bg-white"
+        isPressed ? 'bg-gray-300' : 'bg-white'
       }`}
       onClick={handleClick}
     >
@@ -21,11 +21,10 @@ const GoogleFontButton = ({ onClick }) => {
         height="20"
         viewBox="0 0 20 20"
         fill="none"
-        className="mr-2"
       >
         <mask
           id="mask0_819_2754"
-          style={{ maskType: "alpha" }}
+          style={{ maskType: 'alpha' }}
           maskUnits="userSpaceOnUse"
           x="0"
           y="0"

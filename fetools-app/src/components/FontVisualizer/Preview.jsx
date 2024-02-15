@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
+import { useState } from 'react';
+import { ToolPreviewPane } from '../ToolsLayout/Sections';
 
-const Preview = ({ generateFontStyles }) => {
+const Preview = ({ generateFontStyles, isExpanded, toggleIsExpanded }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [editedText, setEditedText] = useState(
-    "This is a preview text. Joseph Kotvak Stevensaurus wviolinm Ingrig Madrigal d_avid7 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor quam, ac rhoncus risus accumsan vel. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque vel tellus vel arcu malesuada aliquam. Praesent enim justo, placerat at felis ac, dignissim bibendum turpis."
+    'Click to edit this preview text.'
   );
 
-  const handleDoubleClick = () => {
+  const handleClick = () => {
     setIsEditing(true);
   };
 
@@ -16,53 +15,42 @@ const Preview = ({ generateFontStyles }) => {
     setIsEditing(false);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     setEditedText(e.target.value);
   };
 
-  const handleFullscreenToggle = () => {
-    setIsFullscreen(!isFullscreen);
-  };
-
   return (
-    <div
-      className={`p-4 flex flex-col flex-1 gap-4 w-full  relative ${
-        isEditing ? "cursor-text" : "cursor-pointer"
-      } ${isFullscreen ? "fixed top-0 left-0 right-0 bottom-0 z-50 " : ""} ${
-        isFullscreen ? "w-screen h-screen" : ""
-      }`}
-      onDoubleClick={handleDoubleClick}
-      onBlur={handleBlur}
+    <ToolPreviewPane
+      isExpanded={isExpanded}
+      toggleIsExpanded={toggleIsExpanded}
+      expandedLayoutClasses={` min-h-80`}
+      columnLayoutClasses=" lg:border-r rounded-bl-lg h-full min-h-80"
     >
       <div
-        className={`absolute top-4 right-4 cursor-pointer ${
-          isFullscreen ? "text-white" : "text-black"
+        className={`h-full relative z-0 ${
+          isEditing ? 'cursor-text' : 'cursor-pointer'
         }`}
-        onClick={handleFullscreenToggle}
+        onClick={handleClick}
+        onBlur={handleBlur}
       >
-        {isFullscreen ? <FiMinimize2 size={20} /> : <FiMaximize2 size={20} />}
+        {isEditing ? (
+          <textarea
+            style={generateFontStyles()}
+            className={`font-preview-text p-4 w-full h-full min-h-[25rem] m-0`}
+            value={editedText}
+            onChange={handleInputChange}
+            autoFocus
+          />
+        ) : (
+          <p
+            style={generateFontStyles()}
+            className={`font-preview-text break-words p-4 text-base w-full h-full min-h-[25rem]`}
+          >
+            {editedText}
+          </p>
+        )}
       </div>
-      {isEditing ? (
-        <textarea
-          style={generateFontStyles()}
-          className={`font-preview-text text-white bg-transparent block w-full h-full p-4 ${
-            isFullscreen ? "text-2xl" : "text-base"
-          }`}
-          value={editedText}
-          onChange={handleInputChange}
-          autoFocus
-        />
-      ) : (
-        <p
-          style={generateFontStyles()}
-          className={`font-preview-text break-words p-4 w-full h-full ${
-            isFullscreen ? "text-2xl" : "text-base"
-          }`}
-        >
-          {editedText}
-        </p>
-      )}
-    </div>
+    </ToolPreviewPane>
   );
 };
 
