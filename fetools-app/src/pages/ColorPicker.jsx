@@ -18,7 +18,7 @@ import {
 import GoDeeper from '../components/ToolsLayout/GoDeeper';
 import Toast from '../components/Toast';
 import useToastState from '../hooks/useToastState';
-import {createBookmark, checkForLocalStorage} from '../functions/bookmarkUtils';
+import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
 import Bookmark from '../components/ToolsLayout/Bookmark';
 
 export default function ColorPicker() {
@@ -87,6 +87,7 @@ export default function ColorPicker() {
         pageName={'colors'} 
         getStyleFromBookmark={[{styleProperty: 'backgroundColor', bookmarkProperty: 'color'}]}
         addStyle={{width: '120px', height: '96px'}}
+        deleteProperty={'color'}
         className={`
         flex flex-wrap justify-start
         min-[395px]:gap-x-5 max-[440px]:justify-between 
@@ -95,7 +96,10 @@ export default function ColorPicker() {
         
         `}
         childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]
-        `}/>
+        `}
+        setBookmarkLength={setBookmarkLength}>
+
+        </Bookmark>
       </ToolSection>
 
       <GoDeeper linksData={[]}></GoDeeper>

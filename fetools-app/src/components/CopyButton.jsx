@@ -2,6 +2,7 @@ import { MdContentCopy } from 'react-icons/md';
 import ToastButton from './ToastButton';
 
 function CopyButton({ onCopy, toastState }) {
+  
   const handleCopy = () => {
     const textToCopy = onCopy();
     if (navigator.clipboard && textToCopy) {

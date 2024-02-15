@@ -1,4 +1,6 @@
+import { useState } from "react"
 import { MdOutlineEdit } from "react-icons/md"
+import { checkForLocalStorage, saveNewArray } from "./BookmarkUtils"
 
 export default function Bookmark({
     pageName,
@@ -6,14 +8,20 @@ export default function Bookmark({
     addStyle,
     className,
     childClassName,
+    deleteProperty,
+    setBookmarkLength,
     children
 }){
+
+    const [editMode, setEditMode] = useState(false)
 
     return(
     <>
         <div >
             <div className="text-right pb-2">
-                <button className="text-2xl"><MdOutlineEdit></MdOutlineEdit></button>
+                <button 
+                onClick={()=>setEditMode(!editMode)} 
+                className="text-2xl"><MdOutlineEdit></MdOutlineEdit></button>
             </div>
             <div className={className}>{getBookmarked()}</div>
         </div>
@@ -28,10 +36,20 @@ export default function Bookmark({
 
         const bookmarkedItems = stored.map((item, idx)=>{
             return (
-                <div key={`bookmark-${idx}`}
+                <div 
+                id={`bookmark-${idx}`}
+                key={`bookmark-${idx}`}
                 style={setStyles(item)}
-                className={childClassName}>
-                    {children}
+                className={`relative ${childClassName}`}>
+                    <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
+                        {children}
+                        <span onClick={deleteBookmarked} 
+                        className={`
+                        cursor-pointer
+                        absolute right-2 top-1 font-bold text-sm text-red-500
+                        ${editMode?'':'hidden'}`}>Remove</span>
+                    </div>
+
                 </div>
             )
         })
@@ -59,14 +77,16 @@ export default function Bookmark({
 
             return newStyleObj
         }
-    }
 
-    function checkForLocalStorage(){
-        if(!localStorage.getItem(`${pageName}-favorites`)){
-            localStorage.setItem(`${pageName}-favorites`, JSON.stringify([]))
+        function deleteBookmarked(e){
+            const id = parseInt(e.target.parentElement.parentElement.id.replace('bookmark-',''))
+            const stored = checkForLocalStorage(pageName)
+            
+            const newArr = stored.filter(item=>item[deleteProperty]!==stored[id][deleteProperty])
+            
+            saveNewArray(pageName, newArr)
+            setBookmarkLength(newArr.length)
         }
-
-        return JSON.parse(localStorage.getItem(`${pageName}-favorites`))
     }
 
 }

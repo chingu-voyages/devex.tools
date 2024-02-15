@@ -30,5 +30,7 @@ export function checkForLocalStorage(pageName){
     return JSON.parse(localStorage.getItem(`${pageName}-favorites`))
 }
 
-
+export function saveNewArray(pageName, newArr){
+    localStorage.setItem(`${pageName}-favorites`, JSON.stringify(newArr))
+}
 
