@@ -193,8 +193,51 @@ export default function RelatedColors({ colorData, setColorData, timerRef, setTo
           key={`analogic-${idx}`}
           style={{ backgroundColor: color }}
           data-color={color}
-          className={`${idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'}`}
-        ></div>
+          onMouseEnter={(e)=>{
+            const hoverOptions = e.target.querySelector('#hover-options')
+            if(!hoverOptions){
+              return
+            }
+            if(hoverOptions && hoverOptions.id === 'hover-options'){
+              hoverOptions.classList.remove('hidden')
+              return
+            }
+          }}
+          onMouseLeave={(e)=>{
+            const hoverOptions = e.target.querySelector('#hover-options') || e.target
+            if(!hoverOptions){
+              return
+            }
+            if(hoverOptions && hoverOptions.id === 'hover-options'){
+              hoverOptions.classList.add('hidden')
+              return
+            }
+          }}
+          className={`relative ${idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'}`}
+        >
+          <span id='hover-options' className="absolute w-full h-full px-7 py-8 flex flex-col text-white right-0 hidden">
+            <div>
+              <p className='font-medium'>{color}</p>
+            </div>
+            <div className='flex'>
+              <span className='block flex-1 text-2xl text-center'>
+                <EyeDropButton
+                setColorData={setColorData}
+                newColor={color}
+                timerRef={timerRef} 
+                setOpenToast={setOpenToast}
+                setToastContent={setToastContent}/>
+              </span>
+              <span className='block flex-1 text-left text-2xl leading-0'>              
+                <CopyButton 
+                onCopy={()=>color} 
+                timerRef={timerRef} 
+                setOpenToast={setOpenToast}
+                setToastContent={setToastContent}/>
+              </span>
+            </div>          
+          </span>
+        </div>
       );
     });
 
