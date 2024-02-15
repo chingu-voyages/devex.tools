@@ -5,7 +5,7 @@ import ToolHeading from '../components/ToolsLayout/ToolHeading';
 import ColorPickerTool from '../components/ColorPicker/ColorPickerTool';
 import ColorPickerInterface from '../components/ColorPicker/ColorPickerInterface';
 
-import { createColorObj } from '../components/ColorPicker/ColorPickerUtils';
+import { createColorObj, getColorString } from '../components/ColorPicker/ColorPickerUtils';
 import RelatedColors from '../components/ColorPicker/RelatedColors';
 import useExpander from '../hooks/useExpander';
 import ToolMain from '../components/ToolsLayout/ToolMain';
@@ -18,6 +18,7 @@ import {
 import GoDeeper from '../components/ToolsLayout/GoDeeper';
 import Toast from '../components/Toast';
 import useToastState from '../hooks/useToastState';
+import createBookmark from '../components/createBookmark';
 
 export default function ColorPicker() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -54,7 +55,7 @@ export default function ColorPicker() {
           title="Color Codes"
           icon="integration_instructions"
           isPrimary={true}
-          bookmarkCallback={() => {}}
+          bookmarkCallback={()=>createBookmark('colors', {color: getColorString(colorData.color, 'hex')}, ['color'])}
           shareCallback={() => {}}
         >
           <ColorPickerInterface
