@@ -27,9 +27,7 @@ const Preview = ({ generateFontStyles, isExpanded, toggleIsExpanded }) => {
       columnLayoutClasses=" lg:border-r rounded-bl-lg h-full min-h-80"
     >
       <div
-        className={`h-full relative z-0 ${
-          isEditing ? 'cursor-text' : 'cursor-pointer'
-        }`}
+        className={`h-full ${isEditing ? 'cursor-text' : 'cursor-pointer'}`}
         onClick={handleClick}
         onBlur={handleBlur}
       >
