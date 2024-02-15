@@ -18,7 +18,8 @@ import {
 import GoDeeper from '../components/ToolsLayout/GoDeeper';
 import Toast from '../components/Toast';
 import useToastState from '../hooks/useToastState';
-import createBookmark from '../components/createBookmark';
+import {createBookmark, checkForLocalStorage} from '../functions/bookmarkUtils';
+import Bookmark from '../components/ToolsLayout/Bookmark';
 
 export default function ColorPicker() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,6 +31,7 @@ export default function ColorPicker() {
 
   const toastState = useToastState();
 
+  const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage().length)
   const [isExpanded, toggleIsExpanded] = useExpander();
 
   return (
@@ -55,7 +57,12 @@ export default function ColorPicker() {
           title="Color Codes"
           icon="integration_instructions"
           isPrimary={true}
-          bookmarkCallback={()=>createBookmark('colors', {color: getColorString(colorData.color, 'hex')}, ['color'])}
+          bookmarkCallback={()=>createBookmark(
+            'colors', 
+            {color: getColorString(colorData.color, 'hex')}, 
+            ['color'],
+            bookmarkLength, 
+            setBookmarkLength)}
           shareCallback={() => {}}
         >
           <ColorPickerInterface
@@ -76,7 +83,19 @@ export default function ColorPicker() {
       </ToolSection>
 
       <ToolSection title="Your Collection" icon="bookmarks">
-
+        <Bookmark 
+        pageName={'colors'} 
+        getStyleFromBookmark={[{styleProperty: 'backgroundColor', bookmarkProperty: 'color'}]}
+        addStyle={{width: '120px', height: '96px'}}
+        className={`
+        flex flex-wrap justify-start
+        min-[395px]:gap-x-5 max-[440px]:justify-between 
+        max-[550px]:justify-items-center
+        sm:justify-start gap-y-5
+        
+        `}
+        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]
+        `}/>
       </ToolSection>
 
       <GoDeeper linksData={[]}></GoDeeper>

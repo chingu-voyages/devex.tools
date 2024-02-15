@@ -1,13 +1,8 @@
-export default function createBookmark(pageName, object, compareProperties){
+export function createBookmark(pageName, object, compareProperties, bookmarkLength, setBookmarkLength){
 
     checkForLocalStorage()
     saveInLocal()
-
-    function checkForLocalStorage(){
-        if(!localStorage.getItem(`${pageName}-favorites`)){
-            localStorage.setItem(`${pageName}-favorites`, JSON.stringify([]))
-        }
-    }
+    setBookmarkLength(bookmarkLength+1)
 
     function saveInLocal(){
         const favoriteItemsJSON = localStorage.getItem(`${pageName}-favorites`)
@@ -27,6 +22,13 @@ export default function createBookmark(pageName, object, compareProperties){
 
 }
 
+export function checkForLocalStorage(pageName){
+    if(!localStorage.getItem(`${pageName}-favorites`)){
+        localStorage.setItem(`${pageName}-favorites`, JSON.stringify([]))
+    }
+
+    return JSON.parse(localStorage.getItem(`${pageName}-favorites`))
+}
 
 
 

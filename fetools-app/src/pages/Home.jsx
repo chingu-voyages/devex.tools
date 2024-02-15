@@ -2,8 +2,6 @@ import ToolHeaderSection from '../components/ToolsLayout/ToolHeaderSection';
 import GoDeeper from '../components/ToolsLayout/GoDeeper';
 import ToolHeading from '../components/ToolsLayout/ToolHeading';
 import TabSwitcher from '../components/TabSwitcher';
-import Toast from '../components/ToastNotification';
-import Heart from '../components/createBookmark';
 import PageSection from '../components/PageLayout/PageSection';
 
 function TestContent1() {
