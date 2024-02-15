@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { MdOutlineEdit } from "react-icons/md"
+import { MdCheck, MdOutlineEdit, MdClose } from "react-icons/md"
 import { checkForLocalStorage, saveNewArray } from "./BookmarkUtils"
 
 export default function Bookmark({
@@ -37,7 +37,9 @@ export default function Bookmark({
             <div className="text-right pb-2">
                 <button
                 onClick={()=>setEditMode(!editMode)} 
-                className="text-2xl"><MdOutlineEdit></MdOutlineEdit></button>
+                className="text-2xl">
+                    {editMode?<MdCheck></MdCheck>:<MdOutlineEdit></MdOutlineEdit>}
+                </button>
             </div>
             <div ref={parentRef} className={className}
             >{getBookmarked()}</div>
@@ -58,16 +60,17 @@ export default function Bookmark({
                 id={`bookmark-${idx}`}
                 key={`bookmark-${idx}`}
                 style={setStyles(item)}
-                onMouseEnter={onMouseEnter}            
-                onMouseLeave={onMouseLeave}
+                onMouseEnter={editMode?null:onMouseEnter}            
+                onMouseLeave={editMode?null:onMouseLeave}
                 className={`relative ${childClassName}`}>
                     <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
                         {bookmarkChildren(item.color)}
                         <span onClick={deleteBookmarked} 
                         className={`
-                        cursor-pointer hover:animate-wiggle
-                        absolute right-2 top-0 font-bold text-sm text-red-500
-                        ${editMode?'':'hidden'}`}>Remove</span>
+                        cursor-pointer hover:animate-wiggle p-2 bg-black/75 rounded-full
+                        absolute left-1 top-3 font-bold text-sm text-white
+                        ${editMode?'':'hidden'}
+                        `}><MdClose/></span>
                     </div>
 
                 </div>

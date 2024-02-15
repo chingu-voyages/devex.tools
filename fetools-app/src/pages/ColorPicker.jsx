@@ -115,12 +115,12 @@ export default function ColorPicker() {
     setSearchParams({ color });
   }
 
-  function bookmarkChildren(color){
+  function bookmarkChildren(color, editMode){
     return(
     <span
     id="hover-options"
-    className="absolute flex flex-col mt-10 px-9 pb-4 w-full h-min text-white hidden pointer-events-none"
-    >
+    className={`absolute flex flex-col mt-10 px-9 pb-4 w-full h-min text-white hidden pointer-events-none`
+    }>
       <div className=''>
         <p className="font-medium uppercase">{color}</p>
       </div>

@@ -67,8 +67,8 @@ module.exports = {
           to: { height: '0' },
         },
         'wiggle': {
-          '0%, 100%': { transform: 'rotate(-2deg)' },
-          '50%': { transform: 'rotate(2deg)' },
+          '0%, 100%': { transform: 'rotate(-4deg)' },
+          '50%': { transform: 'rotate(4deg)' },
         }
       },
       animation: {
