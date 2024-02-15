@@ -8,7 +8,7 @@ function CopyButton({ onCopy, toastState }) {
       navigator.clipboard.writeText(textToCopy).then(
         () => {
           toastState.setToastContent({
-            title: 'Color Copied To Clipboard',
+            title: 'Content Copied To Clipboard',
             content: textToCopy,
             icon: 'copy',
           });

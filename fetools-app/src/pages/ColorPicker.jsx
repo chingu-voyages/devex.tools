@@ -74,6 +74,10 @@ export default function ColorPicker() {
         />
       </ToolSection>
 
+      <ToolSection title="Your Collection" icon="bookmarks">
+
+      </ToolSection>
+
       <GoDeeper linksData={[]}></GoDeeper>
       <Toast toastState={toastState} />
     </ToolMain>

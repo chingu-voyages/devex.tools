@@ -18,9 +18,12 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
     <div ref={parentContainer}>
       <h2 className="pb-1 text-base">Tints & Shades (Monochromatic)</h2>
       <div
-        id="monochromatic-colors"
-        className="grid grid-cols-11 grid-rows-1 gap-x-[10px] pb-10"
-      >
+      id="monochromatic-colors"
+      className="
+      flex h-max pb-10
+      max-lg:flex-wrap
+      max-lg:gap-y-[10px]
+      lg:gap-x-2">
         {monochromaticPreview()}
       </div>
 
@@ -62,7 +65,7 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
   function monochromaticPreview() {
     const colors = createMonochromatic(colorData.color);
 
-    const previews = colors.map((color, idx) => {
+    const previews = colors.map((color, idx) => {     
       return (
         <div
           id={`mono-${idx}`}
@@ -82,9 +85,11 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
             e.target.children[0].classList.add('hidden');
           }}
           className={`
-            relative h-24 
+            relative h-24 flex-1 min-w-16 w-20 max-w-40
             ${idx === 0 ? 'lg:rounded-bl-lg' : ''}
-            ${idx === 10 ? 'lg:rounded-r-lg' : ''}
+            ${idx === 5 ? 'sm:max-lg:rounded-tr-lg' : ''}
+            ${idx === 6 ? 'sm:max-lg:rounded-bl-lg' : ''}
+            ${idx === 10 ? 'sm:max-lg:rounded-br-lg lg:rounded-r-lg' : ''}
             `}
         >
           <span className="absolute hidden text-white right-2 top-1">
@@ -94,7 +99,73 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
       );
     });
 
-    return <>{previews}</>;
+    function SubGrid({children, position}){
+      
+      switch (position) {
+        case 0:
+          return(
+          <div className='
+          flex 
+          sm:gap-x-[10px] sm:basis-1/2 max-lg:pr-[5px]
+          lg:gap-x-2 lg:flex-1'>
+            {children}
+          </div>
+          )
+        case 1:
+          return(
+          <div className='
+          flex 
+          sm:gap-x-[10px] sm:basis-1/2 max-lg:pl-[5px]
+          lg:gap-x-2 lg:flex-1'>
+            {children}
+          </div>
+          )
+        case 2:
+          return(
+          <div className='
+          flex 
+          sm:gap-x-[10px] sm:basis-7/12 max-lg:pr-[5px]
+          lg:gap-x-2 lg:flex-1 '>
+            {children}
+          </div>
+          )
+        case 3:
+          return(
+          <div className='
+          flex 
+          sm:gap-x-[10px] sm:basis-5/12 max-lg:pl-[5px]
+          lg:gap-x-2 lg:flex-2'>
+            {children}
+          </div>
+          )
+        default:
+          break;
+      }
+    }
+
+    return (
+    <>
+    <SubGrid position={0}>
+      {previews[0]}
+      {previews[1]}
+      {previews[2]}
+    </SubGrid>
+    <SubGrid position={1}>
+      {previews[3]}
+      {previews[4]}
+      {previews[5]}
+    </SubGrid>
+    <SubGrid position={2}>
+      {previews[6]}
+      {previews[7]}
+      {previews[8]}
+    </SubGrid>
+    <SubGrid position={3}>
+      {previews[9]}
+      {previews[10]}
+    </SubGrid>
+    
+    </>);
   }
 
   function analogicPreview() {

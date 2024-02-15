@@ -7,7 +7,7 @@ export default function ToastNotification({toastContent, setOpenToast, openToast
   return(
     <Root
     type='foreground'
-    className={`
+    className={`pointer-events-auto
     ToastRoot max-sm:ToastTop sm:ToastBottom
     relative bg-white rounded-md text-black w-[360px] max-[380px]:w-full m-auto px-12 py-4 border border-gray-300
     shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] 
