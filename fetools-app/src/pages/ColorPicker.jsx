@@ -101,7 +101,8 @@ export default function ColorPicker() {
         setBookmarkLength={setBookmarkLength}
         bookmarkChildren={bookmarkChildren}
         onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}>
+        onMouseLeave={onMouseLeave}
+        childProperty={'color'}>
         </Bookmark>
       </ToolSection>
 
@@ -115,7 +116,7 @@ export default function ColorPicker() {
     setSearchParams({ color });
   }
 
-  function bookmarkChildren(color, editMode){
+  function bookmarkChildren(color){
     return(
     <span
     id="hover-options"

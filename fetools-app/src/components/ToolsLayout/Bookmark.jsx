@@ -12,7 +12,8 @@ export default function Bookmark({
     setBookmarkLength,
     bookmarkChildren,
     onMouseEnter,
-    onMouseLeave
+    onMouseLeave,
+    childProperty
 }){
 
     const [editMode, setEditMode] = useState(false)
@@ -64,7 +65,7 @@ export default function Bookmark({
                 onMouseLeave={editMode?null:onMouseLeave}
                 className={`relative ${childClassName}`}>
                     <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
-                        {bookmarkChildren(item.color)}
+                        {bookmarkChildren(item[childProperty])}
                         <span id={`closeBook-${idx}`} onClick={deleteBookmarked} 
                         className={`
                         cursor-pointer hover:animate-wiggle p-2 bg-black/75 rounded-full
