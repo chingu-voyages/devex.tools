@@ -65,12 +65,12 @@ export default function Bookmark({
                 className={`relative ${childClassName}`}>
                     <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
                         {bookmarkChildren(item.color)}
-                        <span onClick={deleteBookmarked} 
+                        <span id={`closeBook-${idx}`} onClick={deleteBookmarked} 
                         className={`
                         cursor-pointer hover:animate-wiggle p-2 bg-black/75 rounded-full
-                        absolute left-1 top-3 font-bold text-sm text-white
+                        absolute left-1 top-3 font-bold text-sm text-white z-20
                         ${editMode?'':'hidden'}
-                        `}><MdClose/></span>
+                        `}><MdClose className="pointer-event-auto"/></span>
                     </div>
 
                 </div>
@@ -102,7 +102,13 @@ export default function Bookmark({
         }
 
         function deleteBookmarked(e){
-            const id = parseInt(e.target.parentElement.parentElement.id.replace('bookmark-',''))
+            const id = parseInt(
+                e.target.tagName==='SPAN'?
+                e.target.id.replace('closeBook-',''):
+                e.target.closest('span').id.replace('closeBook-','')
+            )
+
+             console.log(id)
             const stored = checkForLocalStorage(pageName)
             
             const newArr = stored.filter(item=>item[deleteProperty]!==stored[id][deleteProperty])
