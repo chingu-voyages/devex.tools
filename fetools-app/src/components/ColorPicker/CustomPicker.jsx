@@ -51,6 +51,10 @@ export default function CustomPicker({
 
   },[colorData, isColorPicker, imgFile])
 
+  useEffect(()=>{
+    canvasContainerRef.current.parentElement.parentElement.parentElement.classList.remove('overflow-auto')
+  })
+
   return(
     <>
     <div>
