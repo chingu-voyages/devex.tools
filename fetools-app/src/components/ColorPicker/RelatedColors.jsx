@@ -178,8 +178,61 @@ export default function RelatedColors({ colorData, setColorData, timerRef, setTo
         <div
           style={{ backgroundColor: complimentaryColor }}
           data-color={complimentaryColor}
-          className="row-span-2 rounded-r-lg"
-        ></div>
+          onMouseEnter={(e)=>{
+            const hoverOptions = e.target.querySelector('#hover-options')
+            if(!hoverOptions){
+              return
+            }
+            if(hoverOptions && hoverOptions.id === 'hover-options'){
+              hoverOptions.classList.remove('hidden')
+              return
+            }
+          }}
+          onMouseLeave={(e)=>{
+            const hoverOptions = e.target.querySelector('#hover-options') || e.target
+            if(!hoverOptions){
+              return
+            }
+            if(hoverOptions && hoverOptions.id === 'hover-options'){
+              hoverOptions.classList.add('hidden')
+              return
+            }
+          }}
+          onBlur={(e)=>{
+            const hoverOptions = e.target.querySelector('#hover-options') || e.target
+            if(!hoverOptions){
+              return
+            }
+            if(hoverOptions && hoverOptions.id === 'hover-options'){
+              hoverOptions.classList.add('hidden')
+              return
+            }
+          }}
+          className="relative row-span-2 rounded-r-lg"
+        >
+          <span id='hover-options' className="absolute w-full h-full px-7 py-24 flex flex-col text-white right-0 hidden">
+            <div>
+              <p className='font-medium'>{complimentaryColor}</p>
+            </div>
+            <div className='flex'>
+              <span className='block flex-1 text-2xl text-center'>
+                <EyeDropButton
+                setColorData={setColorData}
+                newColor={complimentaryColor}
+                timerRef={timerRef} 
+                setOpenToast={setOpenToast}
+                setToastContent={setToastContent}/>
+              </span>
+              <span className='block flex-1 text-left text-2xl leading-0'>              
+                <CopyButton 
+                onCopy={()=>complimentaryColor} 
+                timerRef={timerRef} 
+                setOpenToast={setOpenToast}
+                setToastContent={setToastContent}/>
+              </span>
+            </div>          
+          </span>
+        </div>
       </>
     );
   }
