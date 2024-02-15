@@ -3,7 +3,7 @@ import { MdColorize, MdContentCopy } from 'react-icons/md';
 
 export default function ToastNotification({toastContent, setOpenToast, openToast}){
   
-  const {title, content, icon} = toastContent
+  const {title, content, icon, addOn} = toastContent
   return(
     <Root
     type='foreground'
@@ -25,9 +25,10 @@ export default function ToastNotification({toastContent, setOpenToast, openToast
         {title}
       </Title>
       <Description asChild>
-        <span>
-          {content}
-        </span>
+        <div className='relative flex'>
+          <span className='flex-1'>{content}</span>
+          {getAddOn()}
+        </div>
       </Description>
       </div>
     </Root>
@@ -40,6 +41,18 @@ export default function ToastNotification({toastContent, setOpenToast, openToast
         return (<MdContentCopy/>)   
       case 'eyedrop':
         return (<MdColorize/>)   
+      default:
+        break;
+    }
+  }
+
+  function getAddOn(){
+    if(!addOn){return}
+    switch (addOn.type) {
+      case 'color-dot':
+
+        return (<span className='absolute right-0 bottom-2 flex-2 w-10 h-10 rounded-full' style={{backgroundColor: addOn.color}}></span>)
+    
       default:
         break;
     }

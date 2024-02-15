@@ -15,6 +15,7 @@ export default function EyeDropButton({ newColor, setColorData, toastState }) {
       title: 'New Color Set!',
       content: `current color is ${newColor}`,
       icon: 'eyedrop',
+      addOn: {type:'color-dot', color: newColor}
     });
     setColorData(createColorObj(newColor));
   }
