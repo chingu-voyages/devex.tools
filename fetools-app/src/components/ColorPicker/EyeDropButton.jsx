@@ -1,22 +1,21 @@
-import { MdColorize } from "react-icons/md";
+import { MdColorize } from 'react-icons/md';
 
 import { createColorObj } from './ColorPickerUtils';
-import ToastButton from "../ToastButton";
+import ToastButton from '../ToastButton';
 
-export default function EyeDropButton({newColor, setColorData, timerRef, setOpenToast, setToastContent}) {
-
+export default function EyeDropButton({ newColor, setColorData, toastState }) {
   return (
-    <ToastButton 
-    onClickFun={changeCurrentColor} 
-    timerRef={timerRef} 
-    setOpenToast={setOpenToast}>
-      <MdColorize/>
+    <ToastButton onClickFun={changeCurrentColor} toastState={toastState}>
+      <MdColorize />
     </ToastButton>
-
   );
 
-  function changeCurrentColor(){
-    setToastContent({title: 'New Color Set!',content: `current color is ${newColor}`,icon: 'eyedrop'})
-    setColorData(createColorObj(newColor))
+  function changeCurrentColor() {
+    toastState.setToastContent({
+      title: 'New Color Set!',
+      content: `current color is ${newColor}`,
+      icon: 'eyedrop',
+    });
+    setColorData(createColorObj(newColor));
   }
 }
