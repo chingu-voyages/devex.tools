@@ -1,5 +1,5 @@
 export default function ToastButton({ onClickFun, children, toastState }) {
-  const { setOpenToast, toastTimerRef } = toastState;
+  const { setOpenToast, toastTimerRef } = toastState||false;
 
   return (
     <button
