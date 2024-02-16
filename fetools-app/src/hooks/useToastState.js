@@ -7,7 +7,7 @@ export default function useToastState() {
     content: 'Toast Content',
     icon: 'copy',
   });
-  const toastTimerRef = useRef(0);
+  const toastTimerRef = useRef(null);
 
   return {
     openToast,

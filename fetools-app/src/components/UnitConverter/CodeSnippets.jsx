@@ -1,7 +1,7 @@
 import CodeBlock from '../CodeBlock';
 import TabSwitcher from '../TabSwitcher';
 
-export default function CodeSnippets({ pixels, em, tailwindSize }) {
+export default function CodeSnippets({ pixels, em, tailwindSize, toastState }) {
   //All Code Samples
   const CodeSamples = {
     px: [
@@ -96,6 +96,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize }) {
               key={`${sample.title}-${index}`}
               title={sample.title}
               code={sample.code}
+              toastState={toastState}
             />
           ))
         : CodeSamples['rem'].map((sample, index) => (
@@ -103,6 +104,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize }) {
               key={`${sample.title}-${index}`}
               title={sample.title}
               code={sample.code}
+              toastState={toastState}
             />
           ))}
     </div>,
@@ -114,6 +116,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize }) {
               key={`${sample.title}-${index}`}
               title={sample.title}
               code={sample.code}
+              toastState={toastState}
             />
           ))
         : CodeSamples['em'].map((sample, index) => (
@@ -121,6 +124,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize }) {
               key={`${sample.title}-${index}`}
               title={sample.title}
               code={sample.code}
+              toastState={toastState}
             />
           ))}
     </div>,
@@ -132,6 +136,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize }) {
               key={`${sample.title}-${index}`}
               title={sample.title}
               code={sample.code}
+              toastState={toastState}
             />
           ))
         : CodeSamples['px'].map((sample, index) => (
@@ -139,6 +144,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize }) {
               key={`${sample.title}-${index}`}
               title={sample.title}
               code={sample.code}
+              toastState={toastState}
             />
           ))}
     </div>,
@@ -151,6 +157,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize }) {
               title={sample.title}
               code={sample.code}
               lang="tailwind"
+              toastState={toastState}
             />
           ))
         : CodeSamples['tailwind'].map((sample, index) => (
@@ -159,6 +166,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize }) {
               title={sample.title}
               code={sample.code}
               lang="tailwind"
+              toastState={toastState}
             />
           ))}
     </div>,

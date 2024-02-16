@@ -10,6 +10,8 @@ import {
 } from '../components/ToolsLayout/Sections';
 import GoDeeper from '../components/ToolsLayout/GoDeeper';
 import useExpander from '../hooks/useExpander';
+import useToastState from '../hooks/useToastState';
+import Toast from '../components/Toast';
 
 const FontVisualizer = () => {
   const [font, setFont] = useState({
@@ -29,6 +31,7 @@ const FontVisualizer = () => {
 
   // Hook to manage expanding preview
   const [isExpanded, toggleIsExpanded] = useExpander();
+  const toastState = useToastState();
 
   const handleFontChange = (property, value) => {
     setFont(prevFont => ({
@@ -172,6 +175,7 @@ ${fontSizeToTailwindClass(font.fontSize)}`;
             handleCopyIcon={handleCopyClick}
             codeType={codeType}
             setCodeType={setCodeType}
+            toastState={toastState}
           />
         </div>
       </ToolSection>
@@ -185,6 +189,7 @@ ${fontSizeToTailwindClass(font.fontSize)}`;
           },
         ]}
       />
+      <Toast toastState={toastState}/>
     </ToolMain>
   );
 };

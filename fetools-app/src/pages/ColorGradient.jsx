@@ -6,7 +6,6 @@ import useToastState from "../hooks/useToastState";
 import useExpander from "../hooks/useExpander";
 
 import ColorGradientSlider from "../components/ColorGradient/ColorGradientSlider";
-import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ColorGradientInterface from "../components/ColorGradient/ColorGradientInterface";
 import CodeBlock from "../components/CodeBlock";
