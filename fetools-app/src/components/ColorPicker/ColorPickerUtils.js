@@ -1,4 +1,4 @@
-import { getRandomColor} from "../ColorGradientComponents/ColorGradientUtils"
+import { getRandomColor} from "../ColorGradient/ColorGradientUtils"
 import tinycolor from "tinycolor2"
 
 export function createColorObj(newColor, newHue){

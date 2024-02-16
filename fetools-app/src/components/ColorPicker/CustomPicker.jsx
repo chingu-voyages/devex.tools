@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 
-import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
+import { getHexString } from "../ColorGradient/ColorGradientUtils";
 import { createColorObj, getColorString, HexToHsl } from "./ColorPickerUtils";
 import switchSamplerIcon from "../../assets/switch-sampler-icon.svg"
 import PickerHandles from "./PickerHandles";
