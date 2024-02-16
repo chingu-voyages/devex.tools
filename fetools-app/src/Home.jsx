@@ -88,7 +88,7 @@ function Home() {
 
       <GoDeeper linksData={linksData} />
 
-      <Toast />
+      <Toast/>
     </main>
   );
 }
