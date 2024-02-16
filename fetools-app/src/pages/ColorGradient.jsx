@@ -87,7 +87,7 @@ export default function ColorGradient() {
 
           <ToolPane           
           title="Options"
-          icon="integration_instructions"
+          icon="gradient"
           isPrimary={true}
           bookmarkCallback={()=>{}}
           shareCallback={() => {}}>
