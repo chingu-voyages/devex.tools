@@ -10,10 +10,11 @@ import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ColorGradientInterface from "../components/ColorGradient/ColorGradientInterface";
 import CodeBlock from "../components/CodeBlock";
-import TabSwitcher from "../components/TabSwitcher";
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
 import Toast from "../components/Toast";
-import { ToolPane, ToolPreviewPane, ToolSectionColumns } from "../components/ToolsLayout/Sections";
+import { ToolPane, ToolPreviewPane, ToolSection, ToolSectionColumns } from "../components/ToolsLayout/Sections";
+import ToolMain from "../components/ToolsLayout/ToolMain";
+import TabSwitcher from "../components/TabSwitcher";
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -69,13 +70,11 @@ export default function ColorGradient() {
 
   return (
     <>
-      <ToolHeaderSection>
+    <ToolMain>
         <ToolHeading
-          title="Color Gradient"
-          tagline="Use this tool to create gradients for any project!"
+        title="Color Gradient"
+        tagline="Use this tool to create gradients for any project!"
         ></ToolHeading>
-      </ToolHeaderSection>
-
 
       <ToolSectionColumns isExpanded={isExpanded} reverse={false} ref={containerRef}>
           <ToolPreviewPane isExpanded={isExpanded} toggleIsExpanded={toggleIsExpanded}>
@@ -118,20 +117,30 @@ export default function ColorGradient() {
 
 
 
-      <TabSwitcher title={'Code Sample'}>
-        <CodeBlock 
-        toastState={toastState}
-        title={'CSS Snipet'}
-        code={'background'} 
-        unit={codeBlockRules.background}
-        />
-      </TabSwitcher>   
+      <ToolSection icon="integration_instructions" title="Code Snippets">
+        <TabSwitcher buttons={['CSS', 'Tailwind']}>
+          <CodeBlock 
+          toastState={toastState}
+          title={'CSS'}
+          code={'background'} 
+          unit={codeBlockRules.background}
+          />
+          <CodeBlock 
+          toastState={toastState}
+          title={'CSS'}
+          code={'Tailwind'} 
+          unit={codeBlockRules.background}
+          />
+        </TabSwitcher>
+      </ToolSection>   
 
       <GoDeeper linksData={[
         {url: '#', textValue: 'Not a link available yet'}
       ]}></GoDeeper>   
 
       <Toast toastState={toastState}/>
+    </ToolMain>
+
     </>
   );
 
