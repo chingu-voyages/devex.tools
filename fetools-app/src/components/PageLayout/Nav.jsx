@@ -37,8 +37,8 @@ export default function Nav() {
   return (
     <div>
       <nav
-        className={`flex w-full justify-center gap-0 bg-white max-md:absolute max-md:right-0 max-md:top-20 max-md:z-50 md:pb-4 xl:pb-0 xl:justify-end max-md:${
-          isExpanded ? '' : 'hidden'
+        className={`flex w-full justify-center gap-0 bg-white max-md:absolute max-md:right-0 max-md:top-20 max-md:z-50 md:pb-4 xl:pb-0 xl:justify-end ${
+          isExpanded ? '' : 'max-md:hidden'
         }`}
       >
         <ul className="max-md:border-1 max-md:w-screen flex h-full flex-wrap items-center justify-center gap-x-4 font-bold max-md:flex-col max-md:border-gray-200 max-md:text-center max-md:shadow-md sm:w-full sm:justify-center lg:gap-8 xl:justify-end [&>li>a]:flex [&>li>a]:gap-2 [&_.icon]:text-accent">
