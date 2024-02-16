@@ -14,7 +14,6 @@ export default function ColorGradientInterface({
     gradientColors,
     generateGradientRule,
     updateCSSValues,
-    onClickRandom
 }){
     
     const [displayData, setDisplayData] = useState(inputValue)
@@ -49,7 +48,7 @@ export default function ColorGradientInterface({
 
     return(
         <>
-        <div ref={parentRef} className="grid grid-cols-2 grid-rows-3 gap-x-7 gap-y-12 px-5">
+        <div ref={parentRef} className="grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-6">
             <label id="color" className="flex flex-col font-bold ">Color
                 <div className="relative z-0 max-w-[228px]">
                     <input 
@@ -94,10 +93,6 @@ export default function ColorGradientInterface({
                 className="rounded-sm border border-gray-400 py-4 uppercase text-center"/>
                 <span className="block absolute bottom-0 left-24">{parseInt(displayData.rotation*3.6)}°</span>
             </label>
-            <Button 
-            onClick={onClickRandom}
-            variant="outline" 
-            className='col-span-2 rounded-sm border border-gray-400 h-14'>Random</Button>
         </div>
         </>
     )

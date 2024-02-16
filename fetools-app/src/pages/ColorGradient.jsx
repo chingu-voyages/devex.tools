@@ -79,11 +79,12 @@ export default function ColorGradient() {
           <ToolPreviewPane isExpanded={isExpanded} toggleIsExpanded={toggleIsExpanded}>
             <div
               id="show-gradient"
-              className="gradient h-full w-full min-h-64"
+              className="gradient h-[360px] w-full min-h-64"
             ></div>
           </ToolPreviewPane>
 
-          <ToolPane           
+          <ToolPane
+          className="h-[360px]"           
           title="Options"
           icon="gradient"
           isPrimary={true}
@@ -99,6 +100,7 @@ export default function ColorGradient() {
             generateGradientRule={generateGradientRule}
             gradientColors={gradientColors}
             setGradientColors={setGradientColors}
+            onClickRandom={onClickRandom}
             />
             <ColorGradientInterface
             inputValue={inputValue}

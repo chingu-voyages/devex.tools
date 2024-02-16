@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react"
+import Icon from "../Icon";
 
 export default function ColorGradientSlider({
     inputValue,
@@ -9,6 +10,7 @@ export default function ColorGradientSlider({
     gradientColors,
     setGradientColors,
     generateGradientRule,
+    onClickRandom
 }){
 
     const [activeIndex, setActiveIndex] = useState(0)
@@ -25,11 +27,12 @@ export default function ColorGradientSlider({
 
     return(
     <>
-        <div ref={sliderContainerRef}  id="slider-container" className="flex flex-col flex-1 p-8 rounded-md">
+        <div ref={sliderContainerRef}  id="slider-container" className="flex  flex-1 pt-2 pb-5 rounded-md items-center">
             <div 
-            className="wrap gradientSlider flex flex-col relative w-full h-5 justify-center">
+            className="wrap gradientSlider flex flex-col relative w-full rounded-md h-3 justify-center">
                 {createHandles()}
             </div>
+            <Icon name="star" className="ml-3 cursor-pointer" onClick={onClickRandom}></Icon>
         </div>
     </>
     )
