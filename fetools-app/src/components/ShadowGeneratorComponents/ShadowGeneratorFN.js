@@ -1,4 +1,4 @@
-import { getRandomColor } from "../ColorGradientComponents/ColorGradientUtils";
+import { getRandomColor } from "../ColorGradient/ColorGradientUtils";
 import tinycolor from "tinycolor2";
 
 const generateCssRule = (ShadowsStyles) => {

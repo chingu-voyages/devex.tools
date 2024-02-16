@@ -1,7 +1,7 @@
 import React from "react";
 import CopyButton from "./CopyButton";
 
-function CodeBlock({ title, code, lang = "css" }) {
+function CodeBlock({ toastState, title, code, lang = "css" }) {
   // Function to provide the code text to the CopyButton
   const getCode = () => code.toString();
 
@@ -34,7 +34,7 @@ function CodeBlock({ title, code, lang = "css" }) {
         </div>
       </div>
       <div className="absolute top-0 right-0 mb-2 hidden group-hover:flex">
-        <CopyButton onCopy={getCode} />
+        <CopyButton onCopy={getCode} toastState={toastState}/>
       </div>
     </div>
   );

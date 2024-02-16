@@ -1,13 +1,19 @@
 import { useState, useRef, useEffect } from "react";
-import { getRandomColor, getHexString, isValidHexColor, getRgb } from "../components/ColorGradientComponents/ColorGradientUtils";
 
-import ColorGradientSlider from "../components/ColorGradientComponents/ColorGradientSlider";
+import { getRandomColor, getHexString, isValidHexColor, getRgb } from "../components/ColorGradient/ColorGradientUtils";
+
+import useToastState from "../hooks/useToastState";
+import useExpander from "../hooks/useExpander";
+
+import ColorGradientSlider from "../components/ColorGradient/ColorGradientSlider";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
-import ColorGradientInterface from "../components/ColorGradientComponents/ColorGradientInterface";
+import ColorGradientInterface from "../components/ColorGradient/ColorGradientInterface";
 import CodeBlock from "../components/CodeBlock";
 import TabSwitcher from "../components/TabSwitcher";
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
+import Toast from "../components/Toast";
+import { ToolPane, ToolPreviewPane, ToolSectionColumns } from "../components/ToolsLayout/Sections";
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -43,6 +49,9 @@ export default function ColorGradient() {
     }
   )
 
+  const [isExpanded, toggleIsExpanded] = useExpander();
+  const toastState = useToastState();
+
   useEffect(()=>{
     if(!currentKnob){
       setCurrentKnob(containerRef.current.querySelector('.isActive'))
@@ -67,12 +76,22 @@ export default function ColorGradient() {
         ></ToolHeading>
       </ToolHeaderSection>
 
-      <div
-        ref={containerRef}
-        className="flex flex-1 lg:mx-48 justify-between gap-x-4"
-      >
-        <div className="flex-1 flex-col w-full rounded-lg border border-black">
-          <ColorGradientSlider
+
+      <ToolSectionColumns isExpanded={isExpanded} reverse={false} ref={containerRef}>
+          <ToolPreviewPane isExpanded={isExpanded} toggleIsExpanded={toggleIsExpanded}>
+            <div
+              id="show-gradient"
+              className="gradient h-full w-full min-h-64"
+            ></div>
+          </ToolPreviewPane>
+
+          <ToolPane           
+          title="Options"
+          icon="integration_instructions"
+          isPrimary={true}
+          bookmarkCallback={()=>{}}
+          shareCallback={() => {}}>
+            <ColorGradientSlider
             setColorsArr={setColorsArr}
             inputValue={inputValue}
             updateCSSValues={updateCSSValues}
@@ -82,9 +101,8 @@ export default function ColorGradient() {
             generateGradientRule={generateGradientRule}
             gradientColors={gradientColors}
             setGradientColors={setGradientColors}
-          />
-
-          <ColorGradientInterface
+            />
+            <ColorGradientInterface
             inputValue={inputValue}
             setInputValue={setInputValue}
             handleColorInputChange={handleColorInputChange}
@@ -94,25 +112,26 @@ export default function ColorGradient() {
             gradientColors={gradientColors}
             generateGradientRule={generateGradientRule}
             updateCSSValues={updateCSSValues}
-            onClickRandom={onClickRandom}
-          />
-        </div>
+            onClickRandom={onClickRandom}/>
+          </ToolPane>
+      </ToolSectionColumns>
 
-        <div
-          id="show-gradient"
-          className="gradient flex-1 rounded-lg border border-black"
-        ></div>
-      </div>
+
 
       <TabSwitcher title={'Code Sample'}>
-        <CodeBlock title={'CSS Snipet'}
-        code={'background'} unit={codeBlockRules.background}
+        <CodeBlock 
+        toastState={toastState}
+        title={'CSS Snipet'}
+        code={'background'} 
+        unit={codeBlockRules.background}
         />
       </TabSwitcher>   
 
       <GoDeeper linksData={[
         {url: '#', textValue: 'Not a link available yet'}
       ]}></GoDeeper>   
+
+      <Toast toastState={toastState}/>
     </>
   );
 
