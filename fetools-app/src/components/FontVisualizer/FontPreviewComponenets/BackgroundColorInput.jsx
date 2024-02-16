@@ -1,17 +1,15 @@
-import React from "react";
-
 const BackgroundColorInput = ({
   backgroundColor,
   handleBackgroundColorChange,
 }) => {
   return (
-    <div className="flex items-center space-x-4 gap-4 w-full">
-      <div className="text-base font-bold">Backgraund</div>
-      <div className="flex px-5 text-neutral-400 text-base">
+    <div className="flex items-center gap-2">
+      <div className="text-base font-bold">Background</div>
+      <div className="flex px-5 text-base text-neutral-400">
         <div
-          className="border px-2 color-picker-toggle relative w-8 h-8"
+          className="relative w-8 h-8 px-2 border color-picker-toggle"
           style={{
-            cursor: "pointer",
+            cursor: 'pointer',
             backgroundColor: backgroundColor,
           }}
         >
@@ -19,16 +17,16 @@ const BackgroundColorInput = ({
             type="color"
             value={backgroundColor}
             onChange={handleBackgroundColorChange}
-            className="color-picker-input absolute opacity-0 cursor-pointer w-full h-full"
+            className="absolute w-full h-full opacity-0 cursor-pointer color-picker-input"
             id="backgroundColor"
             name="backgroundColor"
             style={{
-              borderRadius: "5px",
+              borderRadius: '5px',
             }}
           />
           <span
-            className="ml-2 absolute top-0 left-full px-1"
-            style={{ marginTop: "5px" }}
+            className="absolute top-0 px-1 ml-2 left-full"
+            style={{ marginTop: '5px' }}
           >
             {backgroundColor}
           </span>
