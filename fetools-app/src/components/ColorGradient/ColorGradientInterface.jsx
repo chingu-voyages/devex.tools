@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import tinycolor from "tinycolor2";
 
 import { Dropdown } from "./Dropdown";
+import ColorInput from "../InputComponents/ColorInput";
 
 export default function ColorGradientInterface({
     inputValue,
@@ -50,22 +51,12 @@ export default function ColorGradientInterface({
         <>
         <div ref={parentRef} className="grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-6">
             <label id="color" className="flex flex-col font-bold ">Color
-                <div className="relative z-0 max-w-[228px]">
-                    <input 
-                    ref={colorInputRef} 
-                    defaultValue={displayData.color}
-                    onChange={handleColorInputChange} 
-                    placeholder={lastValidData.color || displayData.color}
-                    type="text" 
-                    maxLength={7}
-                    className="rounded-sm border border-gray-400 p-4  uppercase flex-2 w-[228px] outline-none"/>
-
-                    <input 
-                    type="color" 
-                    defaultValue={displayData.color} 
-                    onChange={handleColorInputChange}
-                    className="absolute right-3 top-4"/>
-                </div>
+            <ColorInput
+            ref={colorInputRef} 
+            defaultValue={displayData.color} 
+            onChange={handleColorInputChange}
+            placeholder={lastValidData.color || displayData.color}
+            />
             </label>
             <label id="position" className="relative flex flex-col w-full font-bold">Position
                 <input
