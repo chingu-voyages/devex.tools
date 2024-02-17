@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom';
 import Icon from '../Icon';
 
 const Links = [
-  { to: '/characters', icon: 'star', text: 'Characters' },
+  { to: '/characters', icon: 'Ampersand', iconType: 'svg', text: 'Characters' },
   { to: '/colors', icon: 'colorize', text: 'Colors' },
   { to: '/fonts', icon: 'format_size', text: 'Fonts' },
   { to: '/gradients', icon: 'gradient', text: 'Gradients' },
   { to: '/shadows', icon: 'ev_shadow', text: 'Shadows' },
   { to: '/units', icon: 'sync', text: 'Units', className: 'rotate-90' },
-].map(({ to, icon, text, className }) => (
+].map(({ to, icon, iconType, text, className }) => (
   <li key={to} className="border-gray-200 max-md:w-full max-md:border">
     <Link to={to} className="max-md:p-4">
-      <Icon name={icon} className={className && className} /> {text}
+      <Icon
+        name={icon}
+        type={iconType ? iconType : 'material'}
+        className={className && className}
+      />{' '}
+      {text}
     </Link>
   </li>
 ));
