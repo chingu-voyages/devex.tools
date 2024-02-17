@@ -65,7 +65,7 @@ export default function CodeSnippets({ pixels, em, tailwindSize, toastState }) {
         title: "Font Size",
         code: remToTailwindFontSizeMap[em]
           ? remToTailwindFontSizeMap[em]
-          : `text-[${em.toFixed(3)}rem]`,
+          : `text-[${parseFloat(em).toFixed(3)}rem]`,
       },
       { title: "Height", code: `h-${tailwindSize}` },
       { title: "Width", code: `w-${tailwindSize}` },
