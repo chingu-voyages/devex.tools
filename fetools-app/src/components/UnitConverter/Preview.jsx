@@ -1,4 +1,4 @@
-import { ToolPreviewPane } from '../ToolsLayout/Sections';
+import { ToolPreviewPane } from "../ToolsLayout/Sections";
 
 export default function Preview({
   alertShown = false,
@@ -26,7 +26,7 @@ export default function Preview({
       )}
 
       <div
-        className="flex flex-row items-center justify-center w-full h-full p-3 overflow-auto"
+        className="flex flex-row items-center justify-center w-full h-full p-3"
         style={gridBackgroundStyle}
       >
         <div
