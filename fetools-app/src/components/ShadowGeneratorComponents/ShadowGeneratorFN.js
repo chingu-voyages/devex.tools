@@ -196,50 +196,38 @@ const updateId = (ShadowsStyles, setShadowsStyles, setRemoveShadow) => {
   setRemoveShadow(false);
 };
 
-
 const combineShadows = (shadowArray) => {
-  // Empty object to store combined properties
   let combinedObject = {};
 
-  // Iterate through each shadow in the array
   shadowArray.forEach((shadow) => {
-    // Iterate through each property of the shadow
     Object.keys(shadow).forEach((property) => {
-      // Check if the property already exists in the combined object
       if (combinedObject.hasOwnProperty(property)) {
-        // If it exists, add the value of the current shadow to an array
         if (!Array.isArray(combinedObject[property])) {
           combinedObject[property] = [combinedObject[property]];
         }
         combinedObject[property].push(shadow[property]);
       } else {
-        // If it doesn't exist, simply assign the value of the current shadow
         combinedObject[property] = shadow[property];
       }
     });
   });
-  // console.log(combinedObject);
-  return combinedObject;
-}
 
+  return combinedObject;
+};
 
 const splitCombinedObject = (combinedObject) => {
   let shadowArray = [];
-  
+
   Object.keys(combinedObject).forEach((property) => {
-    
     if (Array.isArray(combinedObject[property])) {
-      
       combinedObject[property].forEach((value, index) => {
-        
         if (!shadowArray[index]) {
           shadowArray[index] = {};
         }
-        
+
         shadowArray[index][property] = value;
       });
     } else {
-      
       if (shadowArray.length === 0) {
         shadowArray.push({});
       }
@@ -248,22 +236,17 @@ const splitCombinedObject = (combinedObject) => {
   });
 
   return shadowArray;
-}
-
-
-
+};
 
 const ShareLink = (searchParams, SetsearchParams, ShadowsStyles) => {
-  
-  let combinedObject = combineShadows(ShadowsStyles)
-  
+  let combinedObject = combineShadows(ShadowsStyles);
 
   // const objectToQueryString  = (obj) => {
   //   const keys = Object.keys(obj);
   //   const keyValuePairs = keys.map(key => {
   //     if(key === 'units'){
   //       const subKeys = Object.keys(obj[key]);
-  //       const subKeyValuePairs = subKeys.map(subKey=>{        
+  //       const subKeyValuePairs = subKeys.map(subKey=>{
   //         return `"${encodeURIComponent(subKey)}"="${encodeURIComponent(obj[key][subKey])}"`;
   //       })
   //       return `"units":{${subKeyValuePairs.join('&')}}`
@@ -272,11 +255,11 @@ const ShareLink = (searchParams, SetsearchParams, ShadowsStyles) => {
   //   });
   //   return `{${keyValuePairs.join('&')}}`
   // }
-  
+
   // const stringQueryArray = ShadowsStyles.map((shadow)=>{
   //   return objectToQueryString(shadow)
   // })
-  
+
   // SetsearchParams({
   //   0: stringQueryArray[0],
   //   1: stringQueryArray[1],
@@ -284,10 +267,8 @@ const ShareLink = (searchParams, SetsearchParams, ShadowsStyles) => {
   // })
   console.log(combinedObject);
 
-  SetsearchParams(splitCombinedObject(combinedObject))
-
-
-}
+  SetsearchParams(splitCombinedObject(combinedObject));
+};
 
 export {
   generateCssRule,
@@ -300,5 +281,5 @@ export {
   unitChanger,
   updateId,
   ShareLink,
-  splitCombinedObject
+  splitCombinedObject,
 };
