@@ -1,6 +1,6 @@
-import TextField from '../TextField';
-import EditableInput from '../EditableInput';
-import { ToolPane } from '../ToolsLayout/Sections/';
+import TextField from "../TextField";
+import EditableInput from "../EditableInput";
+import { ToolPane } from "../ToolsLayout/Sections/";
 
 export default function Calculator({
   em,
@@ -16,8 +16,8 @@ export default function Calculator({
   return (
     <ToolPane title="Calculator" icon="calculate">
       {/*Input Boxes*/}
-      <div className="flex flex-col gap-10">
-        <div className="flex gap-8">
+      <div className="flex flex-col gap-10 items-center">
+        <div className="flex gap-4 items-center">
           <TextField
             title="REM/EM"
             value={em}
@@ -25,12 +25,16 @@ export default function Calculator({
             onValueChange={handleEmChange}
           />
 
+          <span class="material-symbols-rounded">autorenew</span>
+
           <TextField
             title="Pixels"
             value={pixels}
             unit="px"
             onValueChange={handlePixelChange}
           />
+
+          <span class="material-symbols-rounded">autorenew</span>
 
           <TextField
             title="Tailwind Size"
