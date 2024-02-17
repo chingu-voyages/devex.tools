@@ -237,7 +237,7 @@ function UnitConverter() {
     } else {
       newTailwindSize = tailwindSize;
     }
-    setTailwindSize(tailwindCheck(formatCheck(newTailwindSize)));
+    setTailwindSize(tailwindCheck(newTailwindSize));
   };
 
   // JSX for rendering the UI components.
