@@ -239,7 +239,7 @@ function UnitConverter() {
         setToastContent({
           title: "Invalid Arbitrary REM Value",
           content: `Entered value, ${tailwindSize}, has a corresponding Tailwind Size value of ${finalTailwindSize} and has been updated accordingly.`,
-          icon: "info",
+          icon: "error",
         });
         setOpenToast(true);
       }
@@ -256,7 +256,7 @@ function UnitConverter() {
         setToastContent({
           title: "Invalid Arbitrary PX Value",
           content: `Entered value, ${tailwindSize}, has a corresponding Tailwind Size value of ${finalTailwindSize} and has been updated accordingly.`,
-          icon: "eyedrop",
+          icon: "error",
         });
         setOpenToast(true);
       }
@@ -270,7 +270,7 @@ function UnitConverter() {
         setToastContent({
           title: "Invalid Tailwind Size",
           content: `Entered value, ${tailwindSize}, is not an existing Tailwind Size. It has been updated to an arbitrary REM value, ${finalTailwindSize}.`,
-          icon: "copy",
+          icon: "error",
         });
         setOpenToast(true);
       }
