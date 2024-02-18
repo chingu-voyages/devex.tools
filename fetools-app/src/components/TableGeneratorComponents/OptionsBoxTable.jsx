@@ -1,9 +1,9 @@
-import InputColor from './InputColor';
-import { handleOptions } from './TableGeneratorFN';
+import InputColor from "./InputColor";
+import { handleOptions } from "./TableGeneratorFN";
 
-import { TableInputs } from './TableInputs';
-import Icon from '../Icon';
-import { ToolPane } from '../ToolsLayout/Sections';
+import { TableInputs } from "./TableInputs";
+import Icon from "../Icon";
+import { ToolPane } from "../ToolsLayout/Sections";
 
 export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
   return (
@@ -66,54 +66,54 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             Text Alignment
             <div className="flex gap-x-2  justify-around py-2 ">
               <Icon
+                className="cursor-pointer"
                 name="format_align_left"
-                alt="left"
-                onClick={e =>
+                id="left"
+                onClick={(e) =>
                   handleOptions(
-                    e,
-                    'textAlign',
+                    e.target.id,
+                    "textAlign",
                     tableConfig,
-                    setTableConfig,
-                    e.target.alt
+                    setTableConfig
                   )
                 }
               />
               <Icon
+                className="cursor-pointer"
                 name="format_align_center"
-                alt="center"
-                onClick={e =>
+                id="center"
+                onClick={(e) =>
                   handleOptions(
-                    e,
-                    'textAlign',
+                    e.target.id,
+                    "textAlign",
                     tableConfig,
-                    setTableConfig,
-                    e.target.alt
+                    setTableConfig
                   )
                 }
               />
               <Icon
+                className="cursor-pointer"
                 name="format_align_right"
-                alt="right"
-                onClick={e =>
+                id="right"
+                onClick={(e) =>
                   handleOptions(
-                    e,
-                    'textAlign',
+                    e.target.id,
+                    "textAlign",
                     tableConfig,
-                    setTableConfig,
-                    e.target.alt
+                    setTableConfig
                   )
                 }
               />
               <Icon
+                className="cursor-pointer"
                 name="format_align_justify"
-                alt="justify"
-                onClick={e =>
+                id="justify"
+                onClick={(e) =>
                   handleOptions(
-                    e,
-                    'textAlign',
+                    e.target.id,
+                    "textAlign",
                     tableConfig,
                     setTableConfig,
-                    e.target.alt
                   )
                 }
               />
@@ -146,10 +146,10 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
               Border Style:
             </label>
             <select
-              onChange={e =>
+              onChange={(e) =>
                 handleOptions(
                   e.target.value,
-                  'borderStyle',
+                  "borderStyle",
                   tableConfig,
                   setTableConfig
                 )
@@ -163,21 +163,23 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
               <option value="dashed solid"> dashed solid </option>
               <option value="dashed double none"> dashed double none </option>
               <option value="dashed groove none dotted">
-                dashed groove none dotted{' '}
+                dashed groove none dotted{" "}
               </option>
               <option value="dashed groove none dotted">
-                dashed groove none dotted{' '}
+                dashed groove none dotted{" "}
               </option>
             </select>
           </div>
           <div className="flex gap-2 items-center justify-end">
             <strong className>Collapse Border</strong>
             <input
+              defaultChecked={true}
               type="checkbox"
-              onChange={e => {
+              className="w-6 h-6 accent-accent"
+              onChange={(e) => {
                 handleOptions(
                   e.target.checked,
-                  'collapse',
+                  "collapse",
                   tableConfig,
                   setTableConfig
                 );
