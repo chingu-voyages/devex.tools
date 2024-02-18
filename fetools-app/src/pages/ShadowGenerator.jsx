@@ -90,7 +90,7 @@ const ShadowGenerator = () => {
             numOfShadows={numOfShadows}
             setNumOfShadows={setNumOfShadows}
             ActiveShadow={ActiveShadow}
-            setActiveShadow={setActiveShadow}
+          setActiveShadow={setActiveShadow}
             setRemoveShadow={setRemoveShadow}
             searchParams={searchParams}
             setSearchParams={setSearchParams}
@@ -155,8 +155,5 @@ const ShadowGenerator = () => {
   );
 };
 
-function handleQuery(ShadowStylesObj) {
-  setSearchParams({ Arr: ShadowStyles });
-}
 
 export default ShadowGenerator;

@@ -8,6 +8,7 @@ const Links = [
   { to: '/fonts', icon: 'format_size', text: 'Fonts' },
   { to: '/gradients', icon: 'gradient', text: 'Gradients' },
   { to: '/shadows', icon: 'ev_shadow', text: 'Shadows' },
+  { to: '/tables', icon: 'table', text: 'Tables' },
   { to: '/units', icon: 'sync', text: 'Units', className: 'rotate-90' },
 ].map(({ to, icon, iconType, text, className }) => (
   <li key={to} className="border-gray-200 max-md:w-full max-md:border">
