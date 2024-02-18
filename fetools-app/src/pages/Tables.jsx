@@ -29,7 +29,7 @@ const Table = () => {
     bgColor: '#F1F1F1',
     borderColor: '#000',
     headerText: '#ffffff',
-    headerBg: '#FF007A',
+    headerBg: '#663399',
   });
   const [isExpanded, toggleIsExpanded] = useExpander();
 
