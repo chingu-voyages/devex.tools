@@ -49,7 +49,7 @@ const Table = () => {
 
         <ToolPreviewPane toggleIsExpanded={toggleIsExpanded}>
           <div className="px-8 py-12 h-[40rem]">
-            <div className="w-full h-full max-h-full overflow-scroll flex items-start justify-start">
+            <div className="w-full h-full max-h-full overflow-auto flex items-start justify-start">
               <TableGenerator
                 tableConfig={tableConfig}
                 setTableConfig={setTableConfig}
