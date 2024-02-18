@@ -1,19 +1,19 @@
-import '../index.css';
-import { useState, useEffect } from 'react';
-import ReactPaginate from 'react-paginate';
-import SearchField from '../components/SearchField';
-import ToolHeading from '../components/ToolsLayout/ToolHeading';
-import CharacterCategoryTab from '../components/CharacterFinderComponents/CharacterCategoryTab';
-import htmlCharacters from '../components/CharacterFinderComponents/htmlCharacters.json';
-import GoDeeper from '../components/ToolsLayout/GoDeeper';
-import CharacterCard from '../components/CharacterFinderComponents/CharacterCard';
+import "../index.css";
+import { useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
+import SearchField from "../components/SearchField";
+import ToolHeading from "../components/ToolsLayout/ToolHeading";
+import CharacterCategoryTab from "../components/CharacterFinderComponents/CharacterCategoryTab";
+import htmlCharacters from "../components/CharacterFinderComponents/htmlCharacters.json";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
+import CharacterCard from "../components/CharacterFinderComponents/CharacterCard";
 
-import ToolMain from '../components/ToolsLayout/ToolMain';
-import { ToolSection } from '../components/ToolsLayout/Sections';
+import ToolMain from "../components/ToolsLayout/ToolMain";
+import { ToolSection } from "../components/ToolsLayout/Sections";
 
 function CharacterFinder() {
-  const [selectedCategory, setSelectedCategory] = useState('popular');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("popular");
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(16);
@@ -23,9 +23,9 @@ function CharacterFinder() {
     setCurrentPage(selected);
   };
 
-  const displayCharacters = category => {
+  const displayCharacters = (category) => {
     setSelectedCategory(category);
-    setSearchQuery('');
+    setSearchQuery("");
     setSearchResults([]);
     setCurrentPage(0);
     setClearInput(true);
@@ -40,15 +40,16 @@ function CharacterFinder() {
     }
   }, [clearInput]);
 
-  const removeLetterVariations = str => {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const removeLetterVariations = (str) => {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   };
 
-  const handleSearchChange = query => {
+  const handleSearchChange = (query) => {
+
     setSearchQuery(query);
     setCurrentPage(0);
 
-    if (query.trim() === '') {
+    if (query.trim() === "") {
       setSearchResults([]);
       return;
     }
@@ -56,7 +57,8 @@ function CharacterFinder() {
     updateSearchResults(query);
   };
 
-  const updateSearchResults = query => {
+  const updateSearchResults = (query) => {
+
     const allCharacterArrays = [
       ...htmlCharacters.letters,
       ...htmlCharacters.punctuation,
@@ -65,12 +67,17 @@ function CharacterFinder() {
       ...htmlCharacters.currency,
       ...htmlCharacters.arrows,
       ...htmlCharacters.symbols,
-      ...htmlCharacters.emojis,
+      ...htmlCharacters.emojis
     ];
 
     let filteredResults;
 
-    if (query.length === 1) {
+    if (query === '-') {
+      filteredResults = allCharacterArrays.filter(
+        character => character.name.toLowerCase().includes('hyphen')
+      );
+
+      } else if (query.length === 1) {
       filteredResults = allCharacterArrays.filter(
         character =>
           character.character.toLowerCase() === query.toLowerCase() ||
@@ -81,11 +88,14 @@ function CharacterFinder() {
           (character.hex &&
             character.hex.toLowerCase() === query.toLowerCase()) ||
           (character.unicode &&
-            character.unicode.toLowerCase() === query.toLowerCase())
+            character.unicode.toLowerCase() === query.toLowerCase()) ||
+            (character.css &&
+              (character.css.toLowerCase() === query.toLowerCase() ||
+                character.css.toLowerCase() === "\\" + query.toLowerCase()))
       );
 
       if (filteredResults.length === 0) {
-        filteredResults = allCharacterArrays.filter(character => {
+        filteredResults = allCharacterArrays.filter((character) => {
           const name = character.name.toLowerCase();
           return (
             name.includes(` ${query.toLowerCase()}`) ||
@@ -105,7 +115,12 @@ function CharacterFinder() {
           (character.hex &&
             character.hex.toLowerCase().includes(query.toLowerCase())) ||
           (character.unicode &&
-            character.unicode.toLowerCase().includes(query.toLowerCase()))
+            character.unicode.toLowerCase().includes(query.toLowerCase())) ||
+            (character.css &&
+              (character.css.toLowerCase().includes(query.toLowerCase()) ||
+                character.css.toLowerCase().includes(
+                  "\\" + query.toLowerCase()
+                )))
       );
     }
 
@@ -117,7 +132,7 @@ function CharacterFinder() {
 
   const categoryData = searchQuery
     ? searchResults
-    : selectedCategory === 'collection'
+    : selectedCategory === "collection"
     ? [] // TODO - Read out collection from local storage.
     : htmlCharacters[selectedCategory];
 
@@ -127,27 +142,27 @@ function CharacterFinder() {
   );
 
   const categories = [
-    { name: 'popular', displayName: 'Popular', char: '☆' },
-    { name: 'letters', displayName: 'Letters', char: 'Ü' },
-    { name: 'punctuation', displayName: 'Punctuation', char: '%' },
-    { name: 'numbers', displayName: 'Numbers', char: '①' },
-    { name: 'math', displayName: 'Math', char: '÷' },
-    { name: 'currency', displayName: 'Currency', char: '€' },
-    { name: 'arrows', displayName: 'Arrows', char: '→' },
-    { name: 'symbols', displayName: 'Symbols', char: '§' },
-    { name: 'emojis', displayName: 'Emoji', char: '☺' },
-    { name: 'collection', displayName: 'Collection', char: '☲' },
+    { name: "popular", displayName: "Popular", char: "☆" },
+    { name: "letters", displayName: "Letters", char: "Ü" },
+    { name: "punctuation", displayName: "Punctuation", char: "%" },
+    { name: "numbers", displayName: "Numbers", char: "①" },
+    { name: "math", displayName: "Math", char: "÷" },
+    { name: "currency", displayName: "Currency", char: "€" },
+    { name: "arrows", displayName: "Arrows", char: "→" },
+    { name: "symbols", displayName: "Symbols", char: "§" },
+    { name: "emojis", displayName: "Emoji", char: "☺" },
+    { name: "collection", displayName: "Collection", char: "☲" },
   ];
 
   const selectedCategoryIcon = categories.find(
-    category => category.name === selectedCategory
+    (category) => category.name === selectedCategory
   ).char;
 
   const selectedCategoryDisplayName = categories.find(
-    category => category.name === selectedCategory
+    (category) => category.name === selectedCategory
   ).displayName;
 
-  const categoryTabs = categories.map(category => (
+  const categoryTabs = categories.map((category) => (
     <CharacterCategoryTab
       key={category.name}
       category={category.name}
@@ -167,7 +182,7 @@ function CharacterFinder() {
       />
       <div className="container">
         <SearchField
-          placeholderText={'Search'}
+          placeholderText={"Search"}
           search={handleSearchChange}
           clearInput={clearInput}
         />
@@ -179,8 +194,8 @@ function CharacterFinder() {
 
       <ToolSection
         title={searchQuery ? searchQuery : selectedCategoryDisplayName}
-        icon={searchQuery ? 'search' : selectedCategoryIcon}
-        iconMode={searchQuery ? 'symbol' : 'char'}
+        icon={searchQuery ? "search" : selectedCategoryIcon}
+        iconMode={searchQuery ? "symbol" : "char"}
       >
         <div className="grid w-full grid-cols-4">
           {currentCategoryData.map((character, index) => (
@@ -232,14 +247,14 @@ function CharacterFinder() {
                 />
               </svg>
             }
-            breakLabel={'...'}
+            breakLabel={"..."}
             onPageChange={handlePageClick}
-            containerClassName={'pagination flex'}
-            activeClassName={'bg-gray-200'}
-            previousClassName={'mr-2 px-4 py-2'}
-            nextClassName={'ml-2 px-4 py-2'}
-            pageClassName={'mr-2 px-4 py-2'}
-            breakClassName={'mr-2 px-4 py-2'}
+            containerClassName={"pagination flex"}
+            activeClassName={"bg-gray-200"}
+            previousClassName={"mr-2 px-4 py-2"}
+            nextClassName={"ml-2 px-4 py-2"}
+            pageClassName={"mr-2 px-4 py-2"}
+            breakClassName={"mr-2 px-4 py-2"}
             forcePage={currentPage}
           />
         </div>
@@ -248,17 +263,17 @@ function CharacterFinder() {
       <GoDeeper
         linksData={[
           {
-            url: 'https://developer.mozilla.org/en-US/docs/Glossary/Entity',
-            textValue: 'All about entities at MDN',
+            url: "https://developer.mozilla.org/en-US/docs/Glossary/Entity",
+            textValue: "All about entities at MDN",
           },
           {
-            url: 'https://deliciousbrains.com/how-unicode-works/',
-            textValue: 'How Unicode works at Delicious Brain',
+            url: "https://deliciousbrains.com/how-unicode-works/",
+            textValue: "How Unicode works at Delicious Brain",
           },
           {
-            url: 'https://daily-dev-tips.com/posts/tailwind-css-pseudo-elements/',
+            url: "https://daily-dev-tips.com/posts/tailwind-css-pseudo-elements/",
             textValue:
-              'Seeing special characters in pseudo-elements with Tailwind CSS',
+              "Seeing special characters in pseudo-elements with Tailwind CSS",
           },
         ]}
       />

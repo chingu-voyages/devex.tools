@@ -1,6 +1,6 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
-const SearchField = ({ placeholderText, links, search, clearInput }) => {
+const SearchField = ({ placeholderText, search, clearInput }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
@@ -14,7 +14,6 @@ const SearchField = ({ placeholderText, links, search, clearInput }) => {
       search("");
     }
   }, [clearInput]);
-
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -33,27 +32,24 @@ const SearchField = ({ placeholderText, links, search, clearInput }) => {
   };
 
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end relative">
+      <label className="relative">
       <input
         type="text"
         placeholder={placeholderText}
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        className="bg-gray-100 p-3 text-lg"
+        className="bg-gray-100 p-3 text-lg pr-12 focus:[#663399] focus:ring focus:ring-[#663399] focus:outline-none"
         autoFocus
       />
-      <button
-        className="bg-gray-100 text-black p-2"
-        onClick={() => search(inputValue)}
-      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none"
         >
           <path
             strokeLinecap="round"
@@ -61,7 +57,7 @@ const SearchField = ({ placeholderText, links, search, clearInput }) => {
             d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
           />
         </svg>
-      </button>
+        </label>
     </div>
   );
 };
