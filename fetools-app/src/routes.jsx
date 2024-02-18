@@ -9,7 +9,7 @@ import Home from './pages/Home';
 import UnitConverter from './pages/UnitConverter';
 import ColorPicker from './pages/ColorPicker';
 import CharacterFinder from './pages/CharacterFinder';
-import FontVisualizer from './pages/FontVisualizer';
+import FontViewer from './pages/FontViewer';
 import ShadowGenerator from './pages/ShadowGenerator';
 import Table from './pages/Table';
 import ColorGradient from './pages/ColorGradient';
@@ -22,7 +22,7 @@ export const router = createBrowserRouter(
       <Route path="units" element={<UnitConverter />} />
       <Route path="colors" element={<ColorPicker />} />
       <Route path="characters" element={<CharacterFinder />} />
-      <Route path="fonts" element={<FontVisualizer />} />
+      <Route path="fonts" element={<FontViewer />} />
       <Route path="shadows" element={<ShadowGenerator />} />
       <Route path="table" element={<Table />} />
       <Route path="gradients" element={<ColorGradient />} />

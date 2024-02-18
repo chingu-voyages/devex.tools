@@ -2,6 +2,7 @@ import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import ToolHeaderSection from "../components/ToolsLayout/ToolHeaderSection";
 import OptionsBox from "../components/ShadowGeneratorComponents/OptionsBox";
 import CodeBlock from "../components/CodeBlock";
+import Toast from "../components/Toast";
 import { useState, useRef, useEffect } from "react";
 import {
   generateCssRule,
@@ -11,6 +12,7 @@ import PageSection from "../components/PageLayout/PageSection";
 import TabSwitcher from "../components/TabSwitcher";
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
 import { useSearchParams } from "react-router-dom";
+import useToastState from "../hooks/useToastState";
 
 const ShadowGenerator = () => {
   const [firstRender, setFirstRender] = useState(false);
@@ -37,6 +39,7 @@ const ShadowGenerator = () => {
   const [numOfShadows, setNumOfShadows] = useState(1);
   const [removeShadow, setRemoveShadow] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();
+  const toastState = useToastState()
 
   const box = useRef();
 
@@ -105,6 +108,7 @@ const ShadowGenerator = () => {
             title=""
             code={`box-shadow: ${currentStyle.toString()}`}
             lang="css"
+            toastState={toastState}
           />
           <CodeBlock
             title=""
@@ -120,6 +124,7 @@ const ShadowGenerator = () => {
             }
           `}
             lang="css"
+            toastState={toastState}
           />
         </TabSwitcher>
       </PageSection>
@@ -144,6 +149,7 @@ const ShadowGenerator = () => {
             },
           ]}
         />
+        <Toast toastState={toastState}/>
       </PageSection>
     </>
   );

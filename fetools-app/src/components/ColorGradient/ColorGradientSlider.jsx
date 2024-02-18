@@ -8,7 +8,7 @@ export default function ColorGradientSlider({
     handleSetInputValue,
     gradientColors,
     setGradientColors,
-    generateGradientRule
+    generateGradientRule,
 }){
 
     const [activeIndex, setActiveIndex] = useState(0)
