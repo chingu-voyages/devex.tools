@@ -1,4 +1,3 @@
-import React from "react";
 import CopyButton from "./CopyButton";
 
 function CodeBlock({ toastState, title, code, lang = "css" }) {

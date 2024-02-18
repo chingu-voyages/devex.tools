@@ -35,6 +35,7 @@ function UnitConverter() {
   // Hook to manage expanding preview
   const [isExpanded, toggleIsExpanded] = useExpander();
   const toastState = useToastState();
+  const { setOpenToast, setToastContent } = toastState;
 
   const handleContentChange = () => {
     const newText = editableRef.current.innerText;
@@ -224,20 +225,56 @@ function UnitConverter() {
   //Tailwind Blur Function - handles entered tailwind sizes that don't exist
   const onTailwindBlur = () => {
     let newTailwindSize;
+    let finalTailwindSize;
 
     if (tailwindSize.startsWith("[") && tailwindSize.endsWith("rem]")) {
       const remValue = tailwindSize.slice(1, -4);
       let newEm = remValue;
       newTailwindSize = newEm * 4;
+      finalTailwindSize = tailwindCheck(newTailwindSize);
+      setTailwindSize(finalTailwindSize);
+
+      if (finalTailwindSize != tailwindSize) {
+        // Set the toast content and open the toast
+        setToastContent({
+          title: "Invalid Arbitrary REM Value",
+          content: `Entered value, ${tailwindSize}, has a corresponding Tailwind Size value of ${finalTailwindSize} and has been updated accordingly.`,
+          icon: "info",
+        });
+        setOpenToast(true);
+      }
     } else if (tailwindSize.startsWith("[") && tailwindSize.endsWith("px]")) {
       const pxValue = tailwindSize.slice(1, -3);
       let newPx = pxValue;
       let newEm = newPx / basePixelSize;
       newTailwindSize = newEm * 4;
+      finalTailwindSize = tailwindCheck(newTailwindSize);
+      setTailwindSize(finalTailwindSize);
+
+      if (finalTailwindSize != tailwindSize) {
+        // Set the toast content and open the toast
+        setToastContent({
+          title: "Invalid Arbitrary PX Value",
+          content: `Entered value, ${tailwindSize}, has a corresponding Tailwind Size value of ${finalTailwindSize} and has been updated accordingly.`,
+          icon: "eyedrop",
+        });
+        setOpenToast(true);
+      }
     } else {
       newTailwindSize = tailwindSize;
+      finalTailwindSize = tailwindCheck(newTailwindSize);
+      setTailwindSize(finalTailwindSize);
+
+      if (finalTailwindSize != tailwindSize) {
+        // Set the toast content and open the toast
+        setToastContent({
+          title: "Invalid Tailwind Size",
+          content: `Entered value, ${tailwindSize}, is not an existing Tailwind Size. It has been updated to an arbitrary REM value, ${finalTailwindSize}.`,
+          icon: "copy",
+        });
+        setOpenToast(true);
+      }
     }
-    setTailwindSize(tailwindCheck(newTailwindSize));
   };
 
   // JSX for rendering the UI components.
