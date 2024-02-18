@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-custom-scrollbars-2": "^4.5.0",
+    "react-indiana-drag-scroll": "^2.2.0"
+  }
+}
