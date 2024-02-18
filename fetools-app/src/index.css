@@ -374,4 +374,34 @@
     }
 
   }
+
+  @layer Toast{
+    .ToastRoot[data-swipe='move'] {
+      transform: translateY(var(--radix-toast-swipe-move-y));
+    }
+    .ToastRoot[data-swipe='cancel'] {
+      transform: translateY(0);
+      transition: transform 200ms ease-out;
+    }
+    .ToastBottom[data-swipe='end'] {
+      animation: slideDown 100ms ease-out;
+    }
+    
+    @keyframes slideDown {
+      from {
+        transform: translateY(var(--radix-toast-swipe-end-y));
+      }
+      to {
+        transform: translateY(100%);
+      }
+    }
+    @keyframes slideUp {
+      from {
+        transform: translateY(var(--radix-toast-swipe-end-y));
+      }
+      to {
+        transform: translateY(-100%);
+      }
+    }
+  }
 }

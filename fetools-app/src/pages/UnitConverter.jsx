@@ -11,7 +11,11 @@ import {
 import Calculator from '../components/UnitConverter/Calculator';
 import Preview from '../components/UnitConverter/Preview';
 import CodeSnippets from '../components/UnitConverter/CodeSnippets';
+import Toast from '../components/Toast';
+
 import useExpander from '../hooks/useExpander';
+import useToastState from '../hooks/useToastState';
+
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 
@@ -31,7 +35,8 @@ function UnitConverter() {
 
   // Hook to manage expanding preview
   const [isExpanded, toggleIsExpanded] = useExpander();
-
+  const toastState = useToastState()
+ 
   const handleContentChange = () => {
     const newText = editableRef.current.innerText;
     if (newText !== editableContent) {
@@ -265,7 +270,7 @@ function UnitConverter() {
 
       {/* Section for code blocks */}
       <ToolSection icon="integration_instructions" title="Code Snippets">
-        <CodeSnippets pixels={pixels} em={em} tailwindSize={tailwindSize} />
+        <CodeSnippets pixels={pixels} em={em} tailwindSize={tailwindSize} toastState={toastState}/>
       </ToolSection>
 
       <GoDeeper
@@ -284,6 +289,8 @@ function UnitConverter() {
           },
         ]}
       />
+
+      <Toast toastState={toastState}/>
     </ToolMain>
   );
 }

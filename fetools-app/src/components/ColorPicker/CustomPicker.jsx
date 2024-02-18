@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 
-import { getHexString } from "../ColorGradientComponents/ColorGradientUtils";
+import { getHexString } from "../ColorGradient/ColorGradientUtils";
 import { createColorObj, getColorString, HexToHsl } from "./ColorPickerUtils";
 import switchSamplerIcon from "../../assets/switch-sampler-icon.svg"
 import PickerHandles from "./PickerHandles";
@@ -51,6 +51,10 @@ export default function CustomPicker({
 
   },[colorData, isColorPicker, imgFile])
 
+  useEffect(()=>{
+    canvasContainerRef.current.parentElement.parentElement.parentElement.classList.remove('overflow-auto')
+  })
+
   return(
     <>
     <div>
@@ -76,7 +80,7 @@ export default function CustomPicker({
 
       </div>
     </div>
-    <div className="flex self-center my-3">
+    <div className="flex self-center justify-center my-3">
       <button 
       onClick={()=>setIsColorPicker(!isColorPicker)}
       className="flex items-center content-center"><img src={switchSamplerIcon}></img><span className="block font-bold text-sm leading-0">{isColorPicker?'Sample From an Image':'Sample From Color'}</span></button>

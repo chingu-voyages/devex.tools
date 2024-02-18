@@ -178,7 +178,8 @@ function CharacterFinder() {
       <ToolHeading
         title="Character Finder"
         tagline="Look up characters, symbols, HTML entities, and CSS codes."
-        icon="glyphs" // TODO - Add SVG capability for header icons
+        icon="Ampersand"
+        iconType="svg"
       />
       <div className="container">
         <SearchField
@@ -194,8 +195,8 @@ function CharacterFinder() {
 
       <ToolSection
         title={searchQuery ? searchQuery : selectedCategoryDisplayName}
-        icon={searchQuery ? "search" : selectedCategoryIcon}
-        iconMode={searchQuery ? "symbol" : "char"}
+        icon={searchQuery ? 'search' : selectedCategoryIcon}
+        iconType={searchQuery ? 'material' : 'char'}
       >
         <div className="grid w-full grid-cols-4">
           {currentCategoryData.map((character, index) => (
