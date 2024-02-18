@@ -72,7 +72,7 @@ const OptionsBox = ({
           setShadowsStyles={setShadowsStyles}
           ActiveShadow={ActiveShadow}
           onChange={shadowPropertyValue}
-          range={{ min: -50, max: 50 }}
+          range={{ min: -96, max: 96 }}
         />
 
         <ShadowInput
@@ -83,7 +83,7 @@ const OptionsBox = ({
           setShadowsStyles={setShadowsStyles}
           ActiveShadow={ActiveShadow}
           onChange={shadowPropertyValue}
-          range={{ min: -50, max: 50 }}
+          range={{ min: -96, max: 96 }}
         />
 
         <ShadowInput
@@ -94,7 +94,7 @@ const OptionsBox = ({
           setShadowsStyles={setShadowsStyles}
           ActiveShadow={ActiveShadow}
           onChange={shadowPropertyValue}
-          range={{ min: -100, max: 100 }}
+          range={{ min: -96, max: 96 }}
         />
 
         <ShadowInput
@@ -105,8 +105,6 @@ const OptionsBox = ({
           setShadowsStyles={setShadowsStyles}
           ActiveShadow={ActiveShadow}
           onChange={shadowPropertyValue}
-          inset={true}
-          negativeRange={false}
           range={{ min: 0, max: 100 }}
         />
 
