@@ -6,6 +6,7 @@ export default function Icon({
   type = 'material',
   className = '',
   onClick = () => {},
+  ...props
 }) {
   const classNames = `icon select-none ${className} ${
     type === 'material' ? 'material-symbols-rounded' : ''
@@ -21,6 +22,7 @@ export default function Icon({
         lineHeight: `1`,
       }}
       onClick={onClick}
+      {...props}
     >
       {type.toLowerCase() === 'svg' ? <SVGIcon name={name} /> : name}
     </div>
