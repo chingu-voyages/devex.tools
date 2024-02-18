@@ -11,7 +11,7 @@ import ColorPicker from './pages/ColorPicker';
 import CharacterFinder from './pages/CharacterFinder';
 import FontViewer from './pages/FontViewer';
 import ShadowGenerator from './pages/ShadowGenerator';
-import Table from './pages/Table';
+import Tables from './pages/Tables';
 import ColorGradient from './pages/ColorGradient';
 import App from './App';
 
@@ -24,7 +24,7 @@ export const router = createBrowserRouter(
       <Route path="characters" element={<CharacterFinder />} />
       <Route path="fonts" element={<FontViewer />} />
       <Route path="shadows" element={<ShadowGenerator />} />
-      <Route path="table" element={<Table />} />
+      <Route path="tables" element={<Tables />} />
       <Route path="gradients" element={<ColorGradient />} />
     </Route>
   )
