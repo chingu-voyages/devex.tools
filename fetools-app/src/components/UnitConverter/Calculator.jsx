@@ -12,6 +12,7 @@ export default function Calculator({
   onTailwindBlur,
   basePixelSize,
   handleBasePixelSizeChange,
+  toastState,
 }) {
   return (
     <ToolPane title="Calculator" icon="calculate">
@@ -23,6 +24,7 @@ export default function Calculator({
             value={em}
             unit="rem"
             onValueChange={handleEmChange}
+            toastState={toastState}
           />
 
           <span class="material-symbols-rounded">autorenew</span>
@@ -32,6 +34,7 @@ export default function Calculator({
             value={pixels}
             unit="px"
             onValueChange={handlePixelChange}
+            toastState={toastState}
           />
 
           <span class="material-symbols-rounded">autorenew</span>
@@ -42,6 +45,7 @@ export default function Calculator({
             onValueChange={handleTailwindChange}
             inputType="text"
             onBlur={onTailwindBlur}
+            toastState={toastState}
           />
         </div>
 
