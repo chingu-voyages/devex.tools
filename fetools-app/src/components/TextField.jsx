@@ -47,9 +47,9 @@ function TextField({
           <input
             ref={inputRef}
             type={inputType}
-            className={`py-2 pl-3 leading-tight text-gray-400 border border-black rounded w-28 focus:outline-none focus:shadow-outline ${
+            className={`py-2 pl-3 leading-tight text-gray-400 border border-black rounded w-64 focus:outline-none focus:shadow-outline ${
               unit ? "pr-12" : "pr-3"
-            }`}
+            } md:w-28`}
             value={value}
             onChange={onValueChange}
             onFocus={handleInputClick}
