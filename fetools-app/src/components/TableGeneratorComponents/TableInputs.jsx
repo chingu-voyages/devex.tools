@@ -79,7 +79,7 @@ export const TableInputs = ({
                   activeUnit
                 );
           }}
-          className=" w-full"
+          className=" w-full accent-accent"
         />
         {ShowUnits && (
           <select

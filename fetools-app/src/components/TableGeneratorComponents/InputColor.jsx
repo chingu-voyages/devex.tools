@@ -8,7 +8,7 @@ const InputColor = ({labelText,prop, tableConfig, setTableConfig}) => {
         <input  onChange={(e)=> {hanldeColorOptions(e.target.value,tableConfig,setTableConfig, prop)}}  type="color" value={tableConfig[prop]} className="w-8 h-8" />
         <input
           type="text"
-          className="order-none outline-none  w-full h-6 mx-2"
+          className="order-none outline-none accent-accent w-full h-6 mx-2"
           onChange={(e)=> {hanldeColorOptions(e.target.value,tableConfig,setTableConfig, prop)}}
           placeholder={tableConfig[prop]}
         />
