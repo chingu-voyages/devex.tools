@@ -81,6 +81,7 @@ const Table = () => {
           />
 
           <CodeBlock
+            title="HTML & Tailwind Classes"
             toastState={toastState}
             code={generateTableCode(tableConfig, true)}
             lang="html" 
