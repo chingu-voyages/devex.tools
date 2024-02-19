@@ -231,7 +231,7 @@ function UnitConverter() {
       const remValue = tailwindSize.slice(1, -4);
       let newEm = remValue;
       newTailwindSize = newEm * 4;
-      finalTailwindSize = tailwindCheck(newTailwindSize);
+      finalTailwindSize = tailwindCheck(formatCheck(newTailwindSize));
       setTailwindSize(finalTailwindSize);
 
       if (finalTailwindSize != tailwindSize) {
@@ -248,7 +248,7 @@ function UnitConverter() {
       let newPx = pxValue;
       let newEm = newPx / basePixelSize;
       newTailwindSize = newEm * 4;
-      finalTailwindSize = tailwindCheck(newTailwindSize);
+      finalTailwindSize = tailwindCheck(formatCheck(newTailwindSize));
       setTailwindSize(finalTailwindSize);
 
       if (finalTailwindSize != tailwindSize) {
@@ -262,7 +262,7 @@ function UnitConverter() {
       }
     } else {
       newTailwindSize = tailwindSize;
-      finalTailwindSize = tailwindCheck(newTailwindSize);
+      finalTailwindSize = tailwindCheck(formatCheck(newTailwindSize));
       setTailwindSize(finalTailwindSize);
 
       if (finalTailwindSize != tailwindSize) {
