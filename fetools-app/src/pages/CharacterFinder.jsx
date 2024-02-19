@@ -122,8 +122,8 @@ function CharacterFinder() {
           (character.unicode &&
             character.unicode.toLowerCase().includes(query.toLowerCase())) ||
           (character.css &&
-            (character.css.toLowerCase().includes(query.toLowerCase()) ||
-              character.css.toLowerCase().includes('\\' + query.toLowerCase())))
+            (character.css.toLowerCase().includes(query.toLowerCase()))
+          )
       );
     }
 
