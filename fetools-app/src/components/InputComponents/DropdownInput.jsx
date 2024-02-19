@@ -10,8 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import Icon from "../Icon";
+
 const DropdownInput = forwardRef(function DropdownInput(props, ref) {
-  const { title, titleClassName, className, dropdownOptions, callbackFun } =
+  const { title, titleClassName, className, dropdownOptions, callbackFun, children } =
     props;
 
   const [position, setPosition] = useState(dropdownOptions[0]);
@@ -46,16 +48,24 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
         </h2>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
+            <div className="relative">
             <Button
-              ref={buttonRef}
-              variant="outline"
-              className="
-                relative rounded justify-start w-full 
-                border border-gray-400 outline-none
-                text-gray-600 text-sm"
-            >
-              {position}
+            ref={buttonRef}
+            variant="outline"
+            className="
+            relative flex rounded justify-start w-full 
+            border border-gray-400 outline-none
+            text-gray-600 text-sm">
+              {children && Array.isArray(children)?children[0]:children}
+              <span className="flex-2">{position}</span>
+              {children && Array.isArray(children)?children[1]:null}
+              <Icon
+              name={`keyboard_arrow_down`}
+              className="absolute right-0"
+              />
             </Button>
+
+            </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="rounded outline-none"
@@ -77,8 +87,11 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
   function createDropdownItems() {
     const options = dropdownOptions.map((option, idx) => {
       return (
-        <DropdownMenuRadioItem key={`option-${idx}`} value={option}>
-          <span>{option}</span>
+        <DropdownMenuRadioItem 
+        key={`option-${idx}`} 
+        value={option}
+        className='flex'>
+          <span className="flex-2">{option}</span>
         </DropdownMenuRadioItem>
       );
     });

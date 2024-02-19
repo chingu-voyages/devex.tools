@@ -3,6 +3,7 @@ import tinycolor from "tinycolor2";
 
 import ColorInput from "../InputComponents/ColorInput";
 import DropdownInput from "../InputComponents/DropdownInput";
+import Icon from "../Icon";
 
 export default function ColorGradientInterface({
   inputValue,
@@ -38,7 +39,6 @@ export default function ColorGradientInterface({
   useEffect(() => {
     if (parentRef.current) {
       [...parentRef.current.children].forEach((element) => {
-        console.log(element)
         if (element.id === "color-input") {
           element.children[1].children[0].value = inputValue.color;
           element.children[1].children[1].children[0].value = inputValue.color;
@@ -73,7 +73,8 @@ export default function ColorGradientInterface({
             setInputValue({ ...inputValue, type: dropdownValueRef.current });
             updateTypeOnCSS();
           }}
-        />
+        >
+        </DropdownInput>
 
         <label
           id="position"
