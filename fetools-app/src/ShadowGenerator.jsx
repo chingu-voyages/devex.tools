@@ -5,12 +5,15 @@ import CodeBlock from "../components/CodeBlock";
 import { useState, useRef, useEffect } from "react";
 import {
   generateCssRule,
-  updateId
+  updateId,
 } from "../components/ShadowGeneratorComponents/ShadowGeneratorFN";
 import PageSection from "../components/PageLayout/PageSection";
 import TabSwitcher from "../components/TabSwitcher";
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
-import { useSearchParams } from "react-router-dom";
+
+
+
+
 
 const ShadowGenerator = () => {
   const [firstRender, setFirstRender] = useState(false);
@@ -36,7 +39,7 @@ const ShadowGenerator = () => {
   const [ActiveShadow, setActiveShadow] = useState(0);
   const [numOfShadows, setNumOfShadows] = useState(1);
   const [removeShadow, setRemoveShadow] = useState(false);
-  let [searchParams, setSearchParams] = useSearchParams();
+  
 
   const box = useRef();
 
@@ -55,15 +58,15 @@ const ShadowGenerator = () => {
       setFirstRender(false);
     }
 
-  
     if (removeShadow) {
       updateId(ShadowsStyles, setShadowsStyles, setRemoveShadow);
     }
 
-    applyBoxShadow(ShadowsStyles);
-  }, [ShadowsStyles, ActiveShadow, searchParams]);
+    console.log(ShadowsStyles);
 
-  console.log(searchParams)
+    applyBoxShadow(ShadowsStyles);
+  }, [ShadowsStyles, ActiveShadow]);
+
   return (
     <>
       <ToolHeaderSection>
@@ -89,8 +92,6 @@ const ShadowGenerator = () => {
             ActiveShadow={ActiveShadow}
             setActiveShadow={setActiveShadow}
             setRemoveShadow={setRemoveShadow}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
           />
         </div>
       </PageSection>
@@ -128,19 +129,8 @@ const ShadowGenerator = () => {
         <GoDeeper
           linksData={[
             {
-              url: "https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow",
-              textValue:
-                "box-shadow from MDN - https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow ",
-            },
-            {
-              url: "https://www.w3schools.com/cssref/css3_pr_box-shadow.php",
-              textValue:
-                "box-shadow from W3 School - https://www.w3schools.com/cssref/css3_pr_box-shadow.php ",
-            },
-            {
-              url: "https://css-tricks.com/almanac/properties/b/box-shadow/",
-              textValue:
-                "box-shadow from Css-tricks - https://www.w3schools.com/cssref/css3_pr_box-shadow.php ",
+              url: "https://developer.mozilla.org/es/docs/Web/CSS/box-shadow",
+              textValue: "Dummy Link 1",
             },
           ]}
         />
@@ -148,9 +138,5 @@ const ShadowGenerator = () => {
     </>
   );
 };
-
-function handleQuery(ShadowStylesObj) {
-  setSearchParams({ Arr: ShadowStyles });
-}
 
 export default ShadowGenerator;
