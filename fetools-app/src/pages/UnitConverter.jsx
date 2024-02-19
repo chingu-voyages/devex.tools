@@ -224,14 +224,18 @@ function UnitConverter() {
 
   //Tailwind Blur Function - handles entered tailwind sizes that don't exist
   const onTailwindBlur = () => {
+    let formattedTailwindSize = formatCheck(tailwindSize);
     let newTailwindSize;
     let finalTailwindSize;
 
-    if (tailwindSize.startsWith("[") && tailwindSize.endsWith("rem]")) {
+    if (
+      formattedTailwindSize.startsWith("[") &&
+      formattedTailwindSize.endsWith("rem]")
+    ) {
       const remValue = tailwindSize.slice(1, -4);
       let newEm = remValue;
       newTailwindSize = newEm * 4;
-      finalTailwindSize = tailwindCheck(formatCheck(newTailwindSize));
+      finalTailwindSize = tailwindCheck(newTailwindSize);
       setTailwindSize(finalTailwindSize);
 
       if (finalTailwindSize != tailwindSize) {
@@ -243,12 +247,15 @@ function UnitConverter() {
         });
         setOpenToast(true);
       }
-    } else if (tailwindSize.startsWith("[") && tailwindSize.endsWith("px]")) {
+    } else if (
+      formattedTailwindSize.startsWith("[") &&
+      formattedTailwindSize.endsWith("px]")
+    ) {
       const pxValue = tailwindSize.slice(1, -3);
       let newPx = pxValue;
       let newEm = newPx / basePixelSize;
       newTailwindSize = newEm * 4;
-      finalTailwindSize = tailwindCheck(formatCheck(newTailwindSize));
+      finalTailwindSize = tailwindCheck(newTailwindSize);
       setTailwindSize(finalTailwindSize);
 
       if (finalTailwindSize != tailwindSize) {
@@ -261,15 +268,15 @@ function UnitConverter() {
         setOpenToast(true);
       }
     } else {
-      newTailwindSize = tailwindSize;
-      finalTailwindSize = tailwindCheck(formatCheck(newTailwindSize));
+      newTailwindSize = formattedTailwindSize;
+      finalTailwindSize = tailwindCheck(newTailwindSize);
       setTailwindSize(finalTailwindSize);
 
-      if (finalTailwindSize != tailwindSize) {
+      if (finalTailwindSize != formattedTailwindSize) {
         // Set the toast content and open the toast
         setToastContent({
           title: "Invalid Tailwind Size",
-          content: `Entered value, ${tailwindSize}, is not an existing Tailwind Size. It has been updated to an arbitrary REM value, ${finalTailwindSize}.`,
+          content: `Entered value, ${newTailwindSize}, is not an existing Tailwind Size. It has been updated to an arbitrary REM value, ${finalTailwindSize}.`,
           icon: "error",
         });
         setOpenToast(true);
