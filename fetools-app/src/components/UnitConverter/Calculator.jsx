@@ -27,7 +27,9 @@ export default function Calculator({
             toastState={toastState}
           />
 
-          <span className="material-symbols-rounded">autorenew</span>
+          <span className="material-symbols-rounded text-gray-400">
+            autorenew
+          </span>
 
           <TextField
             title="Pixels"
@@ -37,7 +39,9 @@ export default function Calculator({
             toastState={toastState}
           />
 
-          <span className="material-symbols-rounded">autorenew</span>
+          <span className="material-symbols-rounded text-gray-400">
+            autorenew
+          </span>
 
           <TextField
             title="Tailwind Size"
