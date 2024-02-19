@@ -1,16 +1,30 @@
+import SVGIcon from '../assets/icons/SVGIcon';
+
 export default function Icon({
   name = 'stat',
   size = '24',
+  type = 'material',
   className = '',
   onClick = () => {},
+  ...props
 }) {
+  const classNames = `icon select-none ${className} ${
+    type === 'material' ? 'material-symbols-rounded' : ''
+  }`;
+
   return (
-    <span
-      className={`material-symbols-rounded icon block ${className}`}
-      style={{ fontSize: `${size}px`, height: `${size}px`, width: `${size}px` }}
+    <div
+      className={classNames}
+      style={{
+        fontSize: `${size}px`,
+        height: `${size}px`,
+        width: `${size}px`,
+        lineHeight: `1`,
+      }}
       onClick={onClick}
+      {...props}
     >
-      {name}
-    </span>
+      {type.toLowerCase() === 'svg' ? <SVGIcon name={name} /> : name}
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Icon from '../../Icon';
 
 const Detail = ({ icon, isExpanded }) => {
   return (
@@ -55,7 +56,7 @@ export default function ToolPane({
   title = 'Section Title',
   children = <p>Place your content here.</p>,
   icon = 'pageless',
-  iconMode = 'symbol', // Can also be char or svg
+  iconType = 'material', // Can also be char or svg
   isPrimary = false,
   hideBookmarkIcon = false,
   bookmarkCallback = () => {},
@@ -72,15 +73,7 @@ export default function ToolPane({
     >
       <header className="flex items-center justify-between w-full">
         <h2 className="flex items-center gap-3 text-2xl sm:text-4xl">
-          <span
-            className={`text-3xl sm:text-4xl w-7 sm:w-9 ${
-              iconMode === 'char'
-                ? 'flex items-center justify-center sm:text-3xl'
-                : 'material-symbols-rounded'
-            }`}
-          >
-            {icon}
-          </span>
+          <Icon name={icon} type={iconType} size="32" />
           {title}
         </h2>
         <div className="flex gap-2 icons">

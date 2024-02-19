@@ -12958,15 +12958,6 @@
       "css": "\\00A8"
     },
     {
-      "name": "copyright sign",
-      "character": "©",
-      "unicode": "U+000A9",
-      "hex": "&#xa9;",
-      "dec": "&#169;",
-      "entity": "&copy;",
-      "css": "\\00A9"
-    },
-    {
       "name": "feminine ordinal indicator",
       "character": "ª",
       "unicode": "U+000AA",
@@ -19549,15 +19540,6 @@
       "hex": "&#128165;",
       "category": "Smileys & Emotion (emotion)",
       "order": "1305"
-    },
-    {
-      "character": "©️",
-      "name": "copyright",
-      "shortname": ":copyright:",
-      "unicode": "00A9 FE0F",
-      "hex": "&copy;️",
-      "category": "Symbols (other-symbol)",
-      "order": ""
     },
     {
       "character": "💭",
@@ -33355,15 +33337,6 @@
       "hex": "&harr;",
       "category": "Symbols (arrow)",
       "order": "2011"
-    },
-    {
-      "character": "©",
-      "name": "copyright",
-      "shortname": ":copyright:",
-      "unicode": "00a9",
-      "hex": "&copy;",
-      "category": "Symbols (other-symbol)",
-      "order": "2103"
     },
     {
       "character": "®",

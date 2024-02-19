@@ -121,6 +121,10 @@
       z-index: 4;
       cursor: copy;
     }
+    
+    .scrollbar-hide::-webkit-scrollbar{
+      display: none;
+    }
 
     .slider::-webkit-slider-thumb {
       cursor: -webkit-grab;
@@ -175,6 +179,7 @@
     #track-handler {
       cursor: copy;
     }
+
 
     @layer thumbColorStyle {
       .wrap label:nth-of-type(1) ::-webkit-slider-thumb {
