@@ -12,6 +12,7 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
 
   return (
     <div
+      id="color-input"
       className={
         className
           ? `flex z-0 justify-center ${className}`
@@ -30,6 +31,7 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
           onChange={onChange}
           className="w-8 h-8 flex-2"
         />
+        <label id="color-hex-value">
         <input
           ref={ref}
           defaultValue={defaultValue}
@@ -39,6 +41,7 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
           maxLength={7}
           className="uppercase outline-none w-10/12 pl-3 text-gray-600"
         />
+        </label>
       </div>
     </div>
   );

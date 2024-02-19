@@ -37,14 +37,15 @@ export default function ColorGradientInterface({
   // Ensure input fields reflect the updated displayData
   useEffect(() => {
     if (parentRef.current) {
-      [...parentRef.current.children].forEach((label) => {
-        if (label.id === "color") {
-          label.children[0].children[0].value = inputValue.color;
-          label.children[0].children[1].value = inputValue.color;
-        } else if (label.id === "position") {
-          label.children[0].value = inputValue.position;
-        } else if (label.id === "rotation") {
-          label.children[0].value = inputValue.rotation;
+      [...parentRef.current.children].forEach((element) => {
+        console.log(element)
+        if (element.id === "color-input") {
+          element.children[1].children[0].value = inputValue.color;
+          element.children[1].children[1].children[0].value = inputValue.color;
+        } else if (element.id === "position") {
+          element.children[0].value = inputValue.position;
+        } else if (element.id === "rotation") {
+          element.children[0].value = inputValue.rotation;
         }
       });
     }
