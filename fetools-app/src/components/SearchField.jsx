@@ -40,7 +40,7 @@ const SearchField = ({ placeholderText, search, clearInput }) => {
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        className='bg-gray-100 p-3 text-lg pr-12 focus:ring focus:ring-[#663399] focus:outline-none'
+        className='bg-gray-100 p-3 text-lg pr-12 rounding-[.25rem] focus:ring focus:ring-[#663399] focus:outline-none'
         autoFocus
       />
         <svg
