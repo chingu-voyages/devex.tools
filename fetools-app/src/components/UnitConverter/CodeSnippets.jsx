@@ -134,7 +134,10 @@ export default function CodeSnippets({ pixels, em, tailwindSize, toastState }) {
           ))}
     </div>,
 
-    <div key="tab-em" className="grid grid-cols-4 gap-4">
+    <div
+      key="tab-em"
+      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4"
+    >
       {isNaN(em)
         ? CodeSamples["NaN"].map((sample, index) => (
             <CodeBlock
@@ -154,7 +157,10 @@ export default function CodeSnippets({ pixels, em, tailwindSize, toastState }) {
           ))}
     </div>,
 
-    <div key="tab-px" className="grid grid-cols-4 gap-4">
+    <div
+      key="tab-px"
+      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4"
+    >
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample, index) => (
             <CodeBlock
@@ -174,7 +180,10 @@ export default function CodeSnippets({ pixels, em, tailwindSize, toastState }) {
           ))}
     </div>,
 
-    <div key="tab-tailwind" className="grid grid-cols-4 gap-4">
+    <div
+      key="tab-tailwind"
+      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4"
+    >
       {isNaN(pixels)
         ? CodeSamples["NaNtailwind"].map((sample, index) => (
             <CodeBlock
