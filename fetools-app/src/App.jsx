@@ -1,9 +1,8 @@
-import { Outlet } from 'react-router-dom';
-import Header from './components/PageLayout/Header';
-import Footer from './components/PageLayout/Footer';
+import { Outlet } from "react-router-dom";
+import Header from "./components/PageLayout/Header";
+import Footer from "./components/PageLayout/Footer";
 
-import './index.css';
-import Toast from './components/Toast';
+import "./index.css";
 
 function App() {
   return (
