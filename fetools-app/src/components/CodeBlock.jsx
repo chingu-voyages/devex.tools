@@ -8,13 +8,23 @@ function CodeBlock({ toastState, title, code, lang = "css" }) {
     if (lang === "css") {
       // Split code by lines for multiline code handling (for "position" attribute code)
       return code.split("\n").map((line, index) => {
-        const [property, value] = line.split(":");
-        return (
-          <div key={index}>
-            <span className="text-purple-800">{property}:</span>
-            <span className="text-black">{value}</span>
-          </div>
-        );
+        // Check if the line contains a colon
+        if (!line.includes(":")) {
+          // Render these lines without splitting
+          return (
+            <div key={index}>
+              <span className="text-purple-800">{line}</span>
+            </div>
+          );
+        } else {
+          const [property, value] = line.split(":");
+          return (
+            <div key={index}>
+              <span className="text-purple-800">{property}:</span>
+              <span className="text-black">{value}</span>
+            </div>
+          );
+        }
       });
     }
     // Default or when lang is 'tailwind'
