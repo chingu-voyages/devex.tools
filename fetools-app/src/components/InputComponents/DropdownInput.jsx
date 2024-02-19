@@ -53,11 +53,11 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
             ref={buttonRef}
             variant="outline"
             className="
-            relative flex rounded justify-start w-full 
+            relative flex rounded justify-start w-full px-0 pl-2 pr-8  
             border border-gray-400 outline-none
             text-gray-600 text-sm">
               {children && Array.isArray(children)?children[0]:children}
-              <span className="flex-2">{position}</span>
+              <span className="flex-1 text-left">{position}</span>
               {children && Array.isArray(children)?children[1]:null}
               <Icon
               name={`keyboard_arrow_down`}
