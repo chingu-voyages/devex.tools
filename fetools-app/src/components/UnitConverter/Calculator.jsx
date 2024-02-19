@@ -1,6 +1,6 @@
-import TextField from '../TextField';
-import EditableInput from '../EditableInput';
-import { ToolPane } from '../ToolsLayout/Sections/';
+import TextField from "../TextField";
+import EditableInput from "../EditableInput";
+import { ToolPane } from "../ToolsLayout/Sections/";
 
 export default function Calculator({
   em,
@@ -12,25 +12,36 @@ export default function Calculator({
   onTailwindBlur,
   basePixelSize,
   handleBasePixelSizeChange,
+  toastState,
 }) {
   return (
     <ToolPane title="Calculator" icon="calculate">
       {/*Input Boxes*/}
       <div className="flex flex-col gap-10">
-        <div className="flex gap-8">
+        <div className="flex flex-col gap-4 items-center md:flex-row">
           <TextField
             title="REM/EM"
             value={em}
             unit="rem"
             onValueChange={handleEmChange}
+            toastState={toastState}
           />
+
+          <span className="material-symbols-rounded text-gray-400">
+            autorenew
+          </span>
 
           <TextField
             title="Pixels"
             value={pixels}
             unit="px"
             onValueChange={handlePixelChange}
+            toastState={toastState}
           />
+
+          <span className="material-symbols-rounded text-gray-400">
+            autorenew
+          </span>
 
           <TextField
             title="Tailwind Size"
@@ -38,10 +49,11 @@ export default function Calculator({
             onValueChange={handleTailwindChange}
             inputType="text"
             onBlur={onTailwindBlur}
+            toastState={toastState}
           />
         </div>
 
-        <div className="flex items-center justify-center">
+        <div className="flex justify-center">
           <EditableInput
             label="Base Size"
             value={basePixelSize}

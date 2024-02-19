@@ -1,21 +1,20 @@
-import '../index.css';
-import GoDeeper from '../components/ToolsLayout/GoDeeper';
-import ToolHeading from '../components/ToolsLayout/ToolHeading';
+import "../index.css";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
+import ToolHeading from "../components/ToolsLayout/ToolHeading";
 
-import { useState, useEffect, useRef } from 'react';
-import ToolMain from '../components/ToolsLayout/ToolMain';
+import { useState, useEffect, useRef } from "react";
+import ToolMain from "../components/ToolsLayout/ToolMain";
 import {
   ToolSection,
   ToolSectionColumns,
-} from '../components/ToolsLayout/Sections';
-import Calculator from '../components/UnitConverter/Calculator';
-import Preview from '../components/UnitConverter/Preview';
-import CodeSnippets from '../components/UnitConverter/CodeSnippets';
-import Toast from '../components/Toast';
+} from "../components/ToolsLayout/Sections";
+import Calculator from "../components/UnitConverter/Calculator";
+import Preview from "../components/UnitConverter/Preview";
+import CodeSnippets from "../components/UnitConverter/CodeSnippets";
+import Toast from "../components/Toast";
 
-import useExpander from '../hooks/useExpander';
-import useToastState from '../hooks/useToastState';
-
+import useExpander from "../hooks/useExpander";
+import useToastState from "../hooks/useToastState";
 
 // Function component UnitConverter for converting units between pixels, em/rem, and Tailwind utility classes
 
@@ -28,18 +27,25 @@ function UnitConverter() {
   const [cssSize, setCssSize] = useState(`${pixels}px`);
 
   // State to hold the content of the contentEditable div
-  const [editableContent, setEditableContent] = useState('Aa');
+  const [editableContent, setEditableContent] = useState("Aa");
 
   // Function to handle changes in the contentEditable div
   const editableRef = useRef(null);
 
   // Hook to manage expanding preview
   const [isExpanded, toggleIsExpanded] = useExpander();
-  const toastState = useToastState()
- 
+  const toastState = useToastState();
+  const { setOpenToast, setToastContent } = toastState;
+
   const handleContentChange = () => {
     const newText = editableRef.current.innerText;
-    if (newText !== editableContent) {
+
+    // Check if the contentEditable div is empty after the change
+    if (newText.trim() === "") {
+      // Insert a non-breaking space as placeholder to maintain the div's height
+      editableRef.current.innerHTML = "&nbsp;";
+    } else if (newText !== editableContent) {
+      // Update the state only if the new text is different and not empty
       setEditableContent(newText);
     }
   };
@@ -56,7 +62,7 @@ function UnitConverter() {
   const [alertShown, setAlertShown] = useState(false);
 
   // Update CSS size whenever pixels, em, or Tailwind size changes
-  const updateCssSize = newSizeInPixels => {
+  const updateCssSize = (newSizeInPixels) => {
     let finalSize = newSizeInPixels;
     let displayNote = false;
 
@@ -67,7 +73,7 @@ function UnitConverter() {
     }
 
     // Check if newSizeInPixels is a number, if not, set CSS size to "0px"
-    setCssSize(isNaN(finalSize) ? '0px' : `${finalSize}px`); // Update CSS size
+    setCssSize(isNaN(finalSize) ? "0px" : `${finalSize}px`); // Update CSS size
 
     // Update the state to control the visibility of the inline notification
     setAlertShown(displayNote);
@@ -99,12 +105,12 @@ function UnitConverter() {
     24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96,
   ];
 
-  const tailwindCheck = TailwindSize => {
-    if (isNaN(TailwindSize) || TailwindSize === '') {
-      return '';
+  const tailwindCheck = (TailwindSize) => {
+    if (isNaN(TailwindSize) || TailwindSize === "") {
+      return "";
     }
     const nearestTailwindSize = tailwindSizes.find(
-      size => size == TailwindSize
+      (size) => size == TailwindSize
     );
     if (nearestTailwindSize !== undefined) {
       return nearestTailwindSize;
@@ -114,7 +120,7 @@ function UnitConverter() {
   };
 
   // Handler for base pixel size changes
-  const handleBasePixelSizeChange = e => {
+  const handleBasePixelSizeChange = (e) => {
     const newBaseSize = parseFloat(e.target.value);
     setBasePixelSize(newBaseSize);
     const newEm = pixels / newBaseSize;
@@ -123,7 +129,7 @@ function UnitConverter() {
   };
 
   // Handler for pixel value changes
-  const handlePixelChange = e => {
+  const handlePixelChange = (e) => {
     const newPixels = parseFloat(e.target.value);
     setPixels(newPixels);
     const newEm = newPixels / basePixelSize;
@@ -133,7 +139,7 @@ function UnitConverter() {
   };
 
   // Handler for rem/em value changes
-  const handleEmChange = e => {
+  const handleEmChange = (e) => {
     const newEm = parseFloat(e.target.value);
     setEm(newEm);
     const newPixels = newEm * basePixelSize;
@@ -143,27 +149,27 @@ function UnitConverter() {
   };
 
   // Tailwind Size Character Validation
-  const isValidCharacter = char => {
-    const validChars = '[],pxrem.';
+  const isValidCharacter = (char) => {
+    const validChars = "[],pxrem.";
     return validChars.includes(char) || !isNaN(char);
   };
 
   // Tailwind Size Format Check
-  const formatCheck = input => {
+  const formatCheck = (input) => {
     // Check if input is in the allowed format [Xrem] or [Xpx], if so, return as is
     if (
-      (input.startsWith('[') && input.endsWith('rem]')) ||
-      (input.startsWith('[') && input.endsWith('px]'))
+      (input.startsWith("[") && input.endsWith("rem]")) ||
+      (input.startsWith("[") && input.endsWith("px]"))
     ) {
       return input;
     }
 
     // Remove all non-numeric characters except for the decimal point
-    return input.replace(/[^\d.]/g, '');
+    return input.replace(/[^\d.]/g, "");
   };
 
   // Handler for Tailwind Size changes
-  const handleTailwindChange = e => {
+  const handleTailwindChange = (e) => {
     const inputValue = e.target.value.toString();
     const lastChar = inputValue.slice(-1); // Get the last character
 
@@ -180,7 +186,7 @@ function UnitConverter() {
     let newEm;
 
     // Checks if the input value is in the format [X.XXXrem] and parses it correctly
-    if (formattedValue.startsWith('[') && formattedValue.endsWith('rem]')) {
+    if (formattedValue.startsWith("[") && formattedValue.endsWith("rem]")) {
       // Extracts the numeric part and parses it as float
       const remValue = formattedValue.slice(1, -4);
       if (!isNaN(remValue)) {
@@ -191,8 +197,8 @@ function UnitConverter() {
         newEm = 0;
       }
     } else if (
-      formattedValue.startsWith('[') &&
-      formattedValue.endsWith('px]')
+      formattedValue.startsWith("[") &&
+      formattedValue.endsWith("px]")
     ) {
       // Extracts the numeric part and parses it as float
       const pxValue = formattedValue.slice(1, -3);
@@ -218,21 +224,64 @@ function UnitConverter() {
 
   //Tailwind Blur Function - handles entered tailwind sizes that don't exist
   const onTailwindBlur = () => {
+    let formattedTailwindSize = formatCheck(tailwindSize);
     let newTailwindSize;
+    let finalTailwindSize;
 
-    if (tailwindSize.startsWith('[') && tailwindSize.endsWith('rem]')) {
+    if (
+      formattedTailwindSize.startsWith("[") &&
+      formattedTailwindSize.endsWith("rem]")
+    ) {
       const remValue = tailwindSize.slice(1, -4);
       let newEm = remValue;
       newTailwindSize = newEm * 4;
-    } else if (tailwindSize.startsWith('[') && tailwindSize.endsWith('px]')) {
+      finalTailwindSize = tailwindCheck(newTailwindSize);
+      setTailwindSize(finalTailwindSize);
+
+      if (finalTailwindSize != tailwindSize) {
+        // Set the toast content and open the toast
+        setToastContent({
+          title: "Invalid Arbitrary REM Value",
+          content: `Entered value, ${tailwindSize}, has a corresponding Tailwind Size value of ${finalTailwindSize} and has been updated accordingly.`,
+          icon: "error",
+        });
+        setOpenToast(true);
+      }
+    } else if (
+      formattedTailwindSize.startsWith("[") &&
+      formattedTailwindSize.endsWith("px]")
+    ) {
       const pxValue = tailwindSize.slice(1, -3);
       let newPx = pxValue;
       let newEm = newPx / basePixelSize;
       newTailwindSize = newEm * 4;
+      finalTailwindSize = tailwindCheck(newTailwindSize);
+      setTailwindSize(finalTailwindSize);
+
+      if (finalTailwindSize != tailwindSize) {
+        // Set the toast content and open the toast
+        setToastContent({
+          title: "Invalid Arbitrary PX Value",
+          content: `Entered value, ${tailwindSize}, has a corresponding Tailwind Size value of ${finalTailwindSize} and has been updated accordingly.`,
+          icon: "error",
+        });
+        setOpenToast(true);
+      }
     } else {
-      newTailwindSize = tailwindSize;
+      newTailwindSize = formattedTailwindSize;
+      finalTailwindSize = tailwindCheck(newTailwindSize);
+      setTailwindSize(finalTailwindSize);
+
+      if (finalTailwindSize != formattedTailwindSize) {
+        // Set the toast content and open the toast
+        setToastContent({
+          title: "Invalid Tailwind Size",
+          content: `Entered value, ${newTailwindSize}, is not an existing Tailwind Size. It has been updated to an arbitrary REM value, ${finalTailwindSize}.`,
+          icon: "error",
+        });
+        setOpenToast(true);
+      }
     }
-    setTailwindSize(tailwindCheck(formatCheck(newTailwindSize)));
   };
 
   // JSX for rendering the UI components.
@@ -256,6 +305,7 @@ function UnitConverter() {
           onTailwindBlur={onTailwindBlur}
           basePixelSize={basePixelSize}
           handleBasePixelSizeChange={handleBasePixelSizeChange}
+          toastState={toastState}
         />
         <Preview
           alertShown={alertShown}
@@ -270,27 +320,32 @@ function UnitConverter() {
 
       {/* Section for code blocks */}
       <ToolSection icon="integration_instructions" title="Code Snippets">
-        <CodeSnippets pixels={pixels} em={em} tailwindSize={tailwindSize} toastState={toastState}/>
+        <CodeSnippets
+          pixels={pixels}
+          em={em}
+          tailwindSize={tailwindSize}
+          toastState={toastState}
+        />
       </ToolSection>
 
       <GoDeeper
         linksData={[
           {
-            url: 'https://www.w3schools.com/cssref/css_units.php',
-            textValue: 'Explore CSS units at W3Schools',
+            url: "https://www.w3schools.com/cssref/css_units.php",
+            textValue: "Explore CSS units at W3Schools",
           },
           {
-            url: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
-            textValue: 'Learn more about CSS values and units at MDN',
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+            textValue: "Learn more about CSS values and units at MDN",
           },
           {
-            url: 'https://www.youtube.com/watch?v=N5wpD9Ov_To&ab_channel=KevinPowell',
-            textValue: 'Are you using the right CSS units? With Kevin Powell',
+            url: "https://www.youtube.com/watch?v=N5wpD9Ov_To&ab_channel=KevinPowell",
+            textValue: "Are you using the right CSS units? With Kevin Powell",
           },
         ]}
       />
 
-      <Toast toastState={toastState}/>
+      <Toast toastState={toastState} />
     </ToolMain>
   );
 }

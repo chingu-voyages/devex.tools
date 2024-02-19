@@ -58,7 +58,7 @@ function EditableInput({
             value={value}
             onChange={onChange}
             onBlur={handleBlur}
-            className="border rounded border-black w-28 py-2 px-3  text-gray-400 leading-tight"
+            className="border rounded border-black w-28 py-2 px-3 pr-12 text-center text-gray-400 leading-tight"
           />
           {/* Display unit next to the input if applicable*/}
           <span className="px-2 text-gray-700 absolute inset-y-0 right-0 flex items-center mr-2 pointer-events-none font-semibold">

@@ -1,13 +1,14 @@
-import { useRef } from 'react';
-import CopyButton from './CopyButton';
+import { useRef } from "react";
+import CopyButton from "./CopyButton";
 
 function TextField({
   title,
   value,
   unit,
   onValueChange,
-  inputType = 'number',
+  inputType = "number",
   onBlur,
+  toastState,
 }) {
   // A ref to the input element
   const inputRef = useRef(null);
@@ -38,16 +39,16 @@ function TextField({
           }
         `}
       </style>
-      <div className="relative mb-3">
+      <div className="relative mb-3 w-full px-2 md:px-0">
         <label className="block mb-2 text-sm font-bold text-black">
           {title}
         </label>
-        <div className="relative flex border rounded">
+        <div className="relative flex border rounded w-full">
           <input
             ref={inputRef}
             type={inputType}
-            className={`py-2 pl-3 leading-tight text-gray-400 border border-black rounded w-28 focus:outline-none focus:shadow-outline ${
-              unit ? 'pr-12' : 'pr-3'
+            className={`py-2 pl-3 leading-tight text-gray-400 border text-center border-black rounded w-full focus:outline-none focus:shadow-outline ${
+              unit ? "pr-12" : "pr-3"
             }`}
             value={value}
             onChange={onValueChange}
@@ -60,7 +61,7 @@ function TextField({
             </span>
           )}
           <span className="absolute top-0 right-0 -mt-2 text-lg transform translate-x-1/2 -translate-y-full">
-            <CopyButton onCopy={getValueWithUnit} />
+            <CopyButton onCopy={getValueWithUnit} toastState={toastState} />
           </span>
         </div>
       </div>
