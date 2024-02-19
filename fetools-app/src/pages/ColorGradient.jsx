@@ -40,7 +40,7 @@ export default function ColorGradient() {
     color: getHexString(gradientColors[0].colorStr),
     position: gradientColors[0].value,
     rotation: 25,
-    type: 'Linear'
+    type: 'linear'
   });
 
   const [codeBlockRules, setCodeBlockRules] = useState(
@@ -230,7 +230,7 @@ export default function ColorGradient() {
 
     const colors = sortedColors.map(({colorStr,value}) => (`${colorStr} ${value}%`));
 
-    if(type==='Radial' && !isSlider){
+    if(type==='radial' && !isSlider){
       const gradientRule = `${type}-gradient(${colors.join(', ')})`;
       return gradientRule;
     }

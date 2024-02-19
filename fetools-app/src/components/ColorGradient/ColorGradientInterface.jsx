@@ -1,9 +1,8 @@
 import { useRef, useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
 import tinycolor from "tinycolor2";
 
-import { Dropdown } from "./Dropdown";
 import ColorInput from "../InputComponents/ColorInput";
+import DropdownInput from "../InputComponents/DropdownInput";
 
 export default function ColorGradientInterface({
     inputValue,
@@ -19,6 +18,8 @@ export default function ColorGradientInterface({
     
     const [displayData, setDisplayData] = useState(inputValue)
     const [lastValidData, setLastValidData] = useState(inputValue)
+    
+    const dropdownValueRef = useRef() 
     
     const parentRef = useRef() 
     const colorInputRef = useRef()
@@ -50,14 +51,24 @@ export default function ColorGradientInterface({
     return(
         <>
         <div ref={parentRef} className="grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-6">
-            <label id="color" className="flex flex-col font-bold ">Color
+            
             <ColorInput
             ref={colorInputRef} 
             defaultValue={displayData.color} 
             onChange={handleColorInputChange}
+            title='Color'
             placeholder={lastValidData.color || displayData.color}
             />
-            </label>
+
+            <DropdownInput
+            title={'Type'}
+            dropdownOptions={['linear', 'radial']}
+            ref={dropdownValueRef}
+            callbackFun={()=>{
+                setInputValue({...inputValue, type: dropdownValueRef.current });
+                updateTypeOnCSS()
+            }}/>
+
             <label id="position" className="relative flex flex-col w-full font-bold">Position
                 <input
                 max={100}
@@ -69,11 +80,7 @@ export default function ColorGradientInterface({
                 className="rounded-sm border border-gray-400 py-5 uppercase text-center"/>
                 <span className="block absolute bottom-0 left-24">{displayData.position}%</span>
             </label>
-            <Dropdown 
-            inputValue={inputValue}
-            setInputValue={setInputValue}
-            updateTypeOnCSS={updateTypeOnCSS}
-            />
+
             <label id="rotation" className="relative flex flex-col w-full font-bold">Rotation
                 <input
                 max={100}
@@ -91,6 +98,11 @@ export default function ColorGradientInterface({
     function updateTypeOnCSS(){
         const gradientRule = generateGradientRule(gradientColors)
         updateCSSValues('.gradient', 'background', gradientRule);    
+    }
+
+    function dropdownFunc(){
+        setInputValue({ ...inputValue, type: dropdownValueRef.current });
+        updateTypeOnCSS();
     }
 
 }
