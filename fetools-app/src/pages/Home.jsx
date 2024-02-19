@@ -4,7 +4,7 @@ function Home() {
   useEffect(() => {
     window.location.href = "/colors";
   }, []);
-  return null;
+  return <main className="h-[100vh]"></main>;
 }
 
 export default Home;
