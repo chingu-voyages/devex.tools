@@ -74,6 +74,7 @@ const Table = () => {
 
         <TabSwitcher buttons={["HTML & CSS", "Tailwind"]}>
           <CodeBlock
+            title="HTML & CSS"
             toastState={toastState}
             code={generateTableCode(tableConfig)}
             lang="html" 
