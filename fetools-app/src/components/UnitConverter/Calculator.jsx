@@ -17,8 +17,8 @@ export default function Calculator({
   return (
     <ToolPane title="Calculator" icon="calculate">
       {/*Input Boxes*/}
-      <div className="flex flex-col gap-10 items-center">
-        <div className="flex flex-col md:flex-row gap-4 items-center">
+      <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-4 items-center md:flex-row">
           <TextField
             title="REM/EM"
             value={em}
@@ -53,7 +53,7 @@ export default function Calculator({
           />
         </div>
 
-        <div className="flex items-center justify-center">
+        <div className="flex justify-center">
           <EditableInput
             label="Base Size"
             value={basePixelSize}
