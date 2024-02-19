@@ -175,7 +175,7 @@ const generateTableCode = (tableConfig, tailwind = false) => {
     }
     html += "  </tbody>\n";
 
-    html += "</table>\n <div/> ";
+    html += "</table>\n </div> ";
   }
 
   // styles for the css
@@ -243,7 +243,7 @@ const generateTableCode = (tableConfig, tailwind = false) => {
     }
     html += "  </tbody>\n";
 
-    html += "</table>\n <div/> ";
+    html += "</table>\n </div> ";
   }
 
   return html;
