@@ -18,7 +18,7 @@ export default function Calculator({
     <ToolPane title="Calculator" icon="calculate">
       {/*Input Boxes*/}
       <div className="flex flex-col gap-10 items-center">
-        <div className="flex gap-4 items-center">
+        <div className="flex flex-col md:flex-row gap-4 items-center">
           <TextField
             title="REM/EM"
             value={em}
