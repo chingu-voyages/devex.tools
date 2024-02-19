@@ -95,12 +95,15 @@
 
   @layer InputComponents{
     #custom-color-input::-webkit-color-swatch-wrapper{
+      height: 100%;
+      width: 100%;
       padding: 0;
       margin: 0;
-
     }
 
     #custom-color-input::-webkit-color-swatch{
+      height: 100%;
+      width: 100%;
       border: none;
       border-radius: 4px;
     }

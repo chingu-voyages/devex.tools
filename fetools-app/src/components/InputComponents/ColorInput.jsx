@@ -5,6 +5,7 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
     defaultValue,
     placeholder,
     className,
+    title,
     titleClassName,
     children,
     onChange,
@@ -20,8 +21,8 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
       }
     >
       {children}
-      <h2 className={`font-bold text-gray-600 text-sm ${titleClassName}`}>
-        Color
+      <h2 className={`font-bold text-gray-600 text-sm ${titleClassName || ''}`}>
+        {title}
       </h2>
       <div className="relative flex border rounded border-gray-400 pl-1 h-10 items-center">
         <input
@@ -29,7 +30,7 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
           type="color"
           defaultValue={defaultValue}
           onChange={onChange}
-          className="w-8 h-8 flex-2"
+          className="min-w-8 w-8 h-8"
         />
         <label id="color-hex-value">
         <input
@@ -39,7 +40,7 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
           placeholder={placeholder}
           type="text"
           maxLength={7}
-          className="uppercase outline-none w-10/12 pl-3 text-gray-600"
+          className="uppercase outline-none w-full pl-3 text-gray-600"
         />
         </label>
       </div>

@@ -55,26 +55,25 @@ export default function ColorGradientInterface({
     <>
       <div
         ref={parentRef}
-        className="grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-6"
+        className="grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-6 items-center"
       >
         <ColorInput
-          ref={colorInputRef}
-          defaultValue={displayData.color}
-          onChange={handleColorInputChange}
-          title="Color"
-          placeholder={lastValidData.color || displayData.color}
+        ref={colorInputRef}
+        defaultValue={displayData.color}
+        onChange={handleColorInputChange}
+        title="Color"
+        placeholder={lastValidData.color || displayData.color}
         />
 
         <DropdownInput
-          title={"Type"}
+          title="Type"
           dropdownOptions={["linear", "radial"]}
           ref={dropdownValueRef}
           callbackFun={() => {
             setInputValue({ ...inputValue, type: dropdownValueRef.current });
             updateTypeOnCSS();
           }}
-        >
-        </DropdownInput>
+        ></DropdownInput>
 
         <label
           id="position"
@@ -120,5 +119,4 @@ export default function ColorGradientInterface({
     const gradientRule = generateGradientRule(gradientColors);
     updateCSSValues(".gradient", "background", gradientRule);
   }
-
 }
