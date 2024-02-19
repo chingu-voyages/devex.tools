@@ -1,9 +1,7 @@
-import React from "react";
-
 const LetterSpacingInput = ({ font, handleLetterSpacingChange }) => {
   return (
-    <div className="flex flex-col gap-4 w-full">
-      <div className=" text-base font-bold flex items-center">
+    <div className="flex flex-col w-full gap-4">
+      <div className="flex items-center text-base font-bold">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -17,9 +15,7 @@ const LetterSpacingInput = ({ font, handleLetterSpacingChange }) => {
             fill="black"
           />
         </svg>
-        <div className="flex items-center ml-2">
-          <span>{font.letterSpacing}px</span>
-        </div>
+        <div className="flex items-center ml-2">{font.letterSpacing}</div>
         <input
           type="range"
           value={String(parseInt(font.letterSpacing))}

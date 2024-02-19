@@ -1,74 +1,47 @@
 import { Link } from 'react-router-dom';
-import { appName } from '../../data';
-import arrowUp from '../../assets/arrow-up.svg';
+import Icon from '../Icon';
+import logo from '../../assets/devexToolsLogoWhite.svg';
 
 export default function Footer() {
   return (
-    <footer
-      className="
-        bg-[#2c2c2c] text-white flex flex-col p-4 justify-between
-        max-sm:p-4 max-sm:gap-8
-        sm:p-8 sm:gap-4
-        "
-    >
-      <div
-        className="
-            flex justify-between
-            "
-      >
-        <h1
-          className="
-                flex-1 block min-w-fit max-w-fit font-bold text-3xl leading-none
-                "
-        >
-          {appName}
-        </h1>
+    <footer className="flex flex-col justify-between bg-[#2c2c2c] [&_a]:underline [&_a:hover]:text-white py-4 px-8 text-white max-sm:gap-8 max-sm:p-4 sm:gap-4 sm:p-8 xl:px-16">
+      <div className="flex justify-between">
+        <Link to="/">
+          <img src={logo} alt="devex.tools" className="w-[200px] h-[31px]" />
+        </Link>
 
-        <img
-          onClick={goTopPage}
-          src={arrowUp}
-          alt="arrow up footer icon"
-          className="
-                cursor-pointer self-center
-                "
-        />
+        <div className="flex h-8 w-8 items-center justify-center rounded-r-[.5rem] rounded-bl-[.5rem] bg-white text-primary">
+          <Icon
+            name="keyboard_arrow_up"
+            className="cursor-pointer"
+            onClick={goTopPage}
+          />
+        </div>
       </div>
-      <div
-        className="
-            flex justify-center gap-4
-            max-sm:flex-col max-sm:items-center
-            "
-      >
-        <p
-          className="
-                font-bold block max-w-fit min-w-fit 
-                max-sm:tracking-tight
-                "
+      <div className="flex justify-center">
+        <div
+          style={{ textWrap: 'balance' }}
+          className="max-w-[48rem] xl:max-w-[60%] text-center xl:-mt-[3.5rem]"
         >
-          Site Copyright &copy; 2024 {appName}.
-        </p>
-        <ul className="flex flex-row gap-4">
-          <li>
-            <Link
-              to="/team"
-              className="
-                        font-bold block underline underline-offset-2 
-                        "
-            >
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/"
-              className="
-                        font-bold block underline underline-offset-2 
-                        "
-            >
-              Privacy Policy
-            </Link>
-          </li>
-        </ul>
+          <p className="mb-3">
+            Precision machined by{' '}
+            <a href="https://github.com/amansinghgill">@amansinghgill</a>,{' '}
+            <a href="https://github.com/david-nyc-pm">@david-nyc-pm</a>,{' '}
+            <a href="https://github.com/Greimil">@Greimil</a>,{' '}
+            <a href="https://github.com/imadrig">@imadrig</a>,{' '}
+            <a href="https://github.com/joekotvas">@joekotvas</a>,{' '}
+            <a href="https://github.com/olegklyufinskyy">@olegklyufinskyy</a>,
+            &amp; <a href="https://github.com/Stevensauro">@Stevensauro</a>.
+          </p>
+          <p>
+            <strong>Devex.tools</strong> is open source! Find us on{' '}
+            <a href="https://github.com/chingu-voyages/v47-tier2-team-17/">
+              GitHub
+            </a>
+            . Props to the <a href="https://chingu.io/">Chingu</a> {` `}
+            team for facilitating this voyage.
+          </p>
+        </div>
       </div>
     </footer>
   );

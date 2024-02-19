@@ -1,19 +1,32 @@
-function CopyButton({ onCopy }) {
+import { MdContentCopy } from 'react-icons/md';
+import ToastButton from './ToastButton';
+
+function CopyButton({ onCopy, toastState }) {
+  
   const handleCopy = () => {
     const textToCopy = onCopy();
     if (navigator.clipboard && textToCopy) {
       navigator.clipboard.writeText(textToCopy).then(
         () => {
-          console.log("Text copied to clipboard");
+          toastState.setToastContent({
+            title: 'Content Copied To Clipboard',
+            content: textToCopy,
+            icon: 'copy',
+          });
+          console.log(toastState);
         },
-        (err) => {
-          console.error("Could not copy text: ", err);
+        err => {
+          console.error('Could not copy text: ', err);
         }
       );
     }
   };
 
-  return <button onClick={handleCopy}>📋</button>;
+  return (
+    <ToastButton onClickFun={handleCopy} toastState={toastState}>
+      <MdContentCopy />
+    </ToastButton>
+  );
 }
 
 export default CopyButton;
