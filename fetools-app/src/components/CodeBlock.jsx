@@ -26,7 +26,7 @@ function CodeBlock({ toastState, title, code, lang = "css" }) {
       <div className="mb-2 text-sm font-bold text-black">{title}</div>
       <div className="relative rounded overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-1 bg-gray-600 z-10"></div>
-        <div className="p-3 bg-neutral-100 rounded relative">
+        <div className="p-3 bg-neutral-100 rounded relative border border-gray-300">
           <pre className="whitespace-pre-wrap overflow-x-auto">
             <code>{renderCodeWithHighlight()}</code>
           </pre>
