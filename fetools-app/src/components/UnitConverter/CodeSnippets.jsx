@@ -111,7 +111,10 @@ export default function CodeSnippets({ pixels, em, tailwindSize, toastState }) {
   //TabSwitcher Content
 
   const tabContents = [
-    <div key="tab-rem" className="grid grid-cols-4 gap-4">
+    <div
+      key="tab-rem"
+      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4"
+    >
       {isNaN(pixels)
         ? CodeSamples["NaN"].map((sample, index) => (
             <CodeBlock
