@@ -192,7 +192,7 @@ const generateTableCode = (tableConfig, tailwind = false) => {
     border-radius: ${tableConfig.borderRounding}px;
   }
   
-  .table.generated-table {
+  .table.GeneratedTable  {
     width: ${tableConfig.tableWidth};
     background-color: ${tableConfig.bgColor};
     border-collapse: ${tableConfig.collapse ? "collapse" : "separate"};
@@ -224,7 +224,7 @@ const generateTableCode = (tableConfig, tailwind = false) => {
   
   <!-- HTML: Place in the document's body where your table should appear. --> 
     
-  <div>\n  <table class="generated-table" >\n`;
+  <div>\n  <table class="GeneratedTable" >\n`;
 
     html += "  <thead>\n";
     html += "    <tr>\n";
