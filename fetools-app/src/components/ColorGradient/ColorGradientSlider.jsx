@@ -32,7 +32,7 @@ export default function ColorGradientSlider({
             className="wrap gradientSlider flex flex-col relative w-full rounded-md h-3 justify-center">
                 {createHandles()}
             </div>
-            <Icon name="star" className="ml-3 cursor-pointer" onClick={onClickRandom}></Icon>
+            <Icon name="AutoAwesome" iconType="svg" className="ml-3 cursor-pointer" onClick={onClickRandom}></Icon>
         </div>
     </>
     )
