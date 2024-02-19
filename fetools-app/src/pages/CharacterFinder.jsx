@@ -65,12 +65,24 @@ function CharacterFinder() {
       ...htmlCharacters.currency,
       ...htmlCharacters.arrows,
       ...htmlCharacters.symbols,
-      ...htmlCharacters.emojis,
+      ...htmlCharacters.emojis.map(character => ({
+        ...character,
+        unicode:
+          character.unicode && character.unicode.startsWith('U+')
+            ? character.unicode
+            : 'U+' + character.unicode,
+      })),
     ];
 
     let filteredResults;
 
-    if (query.length === 1) {
+    if (query === '-') {
+      filteredResults = allCharacterArrays.filter(character =>
+        character.name.toLowerCase().includes('hyphen')
+      );
+      
+    } else if (query.length === 1) {
+      
       filteredResults = allCharacterArrays.filter(
         character =>
           character.character.toLowerCase() === query.toLowerCase() ||
@@ -81,7 +93,10 @@ function CharacterFinder() {
           (character.hex &&
             character.hex.toLowerCase() === query.toLowerCase()) ||
           (character.unicode &&
-            character.unicode.toLowerCase() === query.toLowerCase())
+            character.unicode.toLowerCase() === query.toLowerCase()) ||
+          (character.css &&
+            (character.css.toLowerCase() === query.toLowerCase() ||
+              character.css.toLowerCase() === '\\' + query.toLowerCase()))
       );
 
       if (filteredResults.length === 0) {
@@ -105,7 +120,10 @@ function CharacterFinder() {
           (character.hex &&
             character.hex.toLowerCase().includes(query.toLowerCase())) ||
           (character.unicode &&
-            character.unicode.toLowerCase().includes(query.toLowerCase()))
+            character.unicode.toLowerCase().includes(query.toLowerCase())) ||
+          (character.css &&
+            (character.css.toLowerCase().includes(query.toLowerCase()))
+          )
       );
     }
 
@@ -161,12 +179,12 @@ function CharacterFinder() {
   return (
     <ToolMain>
       <ToolHeading
-        title="Character Finder"
-        tagline="Look up characters, symbols, HTML entities, and CSS codes."
-        icon="Ampersand"
-        iconType="svg"
+        title='Character Finder'
+        tagline='Look up characters, symbols, HTML entities, and CSS codes.'
+        icon='Ampersand'
+        iconType='svg'
       />
-      <div className="container">
+      <div className='container'>
         <SearchField
           placeholderText={'Search'}
           search={handleSearchChange}
@@ -174,7 +192,7 @@ function CharacterFinder() {
         />
       </div>
 
-      <div className="container flex flex-wrap justify-between px-5 sm:px-8 gap-y-3">
+      <div className='container flex flex-wrap justify-between px-5 sm:px-8 gap-y-3'>
         {categoryTabs}
       </div>
 
@@ -183,7 +201,7 @@ function CharacterFinder() {
         icon={searchQuery ? 'search' : selectedCategoryIcon}
         iconType={searchQuery ? 'material' : 'char'}
       >
-        <div className="grid w-full grid-cols-4">
+        <div className='grid w-full grid-cols-4'>
           {currentCategoryData.map((character, index) => (
             <CharacterCard
               key={index}
@@ -196,40 +214,40 @@ function CharacterFinder() {
             />
           ))}
         </div>
-        <div className="flex justify-center p-6">
+        <div className='flex justify-center p-6'>
           <ReactPaginate
             pageCount={Math.ceil(categoryData.length / itemsPerPage)}
             pageRangeDisplayed={3}
             marginPagesDisplayed={1}
             previousLabel={
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
                 strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+                stroke='currentColor'
+                className='w-6 h-6'
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 19.5 8.25 12l7.5-7.5"
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M15.75 19.5 8.25 12l7.5-7.5'
                 />
               </svg>
             }
             nextLabel={
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
                 strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+                stroke='currentColor'
+                className='w-6 h-6'
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='m8.25 4.5 7.5 7.5-7.5 7.5'
                 />
               </svg>
             }
