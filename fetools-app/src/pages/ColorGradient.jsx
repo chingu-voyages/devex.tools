@@ -9,6 +9,7 @@ import {
 
 import useToastState from '../hooks/useToastState';
 import useExpander from '../hooks/useExpander';
+import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
 
 import ColorGradientSlider from '../components/ColorGradient/ColorGradientSlider';
 import ToolHeading from '../components/ToolsLayout/ToolHeading';
@@ -24,6 +25,7 @@ import {
 } from '../components/ToolsLayout/Sections';
 import ToolMain from '../components/ToolsLayout/ToolMain';
 import TabSwitcher from '../components/TabSwitcher';
+import Bookmark from '../components/ToolsLayout/Bookmark';
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -54,10 +56,11 @@ export default function ColorGradient() {
   });
 
   const [codeBlockRules, setCodeBlockRules] = useState({
-    background: generateGradientRule(colorsArr),
+    background: `background: ${generateGradientRule(colorsArr)}`
   });
 
   const [isExpanded, toggleIsExpanded] = useExpander();
+  const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage().length)
   const toastState = useToastState();
 
   useEffect(() => {
@@ -72,7 +75,7 @@ export default function ColorGradient() {
 
     updateCSSValues('.gradientSlider', 'background', gradientRuleSlider);
     updateCSSValues('.gradient', 'background', gradientRule);
-    setCodeBlockRules({ ...codeBlockRules, background: getCssCode() });
+    setCodeBlockRules({ ...codeBlockRules, background: `background: ${getCssCode()}` });
   }, [inputValue, gradientColors]);
 
   return (
@@ -107,6 +110,7 @@ export default function ColorGradient() {
           bookmarkCallback={()=>{}}
           shareCallback={() => {}}>
             <ColorGradientSlider
+            colorsArr={colorsArr}
             setColorsArr={setColorsArr}
             inputValue={inputValue}
             updateCSSValues={updateCSSValues}
@@ -139,8 +143,8 @@ export default function ColorGradient() {
             <CodeBlock
               toastState={toastState}
               title={'CSS'}
-              code={'background'}
-              unit={codeBlockRules.background}
+              code={codeBlockRules.background}
+              lang='css'
             />
             <CodeBlock
               toastState={toastState}
@@ -150,6 +154,28 @@ export default function ColorGradient() {
             />
           </TabSwitcher>
         </ToolSection>
+
+        <ToolSection title="Your Collection" icon="bookmarks">
+        <Bookmark 
+        pageName={'gradients'} 
+        getStyleFromBookmark={[{styleProperty: 'backgroundColor', bookmarkProperty: 'colorGradient'}]}
+        addStyle={{width: '120px', height: '96px'}}
+        deleteProperty={'colorGradient'}
+        className={`
+        flex flex-wrap justify-start
+        min-[395px]:gap-x-5 max-[440px]:justify-between 
+        max-[550px]:justify-items-center
+        sm:justify-start gap-y-5
+        `}
+        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]
+        `}
+        setBookmarkLength={setBookmarkLength}
+        bookmarkChildren={null}
+        onMouseEnter={null}
+        onMouseLeave={null}
+        childProperty={'colorGradient'}>
+        </Bookmark>
+      </ToolSection>
 
         <GoDeeper
           linksData={[{ url: '#', textValue: 'Not a link available yet' }]}
@@ -256,7 +282,6 @@ export default function ColorGradient() {
     const colors = sortedColors.map(
       ({ colorStr, value }) => `${colorStr} ${value}%`
     );
-
 
     if(type==='radial' && !isSlider){
       const gradientRule = `${type}-gradient(${colors.join(', ')})`;

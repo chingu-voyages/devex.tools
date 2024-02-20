@@ -54,7 +54,7 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
             variant="outline"
             className="
             relative flex rounded justify-start w-full px-0 pl-2 pr-8  
-            border border-gray-400 outline-none
+            border border-gray-400 focus-visible:outline-[#7F40BF]
             text-gray-600 text-sm">
               {children && Array.isArray(children)?children[0]:children}
               <span className="flex-1 text-left">{position}</span>

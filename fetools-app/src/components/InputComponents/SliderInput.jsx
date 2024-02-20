@@ -47,7 +47,7 @@ const SliderInput = forwardRef(function ColorInput(props, ref) {
             defaultValue={defaultValue}
             onChange={onChange}
             type="range"
-            className="block w-full"
+            className="block w-full accent-[#7F40BF]"
           />
         </label>
         <span className={`relative flex min-w-12 items-center ${valueTypes.length===1?'hidden':''}`}>
