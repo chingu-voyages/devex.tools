@@ -27,7 +27,7 @@ export default function ColorGradientSlider({
 
     return(
     <>
-        <div ref={sliderContainerRef}  id="slider-container" className="flex  flex-1 pt-2 pb-5 rounded-md items-center">
+        <div ref={sliderContainerRef}  id="slider-container" className="flex  flex-1 pt-7 pb-5 rounded-md items-center">
             <div 
             className="wrap gradientSlider flex flex-col relative w-full rounded-md h-3 justify-center">
                 {createHandles()}
@@ -62,7 +62,7 @@ export default function ColorGradientSlider({
                 ref={trackRef} 
                 onClick={addThumb}
                 className="block absolute w-full h-full"></span>
-            {knobsArr}
+                {knobsArr}
             </>
         )
 
