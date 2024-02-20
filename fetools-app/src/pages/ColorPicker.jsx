@@ -81,6 +81,7 @@ export default function ColorPicker() {
         <RelatedColors
           colorData={colorData}
           toastState={toastState}
+          createColorObj={createColorObj}
           setColorData={setColorData}
         />
       </ToolSection>
@@ -91,18 +92,8 @@ export default function ColorPicker() {
         getStyleFromBookmark={[{styleProperty: 'backgroundColor', bookmarkProperty: 'color'}]}
         addStyle={{width: '120px', height: '96px'}}
         deleteProperty={'color'}
-        className={`
-        flex flex-wrap justify-start
-        min-[395px]:gap-x-5 max-[440px]:justify-between 
-        max-[550px]:justify-items-center
-        sm:justify-start gap-y-5
-        `}
-        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]
-        `}
         setBookmarkLength={setBookmarkLength}
-        bookmarkChildren={bookmarkChildren}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        bookmarkHoverElement={bookmarkHoverElement}
         childProperty={'color'}>
         </Bookmark>
       </ToolSection>
@@ -117,13 +108,16 @@ export default function ColorPicker() {
     setSearchParams({ color });
   }
 
-  function bookmarkChildren(color){
+  function bookmarkHoverElement(color, editMode){
     return(
     <span
     id="hover-options"
-    className={`absolute flex flex-col mt-10 px-9 pb-4 w-full h-min text-white hidden pointer-events-none`
-    }>
-      <div className=''>
+    className={`
+    absolute flex flex-col px-4 pt-4 w-full h-full text-white text-center 
+    rounded-md rounded-tl-none
+    ${editMode?'hidden':''}
+    `}>
+      <div>
         <p className="font-medium uppercase">{color}</p>
       </div>
       <div className="flex">
@@ -136,33 +130,11 @@ export default function ColorPicker() {
             toastState={toastState}
           />
         </span>
-        <span className="flex-1 block text-2xl text-left leading-0 pointer-events-auto">
+        <span className="flex-1 block text-2xl text-center leading-0 pointer-events-auto">
           <CopyButton onCopy={() => color} toastState={toastState} />
         </span>
       </div>
     </span>
     )
-  }
-
-  function onMouseEnter(e){
-    const hoverOptions = e.target.querySelector('#hover-options');
-    if (!hoverOptions) {
-      return;
-    }
-    if (hoverOptions && hoverOptions.id === 'hover-options') {
-      hoverOptions.classList.remove('hidden');
-      return;
-    }
-  }
-
-  function onMouseLeave(e){
-    const hoverOptions = e.target.querySelector('#hover-options');
-    if (!hoverOptions) {
-      return;
-    }
-    if (hoverOptions && hoverOptions.id === 'hover-options') {
-      hoverOptions.classList.add('hidden');
-      return;
-    }
   }
 }

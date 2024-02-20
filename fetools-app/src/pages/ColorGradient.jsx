@@ -183,7 +183,7 @@ export default function ColorGradient() {
         `}
         childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]`}
         setBookmarkLength={setBookmarkLength}
-        bookmarkChildren={bookmarkChildren}
+        bookmarkHoverElement={bookmarkHoverElement}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         childProperty={'colorGradient'}
@@ -347,7 +347,7 @@ createBookmark(
     return currentStyle;
   }
 
-  function bookmarkChildren(newStyle){
+  function bookmarkHoverElement(newStyle){
     return(
     <span
     id="hover-options"
@@ -378,7 +378,7 @@ createBookmark(
     </span>
     )
   }
-
+/*
   function onMouseEnter(e){
     const hoverOptions = e.target.querySelector('#hover-options');
     if (!hoverOptions) {
@@ -400,4 +400,5 @@ createBookmark(
       return;
     }
   }
+  */
 }
