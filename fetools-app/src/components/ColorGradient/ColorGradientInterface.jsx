@@ -4,6 +4,7 @@ import tinycolor from "tinycolor2";
 import ColorInput from "../InputComponents/ColorInput";
 import DropdownInput from "../InputComponents/DropdownInput";
 import Icon from "../Icon";
+import SliderInput from "../InputComponents/SliderInput";
 
 export default function ColorGradientInterface({
   inputValue,
@@ -42,7 +43,7 @@ export default function ColorGradientInterface({
         if (element.id === "color-input") {
           element.children[1].children[0].value = inputValue.color;
           element.children[1].children[1].children[0].value = inputValue.color;
-        } else if (element.id === "position") {
+        } else if (element.id === "position-input") {
           element.children[0].value = inputValue.position;
         } else if (element.id === "rotation") {
           element.children[0].value = inputValue.rotation;
@@ -66,33 +67,25 @@ export default function ColorGradientInterface({
         />
 
         <DropdownInput
-          title="Type"
-          dropdownOptions={["linear", "radial"]}
-          ref={dropdownValueRef}
-          callbackFun={() => {
-            setInputValue({ ...inputValue, type: dropdownValueRef.current });
-            updateTypeOnCSS();
-          }}
-        ></DropdownInput>
+        title="Type"
+        dropdownOptions={["linear", "radial"]}
+        ref={dropdownValueRef}
+        callbackFun={() => {
+          setInputValue({ ...inputValue, type: dropdownValueRef.current });
+          updateTypeOnCSS();
+        }}
+        />
 
-        <label
-          id="position"
-          className="relative flex flex-col w-full font-bold"
-        >
-          Position
-          <input
-            max={100}
-            step={1}
+        <SliderInput
+            sliderId='position'
             defaultValue={displayData.position}
+            valueTypes={['%']}
+            ranges={[{min: 0, max: 100}]}
+            step={[1]}
+            placeholder={displayData.position}
+            title='Position'
             onChange={handlePositionInputChange}
-            onBlur={updateValuesOnBlur}
-            type="range"
-            className="rounded-sm border border-gray-400 py-5 uppercase text-center"
-          />
-          <span className="block absolute bottom-0 left-24">
-            {displayData.position}%
-          </span>
-        </label>
+        />
 
         <label
           id="rotation"
