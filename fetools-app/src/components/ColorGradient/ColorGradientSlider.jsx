@@ -247,11 +247,11 @@ export default function ColorGradientSlider({
     function removeThumb(){
 
         const removingThumb = document.querySelector('.isActive')
-        console.log(colorsArr.filter(({colorStr})=>colorStr!==removingThumb.dataset.color))
 
-        setGradientColors(gradientColors.filter(({colorStr})=>colorStr!==removingThumb.dataset.color))
+        if(!removingThumb){return}
+
+        setGradientColors(gradientColors.filter(({colorStr},idx)=>idx!==parseInt(removingThumb.id)))
         setColorsArr(colorsArr.filter(({colorStr})=>colorStr!==removingThumb.dataset.color))
-        //updateCSSValues('.gradient', 'background', gradientRule);
     }
 
     function updateHandleValuesOnGradientState(){
