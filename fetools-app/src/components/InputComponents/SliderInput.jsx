@@ -39,6 +39,7 @@ const SliderInput = forwardRef(function ColorInput(props, ref) {
         </span>
         <label id={`slider-${sliderId}`} className="w-full pl-1">
         <input
+            id="custom-slider-input"
             ref={ref}
             min={ranges[activeIndex].min}
             max={ranges[activeIndex].max}

@@ -62,7 +62,7 @@ export default function ColorGradientSlider({
                 ref={trackRef} 
                 onClick={addThumb}
                 className="block absolute w-full h-full"></span>
-            {knobsArr}
+                {knobsArr}
             </>
         )
 
