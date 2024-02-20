@@ -95,8 +95,13 @@
 
   @layer InputComponents{
 
+    *, input {
+      accent-color: #7F40BF;
+    }
+
     *:focus-visible{
       outline: 2px solid #7F40BF;
+      z-index: 10;
     }
 
     #custom-color-input::-webkit-color-swatch-wrapper{
@@ -188,7 +193,6 @@
     #track-handler {
       cursor: copy;
     }
-
 
     @layer thumbColorStyle {
       .wrap label:nth-of-type(1) ::-webkit-slider-thumb {
