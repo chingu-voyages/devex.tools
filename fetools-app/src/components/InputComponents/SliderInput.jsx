@@ -11,7 +11,9 @@ const SliderInput = forwardRef(function ColorInput(props, ref) {
     className,
     title,
     titleClassName,
+    iconName,
     onChange,
+    customPreviewValue
   } = props;
 
   const [activeIndex, setActiveIndex] = useState(0)
@@ -30,9 +32,9 @@ const SliderInput = forwardRef(function ColorInput(props, ref) {
         {title}
       </h2>
       <div className="relative flex w-full h-10 items-center">
-        <Icon name="width" className="block "/>
+        <Icon name={iconName} className="block "/>
         <span className="block text-right font-bold min-w-12">
-          <span className={`${valueTypes.length===1?'':'pr-3'}`}>{defaultValue}</span>
+          <span className={`${valueTypes.length===1?'':'pr-3'}`}>{customPreviewValue||defaultValue}</span>
           <span className={`pl-1 ${valueTypes.length===1?'':'hidden'}`}>{valueTypes[activeIndex]}</span>
         </span>
         <label id={`slider-${sliderId}`} className="w-full pl-1">
