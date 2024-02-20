@@ -107,6 +107,7 @@ export default function ColorGradient() {
           bookmarkCallback={()=>{}}
           shareCallback={() => {}}>
             <ColorGradientSlider
+            colorsArr={colorsArr}
             setColorsArr={setColorsArr}
             inputValue={inputValue}
             updateCSSValues={updateCSSValues}
