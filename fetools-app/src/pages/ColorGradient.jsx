@@ -50,7 +50,7 @@ export default function ColorGradient() {
     color: getHexString(gradientColors[0].colorStr),
     position: gradientColors[0].value,
     rotation: 25,
-    type: 'Linear',
+    type: 'linear'
   });
 
   const [codeBlockRules, setCodeBlockRules] = useState({
@@ -95,27 +95,29 @@ export default function ColorGradient() {
           >
             <div
               id="show-gradient"
-              className="gradient h-full w-full min-h-64"
+              className="gradient h-[360px] w-full min-h-64"
             ></div>
           </ToolPreviewPane>
 
           <ToolPane
-            title="Options"
-            icon="gradient"
-            isPrimary={true}
-            bookmarkCallback={() => {}}
-            shareCallback={() => {}}
-          >
+          className="h-[360px]"           
+          title="Options"
+          icon="gradient"
+          isPrimary={true}
+          bookmarkCallback={()=>{}}
+          shareCallback={() => {}}>
             <ColorGradientSlider
-              setColorsArr={setColorsArr}
-              inputValue={inputValue}
-              updateCSSValues={updateCSSValues}
-              handleColorChange={handleColorChange}
-              handleSetCurrentKnob={handleSetCurrentKnob}
-              handleSetInputValue={handleSetInputValue}
-              generateGradientRule={generateGradientRule}
-              gradientColors={gradientColors}
-              setGradientColors={setGradientColors}
+            setColorsArr={setColorsArr}
+            inputValue={inputValue}
+            updateCSSValues={updateCSSValues}
+            handleColorChange={handleColorChange}
+            handleSetCurrentKnob={handleSetCurrentKnob}
+            handleSetInputValue={handleSetInputValue}
+            generateGradientRule={generateGradientRule}
+            gradientColors={gradientColors}
+            setGradientColors={setGradientColors}
+            onClickRandom={onClickRandom}
+
             />
             <ColorGradientInterface
               inputValue={inputValue}
@@ -255,7 +257,8 @@ export default function ColorGradient() {
       ({ colorStr, value }) => `${colorStr} ${value}%`
     );
 
-    if (type === 'Radial' && !isSlider) {
+
+    if(type==='radial' && !isSlider){
       const gradientRule = `${type}-gradient(${colors.join(', ')})`;
       return gradientRule;
     }
