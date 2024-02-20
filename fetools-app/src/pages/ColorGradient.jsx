@@ -341,12 +341,12 @@ export default function ColorGradient() {
     <span
     id="hover-options"
     className={`
-    absolute flex flex-col px-4 pt-4 w-full h-full text-white text-center 
+    absolute flex flex-col px-6 pt-8 w-full h-full text-white text-center 
     rounded-md rounded-tl-none
     ${editMode?'hidden':''}
     `}>
       <div className="flex">
-        <span className="flex-1 block text-2xl text-center pointer-events-auto">
+        <span className="flex-1 block text-2xl text-center">
         <EyeDropButton
             title={'New Gradient Set'}
             content={''}
@@ -355,7 +355,6 @@ export default function ColorGradient() {
               const newGradient = bookmark.colorGradient.colors.map((colorObj,idx)=>{
                 return {...colorObj, value: (bookmark/bookmark.length)*idx}
               })
-
               setColorsArr(bookmark.colorGradient.colors)
               setGradientColors(newGradient)
             }}
@@ -363,7 +362,7 @@ export default function ColorGradient() {
             toastState={toastState}
           />
         </span>
-        <span className="flex-1 block text-2xl text-left leading-0 pointer-events-auto">
+        <span className="flex-1 block text-2xl text-left leading-0">
           <CopyButton onCopy={() => newStyle} toastState={toastState} />
         </span>
       </div>
