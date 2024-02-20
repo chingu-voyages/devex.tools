@@ -184,8 +184,6 @@ export default function ColorGradient() {
         childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]`}
         setBookmarkLength={setBookmarkLength}
         bookmarkHoverElement={bookmarkHoverElement}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
         childProperty={'colorGradient'}
         childSubProperty='style'
         >
@@ -200,15 +198,6 @@ export default function ColorGradient() {
       </ToolMain>
     </>
   );
-
-/*
-createBookmark(
-            'gradients', 
-            {gradient: document.querySelector('.gradient').style.getPropertyValue('background')}, 
-            ['gradient'],
-            bookmarkLength, 
-            setBookmarkLength)
-*/ 
 
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);
@@ -347,12 +336,15 @@ createBookmark(
     return currentStyle;
   }
 
-  function bookmarkHoverElement(newStyle){
+  function bookmarkHoverElement(newStyle, editMode){
     return(
     <span
     id="hover-options"
-    className={`absolute flex flex-col mt-10 px-9 pb-4 w-full h-min text-white hidden pointer-events-none`
-    }>
+    className={`
+    absolute flex flex-col px-4 pt-4 w-full h-full text-white text-center 
+    rounded-md rounded-tl-none
+    ${editMode?'hidden':''}
+    `}>
       <div className="flex">
         <span className="flex-1 block text-2xl text-center pointer-events-auto">
         <EyeDropButton
@@ -378,27 +370,4 @@ createBookmark(
     </span>
     )
   }
-/*
-  function onMouseEnter(e){
-    const hoverOptions = e.target.querySelector('#hover-options');
-    if (!hoverOptions) {
-      return;
-    }
-    if (hoverOptions && hoverOptions.id === 'hover-options') {
-      hoverOptions.classList.remove('hidden');
-      return;
-    }
-  }
-
-  function onMouseLeave(e){
-    const hoverOptions = e.target.querySelector('#hover-options');
-    if (!hoverOptions) {
-      return;
-    }
-    if (hoverOptions && hoverOptions.id === 'hover-options') {
-      hoverOptions.classList.add('hidden');
-      return;
-    }
-  }
-  */
 }
