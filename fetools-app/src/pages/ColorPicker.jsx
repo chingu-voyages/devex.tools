@@ -33,7 +33,7 @@ export default function ColorPicker() {
 
   const toastState = useToastState();
 
-  const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage().length)
+  const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage('colors').length)
   const [isExpanded, toggleIsExpanded] = useExpander();
 
   return (
@@ -62,7 +62,8 @@ export default function ColorPicker() {
           bookmarkCallback={()=>createBookmark(
             'colors', 
             {color: getColorString(colorData.color, 'hex')}, 
-            ['color'],
+            'color',
+            null,
             bookmarkLength, 
             setBookmarkLength)}
           shareCallback={() => {}}
@@ -128,8 +129,10 @@ export default function ColorPicker() {
       <div className="flex">
         <span className="flex-1 block text-2xl text-center pointer-events-auto">
           <EyeDropButton
-            setColorData={setColorData}
-            newColor={color}
+            title={'New Color Set'}
+            content={''}
+            setStateVar={()=>setColorData(createColorObj(color))}
+            newValue={color}
             toastState={toastState}
           />
         </span>

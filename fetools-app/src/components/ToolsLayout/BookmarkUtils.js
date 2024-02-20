@@ -7,7 +7,7 @@ export function createBookmark(
     setBookmarkLength
 ){
 
-    checkForLocalStorage()
+    checkForLocalStorage(pageName)
     saveInLocal()
     setBookmarkLength(bookmarkLength+1)
 

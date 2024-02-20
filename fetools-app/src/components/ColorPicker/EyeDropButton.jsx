@@ -3,7 +3,7 @@ import { MdColorize } from 'react-icons/md';
 import { createColorObj } from './ColorPickerUtils';
 import ToastButton from '../ToastButton';
 
-export default function EyeDropButton({ newValue, setStateVar, toastState }) {
+export default function EyeDropButton({ title, content, newValue, setStateVar, toastState }) {
   return (
     <ToastButton onClickFun={changeCurrentColor} toastState={toastState}>
       <MdColorize />
@@ -12,11 +12,17 @@ export default function EyeDropButton({ newValue, setStateVar, toastState }) {
 
   function changeCurrentColor() {
     toastState.setToastContent({
-      title: 'New Color Set!',
-      content: `current color is ${newValue}`,
+      title: `${title}`,
+      content: `${content||''} ${newValue}`,
       icon: 'eyedrop',
-      addOn: {type:'color-dot', color: newValue}
+      addOn(){
+        return(
+        <span
+          className="absolute right-0 bottom-2 flex-2 w-10 h-10 rounded-full"
+          style={{ background: newValue }}
+        ></span>
+      )}
     });
-    setStateVar(createColorObj(newValue));
+    setStateVar();
   }
 }

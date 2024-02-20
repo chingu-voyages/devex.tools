@@ -183,10 +183,12 @@ export default function ColorGradient() {
         `}
         childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]`}
         setBookmarkLength={setBookmarkLength}
-        bookmarkChildren={()=>{}}
+        bookmarkChildren={bookmarkChildren}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        childProperty={'colorGradient'}>
+        childProperty={'colorGradient'}
+        childSubProperty='style'
+        >
         </Bookmark>
       </ToolSection>
 
@@ -345,7 +347,7 @@ createBookmark(
     return currentStyle;
   }
 
-  function bookmarkChildren(color){
+  function bookmarkChildren(newStyle){
     return(
     <span
     id="hover-options"
@@ -353,14 +355,24 @@ createBookmark(
     }>
       <div className="flex">
         <span className="flex-1 block text-2xl text-center pointer-events-auto">
-          <EyeDropButton
-            setColorData={setColorsArr}
-            newColor={color}
+        <EyeDropButton
+            title={'New Gradient Set'}
+            content={''}
+            setStateVar={()=>{
+              const bookmark = checkForLocalStorage('gradients').find(({colorGradient})=>colorGradient.style===newStyle)
+              const newGradient = bookmark.colorGradient.colors.map((colorObj,idx)=>{
+                return {...colorObj, value: (bookmark/bookmark.length)*idx}
+              })
+
+              setColorsArr(bookmark.colorGradient.colors)
+              setGradientColors(newGradient)
+            }}
+            newValue={newStyle}
             toastState={toastState}
           />
         </span>
         <span className="flex-1 block text-2xl text-left leading-0 pointer-events-auto">
-          <CopyButton onCopy={() => color} toastState={toastState} />
+          <CopyButton onCopy={() => newStyle} toastState={toastState} />
         </span>
       </div>
     </span>
