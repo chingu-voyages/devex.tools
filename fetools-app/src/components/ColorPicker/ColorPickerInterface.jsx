@@ -90,7 +90,8 @@ export default function ColorPickerInterface({
               defaultValue={inputValues.hexColor}
               onChange={handleOnChange}
               onBlur={handleOnBlur}
-              className="h-10 text-sm font-medium text-center text-gray-700 uppercase border-2 rounded outline-none"
+              className="h-10 text-sm font-medium text-center text-gray-700 uppercase border-2 rounded 
+              outline-none focus-visible:outline-[#7F40BF]"
             ></input>
           </li>
           <li id="rgb" className="flex flex-col">
@@ -108,7 +109,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.rgb.r}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
 
@@ -124,7 +125,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.rgb.g}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
 
@@ -140,7 +141,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.rgb.b}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
 
@@ -156,7 +157,7 @@ export default function ColorPickerInterface({
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
                   defaultValue={`${inputValues.alpha * 100}%`}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
             </div>
@@ -176,7 +177,7 @@ export default function ColorPickerInterface({
                   defaultValue={parseInt(inputValues.hsl.h)}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
 
@@ -192,7 +193,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.hsl.s}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
 
@@ -208,7 +209,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.hsl.l}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
 
@@ -224,7 +225,7 @@ export default function ColorPickerInterface({
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
                   defaultValue={`${inputValues.alpha * 100}%`}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
             </div>
@@ -244,7 +245,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.cmyk.y}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
 
@@ -260,7 +261,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.cmyk.m}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
 
@@ -276,7 +277,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.cmyk.y}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF]" 
                 ></input>
               </div>
 
@@ -292,7 +293,7 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.cmyk.k}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2 focus-visible:outline-[#7F40BF]"
                 ></input>
               </div>
             </div>
@@ -403,7 +404,7 @@ export default function ColorPickerInterface({
     ) {
       setColorData(CMYKtoRgb(inputValues.cmyk));
     } else if (e.target.id === 'a') {
-      let value = e.target.value;
+      let value = parseInt(e.target.value.replace('%',''));
 
       if (value > 100) {
         value = 100;
