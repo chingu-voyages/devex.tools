@@ -124,11 +124,20 @@
       background-color: #717171;
     }
 
+    #custom-slider-input::-moz-range-thumb{
+      appearance: none;
+      border-radius: 50%;
+      height: 12px;
+      width: 12px;
+      outline: solid 2px #D9D9D9;
+      transform: translateY(-30%);
+      background-color: #717171;
+    }
+
     #custom-slider-input::-webkit-slider-runnable-track{
       background: none;/* get rid of white Chrome background */
       font: inherit; /* fix too small font-size in both Chrome & Firefox */
       margin: 0;
-      pointer-events: none;
       height: 4px;
       border-radius: 2px;
       background-color: #D9D9D9;
@@ -138,7 +147,9 @@
       background: none;/* get rid of white Chrome background */
       font: inherit; /* fix too small font-size in both Chrome & Firefox */
       margin: 0;
-      pointer-events: none;
+      height: 4px;
+      border-radius: 2px;
+      background-color: #D9D9D9;
     }
   }
 
