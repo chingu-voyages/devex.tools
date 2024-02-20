@@ -37,6 +37,10 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
           ref={ref}
           defaultValue={defaultValue}
           onChange={onChange}
+          onFocus={(e)=>{
+            console.log(e.target.closest('#color-input'))
+            e.target.closest('div').classList.add('outline', 'outline-[#7F40BF]')}}
+          onBlur={(e)=>{e.target.closest('div').classList.remove('outline', 'outline-[#7F40BF]')}}
           placeholder={placeholder}
           type="text"
           maxLength={7}
@@ -46,6 +50,9 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
       </div>
     </div>
   );
+
+
+
 });
 
 export default ColorInput;

@@ -96,8 +96,7 @@
   @layer InputComponents{
 
     *:focus-visible{
-      margin: 2px;
-      outline: 2px solid #4A256F;
+      outline: 2px solid #7F40BF;
     }
 
     #custom-color-input::-webkit-color-swatch-wrapper{
@@ -105,6 +104,7 @@
       width: 100%;
       padding: 0;
       margin: 0;
+      cursor: pointer;
     }
 
     #custom-color-input::-webkit-color-swatch{
@@ -153,7 +153,7 @@
     }
 
     .wrap .isActive::-webkit-slider-thumb {
-      box-shadow: #4A256F 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 5px 5px -2.5px, inset #fff 0 0 0 1.5px;
+      box-shadow: #7F40BF 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 5px 5px -2.5px, inset #fff 0 0 0 1.5px;
       z-index: 10;
     }
 
@@ -167,7 +167,7 @@
     }
 
     .wrap .isActive::-moz-range-thumb {
-      box-shadow: #0066ff 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 5px 5px -2.5px, inset #fff 0 0 0 1.5px;
+      box-shadow: #7F40BF 0 0 0 1px, rgba(0, 0, 0, 0.05) 0 5px 5px -2.5px, inset #fff 0 0 0 1.5px;
       z-index: 10;
     }
 
@@ -306,7 +306,7 @@
     }
 
     #picker-handles-container .isActive::-webkit-slider-thumb{
-      box-shadow: #4A256F 0 0 0 .8px, rgba(0, 0, 0, 0.05) 0 5px 5px -2.5px, inset #fff 0 0 0 1.5px;
+      box-shadow: #7F40BF 0 0 0 .8px, rgba(0, 0, 0, 0.05) 0 5px 5px -2.5px, inset #fff 0 0 0 1.5px;
     }
 
     .colorPickerSlider::-moz-range-thumb{
