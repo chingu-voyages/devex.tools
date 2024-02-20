@@ -23,9 +23,12 @@ import {
   ToolSection,
   ToolSectionColumns,
 } from '../components/ToolsLayout/Sections';
+
 import ToolMain from '../components/ToolsLayout/ToolMain';
 import TabSwitcher from '../components/TabSwitcher';
 import Bookmark from '../components/ToolsLayout/Bookmark';
+import EyeDropButton from '../components/ColorPicker/EyeDropButton';
+import CopyButton from '../components/CopyButton';
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -107,7 +110,16 @@ export default function ColorGradient() {
           title="Options"
           icon="gradient"
           isPrimary={true}
-          bookmarkCallback={()=>{}}
+          bookmarkCallback={()=>{createBookmark(
+          'gradients', 
+          {colorGradient: {
+            style: document.querySelector('.gradient').style.getPropertyValue('background'),
+            colors: gradientColors
+          }}, 
+          'colorGradient',
+          ['style'],
+          bookmarkLength, 
+          setBookmarkLength)}}
           shareCallback={() => {}}>
             <ColorGradientSlider
             colorsArr={colorsArr}
@@ -121,19 +133,18 @@ export default function ColorGradient() {
             gradientColors={gradientColors}
             setGradientColors={setGradientColors}
             onClickRandom={onClickRandom}
-
             />
             <ColorGradientInterface
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-              handleColorInputChange={handleColorInputChange}
-              handlePositionInputChange={handlePositionInputChange}
-              handleRotationInputChange={handleRotationInputChange}
-              updateValuesOnBlur={updateValuesOnBlur}
-              gradientColors={gradientColors}
-              generateGradientRule={generateGradientRule}
-              updateCSSValues={updateCSSValues}
-              onClickRandom={onClickRandom}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            handleColorInputChange={handleColorInputChange}
+            handlePositionInputChange={handlePositionInputChange}
+            handleRotationInputChange={handleRotationInputChange}
+            updateValuesOnBlur={updateValuesOnBlur}
+            gradientColors={gradientColors}
+            generateGradientRule={generateGradientRule}
+            updateCSSValues={updateCSSValues}
+            onClickRandom={onClickRandom}
             />
           </ToolPane>
         </ToolSectionColumns>
@@ -158,7 +169,10 @@ export default function ColorGradient() {
         <ToolSection title="Your Collection" icon="bookmarks">
         <Bookmark 
         pageName={'gradients'} 
-        getStyleFromBookmark={[{styleProperty: 'backgroundColor', bookmarkProperty: 'colorGradient'}]}
+        getStyleFromBookmark={[{
+          styleProperty: 'background', 
+          bookmarkProperty: 'colorGradient', 
+          bookmarkSubProperty: 'style'}]}
         addStyle={{width: '120px', height: '96px'}}
         deleteProperty={'colorGradient'}
         className={`
@@ -167,12 +181,11 @@ export default function ColorGradient() {
         max-[550px]:justify-items-center
         sm:justify-start gap-y-5
         `}
-        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]
-        `}
+        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]`}
         setBookmarkLength={setBookmarkLength}
-        bookmarkChildren={null}
-        onMouseEnter={null}
-        onMouseLeave={null}
+        bookmarkChildren={()=>{}}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         childProperty={'colorGradient'}>
         </Bookmark>
       </ToolSection>
@@ -185,6 +198,15 @@ export default function ColorGradient() {
       </ToolMain>
     </>
   );
+
+/*
+createBookmark(
+            'gradients', 
+            {gradient: document.querySelector('.gradient').style.getPropertyValue('background')}, 
+            ['gradient'],
+            bookmarkLength, 
+            setBookmarkLength)
+*/ 
 
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);
@@ -321,5 +343,49 @@ export default function ColorGradient() {
       containerRef.current.querySelector('.gradient').style.background;
 
     return currentStyle;
+  }
+
+  function bookmarkChildren(color){
+    return(
+    <span
+    id="hover-options"
+    className={`absolute flex flex-col mt-10 px-9 pb-4 w-full h-min text-white hidden pointer-events-none`
+    }>
+      <div className="flex">
+        <span className="flex-1 block text-2xl text-center pointer-events-auto">
+          <EyeDropButton
+            setColorData={setColorsArr}
+            newColor={color}
+            toastState={toastState}
+          />
+        </span>
+        <span className="flex-1 block text-2xl text-left leading-0 pointer-events-auto">
+          <CopyButton onCopy={() => color} toastState={toastState} />
+        </span>
+      </div>
+    </span>
+    )
+  }
+
+  function onMouseEnter(e){
+    const hoverOptions = e.target.querySelector('#hover-options');
+    if (!hoverOptions) {
+      return;
+    }
+    if (hoverOptions && hoverOptions.id === 'hover-options') {
+      hoverOptions.classList.remove('hidden');
+      return;
+    }
+  }
+
+  function onMouseLeave(e){
+    const hoverOptions = e.target.querySelector('#hover-options');
+    if (!hoverOptions) {
+      return;
+    }
+    if (hoverOptions && hoverOptions.id === 'hover-options') {
+      hoverOptions.classList.add('hidden');
+      return;
+    }
   }
 }

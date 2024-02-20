@@ -23,14 +23,11 @@ export default function Bookmark({
         if(parentRef.current.children.length===0){
             setEditMode(false)
         }
-
         parentRef.current
         .parentElement
         .parentElement
         .parentElement.addEventListener('mouseleave', (e)=>{setEditMode(false)})
-
     },[])
-
 
     return(
     <>
@@ -50,8 +47,7 @@ export default function Bookmark({
 
     function getBookmarked(){
         
-        const stored = checkForLocalStorage(pageName)
-        
+        const stored = checkForLocalStorage(pageName)       
 
         if(stored.length===0){return}
 
@@ -82,7 +78,10 @@ export default function Bookmark({
 
 
         function setStyles(item){
-            const newStyles = getStyleFromBookmark.map(({styleProperty, bookmarkProperty})=>{
+            const newStyles = getStyleFromBookmark.map(({styleProperty, bookmarkProperty, bookmarkSubProperty})=>{
+                if(bookmarkSubProperty){
+                    return {[styleProperty]: item[bookmarkProperty][bookmarkSubProperty]}
+                }
                 return {[styleProperty]: item[bookmarkProperty]}
             })
 
