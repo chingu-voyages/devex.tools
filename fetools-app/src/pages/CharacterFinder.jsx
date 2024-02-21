@@ -45,7 +45,21 @@ function CharacterFinder() {
   };
 
   const handleSearchChange = (query) => {
-    setSearchQuery(query);
+    if (query.startsWith("-")) {
+      setSearchQuery(query);
+      setCurrentPage(0);
+      const actualHyphenSearch = Object.values(htmlCharacters).flatMap(
+        (category) =>
+          category.filter((character) =>
+            character.name.toLowerCase().includes("hyphen")
+          )
+      );
+
+      setSearchResults(actualHyphenSearch);
+      return;
+    }
+
+    setSearchQuery((query = query.replace(/-/g, " ")));
     setCurrentPage(0);
 
     if (query.trim() === "") {
@@ -58,13 +72,41 @@ function CharacterFinder() {
 
   const updateSearchResults = (query) => {
     const allCharacterArrays = [
-      ...htmlCharacters.letters,
-      ...htmlCharacters.punctuation,
-      ...htmlCharacters.numbers,
-      ...htmlCharacters.math,
-      ...htmlCharacters.currency,
-      ...htmlCharacters.arrows,
-      ...htmlCharacters.symbols,
+      ...htmlCharacters.letters.map((character) => ({
+        ...character,
+        name: character.name.replace(/-/g, " "),
+      })),
+      ,
+      ...htmlCharacters.punctuation.map((character) => ({
+        ...character,
+        name: character.name.replace(/-/g, " "),
+      })),
+      ,
+      ...htmlCharacters.numbers.map((character) => ({
+        ...character,
+        name: character.name.replace(/-/g, " "),
+      })),
+      ,
+      ...htmlCharacters.math.map((character) => ({
+        ...character,
+        name: character.name.replace(/-/g, " "),
+      })),
+      ,
+      ...htmlCharacters.currency.map((character) => ({
+        ...character,
+        name: character.name.replace(/-/g, " "),
+      })),
+      ,
+      ...htmlCharacters.arrows.map((character) => ({
+        ...character,
+        name: character.name.replace(/-/g, " "),
+      })),
+      ,
+      ...htmlCharacters.symbols.map((character) => ({
+        ...character,
+        name: character.name.replace(/-/g, " "),
+      })),
+      ,
       ...htmlCharacters.emojis.map((character) => ({
         ...character,
         name: character.name.replace(/-/g, " "),
@@ -77,11 +119,7 @@ function CharacterFinder() {
 
     let filteredResults;
 
-    if (query === "-") {
-      filteredResults = allCharacterArrays.filter((character) =>
-        character.name.toLowerCase().includes("hyphen")
-      );
-    } else if (query.length === 1) {
+    if (query.length === 1) {
       filteredResults = allCharacterArrays.filter(
         (character) =>
           character.character.toLowerCase() === query.toLowerCase() ||

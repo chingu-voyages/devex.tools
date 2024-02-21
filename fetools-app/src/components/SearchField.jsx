@@ -31,6 +31,10 @@ const SearchField = ({ placeholderText, search, clearInput }) => {
     search(inputValue);
   };
 
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
   return (
     <div className="flex justify-end relative">
       <label className="relative">
@@ -41,7 +45,7 @@ const SearchField = ({ placeholderText, search, clearInput }) => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           className="bg-gray-100 p-3 text-lg pr-12 rounded-[.25rem] focus:ring focus:ring-[#663399] focus:outline-none"
-          autoFocus
+          {...(isMobileDevice() ? {} : { autoFocus: true })}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
