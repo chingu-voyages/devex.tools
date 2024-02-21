@@ -39,7 +39,7 @@ const Preview = ({
       >
         {isEditing ? (
           <textarea
-            style={generateFontStyles()}
+            style={generateFontStyles(font, bg)}
             className={`font-preview-text p-4 w-full h-full min-h-[25rem] m-0`}
             value={editedText}
             onChange={handleInputChange}
