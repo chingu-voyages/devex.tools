@@ -53,7 +53,7 @@ export default function CustomPicker({
 
   useEffect(()=>{
     canvasContainerRef.current.parentElement.parentElement.parentElement.classList.remove('overflow-auto')
-  })
+  },[])
 
   return(
     <>
@@ -66,12 +66,16 @@ export default function CustomPicker({
         onDrop={handleOnDrop}
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
         onClick={(e)=>handleClick(e,true)}
-        onTouchStart={(e)=>(handleOnTouchMove(e,false,true), startInterval(e,handleClick,intervalMouseClickRef))}
-        onTouchMove={(e)=>startInterval(e,handleOnTouchMove,intervalMouseMoveRef)}
+        onTouchStart={(e)=>(
+          handleOnTouchMove(e,false,true), 
+          startInterval(e,handleClick,intervalMouseClickRef),
+          disableScroll())}
+        onTouchMove={(e)=>(startInterval(e,handleOnTouchMove,intervalMouseMoveRef),disableScroll())}
         onTouchEnd={()=>(
           stopInterval(intervalMouseClickRef), 
           stopInterval(intervalMouseMoveRef), 
-          handleQuery(currentColor))}
+          handleQuery(currentColor),
+          enableScroll())}
         onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
         onMouseUp={()=>(
           stopInterval(intervalMouseClickRef), 
@@ -217,10 +221,6 @@ export default function CustomPicker({
 
   function handleClick(e, firstClick, isTouch){
 
-    if(isTouch){
-      setMouseCoor({x: e.changedTouches['0'].clientX, y: e.changedTouches['0'].clientY})
-    }
-
     if(!isColorPicker){
       const newColorObj = createColorObj(canvasRef.current.currentColor)
 
@@ -236,8 +236,8 @@ export default function CustomPicker({
     } else{
       colorData.color = HexToHsl(canvasRef.current.currentColor)
 
-      handleColorChange({...colorData})
       calculateMarkerPositionOnMouse()
+      handleColorChange({...colorData})
       if(!firstClick){
         setInputOnFocus(false)
         canvasRef.current.click()
@@ -280,9 +280,7 @@ export default function CustomPicker({
     }
   }
 
-
   function handleOnTouchMove(e){
-    console.log(e)
     setMouseCoor({x: e.changedTouches['0'].clientX, y: e.changedTouches['0'].clientY})
     trackColorOnMouse()
 
@@ -329,5 +327,22 @@ export default function CustomPicker({
     markerRef.current.style.top = `${y}%`
     markerRef.current.style.left = `${x}%`
   }
+
+  function disableScroll() {
+    // Get the current page scroll position
+    const scrollTop = window.scrollY
+        
+    const scrollLeft = window.scrollX
+
+        // if any scroll is attempted,
+      // set this to the previous value
+      window.onscroll = function () {
+          window.scrollTo(scrollLeft, scrollTop);
+      };
+}
+
+function enableScroll() {
+    window.onscroll = function () { };
+}
 
 }
