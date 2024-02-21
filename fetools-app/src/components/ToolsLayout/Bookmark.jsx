@@ -10,6 +10,7 @@ export default function Bookmark({
     childClassName,
     deleteProperty,
     setBookmarkLength,
+    childElement,
     bookmarkHoverElement,
     childProperty,
     childSubProperty
@@ -62,7 +63,8 @@ export default function Bookmark({
                 id={`bookmark-${idx}`}
                 key={`bookmark-${idx}`}
                 style={setStyles(item)}
-                className={`relative rounded-md rounded-tl-none min-w-[100px] max-w-[120px] ${childClassName||''}`}>
+                className={`relative rounded-md rounded-tl-none min-w-[100px] ${childClassName||''}`}>
+                    {childElement(item[childProperty][childSubProperty])}
                     <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
                         <span id={`closeBook-${idx}`} onClick={deleteBookmarked} 
                         className={`
@@ -84,10 +86,21 @@ export default function Bookmark({
 
 
         function setStyles(item){
-            const newStyles = getStyleFromBookmark.map(({styleProperty, bookmarkProperty, bookmarkSubProperty})=>{
+            const newStyles = getStyleFromBookmark.map(({
+                styleProperty, 
+                bookmarkProperty, 
+                bookmarkSubProperty,
+                bookmarkSubSubProperty})=>{
+                    
+                if(bookmarkSubSubProperty){
+                    return {[styleProperty]: item[bookmarkProperty][bookmarkSubProperty][bookmarkSubSubProperty]}
+                }
+                
                 if(bookmarkSubProperty){
                     return {[styleProperty]: item[bookmarkProperty][bookmarkSubProperty]}
                 }
+                
+
                 return {[styleProperty]: item[bookmarkProperty]}
             })
 

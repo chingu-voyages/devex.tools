@@ -1,8 +1,25 @@
 import React from "react";
+import ColorInput from "../../InputComponents/ColorInput";
+import Icon from "../../Icon";
 
 const FontColorInput = ({ font, handleColorChange }) => {
   return (
     <div className="flex items-center space-x-4 gap-4 w-full">
+      <ColorInput
+        title={"color"}
+        defaultValue={font.color}
+        onChange={handleColorChange}
+        className={'flex-row'}
+        titleClassName={'sm:hidden'}
+      >
+        <Icon name="format_color_text" className="self-center mr-2"/>
+      </ColorInput>
+    </div>
+  );
+};
+
+/*
+
       <div className="text-base font-bold">Color</div>
 
       <div className="flex px-5 text-neutral-400 text-base">
@@ -32,8 +49,7 @@ const FontColorInput = ({ font, handleColorChange }) => {
           </span>
         </div>
       </div>
-    </div>
-  );
-};
+
+*/
 
 export default FontColorInput;

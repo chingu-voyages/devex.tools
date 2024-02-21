@@ -8,6 +8,7 @@ import FontVariantInput from './FontPreviewComponenets/FontVariantInput';
 import TextAlignInput from './FontPreviewComponenets/TextAlignInput';
 import LetterSpacingInput from './FontPreviewComponenets/LetterSpacingInput';
 import LineHeightInput from './FontPreviewComponenets/LineHeightInput';
+import { createBookmark } from '../ToolsLayout/BookmarkUtils';
 import { ToolPane } from '../ToolsLayout/Sections';
 
 const FontPreview = ({
@@ -19,9 +20,44 @@ const FontPreview = ({
   handleLetterSpacingChange,
   handleLineHeightChange,
   handleFontSizeChange,
+  generateFontStyles,
+  bookmarkLength,
+  setBookmarkLength
 }) => {
+
+  const stylesArr = []
+  const fontStyleObj = generateFontStyles(font, backgroundColor)
+
+  for(const fontStyle in fontStyleObj){
+    if(
+      fontStyle==='fontFamily' || 
+      fontStyle==='color' ||
+      fontStyle==='backgroundColor' ||
+      fontStyle==='lineHeight' ||
+      fontStyle==='fontStyle' ||
+      fontStyle==='fontWeight' ||
+      fontStyle==='textAlign' ||
+      fontStyle==='textStyle' ||
+      fontStyle==='letterSpacing' 
+    ){
+      stylesArr.push({[fontStyle]: fontStyleObj[fontStyle]})
+    }
+    //stylesArr.push({[fontStyle]: fontStyleObj[fontStyle]})
+  }
+
+  console.log(stylesArr)
   return (
-    <ToolPane title="Options" icon="tune" isPrimary={true}>
+    <ToolPane title="Options" icon="tune" isPrimary={true}
+    bookmarkCallback={()=>{createBookmark(
+      'fonts', 
+      {fontOptions: {
+        style: generateFontStyles(font, backgroundColor),
+        options: font
+      }}, 
+      'fontOptions',
+      ['style'],
+      bookmarkLength, 
+      setBookmarkLength)}}>
       <div className="flex flex-wrap justify-between gap-y-6 [&>*]:w-[48%]">
         <FontNameInput font={font} handleFontChange={handleFontChange} />
         <FontSizeInput
@@ -50,5 +86,19 @@ const FontPreview = ({
     </ToolPane>
   );
 };
+
+/*
+
+    bookmarkCallback={()=>{createBookmark(
+      'fonts', 
+      {fontOptions: {
+        style: generateFontStyles(font, backgroundColor),
+        options: font
+      }}, 
+      'fontOptions',
+      ['style'],
+      bookmarkLength, 
+      setBookmarkLength)}}
+*/
 
 export default FontPreview;
