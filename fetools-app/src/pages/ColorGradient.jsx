@@ -9,6 +9,7 @@ import {
 
 import useToastState from '../hooks/useToastState';
 import useExpander from '../hooks/useExpander';
+import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
 
 import ColorGradientSlider from '../components/ColorGradient/ColorGradientSlider';
 import ToolHeading from '../components/ToolsLayout/ToolHeading';
@@ -22,8 +23,12 @@ import {
   ToolSection,
   ToolSectionColumns,
 } from '../components/ToolsLayout/Sections';
+
 import ToolMain from '../components/ToolsLayout/ToolMain';
 import TabSwitcher from '../components/TabSwitcher';
+import Bookmark from '../components/ToolsLayout/Bookmark';
+import EyeDropButton from '../components/ColorPicker/EyeDropButton';
+import CopyButton from '../components/CopyButton';
 
 export default function ColorGradient() {
   const containerRef = useRef();
@@ -54,10 +59,11 @@ export default function ColorGradient() {
   });
 
   const [codeBlockRules, setCodeBlockRules] = useState({
-    background: generateGradientRule(colorsArr),
+    background: `background: ${generateGradientRule(colorsArr)}`
   });
 
   const [isExpanded, toggleIsExpanded] = useExpander();
+  const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage().length)
   const toastState = useToastState();
 
   useEffect(() => {
@@ -72,7 +78,7 @@ export default function ColorGradient() {
 
     updateCSSValues('.gradientSlider', 'background', gradientRuleSlider);
     updateCSSValues('.gradient', 'background', gradientRule);
-    setCodeBlockRules({ ...codeBlockRules, background: getCssCode() });
+    setCodeBlockRules({ ...codeBlockRules, background: `background: ${getCssCode()}` });
   }, [inputValue, gradientColors]);
 
   return (
@@ -104,9 +110,19 @@ export default function ColorGradient() {
           title="Options"
           icon="gradient"
           isPrimary={true}
-          bookmarkCallback={()=>{}}
+          bookmarkCallback={()=>{createBookmark(
+          'gradients', 
+          {colorGradient: {
+            style: document.querySelector('.gradient').style.getPropertyValue('background'),
+            colors: gradientColors
+          }}, 
+          'colorGradient',
+          ['style'],
+          bookmarkLength, 
+          setBookmarkLength)}}
           shareCallback={() => {}}>
             <ColorGradientSlider
+            colorsArr={colorsArr}
             setColorsArr={setColorsArr}
             inputValue={inputValue}
             updateCSSValues={updateCSSValues}
@@ -117,19 +133,18 @@ export default function ColorGradient() {
             gradientColors={gradientColors}
             setGradientColors={setGradientColors}
             onClickRandom={onClickRandom}
-
             />
             <ColorGradientInterface
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-              handleColorInputChange={handleColorInputChange}
-              handlePositionInputChange={handlePositionInputChange}
-              handleRotationInputChange={handleRotationInputChange}
-              updateValuesOnBlur={updateValuesOnBlur}
-              gradientColors={gradientColors}
-              generateGradientRule={generateGradientRule}
-              updateCSSValues={updateCSSValues}
-              onClickRandom={onClickRandom}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            handleColorInputChange={handleColorInputChange}
+            handlePositionInputChange={handlePositionInputChange}
+            handleRotationInputChange={handleRotationInputChange}
+            updateValuesOnBlur={updateValuesOnBlur}
+            gradientColors={gradientColors}
+            generateGradientRule={generateGradientRule}
+            updateCSSValues={updateCSSValues}
+            onClickRandom={onClickRandom}
             />
           </ToolPane>
         </ToolSectionColumns>
@@ -139,8 +154,8 @@ export default function ColorGradient() {
             <CodeBlock
               toastState={toastState}
               title={'CSS'}
-              code={'background'}
-              unit={codeBlockRules.background}
+              code={codeBlockRules.background}
+              lang='css'
             />
             <CodeBlock
               toastState={toastState}
@@ -150,6 +165,30 @@ export default function ColorGradient() {
             />
           </TabSwitcher>
         </ToolSection>
+
+        <ToolSection title="Your Collection" icon="bookmarks">
+        <Bookmark 
+        pageName={'gradients'} 
+        getStyleFromBookmark={[{
+          styleProperty: 'background', 
+          bookmarkProperty: 'colorGradient', 
+          bookmarkSubProperty: 'style'}]}
+        addStyle={{width: '120px', height: '96px'}}
+        deleteProperty={'colorGradient'}
+        className={`
+        flex flex-wrap justify-start
+        min-[395px]:gap-x-5 max-[440px]:justify-between 
+        max-[550px]:justify-items-center
+        sm:justify-start gap-y-5
+        `}
+        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]`}
+        setBookmarkLength={setBookmarkLength}
+        bookmarkHoverElement={bookmarkHoverElement}
+        childProperty={'colorGradient'}
+        childSubProperty='style'
+        >
+        </Bookmark>
+      </ToolSection>
 
         <GoDeeper
           linksData={[{ url: '#', textValue: 'Not a link available yet' }]}
@@ -257,7 +296,6 @@ export default function ColorGradient() {
       ({ colorStr, value }) => `${colorStr} ${value}%`
     );
 
-
     if(type==='radial' && !isSlider){
       const gradientRule = `${type}-gradient(${colors.join(', ')})`;
       return gradientRule;
@@ -296,5 +334,39 @@ export default function ColorGradient() {
       containerRef.current.querySelector('.gradient').style.background;
 
     return currentStyle;
+  }
+
+  function bookmarkHoverElement(newStyle, editMode){
+    return(
+    <span
+    id="hover-options"
+    className={`
+    absolute flex flex-col px-6 pt-8 w-full h-full text-white text-center 
+    rounded-md rounded-tl-none
+    ${editMode?'hidden':''}
+    `}>
+      <div className="flex">
+        <span className="flex-1 block text-2xl text-center">
+        <EyeDropButton
+            title={'New Gradient Set'}
+            content={''}
+            setStateVar={()=>{
+              const bookmark = checkForLocalStorage('gradients').find(({colorGradient})=>colorGradient.style===newStyle)
+              const newGradient = bookmark.colorGradient.colors.map((colorObj,idx)=>{
+                return {...colorObj, value: (bookmark/bookmark.length)*idx}
+              })
+              setColorsArr(bookmark.colorGradient.colors)
+              setGradientColors(newGradient)
+            }}
+            newValue={newStyle}
+            toastState={toastState}
+          />
+        </span>
+        <span className="flex-1 block text-2xl text-left leading-0">
+          <CopyButton onCopy={() => newStyle} toastState={toastState} />
+        </span>
+      </div>
+    </span>
+    )
   }
 }

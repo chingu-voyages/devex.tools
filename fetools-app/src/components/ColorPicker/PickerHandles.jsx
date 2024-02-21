@@ -33,6 +33,8 @@ export default function PickerHandles({
             <input id="hue" max={360} min={0} step={1}
             type="range"
             value={parseInt(colorData.hue.h)}
+            onTouchStart={setActiveHandle}
+            onMouseDown={setActiveHandle}
             onChange={(e)=>handleOnChange(e, 'hue')}
             className="colorPickerSlider hueSlider flex-1 "></input>
           </li>
@@ -42,6 +44,8 @@ export default function PickerHandles({
             <input id="saturation" max={100} min={0} step={1}
             type="range"
             value={parseInt(colorData.color.s*100)}
+            onTouchStart={setActiveHandle}
+            onMouseDown={setActiveHandle}
             onChange={(e)=>handleOnChange(e, 'saturation')}
             className="colorPickerSlider satSlider flex-1"></input>
           </li>
@@ -51,6 +55,8 @@ export default function PickerHandles({
             <input id="light" max={100} min={0} step={1}
             type="range"
             value={parseInt(colorData.color.l*100)}
+            onTouchStart={setActiveHandle}
+            onMouseDown={setActiveHandle}
             onChange={(e)=>handleOnChange(e, 'light')}
             className="colorPickerSlider lightSlider flex-1"></input>
           </li>
@@ -60,6 +66,8 @@ export default function PickerHandles({
             <input id="alpha" max={100} min={0} step={1}
             type="range"
             value={parseInt(colorData.alpha*100)}
+            onTouchStart={setActiveHandle}
+            onMouseDown={setActiveHandle}
             onChange={(e)=>handleOnChange(e, 'alpha')}
             className="colorPickerSlider alphaSlider flex-1"></input>
           </li>
@@ -150,5 +158,14 @@ export default function PickerHandles({
 
       return rule
     }
+  }
+
+  function setActiveHandle(e){
+    const inputs = document.querySelectorAll('input[type=range]')
+    inputs.forEach(input=>{
+      input.classList.remove('isActive')
+    })
+
+    e.target.classList.add('isActive')
   }
 }

@@ -39,6 +39,7 @@ const Table = () => {
   const [isExpanded, toggleIsExpanded] = useExpander();
   const toastState = useToastState();
 
+
   return (
     <ToolMain>
       <ToolHeading
@@ -56,10 +57,10 @@ const Table = () => {
         <ToolPreviewPane toggleIsExpanded={toggleIsExpanded}>
           <div className="px-8 py-12 h-[40rem]">
             <div className="w-full h-full max-h-full overflow-auto flex items-start justify-start">
-              <TableGenerator
+               <TableGenerator
                 tableConfig={tableConfig}
                 setTableConfig={setTableConfig}
-              />
+              />  
             </div>
           </div>
           <p className="text-center">Click on any cell’s contents to edit.</p>
@@ -70,7 +71,7 @@ const Table = () => {
         title="Code Snippets"
         icon="integration_instructions"
       >
-        {/* <CodeGeneratorTable toastState={toastState} tableConfig={tableConfig}  /> */}
+        
 
         <TabSwitcher buttons={["HTML & CSS", "Tailwind"]}>
           <CodeBlock
@@ -89,6 +90,8 @@ const Table = () => {
         </TabSwitcher>
       </ToolSection>
 
+     
+      
       <GoDeeper
         linksData={[
           {

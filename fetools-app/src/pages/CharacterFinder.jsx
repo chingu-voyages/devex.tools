@@ -45,21 +45,7 @@ function CharacterFinder() {
   };
 
   const handleSearchChange = (query) => {
-    if (query.startsWith("-")) {
-      setSearchQuery(query);
-      setCurrentPage(0);
-      const actualHyphenSearch = Object.values(htmlCharacters).flatMap(
-        (category) =>
-          category.filter((character) =>
-            character.name.toLowerCase().includes("hyphen")
-          )
-      );
-
-      setSearchResults(actualHyphenSearch);
-      return;
-    }
-
-    setSearchQuery((query = query.replace(/-/g, " ")));
+    setSearchQuery(query);
     setCurrentPage(0);
 
     if (query.trim() === "") {
@@ -72,41 +58,13 @@ function CharacterFinder() {
 
   const updateSearchResults = (query) => {
     const allCharacterArrays = [
-      ...htmlCharacters.letters.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.punctuation.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.numbers.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.math.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.currency.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.arrows.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.symbols.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
+      ...htmlCharacters.letters,
+      ...htmlCharacters.punctuation,
+      ...htmlCharacters.numbers,
+      ...htmlCharacters.math,
+      ...htmlCharacters.currency,
+      ...htmlCharacters.arrows,
+      ...htmlCharacters.symbols,
       ...htmlCharacters.emojis.map((character) => ({
         ...character,
         name: character.name.replace(/-/g, " "),
@@ -119,7 +77,11 @@ function CharacterFinder() {
 
     let filteredResults;
 
-    if (query.length === 1) {
+    if (query === "-") {
+      filteredResults = allCharacterArrays.filter((character) =>
+        character.name.toLowerCase().includes("hyphen")
+      );
+    } else if (query.length === 1) {
       filteredResults = allCharacterArrays.filter(
         (character) =>
           character.character.toLowerCase() === query.toLowerCase() ||
@@ -181,32 +143,39 @@ function CharacterFinder() {
   );
 
   const categories = [
-    { name: "popular", displayName: "Popular", char: "☆" },
-    { name: "letters", displayName: "Letters", char: "Ü" },
-    { name: "punctuation", displayName: "Punctuation", char: "%" },
-    { name: "numbers", displayName: "Numbers", char: "①" },
-    { name: "math", displayName: "Math", char: "÷" },
-    { name: "currency", displayName: "Currency", char: "€" },
-    { name: "arrows", displayName: "Arrows", char: "→" },
-    { name: "symbols", displayName: "Symbols", char: "§" },
-    { name: "emojis", displayName: "Emoji", char: "☺" },
-    { name: "collection", displayName: "Collection", char: "☲" },
+    {
+      name: "popular",
+      displayName: "Popular",
+      icon: "star",
+      iconType: "material",
+    },
+    { name: "letters", displayName: "Letters", icon: "Ü" },
+    { name: "punctuation", displayName: "Punctuation", icon: "%" },
+    { name: "numbers", displayName: "Numbers", icon: "①" },
+    { name: "math", displayName: "Math", icon: "÷" },
+    { name: "currency", displayName: "Currency", icon: "€" },
+    { name: "arrows", displayName: "Arrows", icon: "→" },
+    { name: "symbols", displayName: "Symbols", icon: "§" },
+    {
+      name: "emojis",
+      displayName: "Emoji",
+      icon: "mood",
+      iconType: "material",
+    },
+    { name: "collection", displayName: "Collection", icon: "☲" },
   ];
 
-  const selectedCategoryIcon = categories.find(
+  const selectedCategoryObj = categories.find(
     (category) => category.name === selectedCategory
-  ).char;
-
-  const selectedCategoryDisplayName = categories.find(
-    (category) => category.name === selectedCategory
-  ).displayName;
+  );
 
   const categoryTabs = categories.map((category) => (
     <CharacterCategoryTab
       key={category.name}
       category={category.name}
       categoryDisplayName={category.displayName}
-      char={category.char}
+      icon={category.icon}
+      iconType={category.iconType ? category.iconType : "char"}
       selectCategory={displayCharacters}
       active={!searchQuery && category.name === selectedCategory}
     />
@@ -233,9 +202,15 @@ function CharacterFinder() {
       </div>
 
       <ToolSection
-        title={searchQuery ? searchQuery : selectedCategoryDisplayName}
-        icon={searchQuery ? "search" : selectedCategoryIcon}
-        iconType={searchQuery ? "material" : "char"}
+        title={searchQuery ? searchQuery : selectedCategoryObj.displayName}
+        icon={searchQuery ? "search" : selectedCategoryObj.icon}
+        iconType={
+          searchQuery
+            ? "material"
+            : selectedCategoryObj.iconType
+            ? selectedCategoryObj.iconType
+            : "char"
+        }
       >
         <div className="grid w-full grid-cols-4">
           {currentCategoryData.map((character, index) => (

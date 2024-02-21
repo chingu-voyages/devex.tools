@@ -10,10 +10,9 @@ export default function Bookmark({
     childClassName,
     deleteProperty,
     setBookmarkLength,
-    bookmarkChildren,
-    onMouseEnter,
-    onMouseLeave,
-    childProperty
+    bookmarkHoverElement,
+    childProperty,
+    childSubProperty
 }){
 
     const [editMode, setEditMode] = useState(false)
@@ -23,14 +22,11 @@ export default function Bookmark({
         if(parentRef.current.children.length===0){
             setEditMode(false)
         }
-
         parentRef.current
         .parentElement
         .parentElement
         .parentElement.addEventListener('mouseleave', (e)=>{setEditMode(false)})
-
     },[])
-
 
     return(
     <>
@@ -42,16 +38,21 @@ export default function Bookmark({
                     {editMode?<MdCheck></MdCheck>:<MdOutlineEdit></MdOutlineEdit>}
                 </button>
             </div>
-            <div ref={parentRef} className={className}
-            >{getBookmarked()}</div>
+            <div ref={parentRef} 
+            className={`        
+            flex flex-wrap justify-start
+            min-[395px]:gap-x-5 max-[440px]:justify-between 
+            max-[550px]:justify-items-center
+            sm:justify-start gap-y-5 ${className||''}`}>
+                {getBookmarked()}
+            </div>
         </div>
     </>
     )
 
     function getBookmarked(){
         
-        const stored = checkForLocalStorage(pageName)
-        
+        const stored = checkForLocalStorage(pageName)       
 
         if(stored.length===0){return}
 
@@ -61,11 +62,8 @@ export default function Bookmark({
                 id={`bookmark-${idx}`}
                 key={`bookmark-${idx}`}
                 style={setStyles(item)}
-                onMouseEnter={editMode?null:onMouseEnter}            
-                onMouseLeave={editMode?null:onMouseLeave}
-                className={`relative ${childClassName}`}>
+                className={`relative rounded-md rounded-tl-none min-w-[100px] max-w-[120px] ${childClassName||''}`}>
                     <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
-                        {bookmarkChildren(item[childProperty])}
                         <span id={`closeBook-${idx}`} onClick={deleteBookmarked} 
                         className={`
                         cursor-pointer hover:animate-wiggle p-2 bg-black/75 rounded-full
@@ -73,6 +71,10 @@ export default function Bookmark({
                         ${editMode?'':'hidden'}
                         `}><MdClose className="pointer-event-auto"/></span>
                     </div>
+                    {childSubProperty
+                    ?bookmarkHoverElement(item[childProperty][childSubProperty], editMode)
+                    :bookmarkHoverElement(item[childProperty], editMode)
+                    }
 
                 </div>
             )
@@ -82,7 +84,10 @@ export default function Bookmark({
 
 
         function setStyles(item){
-            const newStyles = getStyleFromBookmark.map(({styleProperty, bookmarkProperty})=>{
+            const newStyles = getStyleFromBookmark.map(({styleProperty, bookmarkProperty, bookmarkSubProperty})=>{
+                if(bookmarkSubProperty){
+                    return {[styleProperty]: item[bookmarkProperty][bookmarkSubProperty]}
+                }
                 return {[styleProperty]: item[bookmarkProperty]}
             })
 

@@ -4,6 +4,7 @@ import Icon from "../Icon";
 export default function ColorGradientSlider({
     inputValue,
     setColorsArr,
+    colorsArr,
     updateCSSValues,
     handleSetCurrentKnob,
     handleSetInputValue,
@@ -27,13 +28,21 @@ export default function ColorGradientSlider({
 
     return(
     <>
-        <div ref={sliderContainerRef}  id="slider-container" className="flex  flex-1 pt-2 pb-5 rounded-md items-center">
+        <div ref={sliderContainerRef}  id="slider-container" className="relative flex flex-1 pt-7 pb-5 rounded-md items-center">
             <div 
             className="wrap gradientSlider flex flex-col relative w-full rounded-md h-3 justify-center">
                 {createHandles()}
             </div>
             <Icon name="AutoAwesome" type="svg" className="ml-3 cursor-pointer" onClick={onClickRandom}></Icon>
+            <span 
+            onClick={removeThumb}
+            className={`
+            absolute left-0 top-[-5%] text-sm font-bold 
+            cursor-pointer hover:text-[#7F40BF] 
+            ${gradientColors.length>2?'':'hidden'}
+            `}>Remove</span>
         </div>
+
     </>
     )
  
@@ -62,7 +71,7 @@ export default function ColorGradientSlider({
                 ref={trackRef} 
                 onClick={addThumb}
                 className="block absolute w-full h-full"></span>
-            {knobsArr}
+                {knobsArr}
             </>
         )
 
@@ -148,6 +157,8 @@ export default function ColorGradientSlider({
         setGradientColors(newGradientArr)
         updateCSSValues('.gradient', 'background', gradientRule);
 
+        setActiveIndex(activeIndex)
+
         function checkIndicesForNewKnob(closestThumbs){
 
             let newGradientArr = null;
@@ -231,6 +242,16 @@ export default function ColorGradientSlider({
             }
         }
 
+    }
+
+    function removeThumb(){
+
+        const removingThumb = document.querySelector('.isActive')
+
+        if(!removingThumb){return}
+
+        setGradientColors(gradientColors.filter(({colorStr},idx)=>idx!==parseInt(removingThumb.id)))
+        setColorsArr(colorsArr.filter(({colorStr})=>colorStr!==removingThumb.dataset.color))
     }
 
     function updateHandleValuesOnGradientState(){
