@@ -84,6 +84,7 @@ export default function ColorGradientInterface({
         title='Position'
         onChange={handlePositionInputChange}
         iconName='width'
+        useEffectValue={inputValue.position}
         />
 
         <SliderInput

@@ -59,7 +59,10 @@ export default function ColorGradient() {
   });
 
   const [codeBlockRules, setCodeBlockRules] = useState({
-    background: `background: ${generateGradientRule(colorsArr)}`
+    background: {
+      css: `background: ${generateGradientRule(colorsArr)}`,
+      tailwind: `bg-[${generateGradientRule(colorsArr)}]`
+    }
   });
 
   const [isExpanded, toggleIsExpanded] = useExpander();
@@ -78,7 +81,10 @@ export default function ColorGradient() {
 
     updateCSSValues('.gradientSlider', 'background', gradientRuleSlider);
     updateCSSValues('.gradient', 'background', gradientRule);
-    setCodeBlockRules({ ...codeBlockRules, background: `background: ${getCssCode()}` });
+    setCodeBlockRules({ background: {
+      css: `background: ${getCssCode()}`,
+      tailwind: `bg-[${getCssCode()}]`
+    } });
   }, [inputValue, gradientColors]);
 
   return (
@@ -154,14 +160,14 @@ export default function ColorGradient() {
             <CodeBlock
               toastState={toastState}
               title={'CSS'}
-              code={codeBlockRules.background}
+              code={codeBlockRules.background.css}
               lang='css'
             />
             <CodeBlock
               toastState={toastState}
-              title={'CSS'}
-              code={'Tailwind'}
-              unit={codeBlockRules.background}
+              title={'Tailwind'}
+              code={codeBlockRules.background.tailwind}
+              lang='tailwind'
             />
           </TabSwitcher>
         </ToolSection>
