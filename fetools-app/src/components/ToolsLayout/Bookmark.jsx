@@ -28,7 +28,6 @@ export default function Bookmark({
         .parentElement
         .parentElement.addEventListener('mouseleave', (e)=>{setEditMode(false)})
     },[])
-
     return(
     <>
         <div>
@@ -64,7 +63,7 @@ export default function Bookmark({
                 key={`bookmark-${idx}`}
                 style={setStyles(item)}
                 className={`relative rounded-md rounded-tl-none min-w-[100px] ${childClassName||''}`}>
-                    {childElement(item[childProperty][childSubProperty])}
+                    {childElement?childElement(item[childProperty][childSubProperty]):null}
                     <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
                         <span id={`closeBook-${idx}`} onClick={deleteBookmarked} 
                         className={`
@@ -84,14 +83,13 @@ export default function Bookmark({
 
         return <>{bookmarkedItems}</>
 
-
         function setStyles(item){
             const newStyles = getStyleFromBookmark.map(({
                 styleProperty, 
                 bookmarkProperty, 
                 bookmarkSubProperty,
                 bookmarkSubSubProperty})=>{
-                    
+                
                 if(bookmarkSubSubProperty){
                     return {[styleProperty]: item[bookmarkProperty][bookmarkSubProperty][bookmarkSubSubProperty]}
                 }
@@ -100,14 +98,12 @@ export default function Bookmark({
                     return {[styleProperty]: item[bookmarkProperty][bookmarkSubProperty]}
                 }
                 
-
                 return {[styleProperty]: item[bookmarkProperty]}
             })
 
             const newStyleObj = {}
 
             for(let i=0; i<newStyles.length; i++){
-                
                 for(const key in newStyles[i]){
                     newStyleObj[key] = newStyles[i][key] 
                 }
