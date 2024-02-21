@@ -330,19 +330,13 @@ export default function CustomPicker({
 
   function disableScroll() {
     // Get the current page scroll position
-    const scrollTop = window.scrollY
-        
-    const scrollLeft = window.scrollX
-
-        // if any scroll is attempted,
-      // set this to the previous value
-      window.onscroll = function () {
-          window.scrollTo(scrollLeft, scrollTop);
-      };
+    document.body.style.setProperty('height', '100vh')
+    document.body.style.setProperty('overflow', 'hidden')
 }
 
 function enableScroll() {
-    window.onscroll = function () { };
+    document.body.style.setProperty('height', 'auto')
+    document.body.style.setProperty('overflow', 'visible')
 }
 
 }
