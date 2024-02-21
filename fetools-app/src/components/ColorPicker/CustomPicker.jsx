@@ -66,6 +66,12 @@ export default function CustomPicker({
         onDrop={handleOnDrop}
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
         onClick={(e)=>handleClick(e,true)}
+        onTouchStart={(e)=>(handleOnTouchMove(e,false,true), startInterval(e,handleClick,intervalMouseClickRef))}
+        onTouchMove={(e)=>startInterval(e,handleOnTouchMove,intervalMouseMoveRef)}
+        onTouchEnd={()=>(
+          stopInterval(intervalMouseClickRef), 
+          stopInterval(intervalMouseMoveRef), 
+          handleQuery(currentColor))}
         onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
         onMouseUp={()=>(
           stopInterval(intervalMouseClickRef), 
@@ -209,7 +215,11 @@ export default function CustomPicker({
     )
   }
 
-  function handleClick(e, firstClick){
+  function handleClick(e, firstClick, isTouch){
+
+    if(isTouch){
+      setMouseCoor({x: e.changedTouches['0'].clientX, y: e.changedTouches['0'].clientY})
+    }
 
     if(!isColorPicker){
       const newColorObj = createColorObj(canvasRef.current.currentColor)
@@ -233,9 +243,7 @@ export default function CustomPicker({
         canvasRef.current.click()
       }
     }
-
-
-    
+   
   }
 
   function startInterval(e, func, ref){
@@ -256,6 +264,29 @@ export default function CustomPicker({
 
     trackColorOnMouse()
     setMouseCoor({x: e.clientX, y: e.clientY})
+
+    function trackColorOnMouse(){
+      const ColorCtx = canvasRef.current.getContext('2d')
+      const canvasRect = canvasRef.current.getBoundingClientRect()
+
+      const x = mouseCoor.x - canvasRect.left;
+      const y = mouseCoor.y - canvasRect.top;
+
+      const pixel = ColorCtx.getImageData(x,y,1,1)['data'];   // Read pixel Color
+      const rgb = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+      
+
+      setCurrentColor(getHexString(rgb))
+    }
+  }
+
+
+  function handleOnTouchMove(e){
+    console.log(e)
+    setMouseCoor({x: e.changedTouches['0'].clientX, y: e.changedTouches['0'].clientY})
+    trackColorOnMouse()
+
+    console.log(e.changedTouches['0'].clientX, e.changedTouches['0'].clientY)
 
     function trackColorOnMouse(){
       const ColorCtx = canvasRef.current.getContext('2d')
@@ -298,4 +329,5 @@ export default function CustomPicker({
     markerRef.current.style.top = `${y}%`
     markerRef.current.style.left = `${x}%`
   }
+
 }

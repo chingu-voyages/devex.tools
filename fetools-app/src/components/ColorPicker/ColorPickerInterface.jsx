@@ -376,6 +376,8 @@ export default function ColorPickerInterface({
         value = 100;
       } else if (value < 0) {
         value = 0;
+      } else if(value === '' || isNaN(value)){
+        value = 0
       }
     }
     setInputOnFocus(true);
@@ -408,6 +410,8 @@ export default function ColorPickerInterface({
 
       if (value > 100) {
         value = 100;
+      } else if(isNaN(value)){
+        value = 0
       }
 
       setInputValues({
