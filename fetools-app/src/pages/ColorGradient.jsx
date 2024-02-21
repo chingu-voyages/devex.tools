@@ -183,9 +183,7 @@ export default function ColorGradient() {
         `}
         childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]`}
         setBookmarkLength={setBookmarkLength}
-        bookmarkChildren={bookmarkChildren}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        bookmarkHoverElement={bookmarkHoverElement}
         childProperty={'colorGradient'}
         childSubProperty='style'
         >
@@ -200,15 +198,6 @@ export default function ColorGradient() {
       </ToolMain>
     </>
   );
-
-/*
-createBookmark(
-            'gradients', 
-            {gradient: document.querySelector('.gradient').style.getPropertyValue('background')}, 
-            ['gradient'],
-            bookmarkLength, 
-            setBookmarkLength)
-*/ 
 
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);
@@ -347,14 +336,17 @@ createBookmark(
     return currentStyle;
   }
 
-  function bookmarkChildren(newStyle){
+  function bookmarkHoverElement(newStyle, editMode){
     return(
     <span
     id="hover-options"
-    className={`absolute flex flex-col mt-10 px-9 pb-4 w-full h-min text-white hidden pointer-events-none`
-    }>
+    className={`
+    absolute flex flex-col px-6 pt-8 w-full h-full text-white text-center 
+    rounded-md rounded-tl-none
+    ${editMode?'hidden':''}
+    `}>
       <div className="flex">
-        <span className="flex-1 block text-2xl text-center pointer-events-auto">
+        <span className="flex-1 block text-2xl text-center">
         <EyeDropButton
             title={'New Gradient Set'}
             content={''}
@@ -363,7 +355,6 @@ createBookmark(
               const newGradient = bookmark.colorGradient.colors.map((colorObj,idx)=>{
                 return {...colorObj, value: (bookmark/bookmark.length)*idx}
               })
-
               setColorsArr(bookmark.colorGradient.colors)
               setGradientColors(newGradient)
             }}
@@ -371,33 +362,11 @@ createBookmark(
             toastState={toastState}
           />
         </span>
-        <span className="flex-1 block text-2xl text-left leading-0 pointer-events-auto">
+        <span className="flex-1 block text-2xl text-left leading-0">
           <CopyButton onCopy={() => newStyle} toastState={toastState} />
         </span>
       </div>
     </span>
     )
-  }
-
-  function onMouseEnter(e){
-    const hoverOptions = e.target.querySelector('#hover-options');
-    if (!hoverOptions) {
-      return;
-    }
-    if (hoverOptions && hoverOptions.id === 'hover-options') {
-      hoverOptions.classList.remove('hidden');
-      return;
-    }
-  }
-
-  function onMouseLeave(e){
-    const hoverOptions = e.target.querySelector('#hover-options');
-    if (!hoverOptions) {
-      return;
-    }
-    if (hoverOptions && hoverOptions.id === 'hover-options') {
-      hoverOptions.classList.add('hidden');
-      return;
-    }
   }
 }

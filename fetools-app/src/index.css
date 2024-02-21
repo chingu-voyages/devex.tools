@@ -436,4 +436,17 @@
       }
     }
   }
+
+  @layer Bookmark{
+
+    #hover-options{
+      opacity: 0;
+    }
+
+    #hover-options:hover{
+      opacity: 100%;
+      display: block;
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+  }
 }
