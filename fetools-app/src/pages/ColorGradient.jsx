@@ -173,28 +173,22 @@ export default function ColorGradient() {
         </ToolSection>
 
         <ToolSection title="Your Collection" icon="bookmarks">
-        <Bookmark 
-        pageName={'gradients'} 
-        getStyleFromBookmark={[{
-          styleProperty: 'background', 
-          bookmarkProperty: 'colorGradient', 
-          bookmarkSubProperty: 'style'}]}
-        addStyle={{width: '120px', height: '96px'}}
-        deleteProperty={'colorGradient'}
-        className={`
-        flex flex-wrap justify-start
-        min-[395px]:gap-x-5 max-[440px]:justify-between 
-        max-[550px]:justify-items-center
-        sm:justify-start gap-y-5
-        `}
-        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]`}
-        setBookmarkLength={setBookmarkLength}
-        bookmarkHoverElement={bookmarkHoverElement}
-        childProperty={'colorGradient'}
-        childSubProperty='style'
-        >
-        </Bookmark>
-      </ToolSection>
+          <Bookmark 
+          pageName={'gradients'} 
+          getStyleFromBookmark={[{
+            styleProperty: 'background', 
+            bookmarkProperty: 'colorGradient', 
+            bookmarkSubProperty: 'style'}]}
+          addStyle={{width: '120px', height: '96px'}}
+          deleteProperty={'colorGradient'}
+          setBookmarkLength={setBookmarkLength}
+          bookmarkHoverElement={bookmarkHoverElement}
+          childProperty={'colorGradient'}
+          childSubProperty='style'
+          childClassName={'max-w-[120px]'}
+          >
+          </Bookmark>
+        </ToolSection>
 
         <GoDeeper
           linksData={[{ url: '#', textValue: 'Not a link available yet' }]}

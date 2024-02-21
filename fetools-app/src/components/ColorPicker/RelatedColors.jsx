@@ -260,6 +260,27 @@ export default function RelatedColors({
           data-color={complimentaryColor}
           className="relative row-span-2 rounded-r-lg"
         >
+          <HoverOptions
+            className={`
+            absolute right-0 flex flex-col w-full h-full text-white lg:px-1`}
+            heading={complimentaryColor}
+            headingClassName={'font-medium uppercase m-auto text-center'}
+            buttonsContainerClassName={'max-xl:mx-6'}
+            buttons={[
+              <EyeDropButton
+              key={`button-complimentaryColor`}
+              title={'New Color Set'}
+              content={''}
+              setStateVar={()=>setColorData(createColorObj(complimentaryColor))}
+              newValue={complimentaryColor}
+              toastState={toastState}
+              />,
+              <CopyButton 
+              key={`button-complimentaryColor`} 
+              onCopy={() => complimentaryColor} 
+              toastState={toastState} />
+            ]}
+          />
           <span
           id="hover-options"
           className={`
