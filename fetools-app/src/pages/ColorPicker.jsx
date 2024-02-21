@@ -89,7 +89,9 @@ export default function ColorPicker() {
       <ToolSection title="Your Collection" icon="bookmarks">
         <Bookmark 
         pageName={'colors'} 
-        getStyleFromBookmark={[{styleProperty: 'backgroundColor', bookmarkProperty: 'color'}]}
+        getStyleFromBookmark={[
+          {styleProperty: 'backgroundColor', bookmarkProperty: 'color'}
+        ]}
         addStyle={{width: '120px', height: '96px'}}
         deleteProperty={'color'}
         setBookmarkLength={setBookmarkLength}
