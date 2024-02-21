@@ -53,8 +53,8 @@ export default function Nav() {
 
   useEffect(() => {
     // Set page title based on current route.
-    const currentToolTitle = pages.find((page) => page.to === path).title;
-    document.title = `${currentToolTitle} ▸ devex.tools`;
+    const currentToolTitle = pages.find((page) => page.to === path)?.title;
+    if (currentToolTitle) document.title = `${currentToolTitle} ▸ devex.tools`;
   }, [path]);
 
   useEffect(() => {
