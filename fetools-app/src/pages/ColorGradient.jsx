@@ -59,7 +59,10 @@ export default function ColorGradient() {
   });
 
   const [codeBlockRules, setCodeBlockRules] = useState({
-    background: `background: ${generateGradientRule(colorsArr)}`
+    background: {
+      css: `background: ${generateGradientRule(colorsArr)}`,
+      tailwind: `bg-[${generateGradientRule(colorsArr)}]`
+    }
   });
 
   const [isExpanded, toggleIsExpanded] = useExpander();
@@ -78,7 +81,10 @@ export default function ColorGradient() {
 
     updateCSSValues('.gradientSlider', 'background', gradientRuleSlider);
     updateCSSValues('.gradient', 'background', gradientRule);
-    setCodeBlockRules({ ...codeBlockRules, background: `background: ${getCssCode()}` });
+    setCodeBlockRules({ background: {
+      css: `background: ${getCssCode()}`,
+      tailwind: `bg-[${getCssCode()}]`
+    } });
   }, [inputValue, gradientColors]);
 
   return (
@@ -154,41 +160,35 @@ export default function ColorGradient() {
             <CodeBlock
               toastState={toastState}
               title={'CSS'}
-              code={codeBlockRules.background}
+              code={codeBlockRules.background.css}
               lang='css'
             />
             <CodeBlock
               toastState={toastState}
-              title={'CSS'}
-              code={'Tailwind'}
-              unit={codeBlockRules.background}
+              title={'Tailwind'}
+              code={codeBlockRules.background.tailwind}
+              lang='tailwind'
             />
           </TabSwitcher>
         </ToolSection>
 
         <ToolSection title="Your Collection" icon="bookmarks">
-        <Bookmark 
-        pageName={'gradients'} 
-        getStyleFromBookmark={[{
-          styleProperty: 'background', 
-          bookmarkProperty: 'colorGradient', 
-          bookmarkSubProperty: 'style'}]}
-        addStyle={{width: '120px', height: '96px'}}
-        deleteProperty={'colorGradient'}
-        className={`
-        flex flex-wrap justify-start
-        min-[395px]:gap-x-5 max-[440px]:justify-between 
-        max-[550px]:justify-items-center
-        sm:justify-start gap-y-5
-        `}
-        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]`}
-        setBookmarkLength={setBookmarkLength}
-        bookmarkHoverElement={bookmarkHoverElement}
-        childProperty={'colorGradient'}
-        childSubProperty='style'
-        >
-        </Bookmark>
-      </ToolSection>
+          <Bookmark 
+          pageName={'gradients'} 
+          getStyleFromBookmark={[{
+            styleProperty: 'background', 
+            bookmarkProperty: 'colorGradient', 
+            bookmarkSubProperty: 'style'}]}
+          addStyle={{width: '120px', height: '96px'}}
+          deleteProperty={'colorGradient'}
+          setBookmarkLength={setBookmarkLength}
+          bookmarkHoverElement={bookmarkHoverElement}
+          childProperty={'colorGradient'}
+          childSubProperty='style'
+          childClassName={'max-w-[120px]'}
+          >
+          </Bookmark>
+        </ToolSection>
 
         <GoDeeper
           linksData={[{ url: '#', textValue: 'Not a link available yet' }]}

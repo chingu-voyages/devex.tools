@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import Icon from "../Icon";
 
 const SliderInput = forwardRef(function ColorInput(props, ref) {
@@ -13,20 +13,27 @@ const SliderInput = forwardRef(function ColorInput(props, ref) {
     titleClassName,
     iconName,
     onChange,
-    customPreviewValue
+    customPreviewValue,
+    useEffectValue=null
   } = props;
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
 
+  useEffect(()=>{
+    const inputElement = document.querySelector(`#custom-slider-input`)
+
+    inputElement.value = useEffectValue
+  },[useEffectValue])
+
   return (
     <div
-      id={`${sliderId}-input`}
-      className={
-        className
-          ? `flex z-0 justify-center text-gray-600 text-sm ${className}`
-          : `flex flex-col z-0 justify-center text-gray-600 text-sm`
-      }
+    id={`${sliderId}-input`}
+    className={
+      className
+        ? `flex z-0 justify-center text-gray-600 text-sm ${className}`
+        : `flex flex-col z-0 justify-center text-gray-600 text-sm`
+    }
     >
       <h2 className={`font-bold text-sm${titleClassName || ''}`}>
         {title}
@@ -61,7 +68,7 @@ const SliderInput = forwardRef(function ColorInput(props, ref) {
                 {getValueTypesList()}
               </ul>
             </span>
-          </span>
+        </span>
       </div>
     </div>
   );
