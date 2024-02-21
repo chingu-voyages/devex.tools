@@ -1,22 +1,46 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Icon from "../Icon";
 
-const Links = [
-  { to: "/colors", icon: "colorize", text: "Colors" },
-  { to: "/gradients", icon: "gradient", text: "Gradients" },
-  { to: "/shadows", icon: "ev_shadow", text: "Shadows" },
-  { to: "/characters", icon: "Ampersand", iconType: "svg", text: "Characters" },
-  { to: "/tables", icon: "table", text: "Tables" },
-  { to: "/units", icon: "sync", text: "Units", className: "rotate-90" },
-  { to: "/fonts", icon: "format_size", text: "Fonts" },
-].map(({ to, icon, iconType, text, className }) => (
+const pages = [
+  { to: "/colors", icon: "colorize", text: "Colors", title: "Color Picker" },
+  {
+    to: "/gradients",
+    icon: "gradient",
+    text: "Gradients",
+    title: "Gradient Maker",
+  },
+  {
+    to: "/shadows",
+    icon: "ev_shadow",
+    text: "Shadows",
+    title: "Shadow Generator",
+  },
+  {
+    to: "/characters",
+    icon: "Ampersand",
+    text: "Characters",
+    title: "Character Finder",
+    iconType: "svg",
+  },
+  { to: "/tables", icon: "table", text: "Tables", title: "Table Generator" },
+  {
+    to: "/units",
+    icon: "sync",
+    text: "Units",
+    title: "Unit Converter",
+    className: "rotate-90",
+  },
+  { to: "/fonts", icon: "format_size", text: "Fonts", title: "Font Viewer" },
+];
+
+const Links = pages.map(({ to, icon, iconType, text, className }) => (
   <li key={to} className="border-gray-200 max-md:w-full max-md:border">
     <Link to={to} className="max-md:p-4">
       <Icon
         name={icon}
         type={iconType ? iconType : "material"}
-        className={className && className}
+        className={className ? className : ""}
       />{" "}
       {text}
     </Link>
@@ -25,15 +49,25 @@ const Links = [
 
 export default function Nav() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const path = useLocation().pathname;
 
   useEffect(() => {
+    // Set page title based on current route.
+    const currentToolTitle = pages.find((page) => page.to === path)?.title;
+    if (currentToolTitle) document.title = `${currentToolTitle} ▸ devex.tools`;
+  }, [path]);
+
+  useEffect(() => {
+    // Close mobile menu on click.
     const clickListener = (e) =>
       e.target.closest(".hamburger") === null && setIsExpanded(false);
 
+    // Close mobile menu on ESC keypress.
     const escListener = (e) => e.key === "Escape" && setIsExpanded(false);
 
     document.addEventListener("click", clickListener);
     document.addEventListener("keydown", escListener);
+
     return () => {
       document.removeEventListener("click", clickListener);
       document.removeEventListener("keydown", escListener);
