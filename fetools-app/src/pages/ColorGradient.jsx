@@ -212,6 +212,11 @@ export default function ColorGradient() {
     </>
   );
 
+  function handleQuery(gradientColors) {
+    color = color.slice(1);
+    setSearchParams({ color });
+  }
+
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);
   }
