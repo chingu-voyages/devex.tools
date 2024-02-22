@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-
+import { useSearchParams } from 'react-router-dom';
 import {
   getRandomColor,
   getHexString,
@@ -32,6 +32,8 @@ import CopyButton from '../components/CopyButton';
 
 export default function ColorGradient() {
   const containerRef = useRef();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [colorsArr, setColorsArr] = useState([
     getRandomColor(),
