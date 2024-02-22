@@ -68,20 +68,18 @@ export default function CustomPicker({
         onClick={(e)=>handleClick(e,true)}
         onTouchStart={(e)=>(
           handleOnTouchMove(e,false,true), 
-          startInterval(e,handleClick,intervalMouseClickRef),
-          disableScroll())}
-        onTouchMove={(e)=>(startInterval(e,handleOnTouchMove,intervalMouseMoveRef),disableScroll())}
+          startInterval(e,handleClick,intervalMouseClickRef))}
+        onTouchMove={(e)=>(startInterval(e,handleOnTouchMove,intervalMouseMoveRef))}
         onTouchEnd={()=>(
           stopInterval(intervalMouseClickRef), 
           stopInterval(intervalMouseMoveRef), 
-          handleQuery(currentColor),
-          enableScroll())}
+          handleQuery(currentColor))}
         onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
         onMouseUp={()=>(
           stopInterval(intervalMouseClickRef), 
           stopInterval(intervalMouseMoveRef), 
           handleQuery(currentColor))}
-        className="relative z-0 w-full h-48 rounded-b-2xl"></canvas>
+        className="relative z-0 w-full h-48 rounded-b-2xl touch-none"></canvas>
         <div ref={markerRef} 
         className={`
         marker absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5 mt-[-11px] ml-[-8px] pointer-events-none`}>
@@ -321,22 +319,27 @@ export default function CustomPicker({
   function calculateMarkerPositionOnMouse(){
     const canvasRect = canvasRef.current.getBoundingClientRect()
 
-    const x = parseInt(((mouseCoor.x - canvasRect.left)/canvasRef.current.offsetWidth)*100)
-    const y =  parseInt(((mouseCoor.y - canvasRect.top)/canvasRef.current.offsetHeight)*100)
+    let x = parseInt(((mouseCoor.x - canvasRect.left)/canvasRef.current.offsetWidth)*100)
+    let y =  parseInt(((mouseCoor.y - canvasRect.top)/canvasRef.current.offsetHeight)*100)
+
+    if(x < 0 ){
+      x=0
+    }
+
+    if(x > 100){
+      x=100
+    }
+
+    if(y < 0 ){
+      y=0
+    }
+
+    if(y > 100){
+      y=100
+    }
 
     markerRef.current.style.top = `${y}%`
     markerRef.current.style.left = `${x}%`
   }
-
-  function disableScroll() {
-    // Get the current page scroll position
-    document.body.style.setProperty('height', '100vh')
-    document.body.style.setProperty('overflow', 'hidden')
-}
-
-function enableScroll() {
-    document.body.style.setProperty('height', 'auto')
-    document.body.style.setProperty('overflow', 'visible')
-}
 
 }
