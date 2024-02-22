@@ -67,7 +67,7 @@ export default function ColorPickerInterface({
       } else if (input.id === 'k') {
         input.value = inputValues.cmyk.k;
       } else if (input.id === 'a') {
-        input.value = `${parseFloat(inputValues.alpha * 100).toFixed(0)}%`;
+        input.value = `${parseFloat(inputValues.alpha * 100).toFixed(0)}`;
       }
     });
   }, [inputValues]);

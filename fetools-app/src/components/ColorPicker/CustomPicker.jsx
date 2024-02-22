@@ -308,7 +308,7 @@ export default function CustomPicker({
     if(satValue < 50 && lightValue >= 0){
       x = satValue
       y = 100 - (lightValue)
-    }else if(lightValue>50){
+    }else if(lightValue>=50){
       y = 0
       x = satValue
     } else if(lightValue<50){
