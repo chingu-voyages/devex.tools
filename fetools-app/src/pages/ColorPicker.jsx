@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import ColorPickerTool from '../components/ColorPicker/ColorPickerTool';
@@ -35,6 +35,19 @@ export default function ColorPicker() {
 
   const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage('colors').length)
   const [isExpanded, toggleIsExpanded] = useExpander();
+
+
+    useEffect(()=>{
+      if(!searchParams.get('color')){
+        handleQuery(getColorString(colorData.color, 'hex'))
+      }
+
+      if(getColorString(colorData.color, 'hex') !== `#${searchParams.get('color')}` && searchParams.get('color') ){
+        setColorData(createColorObj(searchParams.get('color')))
+      }
+    },[searchParams])
+
+
 
   return (
     <ToolMain>

@@ -5,6 +5,7 @@ import { TableInputs } from "./TableInputs";
 import Icon from "../Icon";
 import { ToolPane } from "../ToolsLayout/Sections";
 
+
 export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
   return (
     <ToolPane title="Options" icon="tune" isPrimary={true}>
@@ -61,7 +62,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             setTableConfig={setTableConfig}
             prop="tableWidth"
           />
-
+         
           <label className="my-1 flex h-full max-h-[51px] w-full flex-col gap-1 text-sm font-semibold">
             Text Alignment
             <div className="flex gap-x-2  justify-around py-2 ">
@@ -119,6 +120,8 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
               />
             </div>
           </label>
+
+          
         </section>
 
         <section className="borders flex flex-wrap justify-between [&>*]:w-[48%] gap-y-4">
@@ -225,4 +228,58 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
       </div>
     </ToolPane>
   );
+
+/* TabsInput
+          <TabsInput
+            name={"text-align"}
+            options={[
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              }
+            ]}
+            borderAroundOptions={false}
+          />
+*/
+
 };

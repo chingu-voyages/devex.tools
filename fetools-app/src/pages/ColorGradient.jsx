@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-
+import { useSearchParams } from 'react-router-dom';
 import {
   getRandomColor,
   getHexString,
@@ -32,6 +32,8 @@ import CopyButton from '../components/CopyButton';
 
 export default function ColorGradient() {
   const containerRef = useRef();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [colorsArr, setColorsArr] = useState([
     getRandomColor(),
@@ -209,6 +211,11 @@ export default function ColorGradient() {
       </ToolMain>
     </>
   );
+
+  function handleQuery(gradientColors) {
+    color = color.slice(1);
+    setSearchParams({ color });
+  }
 
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);

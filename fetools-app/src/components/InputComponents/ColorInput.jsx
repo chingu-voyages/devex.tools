@@ -48,9 +48,6 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
       </div>
     </div>
   );
-
-
-
 });
 
 export default ColorInput;
