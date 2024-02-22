@@ -101,12 +101,11 @@ export default function PickerHandles({
           colorData.color.l = (colorData.color.l-.01)
         }
 
-        console.log(e.target.value)
         if(currentVal< .5 && colorData.color.l > .5 && parseFloat(e.target.value/100) >= currentSat){
           colorData.color.l = (colorData.color.l-.01)
         }
 
-        if(currentSat === 1){
+        if(currentSat >= 1){
           colorData.color.l = .5
         }
          
@@ -114,19 +113,21 @@ export default function PickerHandles({
 
         createColorObj(colorData.color, colorData.hue)
       } else if(property === 'light'){
-        colorData.color.l = (parseFloat(e.target.value/100))
+        const currentLight = colorData.color.l
+        const currentVal = parseFloat(e.target.value/100)
 
-        if(e.target.value>50 && 
+        if(currentVal>.5 && 
           colorData.color.s > 0 && 
-          (colorData.color.l > colorData.color.s || colorData.color.s > colorData.color.l)){
+          currentVal > colorData.color.l &&
+          (currentLight > colorData.color.s || colorData.color.s > currentLight)){
           colorData.color.s = (colorData.color.s-.02)
         }
 
-        if(colorData.color.l === 1){
+        if(colorData.color.l >= 1 || colorData.color.s <= 0){
           colorData.color.s = 0
         }
          
-
+        colorData.color.l = currentVal
         createColorObj(colorData.color, colorData.hue)
       }else{
         colorData.alpha = (parseFloat(e.target.value/100))
