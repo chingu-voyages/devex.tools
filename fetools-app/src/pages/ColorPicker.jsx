@@ -45,8 +45,6 @@ export default function ColorPicker() {
       }
     },[searchParams])
 
-
-
   return (
     <ToolMain>
       <ToolHeading
