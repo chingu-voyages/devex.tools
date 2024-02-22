@@ -17,7 +17,7 @@ import {
 } from '../components/ToolsLayout/Sections';
 
 import { createColorObj, getColorString } from '../components/ColorPicker/ColorPickerUtils';
-import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
+import {createBookmark, checkForLocalStorage, compareItems} from '../components/ToolsLayout/BookmarkUtils';
 import useExpander from '../hooks/useExpander';
 import useToastState from '../hooks/useToastState';
 
@@ -29,11 +29,14 @@ export default function ColorPicker() {
     createColorObj(searchParams.get('color')) || createColorObj()
   );
 
-  const toastState = useToastState();
-
+  
+  
   const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage('colors').length)
   const [isExpanded, toggleIsExpanded] = useExpander();
+  
+  const toastState = useToastState();
 
+    console.log(compareItems(getColorString(colorData.color, 'hex'), 'colors', 'color'))
 
     useEffect(()=>{
       if(!searchParams.get('color')){
