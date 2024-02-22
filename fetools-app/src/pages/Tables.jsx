@@ -30,9 +30,9 @@ const Table = () => {
     borderWidth: 1,
     borderStyle: "solid",
     collapse: true,
-    textColor: "#000",
+    textColor: "#000000",
     bgColor: "#F1F1F1",
-    borderColor: "#000",
+    borderColor: "#000000",
     headerText: "#ffffff",
     headerBg: "#663399",
   });

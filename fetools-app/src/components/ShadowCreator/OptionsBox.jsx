@@ -1,5 +1,6 @@
-import tinycolor from 'tinycolor2';
-import { ShadowInput } from './ShadowInput';
+import tinycolor from "tinycolor2";
+import { ShadowInput } from "./ShadowInput";
+import ColorInput from "../InputComponents/ColorInput";
 
 import {
   colorChanger,
@@ -7,9 +8,9 @@ import {
   newShadow,
   switchShadow,
   removeShadow,
-} from './ShadowCreatorFN';
-import { ToolPane } from '../ToolsLayout/Sections';
-import Icon from '../Icon';
+} from "./ShadowCreatorFN";
+import { ToolPane } from "../ToolsLayout/Sections";
+import Icon from "../Icon";
 
 const OptionsBox = ({
   ShadowsStyles,
@@ -27,29 +28,14 @@ const OptionsBox = ({
     <ToolPane title="Options" isPrimary={true} icon="tune">
       <div className="flex flex-wrap justify-between gap-y-6 [&>*]:w-[48%] mb-6">
         <div className="control color shadow-color flex items-center">
-          <div className="flex items-center border h-[43px] rounded-[.25rem] w-full">
-            <input
-              type="color"
-              value={color}
-              onChange={e => {
-                colorChanger(
-                  e,
-                  setShadowsStyles,
-                  ShadowsStyles,
-                  ActiveShadow,
-                  false
-                );
-              }}
-            />
-            <input
-              type="text"
-              className="mx-2 border-none outline-none text-start flex-1"
-              placeholder={color}
-              onChange={e => {
-                colorChanger(e, setShadowsStyles, ShadowsStyles, ActiveShadow);
-              }}
-            />
-          </div>
+
+          <ColorInput
+            placeholder={color}
+            value={color}
+            onChange={(e) => {
+              colorChanger(e, setShadowsStyles, ShadowsStyles, ActiveShadow);
+            }}
+          />
         </div>
 
         <ShadowInput
@@ -60,7 +46,7 @@ const OptionsBox = ({
           setShadowsStyles={setShadowsStyles}
           ActiveShadow={ActiveShadow}
           onChange={shadowPropertyValue}
-          unitOptions={['%']}
+          unitOptions={["%"]}
           range={{ min: 0, max: 100 }}
         />
 
@@ -114,12 +100,12 @@ const OptionsBox = ({
             <input
               type="checkbox"
               className="w-6 h-6 border-[#f5f5f5] accent-accent"
-              onChange={e => {
+              onChange={(e) => {
                 shadowPropertyValue(
                   e,
                   setShadowsStyles,
                   ShadowsStyles,
-                  'inset',
+                  "inset",
                   ActiveShadow
                 );
               }}
@@ -135,11 +121,11 @@ const OptionsBox = ({
                 <div
                   id={idx}
                   key={idx}
-                  onClick={e => {
+                  onClick={(e) => {
                     switchShadow(e, setActiveShadow, idx, ActiveShadow);
                   }}
                   className={` ${
-                    ActiveShadow === idx ? 'bg-accent text-white' : ''
+                    ActiveShadow === idx ? "bg-accent text-white" : ""
                   } flex h-8 w-8 cursor-pointer select-none items-center justify-center rounded-[.25rem] border border-solid border-[#999999)]`}
                 >
                   <span> {idx + 1} </span>

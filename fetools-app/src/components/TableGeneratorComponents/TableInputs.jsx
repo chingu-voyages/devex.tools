@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState , useRef} from 'react';
 import { handleOptions } from './TableGeneratorFN';
 import Icon from '../Icon';
+import DropdownInput from '../InputComponents/DropdownInput';
+
 
 export const TableInputs = ({
   label,
@@ -29,6 +31,8 @@ export const TableInputs = ({
       propValue = prop;
       break;
   }
+
+  const dropdownValueRef = useRef();
 
   return (
     <label className="flex flex-col gap-1 font-semibold lg:mx-w-[242px] max-h-[51px] h-full w-full my-1 text-sm">
@@ -82,19 +86,35 @@ export const TableInputs = ({
           className=" w-full accent-accent"
         />
         {ShowUnits && (
-          <select
-            onChange={e => setActiveUnit(e.target.value)}
-            className="outline-none active:outline-none"
-          >
-            {dropDownOptions.map((current, idx) => {
-              return (
-                <option key={idx} value={current}>
-                  {' '}
-                  {current}{' '}
-                </option>
-              );
-            })}
-          </select>
+          // <select
+          //   onChange={e => setActiveUnit(e.target.value)}
+          //   className="outline-none active:outline-none"
+          // >
+          //   {dropDownOptions.map((current, idx) => {
+          //     return (
+          //       <option key={idx} value={current}>
+          //         {' '}
+          //         {current}{' '}
+          //       </option>
+          //     );
+          //   })}
+          // </select>
+          
+          <DropdownInput ref={dropdownValueRef} 
+          dropdownOptions={[
+            "px",
+            "Rem",
+            "Em",
+            "%",
+          ]} 
+          className="border-none"
+          
+          callbackFun={()=> {}}
+          />
+
+
+        
+        
         )}
       </div>
     </label>

@@ -1,12 +1,16 @@
-import InputColor from "./InputColor";
-import { handleOptions } from "./TableGeneratorFN";
 
+import { handleOptions, hanldeColorOptions } from "./TableGeneratorFN";
 import { TableInputs } from "./TableInputs";
 import Icon from "../Icon";
 import { ToolPane } from "../ToolsLayout/Sections";
+import ColorInput from "./../InputComponents/ColorInput";
+import DropdownInput from "../InputComponents/DropdownInput";
+import { useRef } from "react";
 
 
 export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
+  const dropdownValueRef = useRef();
+
   return (
     <ToolPane title="Options" icon="tune" isPrimary={true}>
       <div className="flex flex-col gap-8 text-sm font-bold md:aspect-video lg:justify-evenly">
@@ -35,6 +39,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             setTableConfig={setTableConfig}
             prop="dimensions"
             delay={true}
+           
           />
           <TableInputs
             label="Vertical Cell Padding"
@@ -44,6 +49,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             setTableConfig={setTableConfig}
             prop="verticalCellPading"
             delay={true}
+            rotateIcon={true}
           />
 
           <TableInputs
@@ -53,6 +59,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             tableConfig={tableConfig}
             setTableConfig={setTableConfig}
             prop="horizontalCellPading"
+            
           />
           <TableInputs
             label="Table Width"
@@ -114,7 +121,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
                     e.target.id,
                     "textAlign",
                     tableConfig,
-                    setTableConfig,
+                    setTableConfig
                   )
                 }
               />
@@ -145,34 +152,22 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             prop="borderWidth"
           />
           <div className="flex justify-start items-center">
-            <label className="w-[10rem] text-sm font-semibold">
-              Border Style:
-            </label>
-            <select
-              onChange={(e) =>
-                handleOptions(
-                  e.target.value,
-                  "borderStyle",
-                  tableConfig,
-                  setTableConfig
-                )
-              }
-              name=""
-              className="h-[43px] w-full rounded-[.25rem] border border-gray-200"
-            >
-              <option value="solid"> solid </option>
-              <option value="none">none</option>
-              <option value="dotted"> dotted </option>
-              <option value="dashed solid"> dashed solid </option>
-              <option value="dashed double none"> dashed double none </option>
-              <option value="dashed groove none dotted">
-                dashed groove none dotted{" "}
-              </option>
-              <option value="dashed groove none dotted">
-                dashed groove none dotted{" "}
-              </option>
-            </select>
+            <DropdownInput
+              ref={dropdownValueRef}
+              className="flex-row items-center gap-2"
+              callbackFun={() => setTableConfig({...tableConfig, "borderStyle": dropdownValueRef.current  })}
+              title="Border Style:"
+              dropdownOptions={[
+                "solid",
+                "dotted",
+                "dashed",
+                "double",
+                "none"
+              ]}
+            />
           </div>
+
+          {/* collapse btn */}
           <div className="flex gap-2 items-center justify-end">
             <strong className>Collapse Border</strong>
             <input
@@ -194,35 +189,83 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
           <h3 className="min-w-full border-b border-[#D9D9D9] pb-1 text-[18px] font-semibold">
             Colors
           </h3>
-          <InputColor
+          {/* <InputColor
             labelText="Text"
             tableConfig={tableConfig}
             setTableConfig={setTableConfig}
             prop="textColor"
+          /> */}
+
+          <ColorInput
+            title={"Text"}
+            placeholder={tableConfig.textColor}
+            id="table-text-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "textColor"
+              );
+            }}
           />
-          <InputColor
-            labelText="Background"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="bgColor"
+
+          <ColorInput
+            title={"Background"}
+            placeholder={tableConfig.bgColor}
+            id="table-background-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "bgColor"
+              );
+            }}
           />
-          <InputColor
-            labelText="Border"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="borderColor"
+
+          <ColorInput
+            title={"Border"}
+            placeholder={tableConfig.borderColor}
+            id="table-border-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "borderColor"
+              );
+            }}
           />
-          <InputColor
-            labelText="Header Text"
-            prop="headerText"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
+
+          <ColorInput
+            title={"Header Text"}
+            placeholder={tableConfig.headerText}
+            value={tableConfig.headerText}
+            id="table-header-text-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "headerText"
+              );
+            }}
           />
-          <InputColor
-            labelText="Header Background"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="headerBg"
+
+          <ColorInput
+            title={"Header Background"}
+            placeholder={tableConfig.headerBg}
+            value={tableConfig.headerBg}
+            id="table-header-background-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "headerBg"
+              );
+            }}
           />
         </section>
       </div>

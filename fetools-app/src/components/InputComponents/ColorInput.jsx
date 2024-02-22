@@ -2,18 +2,19 @@ import { forwardRef } from "react";
 
 const ColorInput = forwardRef(function ColorInput(props, ref) {
   const {
-    defaultValue,
+    id,
     placeholder,
     className,
     title,
     titleClassName,
     children,
     onChange,
+    value,
   } = props;
 
   return (
     <div
-      id="color-input"
+      id={`color-input-${id}`}
       className={
         className
           ? `flex z-0 justify-center ${className}`
@@ -28,14 +29,13 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
         <input
           id="custom-color-input"
           type="color"
-          defaultValue={defaultValue}
+          value={value}
           onChange={onChange}
-          className="min-w-8 w-8 h-8"
+          className="min-w-8 w-8 min-h-8 h-8"
         />
         <label id="color-hex-value">
         <input
           ref={ref}
-          defaultValue={defaultValue}
           onChange={onChange}
           onFocus={(e)=>{e.target.closest('div').classList.add('outline', 'outline-[#7F40BF]')}}
           onBlur={(e)=>{e.target.closest('div').classList.remove('outline', 'outline-[#7F40BF]')}}
