@@ -73,45 +73,21 @@ function CharacterFinder() {
   };
 
   const updateSearchResults = (query) => {
+    const replaceDash = (character) => ({
+      ...character,
+      name: character.name.replace(/-/g, " "),
+    });
+
     const allCharacterArrays = [
-      ...htmlCharacters.letters.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.punctuation.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.numbers.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.math.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.currency.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.arrows.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
-      ...htmlCharacters.symbols.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
-      })),
-      ,
+      ...htmlCharacters.letters.map(replaceDash),
+      ...htmlCharacters.punctuation.map(replaceDash),
+      ...htmlCharacters.numbers.map(replaceDash),
+      ...htmlCharacters.math.map(replaceDash),
+      ...htmlCharacters.currency.map(replaceDash),
+      ...htmlCharacters.arrows.map(replaceDash),
+      ...htmlCharacters.symbols.map(replaceDash),
       ...htmlCharacters.emojis.map((character) => ({
-        ...character,
-        name: character.name.replace(/-/g, " "),
+        ...replaceDash(character),
         unicode:
           character.unicode && character.unicode.startsWith("U+")
             ? character.unicode
@@ -127,12 +103,11 @@ function CharacterFinder() {
           character.character.toLowerCase() === query ||
           removeLetterVariations(character.character.toLowerCase()) ===
             removeLetterVariations(query) ||
-          (character.entity && character.entity.toLowerCase() === query) ||
-          (character.hex && character.hex.toLowerCase() === query) ||
-          (character.unicode && character.unicode.toLowerCase() === query) ||
-          (character.css &&
-            (character.css.toLowerCase() === query ||
-              character.css.toLowerCase() === "\\" + query))
+          character.entity?.toLowerCase() === query ||
+          character.hex?.toLowerCase() === query ||
+          character.unicode?.toLowerCase() === query ||
+          character.css?.toLowerCase() === query ||
+          character.css?.toLowerCase() === "\\" + query
       );
 
       if (filteredResults.length === 0) {
@@ -148,12 +123,10 @@ function CharacterFinder() {
           removeLetterVariations(character.name.toLowerCase()).includes(
             removeLetterVariations(query)
           ) ||
-          (character.entity &&
-            character.entity.toLowerCase().includes(query)) ||
-          (character.hex && character.hex.toLowerCase().includes(query)) ||
-          (character.unicode &&
-            character.unicode.toLowerCase().includes(query)) ||
-          (character.css && character.css.toLowerCase().includes(query))
+          character.entity?.toLowerCase().includes(query) ||
+          character.hex?.toLowerCase().includes(query) ||
+          character.unicode?.toLowerCase().includes(query) ||
+          character.css?.toLowerCase().includes(query)
       );
     }
 
