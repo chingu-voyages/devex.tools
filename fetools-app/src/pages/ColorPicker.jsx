@@ -39,7 +39,6 @@ export default function ColorPicker() {
 
     useEffect(()=>{
       if(!searchParams.get('color')){
-        console.log('is null')
         handleQuery(getColorString(colorData.color, 'hex'))
       }
 
