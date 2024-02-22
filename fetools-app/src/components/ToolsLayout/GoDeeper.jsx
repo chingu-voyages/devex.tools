@@ -2,12 +2,20 @@ import { ToolSection } from "./Sections";
 import Icon from "../Icon";
 
 export default function GoDeeper({ linksData }) {
+  // Add icons to links
+  linksData = linksData.map((link) => {
+    return {
+      icon: link.url.includes("youtube") ? "live_tv" : "Link",
+      iconType: link.url.includes("youtube") ? "material" : "svg",
+      ...link,
+    };
+  });
   const anchorElements = (array) =>
-    array.map(({ url, textValue }, idx) => (
+    array.map(({ url, textValue, icon, iconType }, idx) => (
       <li key={`GoLink-${idx}`}>
         <div className="flex items-start gap-2">
           <div className="pt-1">
-            <Icon name="Link" type="svg" size="18" />
+            <Icon name={icon} type={iconType} size="18" />
           </div>
           <a
             href={url}
