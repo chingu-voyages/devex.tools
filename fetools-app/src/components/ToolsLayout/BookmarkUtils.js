@@ -51,3 +51,17 @@ export function saveNewArray(pageName, newArr){
     localStorage.setItem(`${pageName}-favorites`, JSON.stringify(newArr))
 }
 
+export function compareItems(a, b) {
+    // First try simple comparison for strings and numbers
+    if (a === b) return true;
+  
+    // Check if objects have same length
+    if (Object.keys(a).length !== Object.keys(b).length) return false;
+  
+    // Check if all properties are the same
+    for (let key in a) {
+      if (a[key] !== b[key]) return false;
+    }
+  
+    return true;
+}
