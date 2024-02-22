@@ -322,32 +322,31 @@ export default function RelatedColors({
             idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'
           }`}
         >
-          <span
-          id="hover-options"
-          className={`
-          absolute right-0 flex flex-col w-full h-full py-8 text-white px-7
-          ${
-            idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'
-          }
-          `}>
-            <div>
-              <p className="font-medium uppercase max-sm:text-center">{color}</p>
-            </div>
-            <div className="flex">
-              <span className="flex-1 block text-2xl text-center max-sm:text-center">
-              <EyeDropButton
-              title={'New Color Set'}
-              content={''}
-              setStateVar={()=>setColorData(createColorObj(color))}
-              newValue={color}
-              toastState={toastState}
-              />
-              </span>
-              <span className="flex-1 block text-2xl text-left leading-0 max-sm:text-center">
-                <CopyButton onCopy={() => color} toastState={toastState} />
-              </span>
-            </div>
-          </span>
+          <HoverOptions
+            className={`
+            absolute right-0 flex flex-col w-full h-full py-8 text-white px-7
+            ${
+              idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'
+            }
+            `}
+            heading={color}
+            headingClassName={'font-medium uppercase max-sm:text-center'}
+            buttons={[
+            <EyeDropButton
+            key={`button-${idx}`}
+            title={'New Color Set'}
+            content={''}
+            setStateVar={()=>setColorData(createColorObj(color))}
+            newValue={color}
+            toastState={toastState}
+            />,
+            <CopyButton 
+            key={`button-${idx}`} 
+            onCopy={() => color} 
+            toastState={toastState} />
+            ]}
+            buttonsClassName={'text-center'}
+          />
         </div>
       );
     });
