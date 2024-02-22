@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react"
-import { MdCheck, MdOutlineEdit, MdClose } from "react-icons/md"
-import { checkForLocalStorage, saveNewArray } from "./BookmarkUtils"
+import { useEffect, useRef, useState } from "react";
+import { MdCheck, MdOutlineEdit, MdClose } from "react-icons/md";
+import { checkForLocalStorage, saveNewArray } from "./BookmarkUtils";
 
 export default function Bookmark({
     pageName,
@@ -30,29 +30,32 @@ export default function Bookmark({
     },[])
     return(
     <>
-        <div>
-            <div className="text-right pb-2">
-                <button
-                onClick={()=>setEditMode(!editMode)} 
-                className="text-2xl">
-                    {editMode?<MdCheck></MdCheck>:<MdOutlineEdit></MdOutlineEdit>}
-                </button>
-            </div>
-            <div ref={parentRef} 
-            className={`        
+      <div>
+        <div className="text-right pb-2">
+          <button onClick={() => setEditMode(!editMode)} className="text-2xl">
+            {editMode ? <MdCheck></MdCheck> : <MdOutlineEdit></MdOutlineEdit>}
+          </button>
+        </div>
+        <div
+          ref={parentRef}
+          className={`        
             flex flex-wrap justify-start
             min-[395px]:gap-x-5 max-[440px]:justify-between 
             max-[550px]:justify-items-center
-            sm:justify-start gap-y-5 ${className||''}`}>
-                {getBookmarked()}
-            </div>
+            sm:justify-start gap-y-5 ${className || ""}`}
+        >
+          {getBookmarked()}
         </div>
+      </div>
     </>
-    )
+  );
 
-    function getBookmarked(){
-        
-        const stored = checkForLocalStorage(pageName)       
+  function getBookmarked() {
+    const stored = checkForLocalStorage(pageName);
+
+    if (stored.length === 0) {
+      return;
+    }
 
         if(stored.length===0){return}
 
@@ -109,28 +112,29 @@ export default function Bookmark({
                 }
             }
 
-            for(const key in addStyle){
-                newStyleObj[key] = addStyle[key] 
-            }
+      for (const key in addStyle) {
+        newStyleObj[key] = addStyle[key];
+      }
 
-            return newStyleObj
-        }
-
-        function deleteBookmarked(e){
-            const id = parseInt(
-                e.target.tagName==='SPAN'?
-                e.target.id.replace('closeBook-',''):
-                e.target.closest('span').id.replace('closeBook-','')
-            )
-
-             console.log(id)
-            const stored = checkForLocalStorage(pageName)
-            
-            const newArr = stored.filter(item=>item[deleteProperty]!==stored[id][deleteProperty])
-            
-            saveNewArray(pageName, newArr)
-            setBookmarkLength(newArr.length)
-        }
+      return newStyleObj;
     }
 
+    function deleteBookmarked(e) {
+      const id = parseInt(
+        e.target.tagName === "SPAN"
+          ? e.target.id.replace("closeBook-", "")
+          : e.target.closest("span").id.replace("closeBook-", "")
+      );
+
+      console.log(id);
+      const stored = checkForLocalStorage(pageName);
+
+      const newArr = stored.filter(
+        (item) => item[deleteProperty] !== stored[id][deleteProperty]
+      );
+
+      saveNewArray(pageName, newArr);
+      setBookmarkLength(newArr.length);
+    }
+  }
 }
