@@ -72,7 +72,7 @@ export default function ColorGradient() {
         value: 
         idx===colorsArr.length-1
         ?100
-        :(100/colorsArr.length)*idx
+        :(100/colorsArr.length-1)*idx
       }
     ))
   )
