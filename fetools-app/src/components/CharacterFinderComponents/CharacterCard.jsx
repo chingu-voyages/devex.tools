@@ -1,3 +1,5 @@
+import Bookmark from "../ToolsLayout/Bookmark";
+
 const CharacterCard = ({
   char,
   name,

@@ -45,6 +45,8 @@ function CharacterFinder() {
   };
 
   const handleSearchChange = (query) => {
+    query = query.toLowerCase();
+
     if (query.startsWith("-")) {
       setSearchQuery(query);
       setCurrentPage(0);
@@ -122,44 +124,36 @@ function CharacterFinder() {
     if (query.length === 1) {
       filteredResults = allCharacterArrays.filter(
         (character) =>
-          character.character.toLowerCase() === query.toLowerCase() ||
+          character.character.toLowerCase() === query ||
           removeLetterVariations(character.character.toLowerCase()) ===
-            removeLetterVariations(query.toLowerCase()) ||
-          (character.entity &&
-            character.entity.toLowerCase() === query.toLowerCase()) ||
-          (character.hex &&
-            character.hex.toLowerCase() === query.toLowerCase()) ||
-          (character.unicode &&
-            character.unicode.toLowerCase() === query.toLowerCase()) ||
+            removeLetterVariations(query) ||
+          (character.entity && character.entity.toLowerCase() === query) ||
+          (character.hex && character.hex.toLowerCase() === query) ||
+          (character.unicode && character.unicode.toLowerCase() === query) ||
           (character.css &&
-            (character.css.toLowerCase() === query.toLowerCase() ||
-              character.css.toLowerCase() === "\\" + query.toLowerCase()))
+            (character.css.toLowerCase() === query ||
+              character.css.toLowerCase() === "\\" + query))
       );
 
       if (filteredResults.length === 0) {
         filteredResults = allCharacterArrays.filter((character) => {
           const name = character.name.toLowerCase();
-          return (
-            name.includes(` ${query.toLowerCase()}`) ||
-            name.startsWith(`${query.toLowerCase()} `)
-          );
+          return name.includes(` ${query}`) || name.startsWith(`${query} `);
         });
       }
     } else {
       filteredResults = allCharacterArrays.filter(
         (character) =>
-          character.name.toLowerCase().includes(query.toLowerCase()) ||
+          character.name.toLowerCase().includes(query) ||
           removeLetterVariations(character.name.toLowerCase()).includes(
-            removeLetterVariations(query.toLowerCase())
+            removeLetterVariations(query)
           ) ||
           (character.entity &&
-            character.entity.toLowerCase().includes(query.toLowerCase())) ||
-          (character.hex &&
-            character.hex.toLowerCase().includes(query.toLowerCase())) ||
+            character.entity.toLowerCase().includes(query)) ||
+          (character.hex && character.hex.toLowerCase().includes(query)) ||
           (character.unicode &&
-            character.unicode.toLowerCase().includes(query.toLowerCase())) ||
-          (character.css &&
-            character.css.toLowerCase().includes(query.toLowerCase()))
+            character.unicode.toLowerCase().includes(query)) ||
+          (character.css && character.css.toLowerCase().includes(query))
       );
     }
 
