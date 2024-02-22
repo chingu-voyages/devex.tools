@@ -82,7 +82,7 @@ export default function CustomPicker({
         className="relative z-0 w-full h-48 rounded-b-2xl touch-none"></canvas>
         <div ref={markerRef} 
         className={`
-        marker absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5 mt-[-11px] ml-[-8px] pointer-events-none`}>
+        marker z-10 absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5 mt-[-11px] ml-[-8px] pointer-events-none`}>
           {createPickerMarker()}
         </div>
 
@@ -302,11 +302,18 @@ export default function CustomPicker({
     let satValue = parseInt((colorData.color.s)*100)
     let lightValue = parseInt((colorData.color.l)*100)
 
-    let x = satValue
-    let y = 100 - (lightValue*2)
+    let x = 0
+    let y = 0
 
-    if(lightValue>=50){
+    if(satValue < 50 && lightValue >= 0){
+      x = satValue
+      y = 100 - (lightValue)
+    }else if(lightValue>50){
       y = 0
+      x = satValue
+    } else if(lightValue<50){
+      x = satValue
+      y = 100 - (lightValue*2)
     }
 
     markerRef.current.style.top = `${y}%`
