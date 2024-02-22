@@ -67,7 +67,7 @@ export default function CustomPicker({
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
         onClick={(e)=>handleClick(e,true)}
         onTouchStart={(e)=>(
-          handleOnTouchMove(e,false,true), 
+          handleOnTouchMove(e,false), 
           startInterval(e,handleClick,intervalMouseClickRef))}
         onTouchMove={(e)=>(startInterval(e,handleOnTouchMove,intervalMouseMoveRef))}
         onTouchEnd={()=>(
@@ -217,7 +217,7 @@ export default function CustomPicker({
     )
   }
 
-  function handleClick(e, firstClick, isTouch){
+  function handleClick(e, firstClick){
 
     if(!isColorPicker){
       const newColorObj = createColorObj(canvasRef.current.currentColor)
@@ -248,7 +248,7 @@ export default function CustomPicker({
     if (ref.current) return;
     ref.current = setInterval(() => {
       func(e)
-    }, 5);
+    }, 15);
   }
 
   function stopInterval(ref){
@@ -281,8 +281,6 @@ export default function CustomPicker({
   function handleOnTouchMove(e){
     setMouseCoor({x: e.changedTouches['0'].clientX, y: e.changedTouches['0'].clientY})
     trackColorOnMouse()
-
-    console.log(e.changedTouches['0'].clientX, e.changedTouches['0'].clientY)
 
     function trackColorOnMouse(){
       const ColorCtx = canvasRef.current.getContext('2d')
