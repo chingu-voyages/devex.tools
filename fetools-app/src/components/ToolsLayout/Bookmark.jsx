@@ -3,33 +3,32 @@ import { MdCheck, MdOutlineEdit, MdClose } from "react-icons/md";
 import { checkForLocalStorage, saveNewArray } from "./BookmarkUtils";
 
 export default function Bookmark({
-  pageName,
-  getStyleFromBookmark,
-  addStyle,
-  className,
-  childClassName,
-  deleteProperty,
-  setBookmarkLength,
-  bookmarkHoverElement,
-  childProperty,
-  childSubProperty,
-}) {
-  const [editMode, setEditMode] = useState(false);
-  const parentRef = useRef();
+    pageName,
+    getStyleFromBookmark,
+    addStyle,
+    className,
+    childClassName,
+    deleteProperty,
+    setBookmarkLength,
+    childElement,
+    bookmarkHoverElement,
+    childProperty,
+    childSubProperty
+}){
 
-  useEffect(() => {
-    if (parentRef.current.children.length === 0) {
-      setEditMode(false);
-    }
-    parentRef.current.parentElement.parentElement.parentElement.addEventListener(
-      "mouseleave",
-      (e) => {
-        setEditMode(false);
-      }
-    );
-  }, []);
+    const [editMode, setEditMode] = useState(false)
+    const parentRef = useRef()
 
-  return (
+    useEffect(()=>{
+        if(parentRef.current.children.length===0){
+            setEditMode(false)
+        }
+        parentRef.current
+        .parentElement
+        .parentElement
+        .parentElement.addEventListener('mouseleave', (e)=>{setEditMode(false)})
+    },[])
+    return(
     <>
       <div>
         <div className="text-right pb-2">
@@ -58,60 +57,60 @@ export default function Bookmark({
       return;
     }
 
-    const bookmarkedItems = stored.map((item, idx) => {
-      return (
-        <div
-          id={`bookmark-${idx}`}
-          key={`bookmark-${idx}`}
-          style={setStyles(item)}
-          className={`relative rounded-md rounded-tl-none min-w-[100px] max-w-[120px] ${
-            childClassName || ""
-          }`}
-        >
-          <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
-            <span
-              id={`closeBook-${idx}`}
-              onClick={deleteBookmarked}
-              className={`
+        if(stored.length===0){return}
+
+        const bookmarkedItems = stored.map((item, idx)=>{
+            return (
+                <div
+                id={`bookmark-${idx}`}
+                key={`bookmark-${idx}`}
+                style={setStyles(item)}
+                className={`relative rounded-md rounded-tl-none min-w-[100px] ${childClassName||''}`}>
+                    {childElement?childElement(item[childProperty][childSubProperty]):null}
+                    <div className="absolute w-[115%] h-[125%] left-[-9%] top-[-22%]">
+                        <span id={`closeBook-${idx}`} onClick={deleteBookmarked} 
+                        className={`
                         cursor-pointer hover:animate-wiggle p-2 bg-black/75 rounded-full
                         absolute left-1 top-3 font-bold text-sm text-white z-20
-                        ${editMode ? "" : "hidden"}
-                        `}
-            >
-              <MdClose className="pointer-event-auto" />
-            </span>
-          </div>
-          {childSubProperty
-            ? bookmarkHoverElement(
-                item[childProperty][childSubProperty],
-                editMode
-              )
-            : bookmarkHoverElement(item[childProperty], editMode)}
-        </div>
-      );
-    });
+                        ${editMode?'':'hidden'}
+                        `}><MdClose className="pointer-event-auto"/></span>
+                    </div>
+                    {childSubProperty
+                    ?bookmarkHoverElement(item[childProperty][childSubProperty], editMode)
+                    :bookmarkHoverElement(item[childProperty], editMode)
+                    }
 
-    return <>{bookmarkedItems}</>;
+                </div>
+            )
+        })
 
-    function setStyles(item) {
-      const newStyles = getStyleFromBookmark.map(
-        ({ styleProperty, bookmarkProperty, bookmarkSubProperty }) => {
-          if (bookmarkSubProperty) {
-            return {
-              [styleProperty]: item[bookmarkProperty][bookmarkSubProperty],
-            };
-          }
-          return { [styleProperty]: item[bookmarkProperty] };
-        }
-      );
+        return <>{bookmarkedItems}</>
 
-      const newStyleObj = {};
+        function setStyles(item){
+            const newStyles = getStyleFromBookmark.map(({
+                styleProperty, 
+                bookmarkProperty, 
+                bookmarkSubProperty,
+                bookmarkSubSubProperty})=>{
+                
+                if(bookmarkSubSubProperty){
+                    return {[styleProperty]: item[bookmarkProperty][bookmarkSubProperty][bookmarkSubSubProperty]}
+                }
+                
+                if(bookmarkSubProperty){
+                    return {[styleProperty]: item[bookmarkProperty][bookmarkSubProperty]}
+                }
+                
+                return {[styleProperty]: item[bookmarkProperty]}
+            })
 
-      for (let i = 0; i < newStyles.length; i++) {
-        for (const key in newStyles[i]) {
-          newStyleObj[key] = newStyles[i][key];
-        }
-      }
+            const newStyleObj = {}
+
+            for(let i=0; i<newStyles.length; i++){
+                for(const key in newStyles[i]){
+                    newStyleObj[key] = newStyles[i][key] 
+                }
+            }
 
       for (const key in addStyle) {
         newStyleObj[key] = addStyle[key];
