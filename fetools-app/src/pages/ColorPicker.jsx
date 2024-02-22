@@ -100,7 +100,20 @@ export default function ColorPicker() {
         </Bookmark>
       </ToolSection>
 
-      <GoDeeper linksData={[]}></GoDeeper>
+      <GoDeeper linksData={[
+          {
+            url: 'https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance',
+            textValue: 'MDN Web Docs: Understanding Colors and Luminance'
+          },
+          {
+            url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_colors/Applying_color',
+            textValue: 'MDN Web Docs: Applying color to HTML elements using CSS'
+          },
+          {
+            url: 'https://www.youtube.com/watch?v=YeI6Wqn4I78',
+            textValue: 'Color theory basics: use the color wheel & color harmonies to choose colors that work well together'
+          }
+      ]}/>
       <Toast toastState={toastState} />
     </ToolMain>
   );
