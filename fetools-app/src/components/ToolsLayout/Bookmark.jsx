@@ -123,7 +123,6 @@ export default function Bookmark({
                 e.target.closest('span').id.replace('closeBook-','')
             )
 
-             console.log(id)
             const stored = checkForLocalStorage(pageName)
             
             const newArr = stored.filter(item=>item[deleteProperty]!==stored[id][deleteProperty])
