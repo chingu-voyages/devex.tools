@@ -4,7 +4,7 @@ import { handleOptions } from "./TableGeneratorFN";
 import { TableInputs } from "./TableInputs";
 import Icon from "../Icon";
 import { ToolPane } from "../ToolsLayout/Sections";
-import TabsInput from "../InputComponents/TabsInput"
+
 
 export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
   return (
