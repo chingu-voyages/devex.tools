@@ -10,7 +10,6 @@ import {
 import useToastState from '../hooks/useToastState';
 import useExpander from '../hooks/useExpander';
 import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
-import { createColorObj } from '../components/ColorPicker/ColorPickerUtils';
 
 import ColorGradientSlider from '../components/ColorGradient/ColorGradientSlider';
 import ToolHeading from '../components/ToolsLayout/ToolHeading';
@@ -32,6 +31,7 @@ import EyeDropButton from '../components/ColorPicker/EyeDropButton';
 import CopyButton from '../components/CopyButton';
 import { getColorString } from '../components/ColorPicker/ColorPickerUtils';
 
+
 export default function ColorGradient() {
   const containerRef = useRef();
 
@@ -44,8 +44,6 @@ export default function ColorGradient() {
   searchParams.forEach(color=>{
     searchParamsColors.push(getRgb(color))
   })
-
-  console.log(searchParamsColors)
 
   const [colorsArr, setColorsArr] = useState(
     searchParamsColors  ||
@@ -66,9 +64,9 @@ export default function ColorGradient() {
         :(100/(colorsArr.length-1))*idx)
       }
     ))
-    : colorsArr.map((paramColor,idx)=>(
+    : colorsArr.map((color,idx)=>(
       {
-        ...paramColor, 
+        ...color, 
         value: 
         idx===colorsArr.length-1
         ?100
@@ -259,8 +257,6 @@ export default function ColorGradient() {
 
   function handleColorInputChange(evt) {
     const newColor = evt.target.value;
-
-    console.log(newColor)
 
     setInputValue({ ...inputValue, color: newColor }); // Update input value
 
