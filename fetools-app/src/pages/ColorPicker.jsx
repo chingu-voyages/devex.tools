@@ -28,8 +28,6 @@ export default function ColorPicker() {
   const [colorData, setColorData] = useState(
     createColorObj(searchParams.get('color')) || createColorObj()
   );
-
-  
   
   const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage('colors').length)
   const [isExpanded, toggleIsExpanded] = useExpander();

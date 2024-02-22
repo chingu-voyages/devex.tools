@@ -58,8 +58,6 @@ export function compareItems(comparisonObj, pageName, bookmarkProp, checkObjects
         return bookmark[bookmarkProp]===comparisonObj?true:false
     });
     
-    console.log(isBookmarked, typeof(isBookmarked))
-
     if(typeof(isBookmarked)!=='object') {return false}
 
     if(isBookmarked[bookmarkProp]===comparisonObj ) return true;
