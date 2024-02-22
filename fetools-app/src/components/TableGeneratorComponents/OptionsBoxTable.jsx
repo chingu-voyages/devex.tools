@@ -159,6 +159,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             setTableConfig={setTableConfig}
             prop="borderWidth"
           />
+          
           <SliderInput
           ref={dropdownValueRef}
           useEffectValue={tableConfig.borderRounding}
@@ -173,6 +174,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             console.log(e.target.value)
             setTableConfig({...tableConfig, borderStyle: parseInt(e.target.value)  })}}
           />
+
           <div className="flex justify-start items-center">
             <DropdownInput
               ref={dropdownValueRef}
