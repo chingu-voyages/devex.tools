@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
 import ColorPickerTool from '../components/ColorPicker/ColorPickerTool';
 import ColorPickerInterface from '../components/ColorPicker/ColorPickerInterface';
 import RelatedColors from '../components/ColorPicker/RelatedColors';
@@ -19,7 +18,6 @@ import {
 
 import { createColorObj, getColorString } from '../components/ColorPicker/ColorPickerUtils';
 import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
-
 import useExpander from '../hooks/useExpander';
 import useToastState from '../hooks/useToastState';
 
