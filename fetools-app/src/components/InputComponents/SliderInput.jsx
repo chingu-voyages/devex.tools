@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from "react";
 import Icon from "../Icon";
 
-const SliderInput = forwardRef(function ColorInput(props, ref) {
+const SliderInput = forwardRef(function SliderInput(props, ref) {
   const {
     sliderId,
     defaultValue,
