@@ -100,20 +100,20 @@ export const TableInputs = ({
           //   })}
           // </select>
           
-          <DropdownInput ref={dropdownValueRef} 
-          dropdownOptions={[
-            "px",
-            "Rem",
-            "Em",
-            "%",
-          ]} 
-          className="border-none"
+          // <DropdownInput ref={dropdownValueRef} 
+          // dropdownOptions={[
+          //   "px",
+          //   "Rem",
+          //   "Em",
+          //   "%",
+          // ]} 
+          // className="border-none"
           
-          callbackFun={()=> {}}
-          />
+          // callbackFun={()=> {}}
+          // />
 
 
-        
+          <div></div>
         
         )}
       </div>
