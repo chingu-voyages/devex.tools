@@ -112,7 +112,7 @@ export const TableInputs = ({
           // />
 
 
-        
+          <div></div>
         
         )}
       </div>
