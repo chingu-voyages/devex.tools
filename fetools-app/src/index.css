@@ -135,11 +135,13 @@
       border-radius: 2px;
     }
 
+    
     #tab-input label:hover{
       outline: 1px solid #111;
       border-radius: 2px;
       color: #7F40BF;
     }
+    
   }
 
   @layer ColorGradient {

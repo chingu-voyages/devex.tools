@@ -52,16 +52,6 @@ const TabsInput = forwardRef(function TabsInput(props, ref) {
           <input  type="radio" value={option.value} defaultChecked={idx===defaultOption?true:false}
           checked={idx===activeIndex?true:false} 
           onClick={(e)=>(option.onClick(e), setActiveIndex(idx))}
-          onFocus={()=>(
-            document
-            .querySelector(`.tabs${id}`)
-            .querySelector('div').classList.add('outline', 'outline-[#7F40BF]')
-          )}
-          onBlur={()=>(
-            document
-            .querySelector(`.tabs${id}`)
-            .querySelector('div').classList.remove('outline', 'outline-[#7F40BF]')
-          )}
           className={`z-0 absolute bg-[transparent] w-full h-full cursor-pointer`}
           />          
           <Icon
