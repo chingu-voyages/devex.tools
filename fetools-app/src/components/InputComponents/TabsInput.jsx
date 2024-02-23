@@ -3,9 +3,9 @@ import Icon from "../Icon";
 
 const TabsInput = forwardRef(function TabsInput(props, ref) {
   const {
+    id,
     name,
     className,
-    optionSize,
     title,
     titleClassName,
     options,
@@ -17,11 +17,11 @@ const TabsInput = forwardRef(function TabsInput(props, ref) {
 
   return (
     <div
-      id="tab-input"
+      id={`tab-input`}
       className={
         className
-          ? `flex z-0 justify-center ${className}`
-          : `flex z-0 justify-center flex-col` 
+          ? `tabs${id} flex z-0 justify-center ${className}`
+          : `tabs${id} flex z-0 justify-center flex-col` 
       }
     >
       {title
@@ -48,17 +48,24 @@ const TabsInput = forwardRef(function TabsInput(props, ref) {
       <label key={`icon-${idx}`} name={name} 
       className="flex flex-1 relative w-full h-full 
       items-center text-center">
-        <div className="flex relative w-full h-full hover:text-[#7F40BF]"
-        style={{width: optionSize.width, height: optionSize.height}}>
+        <div className="flex relative w-full h-full hover:text-[#7F40BF]">
           <input  type="radio" value={option.value} defaultChecked={idx===defaultOption?true:false}
           checked={idx===activeIndex?true:false} 
           onClick={(e)=>(option.onClick(e), setActiveIndex(idx))}
-          className={`z-10 absolute bg-[transparent] w-full h-full ${optionSize?``:'w-full h-full'} 
-          cursor-pointer`}
+          onFocus={()=>(
+            document
+            .querySelector(`.tabs${id}`)
+            .querySelector('div').classList.add('outline', 'outline-[#7F40BF]')
+          )}
+          onBlur={()=>(
+            document
+            .querySelector(`.tabs${id}`)
+            .querySelector('div').classList.remove('outline', 'outline-[#7F40BF]')
+          )}
+          className={`z-0 absolute bg-[transparent] w-full h-full cursor-pointer`}
           />          
           <Icon
-          size="24"
-          className="m-auto cursor-pointer"
+          className="m-auto cursor-pointer z-10"
           name={option.iconName}
           id="center"/>
         </div>

@@ -81,9 +81,9 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
 
          <TabsInput
             name={"text-align"}
+            id={'textAlign'}
             title={'Text Align'}
             defaultOption={1}
-            optionSize={{width: 32, height: 32}}
             options={[
               {
                 iconName: 'format_align_left',

@@ -135,13 +135,7 @@
       border-radius: 2px;
     }
 
-    #tab-input input[type="radio"]:focus-visible{
-      outline: 2px solid #7F40BF;
-      z-index: 10;
-    }
-
-
-    #tab-input label div:hover{
+    #tab-input label:hover{
       outline: 1px solid #111;
       border-radius: 2px;
       color: #7F40BF;
