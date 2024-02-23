@@ -190,7 +190,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
                 }
               />
               <AlignTextInput tableConfig={tableConfig} setTableConfig={setTableConfig} />
-              */
+              */}
               
             </div>
           </label>
