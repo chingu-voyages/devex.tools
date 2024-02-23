@@ -45,7 +45,23 @@ function CharacterFinder() {
   };
 
   const handleSearchChange = (query) => {
-    setSearchQuery(query);
+    query = query.toLowerCase();
+
+    if (query.startsWith("-")) {
+      setSearchQuery(query);
+      setCurrentPage(0);
+      const actualHyphenSearch = Object.values(htmlCharacters).flatMap(
+        (category) =>
+          category.filter((character) =>
+            character.name.toLowerCase().includes("hyphen")
+          )
+      );
+
+      setSearchResults(actualHyphenSearch);
+      return;
+    }
+
+    setSearchQuery((query = query.replace(/-/g, " ")));
     setCurrentPage(0);
 
     if (query.trim() === "") {
@@ -57,16 +73,21 @@ function CharacterFinder() {
   };
 
   const updateSearchResults = (query) => {
+    const replaceDash = (character) => ({
+      ...character,
+      name: character.name.replace(/-/g, " "),
+    });
+
     const allCharacterArrays = [
-      ...htmlCharacters.letters,
-      ...htmlCharacters.punctuation,
-      ...htmlCharacters.numbers,
-      ...htmlCharacters.math,
-      ...htmlCharacters.currency,
-      ...htmlCharacters.arrows,
-      ...htmlCharacters.symbols,
+      ...htmlCharacters.letters.map(replaceDash),
+      ...htmlCharacters.punctuation.map(replaceDash),
+      ...htmlCharacters.numbers.map(replaceDash),
+      ...htmlCharacters.math.map(replaceDash),
+      ...htmlCharacters.currency.map(replaceDash),
+      ...htmlCharacters.arrows.map(replaceDash),
+      ...htmlCharacters.symbols.map(replaceDash),
       ...htmlCharacters.emojis.map((character) => ({
-        ...character,
+        ...replaceDash(character),
         unicode:
           character.unicode && character.unicode.startsWith("U+")
             ? character.unicode
@@ -76,51 +97,36 @@ function CharacterFinder() {
 
     let filteredResults;
 
-    if (query === "-") {
-      filteredResults = allCharacterArrays.filter((character) =>
-        character.name.toLowerCase().includes("hyphen")
-      );
-    } else if (query.length === 1) {
+    if (query.length === 1) {
       filteredResults = allCharacterArrays.filter(
         (character) =>
-          character.character.toLowerCase() === query.toLowerCase() ||
+          character.character.toLowerCase() === query ||
           removeLetterVariations(character.character.toLowerCase()) ===
-            removeLetterVariations(query.toLowerCase()) ||
-          (character.entity &&
-            character.entity.toLowerCase() === query.toLowerCase()) ||
-          (character.hex &&
-            character.hex.toLowerCase() === query.toLowerCase()) ||
-          (character.unicode &&
-            character.unicode.toLowerCase() === query.toLowerCase()) ||
-          (character.css &&
-            (character.css.toLowerCase() === query.toLowerCase() ||
-              character.css.toLowerCase() === "\\" + query.toLowerCase()))
+            removeLetterVariations(query) ||
+          character.entity?.toLowerCase() === query ||
+          character.hex?.toLowerCase() === query ||
+          character.unicode?.toLowerCase() === query ||
+          character.css?.toLowerCase() === query ||
+          character.css?.toLowerCase() === "\\" + query
       );
 
       if (filteredResults.length === 0) {
         filteredResults = allCharacterArrays.filter((character) => {
           const name = character.name.toLowerCase();
-          return (
-            name.includes(` ${query.toLowerCase()}`) ||
-            name.startsWith(`${query.toLowerCase()} `)
-          );
+          return name.includes(` ${query}`) || name.startsWith(`${query} `);
         });
       }
     } else {
       filteredResults = allCharacterArrays.filter(
         (character) =>
-          character.name.toLowerCase().includes(query.toLowerCase()) ||
+          character.name.toLowerCase().includes(query) ||
           removeLetterVariations(character.name.toLowerCase()).includes(
-            removeLetterVariations(query.toLowerCase())
+            removeLetterVariations(query)
           ) ||
-          (character.entity &&
-            character.entity.toLowerCase().includes(query.toLowerCase())) ||
-          (character.hex &&
-            character.hex.toLowerCase().includes(query.toLowerCase())) ||
-          (character.unicode &&
-            character.unicode.toLowerCase().includes(query.toLowerCase())) ||
-          (character.css &&
-            character.css.toLowerCase().includes(query.toLowerCase()))
+          character.entity?.toLowerCase().includes(query) ||
+          character.hex?.toLowerCase().includes(query) ||
+          character.unicode?.toLowerCase().includes(query) ||
+          character.css?.toLowerCase().includes(query)
       );
     }
 
@@ -217,7 +223,11 @@ function CharacterFinder() {
               key={index}
               char={character.character}
               name={character.name}
-              unicode={character.unicode}
+              unicode={
+                character.unicode.startsWith("U+")
+                  ? character.unicode
+                  : "U+" + character.unicode
+              }
               htmlcode={character.hex}
               htmlEntity={character.entity}
               cssCode={character.css}

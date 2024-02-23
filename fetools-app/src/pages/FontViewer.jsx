@@ -5,193 +5,141 @@ import Preview from "../components/FontVisualizer/Preview";
 import ToolMain from "../components/ToolsLayout/ToolMain";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import {
-  ToolSection,
-  ToolSectionColumns,
+    ToolSection,
+    ToolSectionColumns,
 } from "../components/ToolsLayout/Sections";
-import Bookmark from "../components/ToolsLayout/Bookmark";
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
 import useExpander from "../hooks/useExpander";
+import useBookmarks from "../hooks/useBookmarks";
+import FontViewerBookmarks from "../components/FontVisualizer/FontViewerBookmarks";
 import useToastState from "../hooks/useToastState";
-import {
-  createBookmark,
-  checkForLocalStorage,
-} from "../components/ToolsLayout/BookmarkUtils";
 import Toast from "../components/Toast";
 
 import {
-  generateHtmlCode,
-  fontSizeToTailwindClass,
-  generateCssCode,
-  generateFontStyles,
-  generateTailwindCode,
-  handleCopyClick,
+    generateHtmlCode,
+    //    fontSizeToTailwindClass,
+    generateCssCode,
+    generateFontStyles,
+    generateTailwindCode,
+    handleCopyClick,
 } from "../components/FontVisualizer/index";
 
 const FontVisualizer = () => {
-  const [font, setFont] = useState({
-    name: "Georgia",
-    color: "#FFF4E4",
-    style: "normal",
-    weight: "normal",
-    textTransform: "none",
-    textAlign: "center",
-    letterSpacing: 0,
-    lineHeight: 1.2,
-    fontSize: 3,
-  });
+    const [font, setFont] = useState({
+        name: "Georgia",
+        color: "#FFF4E4",
+        backgroundColor: "#57390B",
+        style: "normal",
+        weight: "normal",
+        textTransform: "none",
+        textAlign: "center",
+        letterSpacing: 0,
+        lineHeight: 1.2,
+        fontSize: 3,
+    });
 
-  const handleFontChange = (property, value) => {
-    setFont((prevFont) => ({
-      ...prevFont,
-      [property]: value,
-    }));
-  };
+    console.log("Font", font);
 
-  const handleColorChange = (e) => {
-    handleFontChange("color", e.target.value);
-  };
+    const [isBookmarked, bookmarks, toggleBookmark, removeBookmark] =
+        useBookmarks(font, "fonts");
 
-  const handleBackgroundColorChange = (e) => {
-    setBackgroundColor(e.target.value);
-  };
+    const handleFontChange = (property, value) => {
+        setFont((prevFont) => ({
+            ...prevFont,
+            [property]: value,
+        }));
+    };
 
-  const handleFontSizeChange = (value) => {
-    handleFontChange("fontSize", value);
-  };
+    const handleColorChange = (e) => {
+        handleFontChange("color", e.target.value);
+    };
 
-  const handleLetterSpacingChange = (e) => {
-    handleFontChange("letterSpacing", `${e.target.value}px`);
-  };
+    const handleBackgroundColorChange = (e) => {
+        handleFontChange("backgroundColor", e.target.value);
+    };
 
-  const handleLineHeightChange = (e) => {
-    handleFontChange("lineHeight", `${e.target.value}`);
-  };
+    const handleFontSizeChange = (value) => {
+        handleFontChange("fontSize", value);
+    };
 
-  const [backgroundColor, setBackgroundColor] = useState("#57390B");
-  const [codeType, setCodeType] = useState("css");
-  const [htmlCode, setHtmlCode] = useState(generateHtmlCode());
+    const handleLetterSpacingChange = (e) => {
+        handleFontChange("letterSpacing", `${e.target.value}px`);
+    };
 
-  // Hook to manage expanding preview
-  const [isExpanded, toggleIsExpanded] = useExpander();
-  const [bookmarkLength, setBookmarkLength] = useState(
-    checkForLocalStorage().length
-  );
-  const toastState = useToastState();
+    const handleLineHeightChange = (e) => {
+        handleFontChange("lineHeight", `${e.target.value}`);
+    };
 
-  return (
-    <ToolMain>
-      <ToolHeading
-        title="Font Viewer"
-        tagline="Preview font property combinations live in the browser."
-        icon="format_size"
-      />
-      <ToolSectionColumns isExpanded={isExpanded}>
-        <FontOptions
-          font={font}
-          backgroundColor={backgroundColor}
-          handleFontChange={handleFontChange}
-          handleColorChange={handleColorChange}
-          handleBackgroundColorChange={handleBackgroundColorChange}
-          handleLetterSpacingChange={handleLetterSpacingChange}
-          handleLineHeightChange={handleLineHeightChange}
-          handleFontSizeChange={handleFontSizeChange}
-          generateFontStyles={generateFontStyles}
-          bookmarkLength={bookmarkLength}
-          setBookmarkLength={setBookmarkLength}
-        />
+    const [codeType, setCodeType] = useState("css");
+    const [htmlCode, setHtmlCode] = useState(generateHtmlCode());
 
-        <Preview
-          generateFontStyles={generateFontStyles}
-          isExpanded={isExpanded}
-          toggleIsExpanded={toggleIsExpanded}
-          font={font}
-          bg={backgroundColor}
-        />
-      </ToolSectionColumns>
+    // Hook to manage expanding preview
+    const [isExpanded, toggleIsExpanded] = useExpander();
+    const toastState = useToastState();
 
-      {/* Section for code blocks */}
-      <ToolSection icon="integration_instructions" title="Code Snippets">
-        <div className="flex flex-1">
-          <CodeGenerator
-            generateCssCode={generateCssCode}
-            generateHtmlCode={generateHtmlCode}
-            generateTailwindCode={generateTailwindCode}
-            handleCopyIcon={handleCopyClick}
-            codeType={codeType}
-            setCodeType={setCodeType}
-            toastState={toastState}
-            font={font}
-            bg={backgroundColor}
-            htmlCode={htmlCode}
-            setHtmlCode={setHtmlCode}
-          />
-        </div>
-      </ToolSection>
+    return (
+        <ToolMain>
+            <ToolHeading
+                title="Font Viewer"
+                tagline="Preview font property combinations live in the browser."
+                icon="format_size"
+            />
+            <ToolSectionColumns isExpanded={isExpanded}>
+                <FontOptions
+                    font={font}
+                    handleFontChange={handleFontChange}
+                    handleColorChange={handleColorChange}
+                    handleBackgroundColorChange={handleBackgroundColorChange}
+                    handleLetterSpacingChange={handleLetterSpacingChange}
+                    handleLineHeightChange={handleLineHeightChange}
+                    handleFontSizeChange={handleFontSizeChange}
+                    generateFontStyles={generateFontStyles}
+                    isBookmarked={isBookmarked}
+                    toggleBookmark={toggleBookmark}
+                />
 
-      <ToolSection title="Your Collection" icon="bookmarks">
-        <Bookmark
-          pageName={"fonts"}
-          getStyleFromBookmark={[
-            {
-              styleProperty: "backgroundColor",
-              bookmarkProperty: "fontOptions",
-              bookmarkSubProperty: "style",
-              bookmarkSubSubProperty: "backgroundColor",
-            },
-            {
-              styleProperty: "fontFamily",
-              bookmarkProperty: "fontOptions",
-              bookmarkSubProperty: "style",
-              bookmarkSubSubProperty: "fontFamily",
-            },
-            {
-              styleProperty: "color",
-              bookmarkProperty: "fontOptions",
-              bookmarkSubProperty: "style",
-              bookmarkSubSubProperty: "color",
-            },
-          ]}
-          addStyle={{ width: "240px", height: "145px"}}
-          deleteProperty={"fontOptions"}
-          setBookmarkLength={setBookmarkLength}
-          bookmarkHoverElement={() => {}}
-          childElement={createBookmarkChildren}
-          childProperty={"fontOptions"}
-          childSubProperty="options"
+                <Preview
+                    generateFontStyles={generateFontStyles}
+                    isExpanded={isExpanded}
+                    toggleIsExpanded={toggleIsExpanded}
+                    font={font}
+                />
+            </ToolSectionColumns>
 
-        >
-          <div>
+            {/* Section for code blocks */}
+            <ToolSection icon="integration_instructions" title="Code Snippets">
+                <div className="flex flex-1">
+                    <CodeGenerator
+                        generateCssCode={generateCssCode}
+                        generateHtmlCode={generateHtmlCode}
+                        generateTailwindCode={generateTailwindCode}
+                        handleCopyIcon={handleCopyClick}
+                        codeType={codeType}
+                        setCodeType={setCodeType}
+                        toastState={toastState}
+                        font={font}
+                        htmlCode={htmlCode}
+                        setHtmlCode={setHtmlCode}
+                    />
+                </div>
+            </ToolSection>
 
-            <span className="text-6xl">aA</span>
-          </div>
-        </Bookmark>
-      </ToolSection>
+            <FontViewerBookmarks
+                {...{ bookmarks, removeBookmark, setFont, toastState }}
+            />
 
-      <GoDeeper
-        linksData={[
-          {
-            url: "https://fonts.google.com/knowledge",
-            textValue:
-              "Explore guidance for selecting, customizing and using fonts from Google Fonts",
-          },
-        ]}
-      />
-      <Toast toastState={toastState} />
-    </ToolMain>
-  );
-
-function createBookmarkChildren(fontOptions){
-  return(
-    <div className="flex flex-col h-full">
-      <div className="flex-1">
-        <span>{fontOptions.name}</span>      
-        <span>{fontOptions.fontSize}/{fontOptions.lineHeight*100}%</span>     
-      </div>
- 
-      <span className="h-full text-6xl m-auto">aA</span>
-    </div>
-  )
-}
+            <GoDeeper
+                linksData={[
+                    {
+                        url: "https://fonts.google.com/knowledge",
+                        textValue:
+                            "Explore guidance for selecting, customizing and using fonts from Google Fonts",
+                    },
+                ]}
+            />
+            <Toast toastState={toastState} />
+        </ToolMain>
+    );
 };
 
 export default FontVisualizer;
