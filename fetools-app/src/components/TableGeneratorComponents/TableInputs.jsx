@@ -85,7 +85,8 @@ export const TableInputs = ({
           className=" w-full accent-accent"
         />
         {ShowUnits && (
-          <select
+          <div>
+            <select
             onChange={e => setActiveUnit(e.target.value)}
             className="outline-none active:outline-none"
           >
@@ -98,6 +99,8 @@ export const TableInputs = ({
               );
             })}
            </select>
+          </div>
+
           
           // <DropdownInput ref={dropdownValueRef} 
           // dropdownOptions={[
@@ -111,8 +114,6 @@ export const TableInputs = ({
           // callbackFun={()=> {}}
           // />
 
-
-          <div></div>
         
         )}
       </div>
