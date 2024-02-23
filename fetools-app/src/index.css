@@ -118,6 +118,27 @@
       border: none;
       border-radius: 4px;
     }
+
+    #tab-input input[type="radio"]{
+      /* Add if not using autoprefixer */
+      -webkit-appearance: none;
+      appearance: none;
+      /* For iOS < 15 to remove gradient background */
+      background-color: #fff;
+      /* Not removed via appearance */
+      margin: 0;
+    }
+
+    #tab-input input[type="radio"]:checked{
+      outline: 1px solid #000;
+      border-radius: 2px;
+    }
+
+    #tab-input label:hover{
+      outline: 1px solid #555;
+      background: #7F40BF;
+      border-radius: 2px;
+    }
   }
 
   @layer ColorGradient {

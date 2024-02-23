@@ -7,9 +7,17 @@ import ColorInput from "./../InputComponents/ColorInput";
 import DropdownInput from "../InputComponents/DropdownInput";
 import { useRef } from "react";
 import { AlignTextInput } from "./AlignTextInput";
+import SliderInput from "../InputComponents/SliderInput";
 
 export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
   const dropdownValueRef = useRef();
+  const dropDownOptions = ['px', 'em', 'rem', '%'];
+  const ranges = [
+    {min:0 , max: 35},
+    {min:0 , max: 35},
+    {min:0 , max: 35},
+    {min:0 , max: 100}
+  ]
 
   return (
     <ToolPane title="Options" icon="tune" isPrimary={true}>
@@ -69,7 +77,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             setTableConfig={setTableConfig}
             prop="tableWidth"
           />
-
+         
           <label className="my-1 flex h-full max-h-[51px] w-full flex-col gap-1 text-sm font-semibold">
             Text Alignment
             <div className="flex gap-x-2  justify-around py-2 ">
@@ -130,6 +138,8 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
               <AlignTextInput tableConfig={tableConfig} setTableConfig={setTableConfig} />
             </div>
           </label>
+
+          
         </section>
 
         <section className="borders flex flex-wrap justify-between [&>*]:w-[48%] gap-y-4">
@@ -152,6 +162,22 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             setTableConfig={setTableConfig}
             prop="borderWidth"
           />
+          
+          <SliderInput
+          ref={dropdownValueRef}
+          useEffectValue={tableConfig.borderRounding}
+          sliderId={"border-rounding"}
+          defaultValue={tableConfig.borderRounding}
+          valueTypes={dropDownOptions}
+          ranges={ranges}
+          step={1}
+          title={'Border Rounding'}
+          iconName={'line_curve'}
+          onChange={(e) => {
+            console.log(e.target.value)
+            setTableConfig({...tableConfig, borderStyle: parseInt(e.target.value)  })}}
+          />
+
           <div className="flex justify-start items-center">
             <DropdownInput
               ref={dropdownValueRef}
@@ -266,4 +292,58 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
       </div>
     </ToolPane>
   );
+
+/* TabsInput
+          <TabsInput
+            name={"text-align"}
+            options={[
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              }
+            ]}
+            borderAroundOptions={false}
+          />
+*/
+
 };

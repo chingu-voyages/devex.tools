@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-
+import { useSearchParams } from 'react-router-dom';
 import {
   getRandomColor,
   getHexString,
@@ -32,6 +32,8 @@ import CopyButton from '../components/CopyButton';
 
 export default function ColorGradient() {
   const containerRef = useRef();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [colorsArr, setColorsArr] = useState([
     getRandomColor(),
@@ -190,14 +192,30 @@ export default function ColorGradient() {
           </Bookmark>
         </ToolSection>
 
-        <GoDeeper
-          linksData={[{ url: '#', textValue: 'Not a link available yet' }]}
-        ></GoDeeper>
+        <GoDeeper linksData={[
+          {
+            url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/gradient',
+            textValue: 'MDN Web Docs: CSS Gradients'
+          },
+          {
+            url: 'https://www.w3schools.com/css/css3_gradients.asp ',
+            textValue: 'W3Schools: CSS Gradients'
+          },
+          {
+            url: 'https://www.youtube.com/watch?v=4kWHW7da4U8',
+            textValue: 'CSS Gradients and repeating gradients'
+          }
+      ]}/>
 
         <Toast toastState={toastState} />
       </ToolMain>
     </>
   );
+
+  function handleQuery(gradientColors) {
+    color = color.slice(1);
+    setSearchParams({ color });
+  }
 
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);

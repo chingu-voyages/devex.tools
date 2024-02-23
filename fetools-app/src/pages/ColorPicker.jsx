@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ColorPickerTool from '../components/ColorPicker/ColorPickerTool';
 import ColorPickerInterface from '../components/ColorPicker/ColorPickerInterface';
@@ -33,6 +33,19 @@ export default function ColorPicker() {
 
   const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage('colors').length)
   const [isExpanded, toggleIsExpanded] = useExpander();
+
+
+    useEffect(()=>{
+      if(!searchParams.get('color')){
+        handleQuery(getColorString(colorData.color, 'hex'))
+      }
+
+      if(getColorString(colorData.color, 'hex') !== `#${searchParams.get('color')}` && searchParams.get('color') ){
+        setColorData(createColorObj(searchParams.get('color')))
+      }
+    },[searchParams])
+
+
 
   return (
     <ToolMain>
@@ -87,7 +100,9 @@ export default function ColorPicker() {
       <ToolSection title="Your Collection" icon="bookmarks">
         <Bookmark 
         pageName={'colors'} 
-        getStyleFromBookmark={[{styleProperty: 'backgroundColor', bookmarkProperty: 'color'}]}
+        getStyleFromBookmark={[
+          {styleProperty: 'backgroundColor', bookmarkProperty: 'color'}
+        ]}
         addStyle={{width: '120px', height: '96px'}}
         deleteProperty={'color'}
         setBookmarkLength={setBookmarkLength}
@@ -96,7 +111,20 @@ export default function ColorPicker() {
         </Bookmark>
       </ToolSection>
 
-      <GoDeeper linksData={[]}></GoDeeper>
+      <GoDeeper linksData={[
+          {
+            url: 'https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance',
+            textValue: 'MDN Web Docs: Understanding Colors and Luminance'
+          },
+          {
+            url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_colors/Applying_color',
+            textValue: 'MDN Web Docs: Applying color to HTML elements using CSS'
+          },
+          {
+            url: 'https://www.youtube.com/watch?v=YeI6Wqn4I78',
+            textValue: 'Color theory basics: use the color wheel & color harmonies to choose colors that work well together'
+          }
+      ]}/>
       <Toast toastState={toastState} />
     </ToolMain>
   );
