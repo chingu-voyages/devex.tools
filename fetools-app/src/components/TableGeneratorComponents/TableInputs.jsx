@@ -1,7 +1,6 @@
 import { useState , useRef} from 'react';
 import { handleOptions } from './TableGeneratorFN';
 import Icon from '../Icon';
-import DropdownInput from '../InputComponents/DropdownInput';
 
 
 export const TableInputs = ({
@@ -86,19 +85,19 @@ export const TableInputs = ({
           className=" w-full accent-accent"
         />
         {ShowUnits && (
-          // <select
-          //   onChange={e => setActiveUnit(e.target.value)}
-          //   className="outline-none active:outline-none"
-          // >
-          //   {dropDownOptions.map((current, idx) => {
-          //     return (
-          //       <option key={idx} value={current}>
-          //         {' '}
-          //         {current}{' '}
-          //       </option>
-          //     );
-          //   })}
-          // </select>
+          <select
+            onChange={e => setActiveUnit(e.target.value)}
+            className="outline-none active:outline-none"
+          >
+            {dropDownOptions.map((current, idx) => {
+              return (
+                <option key={idx} value={current}>
+                  {' '}
+                  {current}{' '}
+                </option>
+              );
+            })}
+           </select>
           
           // <DropdownInput ref={dropdownValueRef} 
           // dropdownOptions={[

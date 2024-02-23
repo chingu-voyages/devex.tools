@@ -39,7 +39,7 @@ const handleOptions = (
       break;
   }
 
-  console.log(value);
+
 
   uniToConver !== "px"
     ? (value = convertToPx(value, uniToConver, baseSize))

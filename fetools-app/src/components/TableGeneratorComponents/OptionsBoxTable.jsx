@@ -1,13 +1,13 @@
 
 import { handleOptions, hanldeColorOptions } from "./TableGeneratorFN";
 import { TableInputs } from "./TableInputs";
-import Icon from "../Icon";
 import { ToolPane } from "../ToolsLayout/Sections";
 import ColorInput from "./../InputComponents/ColorInput";
 import DropdownInput from "../InputComponents/DropdownInput";
 import { useRef } from "react";
 import { AlignTextInput } from "./AlignTextInput";
 import SliderInput from "../InputComponents/SliderInput";
+import TabsInput from "../InputComponents/TabsInput";
 
 export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
   const dropdownValueRef = useRef();
@@ -78,9 +78,65 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             prop="tableWidth"
           />
          
+
+         <TabsInput
+            name={"text-align"}
+            title={'Text Align'}
+            defaultOption={1}
+            optionSize={{width: 32, height: 32}}
+            options={[
+              {
+                iconName: 'format_align_left',
+                value: 'left',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_center',
+                value: 'center',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_right',
+                value: 'right',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              },
+              {
+                iconName: 'format_align_justify',
+                value: 'justify',
+                onClick: (e) =>
+                handleOptions(
+                  e.target.value,
+                  "textAlign",
+                  tableConfig,
+                  setTableConfig
+                )
+              }
+            ]}
+            borderAroundOptions={false}
+          />
+
           <label className="my-1 flex h-full max-h-[51px] w-full flex-col gap-1 text-sm font-semibold">
             Text Alignment
             <div className="flex gap-x-2  justify-around py-2 ">
+
               {/* <Icon
                 className="cursor-pointer"
                 name="format_align_left"
@@ -133,9 +189,9 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
                   )
                 }
               />
-              */}
-
               <AlignTextInput tableConfig={tableConfig} setTableConfig={setTableConfig} />
+              */
+              
             </div>
           </label>
 
@@ -216,7 +272,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
           <h3 className="min-w-full border-b border-[#D9D9D9] pb-1 text-[18px] font-semibold">
             Colors
           </h3>
-         
+
           <ColorInput
             title={"Text"}
             placeholder={tableConfig.textColor}

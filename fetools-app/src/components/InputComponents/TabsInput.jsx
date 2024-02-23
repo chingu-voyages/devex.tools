@@ -1,15 +1,19 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import Icon from "../Icon";
 
 const TabsInput = forwardRef(function TabsInput(props, ref) {
   const {
     name,
     className,
+    optionSize,
     title,
     titleClassName,
     options,
-    borderAroundOptions
+    borderAroundOptions,
+    defaultOption
   } = props;
+
+  const [activeIndex, setActiveIndex] = useState(defaultOption)
 
   return (
     <div
@@ -17,12 +21,12 @@ const TabsInput = forwardRef(function TabsInput(props, ref) {
       className={
         className
           ? `flex z-0 justify-center ${className}`
-          : `flex z-0 justify-center flex-col`
+          : `flex z-0 justify-center flex-col` 
       }
     >
       {title
       ?
-      <h2 className={`font-bold text-gray-600 text-sm ${titleClassName || ''}`}>
+      <h2 className={`font-bold text-sm ${titleClassName || ''}`}>
         {title}
       </h2>
       :null}
@@ -44,11 +48,16 @@ const TabsInput = forwardRef(function TabsInput(props, ref) {
       <label key={`icon-${idx}`} name={name} 
       className="flex flex-1 relative w-full h-full 
       items-center text-center">
-        <div className="flex relative w-full h-full">
-          <input  type="radio" value={option.value} defaultChecked={idx===0?true:false} 
-          onClick={option.onClick}
-          className={`z-10 absolute bg-[transparent] w-full h-full cursor-pointer`}></input>
+        <div className="flex relative w-full h-full hover:text-[#7F40BF]"
+        style={{width: optionSize.width, height: optionSize.height}}>
+          <input  type="radio" value={option.value} defaultChecked={idx===defaultOption?true:false}
+          checked={idx===activeIndex?true:false} 
+          onClick={(e)=>(option.onClick(e), setActiveIndex(idx))}
+          className={`z-10 absolute bg-[transparent] w-full h-full ${optionSize?``:'w-full h-full'} 
+          cursor-pointer`}
+          />          
           <Icon
+          size="24"
           className="m-auto cursor-pointer"
           name={option.iconName}
           id="center"/>

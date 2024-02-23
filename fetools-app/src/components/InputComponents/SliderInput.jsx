@@ -13,8 +13,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
     titleClassName,
     iconName,
     onChange,
-    customPreviewValue,
-    useEffectValue=null
+    customPreviewValue
   } = props;
 
   const [activeIndex, setActiveIndex] = useState(0)

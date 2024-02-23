@@ -57,9 +57,10 @@ export default function ColorGradientSlider({
                         data-color={gradientColors[i].colorStr}
                         type="range" min='0' max='100' step='1' 
                         defaultValue={`${gradientColors[i].value}`}
+                        onClick={()=>handleSetActiveIndex(i)}
                         onChange={handleOnChange}
                         onFocus={handleOnFocus}
-                        onTouchStart={handleOnFocus}
+                        onTouchStart={(e)=>(handleOnFocus(e),handleSetActiveIndex(i))}
                         className={`thumb slider absolute ${activeIndex===i?'isActive z-10':''}`}></input>
                 </label>
             )

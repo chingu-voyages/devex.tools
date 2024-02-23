@@ -29,27 +29,51 @@ import TabSwitcher from '../components/TabSwitcher';
 import Bookmark from '../components/ToolsLayout/Bookmark';
 import EyeDropButton from '../components/ColorPicker/EyeDropButton';
 import CopyButton from '../components/CopyButton';
+import { getColorString } from '../components/ColorPicker/ColorPickerUtils';
+
 
 export default function ColorGradient() {
   const containerRef = useRef();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [colorsArr, setColorsArr] = useState([
-    getRandomColor(),
-    getRandomColor(),
-  ]);
+  const searchParamsColors = searchParams.size!==0
+  ? []
+  : false
 
-  const [gradientColors, setGradientColors] = useState([
-    {
-      ...colorsArr[0],
-      value: 0,
-    },
-    {
-      ...colorsArr[1],
-      value: 100,
-    },
-  ]);
+  searchParams.forEach(color=>{
+    searchParamsColors.push(getRgb(color))
+  })
+
+  const [colorsArr, setColorsArr] = useState(
+    searchParamsColors  ||
+    [
+      getRandomColor(),
+      getRandomColor(),
+    ]
+  );
+
+  const [gradientColors, setGradientColors] = useState(
+    searchParams
+    ? colorsArr.map((paramColor,idx)=>(
+      {
+        ...paramColor, 
+        value:( 
+        idx===colorsArr.length-1
+        ?100
+        :(100/(colorsArr.length-1))*idx)
+      }
+    ))
+    : colorsArr.map((color,idx)=>(
+      {
+        ...color, 
+        value: 
+        idx===colorsArr.length-1
+        ?100
+        :(100/colorsArr.length-1)*idx
+      }
+    ))
+  )
 
   const [currentKnob, setCurrentKnob] = useState(false);
 
@@ -75,6 +99,7 @@ export default function ColorGradient() {
     if (!currentKnob) {
       setCurrentKnob(containerRef.current.querySelector('.isActive'));
     }
+
   }, [currentKnob]);
 
   useEffect(() => {
@@ -89,7 +114,11 @@ export default function ColorGradient() {
     } });
   }, [inputValue, gradientColors]);
 
-  return (
+  useEffect(()=>{
+    handleQuery(colorsArr)
+  },[colorsArr])
+
+    return (
     <>
       <ToolMain>
         <ToolHeading
@@ -212,9 +241,14 @@ export default function ColorGradient() {
     </>
   );
 
-  function handleQuery(gradientColors) {
-    color = color.slice(1);
-    setSearchParams({ color });
+  function handleQuery(gradientColorsArr) {
+    const colors = {}
+
+    gradientColorsArr.forEach(({colorStr},idx)=>{
+      colors[`color${idx}`] = getColorString(colorStr, 'hex').replace('#', '')
+    })
+
+    setSearchParams(colors);
   }
 
   function handleSetCurrentKnob(knob) {
