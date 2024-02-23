@@ -55,7 +55,7 @@ const TabsInput = forwardRef(function TabsInput(props, ref) {
           onClick={(e)=>(option.onClick(e), setActiveIndex(idx))}
           className={`z-10 absolute bg-[transparent] w-full h-full ${optionSize?``:'w-full h-full'} 
           cursor-pointer`}
-          >          </input>
+          />          
           <Icon
           size="24"
           className="m-auto cursor-pointer"
