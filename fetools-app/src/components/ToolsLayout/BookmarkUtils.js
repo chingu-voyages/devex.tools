@@ -55,12 +55,12 @@ export function compareItems(comparisonObj, pageName, bookmarkProp, checkObjects
     // First try simple comparison for strings and numbers
     
     const isBookmarked = checkForLocalStorage(pageName).find(bookmark=>{
-        return bookmark[bookmarkProp]===comparisonObj?true:false
+        return bookmark[bookmarkProp]===comparisonObj[bookmarkProp]?true:false
     });
     
     if(typeof(isBookmarked)!=='object') {return false}
 
-    if(isBookmarked[bookmarkProp]===comparisonObj ) return true;
+    if(isBookmarked[bookmarkProp]===comparisonObj[bookmarkProp] ) return true;
     // Check if all properties are the same
 
     if(checkObjectsKeys){

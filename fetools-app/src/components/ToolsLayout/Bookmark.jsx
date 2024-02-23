@@ -28,6 +28,7 @@ export default function Bookmark({
         .parentElement
         .parentElement.addEventListener('mouseleave', (e)=>{setEditMode(false)})
     },[])
+    
     return(
     <>
         <div>

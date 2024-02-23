@@ -20,6 +20,7 @@ import { createColorObj, getColorString } from '../components/ColorPicker/ColorP
 import {createBookmark, checkForLocalStorage, compareItems} from '../components/ToolsLayout/BookmarkUtils';
 import useExpander from '../hooks/useExpander';
 import useToastState from '../hooks/useToastState';
+import BookmarkButton from '../components/ToolsLayout/BookmarkButton';
 
 export default function ColorPicker() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,21 +31,24 @@ export default function ColorPicker() {
   );
   
   const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage('colors').length)
+  const [comparisonObj, setComparisonObj] = useState({color: getColorString(colorData.color, 'hex')})
+
   const [isExpanded, toggleIsExpanded] = useExpander();
-  
   const toastState = useToastState();
 
-    console.log(compareItems(getColorString(colorData.color, 'hex'), 'colors', 'color'))
+  useEffect(()=>{
+    if(!searchParams.get('color')){
+      handleQuery(getColorString(colorData.color, 'hex'))
+    }
 
-    useEffect(()=>{
-      if(!searchParams.get('color')){
-        handleQuery(getColorString(colorData.color, 'hex'))
-      }
+    if(getColorString(colorData.color, 'hex') !== `#${searchParams.get('color')}` && searchParams.get('color') ){
+      setColorData(createColorObj(searchParams.get('color')))
+    }
+  },[searchParams])
 
-      if(getColorString(colorData.color, 'hex') !== `#${searchParams.get('color')}` && searchParams.get('color') ){
-        setColorData(createColorObj(searchParams.get('color')))
-      }
-    },[searchParams])
+  useEffect(()=>{
+    setComparisonObj({color: getColorString(colorData.color, 'hex')})
+  },[colorData])
 
   return (
     <ToolMain>
@@ -78,6 +82,12 @@ export default function ColorPicker() {
             setBookmarkLength)}
           shareCallback={() => {}}
         >
+          <BookmarkButton 
+          comparisonObj={{comparisonObj}}
+          checkProperty={'color'} 
+          pageName={'colors'}
+          setBookmarkLength={setBookmarkLength}/>
+
           <ColorPickerInterface
             colorData={colorData}
             setColorData={setColorData}
