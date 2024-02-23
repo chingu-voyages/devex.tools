@@ -51,3 +51,27 @@ export function saveNewArray(pageName, newArr){
     localStorage.setItem(`${pageName}-favorites`, JSON.stringify(newArr))
 }
 
+export function compareItems(comparisonObj, pageName, bookmarkProp, checkObjectsKeys=false) {
+    // First try simple comparison for strings and numbers
+    
+    const isBookmarked = checkForLocalStorage(pageName).find(bookmark=>{
+        return bookmark[bookmarkProp]===comparisonObj[bookmarkProp]?true:false
+    });
+    
+    if(typeof(isBookmarked)!=='object') {return false}
+
+    if(isBookmarked[bookmarkProp]===comparisonObj[bookmarkProp] ) return true;
+    // Check if all properties are the same
+
+    if(checkObjectsKeys){
+        for (let key in comparisonObj) {
+            const checks = checkForLocalStorage(pageName).map(bookmark=>{
+                if (comparisonObj[key] !== bookmark[key]) return false;
+                return true
+            })
+            return checks.reduce((a,b)=>a&&b)
+        }   
+    }    
+
+    return false
+}

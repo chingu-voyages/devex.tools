@@ -14,6 +14,7 @@ export default function ColorGradientInterface({
   gradientColors,
   generateGradientRule,
   updateCSSValues,
+  currentKnob
 }) {
   const [displayData, setDisplayData] = useState(inputValue);
   const [lastValidData, setLastValidData] = useState(inputValue);
@@ -38,8 +39,8 @@ export default function ColorGradientInterface({
   useEffect(() => {
     if (parentRef.current) {
       [...parentRef.current.children].forEach((element) => {
-        if (element.id === "color-input") {
-          element.children[1].children[0].value = inputValue.color;
+        if (element.id === "color-input-gradient") {
+          element.children[1].children[0].value = lastValidData.color;
           element.children[1].children[1].children[0].value = inputValue.color;
         } else if (element.id === "position-input") {
           element.children[0].value = inputValue.position;
@@ -48,7 +49,7 @@ export default function ColorGradientInterface({
         }
       });
     }
-  }, [inputValue]);
+  }, [inputValue, lastValidData]);
 
   return (
     <>
@@ -57,6 +58,7 @@ export default function ColorGradientInterface({
         className="grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-6 items-center"
       >
         <ColorInput
+        id={"gradient"}
         ref={colorInputRef}
         defaultValue={displayData.color}
         onChange={handleColorInputChange}

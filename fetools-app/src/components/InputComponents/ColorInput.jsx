@@ -9,7 +9,8 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
     titleClassName,
     children,
     onChange,
-    value,
+    defaultValue,
+    value
   } = props;
 
   return (
@@ -29,6 +30,7 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
         <input
           id="custom-color-input"
           type="color"
+          defaultValue={defaultValue}
           value={value}
           onChange={onChange}
           className="min-w-8 w-8 min-h-8 h-8"
@@ -37,6 +39,7 @@ const ColorInput = forwardRef(function ColorInput(props, ref) {
         <input
           ref={ref}
           onChange={onChange}
+          defaultValue={defaultValue}
           onFocus={(e)=>{e.target.closest('div').classList.add('outline', 'outline-[#7F40BF]')}}
           onBlur={(e)=>{e.target.closest('div').classList.remove('outline', 'outline-[#7F40BF]')}}
           placeholder={placeholder}
