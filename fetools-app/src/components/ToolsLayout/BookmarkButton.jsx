@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { compareItems, checkForLocalStorage, saveNewArray } from "./BookmarkUtils";
 
 import Icon from "../Icon";
@@ -14,7 +14,9 @@ export default function BookmarkButton({
 
     const [isBookmarked, setIsBookmarked] = useState(compareItems(comparisonObj, pageName, checkProperty, checkObjectKeys))
 
-    console.log(compareItems(comparisonObj, pageName, checkProperty, checkObjectKeys))
+    useEffect(()=>{
+
+    },[isBookmarked])
 
     return(
         <Icon 
