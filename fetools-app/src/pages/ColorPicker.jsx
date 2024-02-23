@@ -83,7 +83,7 @@ export default function ColorPicker() {
           shareCallback={() => {}}
         >
           <BookmarkButton 
-          comparisonObj={{comparisonObj}}
+          comparisonObj={comparisonObj}
           checkProperty={'color'} 
           pageName={'colors'}
           setBookmarkLength={setBookmarkLength}/>
