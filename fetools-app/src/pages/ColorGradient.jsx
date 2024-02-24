@@ -27,7 +27,6 @@ import {
 
 import ToolMain from '../components/ToolsLayout/ToolMain';
 import TabSwitcher from '../components/TabSwitcher';
-import Bookmark from '../components/ToolsLayout/Bookmark';
 import EyeDropButton from '../components/ColorPicker/EyeDropButton';
 import CopyButton from '../components/CopyButton';
 import { getColorString } from '../components/ColorPicker/ColorPickerUtils';
@@ -95,13 +94,12 @@ export default function ColorGradient() {
 
   const [isExpanded, toggleIsExpanded] = useExpander();
 
-  const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage().length)
   const toastState = useToastState();
 
   const [currentGradientObj, setCurrentGlobalObj ] = useState(
     {
       gradientColors: colorsArr,
-      rotation: inputValue.rotation,
+      rotation: (inputValue.rotation*3.6),
       type: inputValue.type
     }
   )
@@ -125,15 +123,16 @@ export default function ColorGradient() {
       css: `background: ${getCssCode()}`,
       tailwind: `bg-[${getCssCode()}]`
     } });
+
+    setCurrentGlobalObj({
+      gradientColors: colorsArr,
+      rotation: (inputValue.rotation*3.6),
+      type: inputValue.type
+    })
   }, [inputValue, gradientColors]);
 
   useEffect(()=>{
-    handleQuery(colorsArr),
-    setCurrentGlobalObj({
-      gradientColors: colorsArr,
-      rotation: inputValue.rotation,
-      type: inputValue.type
-    })
+    handleQuery(colorsArr)
   },[colorsArr])
 
     return (

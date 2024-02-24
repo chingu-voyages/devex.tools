@@ -17,16 +17,22 @@ export default function ColorGradientBookmarks({
                 formatBookmarkCardStyle={(item) => {
                     console.log("item", item);
                     return {
-                        background: `linear-gradient(90deg, ${item
+                        background: `
+                            ${item.type}-gradient(
+                            ${item.type==="radial"?"":`${item.rotation}deg,`} 
+                            ${item.gradientColors
                             .map((color) => color.colorStr)
                             .join(", ")})`,
                         padding: "1rem",
                     };
                 }}
                 formatHoverActions={(item) => {
-                    const newGradientCode = `linear-gradient(90deg, ${item
-                        .map((color) => color.colorStr)
-                        .join(", ")})`;
+                    const newGradientCode = `
+                    ${item.type}-gradient(
+                    ${item.type==="radial"?"":`${item.rotation}deg,`} 
+                    ${item.gradientColors
+                    .map((color) => color.colorStr)
+                    .join(", ")})`;
                     const EyeDropAction = (
                         <EyeDropButton
                             key="EyeDropButton"
