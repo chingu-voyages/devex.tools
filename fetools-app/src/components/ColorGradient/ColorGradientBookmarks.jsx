@@ -9,6 +9,7 @@ export default function ColorGradientBookmarks({
     toastState,
     setColorsArr,
     setInputValue,
+    setGradientColors,
     inputValue
 }) {
     return (
@@ -40,8 +41,18 @@ export default function ColorGradientBookmarks({
                             key="EyeDropButton"
                             title={"New Gradient Set"}
                             setState={() => {
+
                                 setColorsArr(item.gradientColors)
                                 setInputValue({...inputValue, rotation: item.rotation/3.6, type: item.type})
+                                setGradientColors(item.gradientColors.map((paramColor,idx)=>(
+                                    {
+                                      ...paramColor, 
+                                      value:( 
+                                      idx===item.gradientColors.length-1
+                                      ?100
+                                      :(100/(item.gradientColors.length-1))*idx)
+                                    }
+                                  )))
                             }}
                             newValue={newGradientCode}
                             toastState={toastState}

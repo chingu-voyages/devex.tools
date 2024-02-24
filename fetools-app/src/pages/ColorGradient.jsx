@@ -130,6 +130,11 @@ export default function ColorGradient() {
 
   useEffect(()=>{
     handleQuery(colorsArr)
+    
+    if(currentKnob){
+      setInputValue({...inputValue,color: getHexString(currentKnob.dataset.color)})
+    }
+
   },[colorsArr])
 
     return (
@@ -216,6 +221,7 @@ export default function ColorGradient() {
         setColorsArr={setColorsArr}
         inputValue={inputValue}
         setInputValue={setInputValue}
+        setGradientColors={setGradientColors}
         toastState={toastState}
         />
 
