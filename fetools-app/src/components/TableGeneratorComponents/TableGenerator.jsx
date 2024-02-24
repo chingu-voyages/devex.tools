@@ -1,6 +1,8 @@
 import { handleEditCells, getCellStyle } from "./TableGeneratorFN";
-
 export const TableGenerator = ({ tableConfig, setTableConfig }) => {
+ 
+  
+ 
   return (
     <div>
       <div
