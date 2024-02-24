@@ -19,6 +19,7 @@ export default function ColorGradientBookmarks({
                 removeBookmark={removeBookmark}
                 formatBookmarkCardStyle={(item) => {
                     console.log("item", item);
+                    if(!item){return}
                     return {
                         background: `
                             ${item.type}-gradient(
@@ -30,6 +31,7 @@ export default function ColorGradientBookmarks({
                     };
                 }}
                 formatHoverActions={(item) => {
+                    if(!item){return}
                     const newGradientCode = `
                     ${item.type}-gradient(
                     ${item.type==="radial"?"":`${item.rotation}deg,`} 
