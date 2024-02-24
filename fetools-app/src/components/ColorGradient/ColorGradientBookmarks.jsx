@@ -6,7 +6,7 @@ import { ToolSection } from "../ToolsLayout/Sections";
 export default function ColorGradientBookmarks({
     bookmarks,
     removeBookmark,
-    setGradientColors,
+    currentGradientObj,
     toastState,
 }) {
     return (
@@ -32,7 +32,7 @@ export default function ColorGradientBookmarks({
                             key="EyeDropButton"
                             title={"New Gradient Set"}
                             setState={() => {
-                                setGradientColors(item);
+                                currentGradientObj(item);
                             }}
                             newValue={newGradientCode}
                             toastState={toastState}

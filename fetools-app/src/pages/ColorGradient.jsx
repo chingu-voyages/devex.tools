@@ -9,6 +9,7 @@ import {
 
 import useToastState from '../hooks/useToastState';
 import useExpander from '../hooks/useExpander';
+import useBookmarks from "../hooks/useBookmarks";
 import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
 
 import ColorGradientSlider from '../components/ColorGradient/ColorGradientSlider';
@@ -30,6 +31,7 @@ import Bookmark from '../components/ToolsLayout/Bookmark';
 import EyeDropButton from '../components/ColorPicker/EyeDropButton';
 import CopyButton from '../components/CopyButton';
 import { getColorString } from '../components/ColorPicker/ColorPickerUtils';
+import ColorGradientBookmarks from '../components/ColorGradient/ColorGradientBookmarks';
 
 
 export default function ColorGradient() {
@@ -92,8 +94,19 @@ export default function ColorGradient() {
   });
 
   const [isExpanded, toggleIsExpanded] = useExpander();
+
   const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage().length)
   const toastState = useToastState();
+
+  const [currentGradientObj, setCurrentGlobalObj ] = useState(
+    {
+      gradientColors: colorsArr,
+      rotation: inputValue.rotation,
+      type: inputValue.type
+    }
+  )
+
+  const [isBookmarked, bookmarks, toggleBookmark, removeBookmark] = useBookmarks(currentGradientObj, "gradients");
 
   useEffect(() => {
     if (!currentKnob) {
@@ -115,7 +128,12 @@ export default function ColorGradient() {
   }, [inputValue, gradientColors]);
 
   useEffect(()=>{
-    handleQuery(colorsArr)
+    handleQuery(colorsArr),
+    setCurrentGlobalObj({
+      gradientColors: colorsArr,
+      rotation: inputValue.rotation,
+      type: inputValue.type
+    })
   },[colorsArr])
 
     return (
@@ -147,16 +165,9 @@ export default function ColorGradient() {
           title="Options"
           icon="gradient"
           isPrimary={true}
-          bookmarkCallback={()=>{createBookmark(
-          'gradients', 
-          {colorGradient: {
-            style: document.querySelector('.gradient').style.getPropertyValue('background'),
-            colors: gradientColors
-          }}, 
-          'colorGradient',
-          ['style'],
-          bookmarkLength, 
-          setBookmarkLength)}}
+          isBookmarked={isBookmarked}
+          toggleBookmark={toggleBookmark}
+          toolState={currentGradientObj}
           shareCallback={() => {}}>
             <ColorGradientSlider
             colorsArr={colorsArr}
@@ -203,23 +214,12 @@ export default function ColorGradient() {
           </TabSwitcher>
         </ToolSection>
 
-        <ToolSection title="Your Collection" icon="bookmarks">
-          <Bookmark 
-          pageName={'gradients'} 
-          getStyleFromBookmark={[{
-            styleProperty: 'background', 
-            bookmarkProperty: 'colorGradient', 
-            bookmarkSubProperty: 'style'}]}
-          addStyle={{width: '120px', height: '96px'}}
-          deleteProperty={'colorGradient'}
-          setBookmarkLength={setBookmarkLength}
-          bookmarkHoverElement={bookmarkHoverElement}
-          childProperty={'colorGradient'}
-          childSubProperty='style'
-          childClassName={'max-w-[120px]'}
-          >
-          </Bookmark>
-        </ToolSection>
+        <ColorGradientBookmarks
+        bookmarks={bookmarks}
+        removeBookmark={removeBookmark}
+        currentGradientObj={currentGradientObj}
+        toastState={toastState}
+        />
 
         <GoDeeper linksData={[
           {
