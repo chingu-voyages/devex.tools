@@ -11,6 +11,8 @@ import TabsInput from "../InputComponents/TabsInput";
 
 export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
   const dropdownValueRef = useRef();
+  
+  const sliderValueRef = useRef()
   const dropDownOptions = ['px', 'em', 'rem', '%'];
   const ranges = [
     {min:0 , max: 35},
@@ -220,8 +222,7 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
           />
           
           <SliderInput
-          ref={dropdownValueRef}
-          useEffectValue={tableConfig.borderRounding}
+          ref={sliderValueRef}
           sliderId={"border-rounding"}
           defaultValue={tableConfig.borderRounding}
           valueTypes={dropDownOptions}
@@ -230,8 +231,8 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
           title={'Border Rounding'}
           iconName={'line_curve'}
           onChange={(e) => {
-            console.log(e.target.value)
-            setTableConfig({...tableConfig, borderStyle: parseInt(e.target.value)  })}}
+            console.log(sliderValueRef)
+            setTableConfig({...tableConfig, borderRounding: e.target.value})}}
           />
 
           <div className="flex justify-start items-center">
