@@ -39,8 +39,6 @@ const handleOptions = (
       break;
   }
 
-
-
   uniToConver !== "px"
     ? (value = convertToPx(value, uniToConver, baseSize))
     : "";
@@ -105,6 +103,8 @@ const getCellStyle = (idxRow,idxCol, tableConfig) => {
   const isRight = idxCol === tableConfig.dimensions[0].length - 1
   const isLeft = idxCol === 0;
 
+  
+
   return {
     paddingTop: `${tableConfig.verticalCellPading}px`,
     paddingBottom: `${tableConfig.verticalCellPading}px`,
@@ -118,8 +118,10 @@ const getCellStyle = (idxRow,idxCol, tableConfig) => {
     color: isHeaderRow ? tableConfig.headerText : tableConfig.textColor,
     fontWeight: isHeaderRow && "bold",
     width: tableConfig.tableWidth / tableConfig.dimensions[0].length,
-    
+  
   };
+
+  
 };
 
 const generateTableCode = (tableConfig, tailwind = false) => {
