@@ -45,21 +45,24 @@ const TabsInput = forwardRef(function TabsInput(props, ref) {
   function createOptions(){
     
     const optionsElements = options.map((option,idx)=>(
-      <label key={`icon-${idx}`} name={name} 
-      className="flex flex-1 relative w-full h-full 
-      items-center text-center">
-        <div className="flex relative w-full h-full hover:text-[#7F40BF]">
-          <input  type="radio" value={option.value} defaultChecked={idx===defaultOption?true:false}
-          checked={idx===activeIndex?true:false} 
+
+    <div key={`icon-${id}-${idx}`}
+    className="flex flex-1 relative w-full h-full 
+    items-center text-center">
+      <div className="flex relative w-full h-full hover:text-[#7F40BF]">
+          <button value={option.value}
           onClick={(e)=>(option.onClick(e), setActiveIndex(idx))}
-          className={`z-0 absolute bg-[transparent] w-full h-full cursor-pointer`}
-          />          
+          className={`
+          z-10 absolute bg-[transparent] w-full h-full 
+          hover:border hover:border-black hover:rounded cursor-pointer
+          ${idx===activeIndex?'border-2 border-[#666] rounded':''}
+          `}></button>          
           <Icon
-          className="m-auto cursor-pointer z-10"
+          className="m-auto cursor-pointer"
           name={option.iconName}
           id="center"/>
-        </div>
-      </label>
+      </div>
+    </div>
     ))
     
     return(<>{optionsElements}</>)
@@ -68,3 +71,23 @@ const TabsInput = forwardRef(function TabsInput(props, ref) {
 });
 
 export default TabsInput;
+
+/*
+      <div key={`icon-${id}-${idx}`}
+      className="flex flex-1 relative w-full h-full 
+      items-center text-center hover:text-[#7F40BF]"}>
+        <div className="flex relative w-full h-full hover:text-[#7F40BF]">
+            <button value={option.value}
+            onClick={(e)=>(option.onClick(e), setActiveIndex(idx))}
+            className={`
+            z-0 absolute bg-[transparent] w-full h-full cursor-pointer
+            ${idx===activeIndex?'outline outline-[#666] rounded':''}
+            `}></button>          
+            <Icon
+            className="m-auto cursor-pointer z-10"
+            name={option.iconName}
+            id="center"/>
+        </div>
+      </div>
+        
+*/
