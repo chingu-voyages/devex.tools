@@ -14,7 +14,6 @@ export default function ColorGradientInterface({
   gradientColors,
   generateGradientRule,
   updateCSSValues,
-  currentKnob
 }) {
   const [displayData, setDisplayData] = useState(inputValue);
   const [lastValidData, setLastValidData] = useState(inputValue);
@@ -67,8 +66,10 @@ export default function ColorGradientInterface({
         />
 
         <DropdownInput
+        id="gradient-type"
         title="Type"
         dropdownOptions={["linear", "radial"]}
+        useEffectValue={inputValue.type}
         ref={dropdownValueRef}
         callbackFun={() => {
           setInputValue({ ...inputValue, type: dropdownValueRef.current });

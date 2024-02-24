@@ -14,6 +14,7 @@ import Icon from "../Icon";
 
 const DropdownInput = forwardRef(function DropdownInput(props, ref) {
   const { 
+    id,
     title, 
     titleClassName, 
     className, 
@@ -25,6 +26,8 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
   const [position, setPosition] = useState(dropdownOptions[0]);
   const [menuStyle, setMenuStyle] = useState({ width: "50x" });
   const buttonRef = useRef();
+
+    
 
   useEffect(() => {
     setMenuStyle({ width: `${buttonRef.current.offsetWidth}px` });
@@ -38,9 +41,14 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
     callbackFun();
   }, [position]);
 
+  useEffect(()=>{
+    setPosition(useEffectValue)
+  },[useEffectValue])
+
   return (
     <>
       <div
+        id={`${id}-options`}
         className={
           className
             ? `flex z-0 justify-center ${className}`
@@ -94,10 +102,10 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
     const options = dropdownOptions.map((option, idx) => {
       return (
         <DropdownMenuRadioItem 
-        key={`option-${idx}`} 
+        key={`${id}-option-${idx}`}
         value={option}
         className='flex'>
-          <span className="flex-2">{option}</span>
+          <span id={`${id}-option`} className="flex-2">{option}</span>
         </DropdownMenuRadioItem>
       );
     });
