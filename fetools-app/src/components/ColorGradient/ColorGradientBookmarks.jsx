@@ -6,8 +6,10 @@ import { ToolSection } from "../ToolsLayout/Sections";
 export default function ColorGradientBookmarks({
     bookmarks,
     removeBookmark,
-    currentGradientObj,
     toastState,
+    setColorsArr,
+    setInputValue,
+    inputValue
 }) {
     return (
         <ToolSection title="Your Collection" icon="bookmarks">
@@ -38,7 +40,8 @@ export default function ColorGradientBookmarks({
                             key="EyeDropButton"
                             title={"New Gradient Set"}
                             setState={() => {
-                                currentGradientObj(item);
+                                setColorsArr(item.gradientColors)
+                                setInputValue({...inputValue, rotation: item.rotation/3.6, type: item.type})
                             }}
                             newValue={newGradientCode}
                             toastState={toastState}

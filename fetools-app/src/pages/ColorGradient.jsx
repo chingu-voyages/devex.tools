@@ -10,7 +10,6 @@ import {
 import useToastState from '../hooks/useToastState';
 import useExpander from '../hooks/useExpander';
 import useBookmarks from "../hooks/useBookmarks";
-import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
 
 import ColorGradientSlider from '../components/ColorGradient/ColorGradientSlider';
 import ToolHeading from '../components/ToolsLayout/ToolHeading';
@@ -27,8 +26,6 @@ import {
 
 import ToolMain from '../components/ToolsLayout/ToolMain';
 import TabSwitcher from '../components/TabSwitcher';
-import EyeDropButton from '../components/ColorPicker/EyeDropButton';
-import CopyButton from '../components/CopyButton';
 import { getColorString } from '../components/ColorPicker/ColorPickerUtils';
 import ColorGradientBookmarks from '../components/ColorGradient/ColorGradientBookmarks';
 
@@ -216,7 +213,9 @@ export default function ColorGradient() {
         <ColorGradientBookmarks
         bookmarks={bookmarks}
         removeBookmark={removeBookmark}
-        currentGradientObj={currentGradientObj}
+        setColorsArr={setColorsArr}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
         toastState={toastState}
         />
 
@@ -387,37 +386,4 @@ export default function ColorGradient() {
     return currentStyle;
   }
 
-  function bookmarkHoverElement(newStyle, editMode){
-    return(
-    <span
-    id="hover-options"
-    className={`
-    absolute flex flex-col px-6 pt-8 w-full h-full text-white text-center 
-    rounded-md rounded-tl-none
-    ${editMode?'hidden':''}
-    `}>
-      <div className="flex">
-        <span className="flex-1 block text-2xl text-center">
-        <EyeDropButton
-            title={'New Gradient Set'}
-            content={''}
-            setStateVar={()=>{
-              const bookmark = checkForLocalStorage('gradients').find(({colorGradient})=>colorGradient.style===newStyle)
-              const newGradient = bookmark.colorGradient.colors.map((colorObj,idx)=>{
-                return {...colorObj, value: (bookmark/bookmark.length)*idx}
-              })
-              setColorsArr(bookmark.colorGradient.colors)
-              setGradientColors(newGradient)
-            }}
-            newValue={newStyle}
-            toastState={toastState}
-          />
-        </span>
-        <span className="flex-1 block text-2xl text-left leading-0">
-          <CopyButton onCopy={() => newStyle} toastState={toastState} />
-        </span>
-      </div>
-    </span>
-    )
-  }
 }
