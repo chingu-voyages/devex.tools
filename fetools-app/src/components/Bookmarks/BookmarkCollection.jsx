@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import BookmarkCard from "./BookmarkCard";
 import Icon from "../Icon";
@@ -11,6 +11,25 @@ export default function BookmarkCollection({
     formatHoverActions = () => {},
 }) {
     const [editMode, setEditMode] = useState(false);
+
+    useEffect(() => {
+        // Close edit mode on click out of section.
+        const clickListener = (e) =>
+            e.target.closest(".bookmark-collection") === null &&
+            setEditMode(false);
+
+        // Close edit mode on ESC keypress.
+        const escListener = (e) => e.key === "Escape" && setEditMode(false);
+
+        document.addEventListener("click", clickListener);
+        document.addEventListener("keydown", escListener);
+
+        return () => {
+            document.removeEventListener("click", clickListener);
+            document.removeEventListener("keydown", escListener);
+        };
+    }, []);
+
     return (
         <div className="bookmark-collection flex justify-end items-end flex-col">
             {bookmarks.length ? (
