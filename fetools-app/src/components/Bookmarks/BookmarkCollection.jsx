@@ -11,16 +11,20 @@ export default function BookmarkCollection({
     formatHoverActions = () => {},
 }) {
     const [editMode, setEditMode] = useState(false);
-    console.log("BookmarkCollection", bookmarks);
     return (
         <div className="bookmark-collection flex justify-end items-end flex-col">
-            <button onClick={() => setEditMode(!editMode)} className="text-2xl">
-                {editMode ? (
-                    <Icon name="check" />
-                ) : (
-                    <Icon name="app_registration" />
-                )}
-            </button>
+            {bookmarks.length ? (
+                <button
+                    onClick={() => setEditMode(!editMode)}
+                    className="text-2xl"
+                >
+                    {editMode ? (
+                        <Icon name="check" />
+                    ) : (
+                        <Icon name="app_registration" />
+                    )}
+                </button>
+            ) : null}
             <div className="bookmark-cards-wrapper flex flex-wrap gap-4 w-full justify-start">
                 {bookmarks.map((item, idx) => {
                     if (!item) return;
