@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CodeGenerator from "../components/FontVisualizer/CodeGenerator";
-import FontOptions from "../components/FontVisualizer/FontOptions";
-import Preview from "../components/FontVisualizer/Preview";
+import CodeGenerator from "../components/FontViewer/CodeGenerator";
+import FontOptions from "../components/FontViewer/FontOptions";
+import Preview from "../components/FontViewer/Preview";
 import ToolMain from "../components/ToolsLayout/ToolMain";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
 import {
@@ -11,7 +11,7 @@ import {
 import GoDeeper from "../components/ToolsLayout/GoDeeper";
 import useExpander from "../hooks/useExpander";
 import useBookmarks from "../hooks/useBookmarks";
-import FontViewerBookmarks from "../components/FontVisualizer/FontViewerBookmarks";
+import FontViewerBookmarks from "../components/FontViewer/FontViewerBookmarks";
 import useToastState from "../hooks/useToastState";
 import Toast from "../components/Toast";
 
@@ -22,7 +22,7 @@ import {
     generateFontStyles,
     generateTailwindCode,
     handleCopyClick,
-} from "../components/FontVisualizer/index";
+} from "../components/FontViewer/index";
 
 const FontVisualizer = () => {
     const [font, setFont] = useState({

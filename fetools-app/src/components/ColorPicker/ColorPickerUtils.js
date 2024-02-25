@@ -18,13 +18,27 @@ export function createColorObj(newColor, newHue){
       alpha: tinycolor(color).getAlpha()
     }
 
+    reduceValueDecimals(colorObj.color)
+    reduceValueDecimals(colorObj.hue)
+
     colorObj.color.a = 1
 
     if(newHue){
       updateHueInColor()
     }
 
+    if(colorObj.color.h !== colorObj.hue.h){
+      colorObj.hue.h === colorObj.color.h
+    }
+
     return colorObj
+
+    function reduceValueDecimals(obj){
+      for(const key in obj){
+        console.log(parseFloat(obj[key].toFixed(2)))
+        obj[key] = parseFloat(obj[key].toFixed(2))
+      }
+    }
 
     function getHue(){
       const hueHsl = {...color}

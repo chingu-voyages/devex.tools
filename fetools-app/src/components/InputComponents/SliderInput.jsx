@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useEffect, useState} from "react";
 import Icon from "../Icon";
 
 const SliderInput = forwardRef(function SliderInput(props, ref) {
@@ -17,6 +17,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
     customPreviewValue
   } = props;
 
+
   const [activeIndex, setActiveIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
 
@@ -25,6 +26,14 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
 
     inputElement.value = defaultValue
   },[defaultValue])
+
+
+  useEffect(()=>{
+    if(ref){
+      ref.current = valueTypes[activeIndex]
+    }
+    
+  },[activeIndex])
 
   return (
     <div
@@ -50,14 +59,13 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
         <label id={`slider-${sliderId}`} className="w-full pl-1">
         <input
             id="custom-slider-input"
-            ref={ref}
             min={ranges[activeIndex].min}
             max={ranges[activeIndex].max}
             step={Array.isArray(step)?step[activeIndex]:step}
             defaultValue={defaultValue}
             onChange={onChange}
             type="range"
-            className="block w-full accent-[#7F40BF]"
+            className="block w-full accent-[#222222]"
           />
         </label>
         <span className={`relative flex min-w-12 items-center ${valueTypes.length===1?'hidden':''}`}>
@@ -82,7 +90,6 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
       return <li key={`type-${idx}`} onClick={(e)=> {setActiveIndex(idx), onClickFn(e) ;} } 
       className={`font-bold border-b-2 border-black cursor-pointer`}>{type}</li>
     })
-
     return(<>{types}</>)
   }
 });

@@ -158,7 +158,6 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             name={"text-align"}
             title={"Text Align"}
             defaultOption={1}
-            optionSize={{ width: 32, height: 32 }}
             options={[
               {
                 iconName: "format_align_left",
