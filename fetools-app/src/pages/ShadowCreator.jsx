@@ -1,40 +1,46 @@
 // React
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 
 // Layout
 import {
   ToolPreviewPane,
   ToolSection,
   ToolSectionColumns,
-} from '../components/ToolsLayout/Sections';
-import ToolMain from '../components/ToolsLayout/ToolMain';
-import ToolHeading from '../components/ToolsLayout/ToolHeading';
-import GoDeeper from '../components/ToolsLayout/GoDeeper';
+} from "../components/ToolsLayout/Sections";
+import ToolMain from "../components/ToolsLayout/ToolMain";
+import ToolHeading from "../components/ToolsLayout/ToolHeading";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
 
 // Global Components
-import TabSwitcher from '../components/TabSwitcher';
-import CodeBlock from '../components/CodeBlock';
+import TabSwitcher from "../components/TabSwitcher";
+import CodeBlock from "../components/CodeBlock";
 
 // Expander
-import useExpander from '../hooks/useExpander';
+import useExpander from "../hooks/useExpander";
 
 // Toast
-import Toast from '../components/Toast';
-import useToastState from '../hooks/useToastState';
+import Toast from "../components/Toast";
+import useToastState from "../hooks/useToastState";
+
+// BookMark
+import useBookmarks from "../hooks/useBookmarks";
 
 // Shadow Creator Components
-import OptionsBox from '../components/ShadowCreator/OptionsBox';
+import OptionsBox from "../components/ShadowCreator/OptionsBox";
 import {
   generateCssRule,
   updateId,
-} from '../components/ShadowCreator/ShadowCreatorFN';
+  removeIdFromShadow,
+} from "../components/ShadowCreator/ShadowCreatorFN";
+
+import ShadowCreatorBookmark from "../components/ShadowCreator/ShadowCreatorBookmark";
 
 const ShadowCreator = () => {
   const [firstRender, setFirstRender] = useState(false);
   const [ShadowsStyles, setShadowsStyles] = useState([
     {
       id: 0,
-      shadowColor: 'rgba(51, 51, 51, 25%)',
+      shadowColor: "rgba(51, 51, 51, 25%)",
       opacity: 30,
       horizontalOffset: 10,
       verticalOffset: 10,
@@ -42,11 +48,11 @@ const ShadowCreator = () => {
       blur: 5,
       inset: false,
       units: {
-        opacity: '%',
-        horizontalOffset: 'px',
-        verticalOffset: 'px',
-        spread: 'px',
-        blur: 'px',
+        opacity: "%",
+        horizontalOffset: "px",
+        verticalOffset: "px",
+        spread: "px",
+        blur: "px",
       },
     },
   ]);
@@ -61,15 +67,15 @@ const ShadowCreator = () => {
   const box = useRef();
 
   useEffect(() => {
-    const applyBoxShadow = styles => {
+    const applyBoxShadow = (styles) => {
       const cssRule = generateCssRule(styles);
-      box.current.style.boxShadow = cssRule.join(',');
+      box.current.style.boxShadow = cssRule.join(",");
       setCurrentStyle(cssRule);
     };
 
-    if (firstRender && localStorage.getItem('ShadowStyle')) {
-      const localStorageValue = JSON.parse(localStorage.getItem('ShadowStyle'));
-      const newState = localStorageValue.filter(obj => obj.id !== 0);
+    if (firstRender && localStorage.getItem("ShadowStyle")) {
+      const localStorageValue = JSON.parse(localStorage.getItem("ShadowStyle"));
+      const newState = localStorageValue.filter((obj) => obj.id !== 0);
       setShadowsStyles(newState);
       setShadowsStyles(localStorageValue);
       setFirstRender(false);
@@ -79,11 +85,13 @@ const ShadowCreator = () => {
       updateId(ShadowsStyles, setShadowsStyles, setRemoveShadow);
     }
 
-    // console.log(ShadowsStyles);
     applyBoxShadow(ShadowsStyles);
   }, [ShadowsStyles, ActiveShadow]);
 
-  
+  // UseBookMark
+
+  const [isBookmarked, bookmarks, toggleBookmark, removeBookmark] =
+    useBookmarks(removeIdFromShadow(ShadowsStyles[ActiveShadow]), "Shadows");
 
   return (
     <ToolMain>
@@ -98,6 +106,11 @@ const ShadowCreator = () => {
         toggleIsExpanded={toggleIsExpanded}
       >
         <OptionsBox
+          isBookmarked={isBookmarked}
+          bookmarks={bookmarks}
+          toggleBookmark={toggleBookmark}
+          removeBookmark={removeBookmark}
+          toolState={removeIdFromShadow(ShadowsStyles[ActiveShadow])}
           ShadowsStyles={ShadowsStyles}
           setShadowsStyles={setShadowsStyles}
           numOfShadows={numOfShadows}
@@ -124,7 +137,7 @@ const ShadowCreator = () => {
         title="Code Snippets"
         icon="integration_instructions"
       >
-        <TabSwitcher buttons={['CSS', 'Tailwind']}>
+        <TabSwitcher buttons={["CSS", "Tailwind"]}>
           <CodeBlock
             title="CSS"
             code={`box-shadow: ${currentStyle.toString()}`}
@@ -150,19 +163,28 @@ const ShadowCreator = () => {
         </TabSwitcher>
       </ToolSection>
 
+      <ShadowCreatorBookmark
+        removeBookmark={removeBookmark}
+        toastState={toastState}
+        bookmarks={bookmarks}
+        ShadowsStyles={ShadowsStyles}
+        setShadowsStyles={setShadowsStyles}
+        ActiveShadow={ActiveShadow}
+      />
+
       <GoDeeper
         linksData={[
           {
-            url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow',
-            textValue: 'box-shadow from MDN',
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow",
+            textValue: "box-shadow from MDN",
           },
           {
-            url: 'https://www.w3schools.com/cssref/css3_pr_box-shadow.php',
-            textValue: 'box-shadow from W3 Schools',
+            url: "https://www.w3schools.com/cssref/css3_pr_box-shadow.php",
+            textValue: "box-shadow from W3 Schools",
           },
           {
-            url: 'https://css-tricks.com/almanac/properties/b/box-shadow/',
-            textValue: 'box-shadow from CSS-Tricks',
+            url: "https://css-tricks.com/almanac/properties/b/box-shadow/",
+            textValue: "box-shadow from CSS-Tricks",
           },
         ]}
       />
