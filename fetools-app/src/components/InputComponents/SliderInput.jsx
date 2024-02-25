@@ -67,7 +67,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
               onClick={()=>setOpenMenu(!openMenu)}
               className="block font-bold self-end cursor-pointer" 
               ></Icon>
-              <ul id="value-types-menu" className={`absolute left-1 top-[100%] border-black  border-t-2 w-12 bg-white ${!openMenu?'hidden':''}`}>
+              <ul id="value-types-menu" className={`absolute z-20 left-1 top-[100%] border-black  border-t-2 w-12 bg-white ${!openMenu?'hidden':''}`}>
                 {getValueTypesList()}
               </ul>
             </span>
