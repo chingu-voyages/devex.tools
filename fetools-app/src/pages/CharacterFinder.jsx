@@ -140,7 +140,7 @@ function CharacterFinder() {
   const categoryData = searchQuery
     ? searchResults
     : selectedCategory === "collection"
-    ? getBookmarkCollection() // TODO - Read out collection from local storage.
+    ? getBookmarkCollection()?getBookmarkCollection():[] // TODO - Read out collection from local storage.
     : htmlCharacters[selectedCategory];
 
   const currentCategoryData = categoryData.slice(
