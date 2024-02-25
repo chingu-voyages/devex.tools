@@ -32,7 +32,7 @@ export default function Preview({
         <div
           contentEditable
           ref={editableRef}
-          className="flex text-3xl font-bold leading-none break-words font-arial focus:outline-none max-w-full max-h-full"
+          className="text-3xl font-bold leading-none break-words font-arial focus:outline-none max-w-full max-h-full"
           style={{
             fontSize: cssSize,
             margin: "auto",
