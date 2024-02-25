@@ -14,7 +14,7 @@ export default function Preview({
       isExpanded={isExpanded}
       toggleIsExpanded={toggleIsExpanded}
       expandedLayoutClasses={`h-[${cssSize}px] min-h-72`}
-      columnLayoutClasses="h-[${cssSize}px] min-h-72 lg:border-r rounded-bl-lg"
+      columnLayoutClasses={`h-[${cssSize}px] min-h-72 lg:border-r rounded-bl-lg`}
     >
       {/* Inline Notification about Preview Limit */}
 
@@ -26,16 +26,16 @@ export default function Preview({
       )}
 
       <div
-        className="flex flex-row items-center justify-center w-full h-full p-3"
+        className="flex justify-center w-full h-full p-3 min-h-72 max-h-72 overflow-auto"
         style={gridBackgroundStyle}
       >
         <div
           contentEditable
           ref={editableRef}
-          className="flex items-center text-3xl font-bold leading-none break-words font-arial focus:outline-none min-h-72"
+          className="flex text-3xl font-bold leading-none break-words font-arial focus:outline-none max-w-full max-h-full"
           style={{
             fontSize: cssSize,
-            height: cssSize,
+            margin: "auto",
           }}
           onInput={handleContentChange} // Update state on input
         ></div>
