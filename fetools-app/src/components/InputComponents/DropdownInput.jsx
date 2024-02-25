@@ -13,12 +13,21 @@ import {
 import Icon from "../Icon";
 
 const DropdownInput = forwardRef(function DropdownInput(props, ref) {
-  const { title, titleClassName, className, dropdownOptions, callbackFun, children } =
-    props;
+  const { 
+    id,
+    title, 
+    titleClassName, 
+    className, 
+    dropdownOptions, 
+    callbackFun, 
+    useEffectValue,
+    children } = props;
 
   const [position, setPosition] = useState(dropdownOptions[0]);
   const [menuStyle, setMenuStyle] = useState({ width: "50x" });
   const buttonRef = useRef();
+
+    
 
   useEffect(() => {
     setMenuStyle({ width: `${buttonRef.current.offsetWidth}px` });
@@ -32,9 +41,14 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
     callbackFun();
   }, [position]);
 
+  useEffect(()=>{
+    setPosition(useEffectValue)
+  },[useEffectValue])
+
   return (
     <>
       <div
+        id={`${id}-options`}
         className={
           className
             ? `flex z-0 justify-center ${className}`
@@ -68,13 +82,13 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="rounded outline-none"
-            style={menuStyle}
+          className="rounded outline-none"
+          style={menuStyle}
           >
             <DropdownMenuRadioGroup
-              value={position}
-              onValueChange={setPosition}
-              className="outline-none"
+            value={position}
+            onValueChange={setPosition}
+            className="outline-none"
             >
               {createDropdownItems()}
             </DropdownMenuRadioGroup>
@@ -88,10 +102,10 @@ const DropdownInput = forwardRef(function DropdownInput(props, ref) {
     const options = dropdownOptions.map((option, idx) => {
       return (
         <DropdownMenuRadioItem 
-        key={`option-${idx}`} 
+        key={`${id}-option-${idx}`}
         value={option}
         className='flex'>
-          <span className="flex-2">{option}</span>
+          <span id={`${id}-option`} className="flex-2">{option}</span>
         </DropdownMenuRadioItem>
       );
     });
