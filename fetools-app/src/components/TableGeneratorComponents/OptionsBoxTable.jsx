@@ -1,4 +1,8 @@
-import { handleOptions, hanldeColorOptions } from "./TableGeneratorFN";
+import {
+  handleOptions,
+  hanldeColorOptions,
+  unitChangerTable,
+} from "./TableGeneratorFN";
 import { ToolPane } from "../ToolsLayout/Sections";
 import ColorInput from "./../InputComponents/ColorInput";
 import DropdownInput from "../InputComponents/DropdownInput";
@@ -23,34 +27,48 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             Layout
           </h3>
 
-            
           <SliderInput
             useEffectValue={tableConfig.dimensions.length}
             sliderId={"Rows"}
             defaultValue={tableConfig.dimensions.length}
-            valueTypes={['']}
-            ranges={[
-              { min: 1, max: 50 },
-            ]}
+            valueTypes={[""]}
+            ranges={[{ min: 1, max: 50 }]}
             step={1}
             title={"Rows"}
             iconName={"table_rows"}
-            onChange={(e)=> { setTimeout(() => {handleOptions(e.target.value,"Rows",tableConfig,setTableConfig ), 250})}}
+            onChange={(e) => {
+              setTimeout(() => {
+                handleOptions(
+                  e.target.value,
+                  "Rows",
+                  tableConfig,
+                  setTableConfig
+                ),
+                  250;
+              });
+            }}
           />
-
 
           <SliderInput
             useEffectValue={tableConfig.dimensions[0].length}
             sliderId={"Columns"}
             defaultValue={tableConfig.dimensions[0].length}
-            valueTypes={['']}
-            ranges={[
-              { min: 0, max: 50 },
-            ]}
+            valueTypes={[""]}
+            ranges={[{ min: 0, max: 50 }]}
             step={1}
             title={"Columns"}
             iconName={"view_week"}
-            onChange={(e)=> { setTimeout(() => {handleOptions(e.target.value,"Cols",tableConfig,setTableConfig ), 250})}}
+            onChange={(e) => {
+              setTimeout(() => {
+                handleOptions(
+                  e.target.value,
+                  "Cols",
+                  tableConfig,
+                  setTableConfig
+                ),
+                  250;
+              });
+            }}
           />
 
           <SliderInput
@@ -63,6 +81,14 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
               { min: 0, max: 10 },
               { min: 0, max: 100 },
             ]}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "verticalCellPading",
+                setTableConfig,
+                tableConfig
+              );
+            }}
             step={1}
             title={"Vertical Cell Padding"}
             iconName={"padding"}
@@ -87,6 +113,14 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             step={1}
             title={"Horizontal Cell Padding"}
             iconName={"padding"}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "horizontalCellPading",
+                setTableConfig,
+                tableConfig
+              );
+            }}
             onChange={(e) => {
               setTableConfig({
                 ...tableConfig,
@@ -100,10 +134,18 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             sliderId={"table-width"}
             defaultValue={tableConfig.tableWidth}
             valueTypes={dropDownOptions}
-            ranges={[{min:0, max: 1024}]}
+            ranges={[{ min: 0, max: 1024 }, {mi:0, max: 64}, {mi:0, max: 64}]}
             step={1}
             title={"table Width"}
             iconName={"width"}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "tableWidth",
+                setTableConfig,
+                tableConfig
+              );
+            }}
             onChange={(e) => {
               setTableConfig({
                 ...tableConfig,
@@ -180,6 +222,14 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             step={1}
             title={"Border Rounding"}
             iconName={"line_curve"}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "borderRounding",
+                setTableConfig,
+                tableConfig
+              );
+            }}
             onChange={(e) => {
               setTableConfig({
                 ...tableConfig,
@@ -197,6 +247,14 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             step={1}
             title={"Border Width"}
             iconName={"border_all"}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "borderWidth",
+                setTableConfig,
+                tableConfig
+              );
+            }}
             onChange={(e) => {
               setTableConfig({
                 ...tableConfig,
@@ -220,7 +278,6 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             />
           </div>
 
-         
           <div className="flex gap-2 items-center justify-end">
             <strong className>Collapse Border</strong>
             <input
@@ -318,5 +375,4 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
       </div>
     </ToolPane>
   );
-
 };

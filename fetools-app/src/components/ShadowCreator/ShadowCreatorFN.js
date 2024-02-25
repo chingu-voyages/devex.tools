@@ -1,7 +1,7 @@
-import { getRandomColor } from '../ColorGradient/ColorGradientUtils';
-import tinycolor from 'tinycolor2';
+import { getRandomColor } from "../ColorGradient/ColorGradientUtils";
+import tinycolor from "tinycolor2";
 
-const generateCssRule = ShadowsStyles => {
+const generateCssRule = (ShadowsStyles) => {
   let color;
   return ShadowsStyles.map(
     ({
@@ -21,7 +21,7 @@ const generateCssRule = ShadowsStyles => {
       spread = spread + units.spread;
 
       return `${
-        inset ? 'inset' : ''
+        inset ? "inset" : ""
       } ${horizontalOffset} ${verticalOffset} ${blur} ${spread} ${color.toString()}`;
     }
   );
@@ -39,14 +39,14 @@ const colorChanger = (
   let color = event.target.value;
   let newState = [...ShadowsStyles];
 
-  if (color[0] === '#') {
+  if (color[0] === "#") {
     newState[ActiveShadow].shadowColor = color;
 
-    regexColorHexadecimal.test(color) ? setShadowsStyles(newState) : '';
+    regexColorHexadecimal.test(color) ? setShadowsStyles(newState) : "";
   } else {
-    addSharp ? (color = '#' + color) : '';
+    addSharp ? (color = "#" + color) : "";
     newState[ActiveShadow].shadowColor = color;
-    regexColorHexadecimal.test(color) ? setShadowsStyles(newState) : '';
+    regexColorHexadecimal.test(color) ? setShadowsStyles(newState) : "";
   }
 };
 
@@ -68,7 +68,7 @@ const shadowPropertyValue = (
   let newState = [...ShadowsStyles];
 
   newState[ActiveShadow][prop] =
-    prop === 'inset' ? e.target.checked : Number(e.target.value);
+    prop === "inset" ? e.target.checked : Number(e.target.value);
 
   setShadowsStyles(newState);
 };
@@ -96,10 +96,10 @@ const newShadow = (
         blur: 10,
         inset: false,
         units: {
-          horizontalOffset: 'px',
-          verticalOffset: 'px',
-          spread: 'px',
-          blur: 'px',
+          horizontalOffset: "px",
+          verticalOffset: "px",
+          spread: "px",
+          blur: "px",
         },
       },
     ];
@@ -120,7 +120,7 @@ const removeShadow = (
   setRemoveShadow
 ) => {
   if (ShadowsStyles.length > 1) {
-    const newState = ShadowsStyles.filter(obj => obj.id !== ActiveShadow);
+    const newState = ShadowsStyles.filter((obj) => obj.id !== ActiveShadow);
     setShadowsStyles(newState);
     setNumOfShadows(numOfShadows - 1);
     setActiveShadow(ActiveShadow === 0 ? 0 : ActiveShadow - 1);
@@ -134,54 +134,19 @@ const switchShadow = (e, setActiveShadow, idx) => {
   setActiveShadow(newState);
 };
 
+
 const unitChanger = (
   e,
-  prop,
+  propUnit,
   setShadowsStyles,
   ShadowsStyles,
-  ActiveShadow,
-  ActiveUnit,
-  setActiveUnit
+  ActiveShadow
 ) => {
   let newState = [...ShadowsStyles];
-  let value = ShadowsStyles[ActiveShadow][prop];
 
-  let UnitConverted = unitConverterShadow(
-    value,
-    ActiveUnit,
-    e.target.value,
-    16
-  );
-  setActiveUnit(e.target.value);
-  newState[ActiveShadow][prop] = UnitConverted;
-  newState[ActiveShadow].units[prop] = e.target.value;
+  newState[ActiveShadow].units[propUnit] = e.target.innerText;
+
   setShadowsStyles(newState);
-};
-
-const unitConverterShadow = (value, originalUnit, unitToConvert, baseSize) => {
-  switch (originalUnit) {
-    case 'px':
-      if (unitToConvert === 'em') {
-        return value / baseSize;
-      } else if (unitToConvert === 'rem') {
-        return value / baseSize;
-      }
-      break;
-    case 'em':
-      if (unitToConvert === 'px') {
-        return value * baseSize;
-      } else if (unitToConvert === 'rem') {
-        return value / baseSize;
-      }
-      break;
-    case 'rem':
-      if (unitToConvert === 'px') {
-        return value * baseSize;
-      } else if (unitToConvert === 'em') {
-        return value * baseSize;
-      }
-      break;
-  }
 };
 
 const updateId = (ShadowsStyles, setShadowsStyles, setRemoveShadow) => {
@@ -196,11 +161,11 @@ const updateId = (ShadowsStyles, setShadowsStyles, setRemoveShadow) => {
   setRemoveShadow(false);
 };
 
-const combineShadows = shadowArray => {
+const combineShadows = (shadowArray) => {
   let combinedObject = {};
 
-  shadowArray.forEach(shadow => {
-    Object.keys(shadow).forEach(property => {
+  shadowArray.forEach((shadow) => {
+    Object.keys(shadow).forEach((property) => {
       if (combinedObject.hasOwnProperty(property)) {
         if (!Array.isArray(combinedObject[property])) {
           combinedObject[property] = [combinedObject[property]];
@@ -215,10 +180,10 @@ const combineShadows = shadowArray => {
   return combinedObject;
 };
 
-const splitCombinedObject = combinedObject => {
+const splitCombinedObject = (combinedObject) => {
   let shadowArray = [];
 
-  Object.keys(combinedObject).forEach(property => {
+  Object.keys(combinedObject).forEach((property) => {
     if (Array.isArray(combinedObject[property])) {
       combinedObject[property].forEach((value, index) => {
         if (!shadowArray[index]) {
