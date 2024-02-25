@@ -20,10 +20,24 @@ const OptionsBox = ({
   setActiveShadow,
   ActiveShadow,
   setRemoveShadow,
+  isBookmarked,
+  bookmarks,
+  toggleBookmark,
+  removeBookmark,
+  toolState
 }) => {
   let color = tinycolor(ShadowsStyles[ActiveShadow].shadowColor).toHexString();
   return (
-    <ToolPane title="Options" isPrimary={true} icon="tune">
+    <ToolPane
+      isBookmarked={isBookmarked}
+      bookmarks={bookmarks}
+      toggleBookmark={toggleBookmark}
+      removeBookmark={removeBookmark}
+      toolState={toolState}
+      title="Options"
+      isPrimary={true}
+      icon="tune"
+    >
       <div className="flex flex-wrap justify-between gap-y-6 [&>*]:w-[48%] mb-6">
         <div className="control color shadow-color flex items-center">
           <ColorInput

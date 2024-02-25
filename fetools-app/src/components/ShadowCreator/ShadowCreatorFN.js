@@ -134,7 +134,6 @@ const switchShadow = (e, setActiveShadow, idx) => {
   setActiveShadow(newState);
 };
 
-
 const unitChanger = (
   e,
   propUnit,
@@ -203,6 +202,12 @@ const splitCombinedObject = (combinedObject) => {
   return shadowArray;
 };
 
+const removeIdFromShadow = (shadow) => {
+  delete shadow.id;
+
+  return shadow;
+};
+
 const ShareLink = (searchParams, SetsearchParams, ShadowsStyles) => {
   let combinedObject = combineShadows(ShadowsStyles);
 
@@ -247,4 +252,5 @@ export {
   updateId,
   ShareLink,
   splitCombinedObject,
+  removeIdFromShadow,
 };
