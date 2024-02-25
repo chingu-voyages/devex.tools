@@ -63,7 +63,7 @@ const ShadowCreator = () => {
   useEffect(() => {
     const applyBoxShadow = styles => {
       const cssRule = generateCssRule(styles);
-      box.current.style.boxShadow = cssRule.join(', ');
+      box.current.style.boxShadow = cssRule.join(',');
       setCurrentStyle(cssRule);
     };
 
@@ -79,8 +79,11 @@ const ShadowCreator = () => {
       updateId(ShadowsStyles, setShadowsStyles, setRemoveShadow);
     }
 
+    // console.log(ShadowsStyles);
     applyBoxShadow(ShadowsStyles);
   }, [ShadowsStyles, ActiveShadow]);
+
+  
 
   return (
     <ToolMain>

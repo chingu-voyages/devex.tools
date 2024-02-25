@@ -35,6 +35,13 @@ const Table = () => {
     borderColor: "#000000",
     headerText: "#ffffff",
     headerBg: "#663399",
+    units: {
+      verticalCellPading: "px",
+      horizontalCellPading: "px",
+      tableWidth: "px",
+      borderRounding: "px",
+      borderWidth: "px",
+    },
   });
   const [isExpanded, toggleIsExpanded] = useExpander();
   const toastState = useToastState();

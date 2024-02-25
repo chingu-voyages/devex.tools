@@ -13,6 +13,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
     titleClassName,
     iconName,
     onChange,
+    onClickFn = null,
     customPreviewValue
   } = props;
 
@@ -36,7 +37,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
     >
       {title
       ?
-      <h2 className={`font-bold text-sm${titleClassName || ''}`}>
+      <h2 className={`relative z-0 pointer-events-none w-fit font-bold text-sm${titleClassName || ''}`}>
         {title}
       </h2>
       :null}
@@ -61,12 +62,12 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
         </label>
         <span className={`relative flex min-w-12 items-center ${valueTypes.length===1?'hidden':''}`}>
             <span className="block min-w-7 text-center font-bold">{valueTypes[activeIndex]}</span>
-            <span className="flex w-full overflow-hidden">
+            <span className="z-10 flex w-full overflow-hidden">
               <Icon name={`keyboard_arrow_${!openMenu?'down':'up'}`} size="24" 
-              onClick={()=>setOpenMenu(!openMenu)}
+              onClick={()=> setOpenMenu(!openMenu)}
               className="block font-bold self-end cursor-pointer" 
               ></Icon>
-              <ul id="value-types-menu" className={`absolute left-1 top-[100%] border-black  border-t-2 w-12 bg-white ${!openMenu?'hidden':''}`}>
+              <ul id="value-types-menu" className={`absolute pointer-events-auto z-40 left-1 top-[100%] border-black  border-t-2 w-12 bg-white ${!openMenu?'hidden':''}`}>
                 {getValueTypesList()}
               </ul>
             </span>
@@ -78,7 +79,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
   function getValueTypesList(){
     const types = valueTypes.map((type,idx)=>{
       if(idx===activeIndex){return}
-      return <li key={`type-${idx}`} onClick={()=>setActiveIndex(idx)} 
+      return <li key={`type-${idx}`} onClick={(e)=> {setActiveIndex(idx), onClickFn(e) ;} } 
       className={`font-bold border-b-2 border-black cursor-pointer`}>{type}</li>
     })
 

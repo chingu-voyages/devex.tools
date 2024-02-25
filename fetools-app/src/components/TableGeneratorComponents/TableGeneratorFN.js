@@ -97,31 +97,46 @@ const convertToPx = (value, unit, baseSize = 16) => {
   }
 };
 
-const getCellStyle = (idxRow,idxCol, tableConfig) => {
+const getCellStyle = (idxRow, idxCol, tableConfig) => {
   const isHeaderRow = idxRow === 0;
-  const isBottom = idxRow  === tableConfig.dimensions.length - 1
-  const isRight = idxCol === tableConfig.dimensions[0].length - 1
+  const isBottom = idxRow === tableConfig.dimensions.length - 1;
+  const isRight = idxCol === tableConfig.dimensions[0].length - 1;
   const isLeft = idxCol === 0;
 
-  
-
   return {
-    paddingTop: `${tableConfig.verticalCellPading}px`,
-    paddingBottom: `${tableConfig.verticalCellPading}px`,
-    paddingLeft: `${tableConfig.horizontalCellPading}px`,
-    paddingRight: `${tableConfig.horizontalCellPading}px`,
-    borderTop: `${tableConfig.borderWidth}px ${!isHeaderRow ? tableConfig.borderStyle : "none"} ${tableConfig.borderColor}`,
-    borderBottom: `${tableConfig.borderWidth}px ${!isBottom ? tableConfig.borderStyle : "none"} ${tableConfig.borderColor}`,
-    borderLeft: `${tableConfig.borderWidth}px ${!isLeft ? tableConfig.borderStyle : "none"} ${tableConfig.borderColor}`,
-    borderRight: `${tableConfig.borderWidth}px ${!isRight ? tableConfig.borderStyle : "none"} ${tableConfig.borderColor}`,
+    paddingTop: `${tableConfig.verticalCellPading}${tableConfig.units.verticalCellPading}`,
+    paddingBottom: `${tableConfig.verticalCellPading}${tableConfig.units.verticalCellPading} `,
+    paddingLeft: `${tableConfig.horizontalCellPading}${tableConfig.units.horizontalCellPading}`,
+    paddingRight: `${tableConfig.horizontalCellPading}${tableConfig.units.horizontalCellPading}`,
+    borderTop: `${tableConfig.borderWidth}${tableConfig.units.borderWidth} ${
+      !isHeaderRow ? tableConfig.borderStyle : "none"
+    } ${tableConfig.borderColor}`,
+    borderBottom: `${tableConfig.borderWidth}${tableConfig.units.borderWidth} ${
+      !isBottom ? tableConfig.borderStyle : "none"
+    } ${tableConfig.borderColor}`,
+    borderLeft: `${tableConfig.borderWidth}${tableConfig.units.borderWidth} ${
+      !isLeft ? tableConfig.borderStyle : "none"
+    } ${tableConfig.borderColor}`,
+    borderRight: `${tableConfig.borderWidth}${tableConfig.units.borderWidth} ${
+      !isRight ? tableConfig.borderStyle : "none"
+    } ${tableConfig.borderColor}`,
     background: isHeaderRow ? tableConfig.headerBg : tableConfig.bgColor,
     color: isHeaderRow ? tableConfig.headerText : tableConfig.textColor,
     fontWeight: isHeaderRow && "bold",
     width: tableConfig.tableWidth / tableConfig.dimensions[0].length,
-  
+  };
+};
+
+const unitChangerTable = (e, propUnit, setTableConfig, tableConfig) => {
+  let newState = {
+    ...tableConfig,
+    units: {
+      ...tableConfig.units,
+      [propUnit]: e.target.innerText,
+    },
   };
 
-  
+  setTableConfig(newState);
 };
 
 const generateTableCode = (tableConfig, tailwind = false) => {
@@ -157,9 +172,11 @@ const generateTableCode = (tableConfig, tailwind = false) => {
   if (tailwind) {
     html = `<div class="overflow-hidden border-[${
       tableConfig.borderWidth
-    }px] ${borderStyle} border-[${tableConfig.borderColor}] rounded-[${tableConfig.borderRounding}px]">\n <table class="w-[${
-      tableConfig.tableWidth
-    }px] bg-[${tableConfig.bgColor}] ${
+    }px] ${borderStyle} border-[${tableConfig.borderColor}] rounded-[${
+      tableConfig.borderRounding
+    }px]">\n <table class="w-[${tableConfig.tableWidth}px] bg-[${
+      tableConfig.bgColor
+    }] ${
       tableConfig.collapse ? "border-collapse" : "border-separate"
     } border-[${tableConfig.borderWidth}px] ${borderStyle} border-[${
       tableConfig.borderColor
@@ -168,7 +185,13 @@ const generateTableCode = (tableConfig, tailwind = false) => {
     html += `  <thead class="text-[${tableConfig.headerText}] bg-[${tableConfig.headerBg}]" >\n`;
     html += `    <tr class="py-[${tableConfig.verticalCellPading}px] px-[${tableConfig.horizontalCellPading}px] " >\n`;
     for (let i = 0; i < tableConfig.dimensions[0].length; i++) {
-      html += `      <th class=" py-[${tableConfig.verticalCellPading}px] w-[${tableConfig.tableWidth / tableConfig.dimensions[0].length}px] px-[${tableConfig.horizontalCellPading}px]  border-[${tableConfig.borderWidth}px] ${borderStyle} border-[${tableConfig.borderColor}]" >${tableConfig.dimensions[0][i]}</th>\n`;
+      html += `      <th class=" py-[${tableConfig.verticalCellPading}px] w-[${
+        tableConfig.tableWidth / tableConfig.dimensions[0].length
+      }px] px-[${tableConfig.horizontalCellPading}px]  border-[${
+        tableConfig.borderWidth
+      }px] ${borderStyle} border-[${tableConfig.borderColor}]" >${
+        tableConfig.dimensions[0][i]
+      }</th>\n`;
     }
     html += "    </tr>\n";
     html += "  </thead>\n";
@@ -177,7 +200,13 @@ const generateTableCode = (tableConfig, tailwind = false) => {
     for (let i = 1; i < tableConfig.dimensions.length; i++) {
       html += `    <tr>\n`;
       for (let j = 0; j < tableConfig.dimensions[i].length; j++) {
-        html += `      <td class=" w-[${tableConfig.tableWidth / tableConfig.dimensions[0].length}px] border-[${tableConfig.borderWidth}px] ${borderStyle} border-[${tableConfig.borderColor}] py-[${tableConfig.verticalCellPading}px] px-[${tableConfig.horizontalCellPading}px]"> ${tableConfig.dimensions[i][j]}</td>\n`;
+        html += `      <td class=" w-[${
+          tableConfig.tableWidth / tableConfig.dimensions[0].length
+        }px] border-[${tableConfig.borderWidth}px] ${borderStyle} border-[${
+          tableConfig.borderColor
+        }] py-[${tableConfig.verticalCellPading}px] px-[${
+          tableConfig.horizontalCellPading
+        }px]"> ${tableConfig.dimensions[i][j]}</td>\n`;
       }
       html += "    </tr>\n";
     }
@@ -195,7 +224,8 @@ const generateTableCode = (tableConfig, tailwind = false) => {
   .tableContainer{
     overflow: hidden;
     border: ${tableConfig.borderWidth}px ${tableConfig.borderStyle} ${
-      tableConfig.borderColor};
+      tableConfig.borderColor
+    };
     border-radius: ${tableConfig.borderRounding}px;
     width: ${tableConfig.tableWidth}px;
   }
@@ -264,4 +294,5 @@ export {
   handleEditCells,
   getCellStyle,
   generateTableCode,
+  unitChangerTable
 };
