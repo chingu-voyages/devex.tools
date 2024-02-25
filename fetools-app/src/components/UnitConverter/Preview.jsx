@@ -1,5 +1,16 @@
 import { ToolPreviewPane } from "../ToolsLayout/Sections";
 
+function handlePaste(event) {
+  // Prevent the default paste action
+  event.preventDefault();
+
+  // Get the text content from the clipboard
+  const text = (event.clipboardData || window.clipboardData).getData("text");
+
+  // Insert the text content into the contentEditable div
+  document.execCommand("insertHTML", false, text);
+}
+
 export default function Preview({
   alertShown = false,
   gridBackgroundStyle,
@@ -38,6 +49,7 @@ export default function Preview({
             margin: "auto",
           }}
           onInput={handleContentChange} // Update state on input
+          onPaste={handlePaste}
         ></div>
       </div>
     </ToolPreviewPane>
