@@ -1,14 +1,19 @@
 import { ToolPreviewPane } from "../ToolsLayout/Sections";
 
 function handlePaste(event) {
-  // Prevent the default paste action
+  //  Prevent the default paste action and get clipboard text
   event.preventDefault();
-
-  // Get the text content from the clipboard
   const text = (event.clipboardData || window.clipboardData).getData("text");
 
-  // Insert the text content into the contentEditable div
-  document.execCommand("insertHTML", false, text);
+  // Proceed only if there's a selection
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return false;
+
+  // Replace current selection with clipboard text
+  selection.deleteFromDocument();
+  const textNode = document.createTextNode(text);
+  selection.getRangeAt(0).insertNode(textNode);
+  selection.collapseToEnd();
 }
 
 export default function Preview({
