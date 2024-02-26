@@ -9,6 +9,7 @@ import {
 
 import useToastState from "../hooks/useToastState";
 import useExpander from "../hooks/useExpander";
+import useBookmarks from "../hooks/useBookmarks";
 
 import ColorGradientSlider from "../components/ColorGradient/ColorGradientSlider";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
@@ -86,6 +87,9 @@ export default function ColorGradient() {
         type: inputValue.type,
     });
 
+    const [isBookmarked, bookmarks, toggleBookmark, removeBookmark] =
+        useBookmarks(currentGradientObj, "gradients");
+
     useEffect(() => {
         if (!currentKnob) {
             setCurrentKnob(containerRef.current.querySelector(".isActive"));
@@ -156,6 +160,8 @@ export default function ColorGradient() {
                         title="Options"
                         icon="gradient"
                         isPrimary={true}
+                        isBookmarked={isBookmarked}
+                        toggleBookmark={toggleBookmark}
                         toolState={currentGradientObj}
                         shareCallback={() => {}}
                     >
