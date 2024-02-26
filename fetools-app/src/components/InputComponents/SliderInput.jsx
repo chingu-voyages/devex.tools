@@ -18,9 +18,10 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
   } = props;
 
 
+  
   const [activeIndex, setActiveIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
-
+ 
   useEffect(()=>{
     const inputElement = document.querySelector(`#${sliderId}-input #custom-slider-input`)
 
@@ -31,6 +32,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
   useEffect(()=>{
     if(ref){
       ref.current = valueTypes[activeIndex]
+      
     }
     
   },[activeIndex])
@@ -66,6 +68,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
             onChange={onChange}
             type="range"
             className="block w-full accent-[#222222]"
+  
           />
         </label>
         <span className={`relative flex min-w-12 items-center ${valueTypes.length===1?'hidden':''}`}>
