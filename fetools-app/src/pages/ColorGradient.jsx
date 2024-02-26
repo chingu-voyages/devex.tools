@@ -27,6 +27,7 @@ import {
 import ToolMain from "../components/ToolsLayout/ToolMain";
 import TabSwitcher from "../components/TabSwitcher";
 import { getColorString } from "../components/ColorPicker/ColorPickerUtils";
+import ColorGradientBookmarks from "../components/ColorGradient/ColorGradientBookmarks";
 
 export default function ColorGradient() {
     const containerRef = useRef();
@@ -216,6 +217,16 @@ export default function ColorGradient() {
                         />
                     </TabSwitcher>
                 </ToolSection>
+
+                <ColorGradientBookmarks
+                    bookmarks={bookmarks}
+                    removeBookmark={removeBookmark}
+                    setColorsArr={setColorsArr}
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    setGradientColors={setGradientColors}
+                    toastState={toastState}
+                />
 
                 <GoDeeper
                     linksData={[
