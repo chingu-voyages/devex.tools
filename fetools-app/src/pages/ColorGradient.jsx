@@ -44,6 +44,8 @@ export default function ColorGradient() {
         searchParamsColors || [getRandomColor(), getRandomColor()]
     );
 
+    console.log("colorsArr", colorsArr);
+
     const [gradientColors, setGradientColors] = useState(
         searchParams
             ? colorsArr.map((paramColor, idx) => ({
@@ -65,7 +67,7 @@ export default function ColorGradient() {
     const [currentKnob, setCurrentKnob] = useState(false);
 
     const [inputValue, setInputValue] = useState({
-        color: getHexString(gradientColors[0].colorStr),
+        color: getHexString(gradientColors[0]?.colorStr),
         position: gradientColors[0].value,
         rotation: 25,
         type: "linear",
@@ -348,7 +350,7 @@ export default function ColorGradient() {
         }));
 
         const isColorsArrSimilarToSorted = colorsArr.every(
-            ({ colorStr }, idx) => colorStr === newColorObject[idx].colorStr
+            ({ colorStr }, idx) => colorStr === newColorObject[idx]?.colorStr
         );
 
         if (!isColorsArrSimilarToSorted) {
