@@ -42,13 +42,13 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
     id={`${sliderId}-input`}
     className={
       className
-        ? `flex z-0 justify-center text-sm ${className}`
-        : `flex flex-col z-0 justify-center text-sm`
+        ? `flex pointer-events-none z-0 justify-center text-sm ${className}`
+        : `flex pointer-events-none flex-col z-0 justify-center text-sm`
     }
     >
       {title
       ?
-      <h2 className={`relative z-0 pointer-events-none w-fit font-bold text-sm${titleClassName || ''}`}>
+      <h2 className={`relative  w-fit font-bold text-sm${titleClassName || ''}`}>
         {title}
       </h2>
       :null}
@@ -67,16 +67,19 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
             defaultValue={defaultValue}
             onChange={onChange}
             type="range"
-            className="block w-full accent-[#222222]"
-  
+            className="pointer-events-auto block w-full accent-[#222222]"
           />
         </label>
-        <span className={`relative flex min-w-12 items-center ${valueTypes.length===1?'hidden':''}`}>
+        <span className={
+        `relative cursor-pointer z-10 flex min-w-12 items-center pointer-events-auto ${valueTypes.length===1?'hidden':''}`
+        }
+        onClick={()=> setOpenMenu(!openMenu)}
+        onMouseLeave={()=>setOpenMenu(false)}>
             <span className="block min-w-7 text-center font-bold">{valueTypes[activeIndex]}</span>
-            <span className="z-10 flex w-full overflow-hidden">
+            <span
+            className="flex w-full overflow-hidden">
               <Icon name={`keyboard_arrow_${!openMenu?'down':'up'}`} size="24" 
-              onClick={()=> setOpenMenu(!openMenu)}
-              className="block font-bold self-end cursor-pointer" 
+              className="block font-bold self-end cursor-pointer text-black" 
               ></Icon>
               <ul id="value-types-menu" className={`absolute pointer-events-auto z-40 left-1 top-[100%] border-black  border-t-2 w-12 bg-white ${!openMenu?'hidden':''}`}>
                 {getValueTypesList()}
@@ -91,7 +94,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
     const types = valueTypes.map((type,idx)=>{
       if(idx===activeIndex){return}
       return <li key={`type-${idx}`} onClick={(e)=> {setActiveIndex(idx), onClickFn(e) ;} } 
-      className={`font-bold border-b-2 border-black cursor-pointer`}>{type}</li>
+      className={`font-bold border-b-2 border-black cursor-pointer hover:text-[#7F40BF]`}>{type}</li>
     })
     return(<>{types}</>)
   }
