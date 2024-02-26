@@ -123,7 +123,7 @@ const getCellStyle = (idxRow, idxCol, tableConfig) => {
     background: isHeaderRow ? tableConfig.headerBg : tableConfig.bgColor,
     color: isHeaderRow ? tableConfig.headerText : tableConfig.textColor,
     fontWeight: isHeaderRow && "bold",
-    width: tableConfig.tableWidth / tableConfig.dimensions[0].length,
+    width: tableConfig.units.tableWidth === "px"? tableConfig.tableWidth / tableConfig.dimensions[0].length : (tableConfig.tableWidth * 16) / tableConfig.dimensions[0].length   ,
   };
 };
 
