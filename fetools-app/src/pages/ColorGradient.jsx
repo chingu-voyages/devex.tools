@@ -9,7 +9,6 @@ import {
 
 import useToastState from "../hooks/useToastState";
 import useExpander from "../hooks/useExpander";
-import useBookmarks from "../hooks/useBookmarks";
 
 import ColorGradientSlider from "../components/ColorGradient/ColorGradientSlider";
 import ToolHeading from "../components/ToolsLayout/ToolHeading";
@@ -27,7 +26,6 @@ import {
 import ToolMain from "../components/ToolsLayout/ToolMain";
 import TabSwitcher from "../components/TabSwitcher";
 import { getColorString } from "../components/ColorPicker/ColorPickerUtils";
-import ColorGradientBookmarks from "../components/ColorGradient/ColorGradientBookmarks";
 
 export default function ColorGradient() {
     const containerRef = useRef();
@@ -87,9 +85,6 @@ export default function ColorGradient() {
         rotation: inputValue.rotation * 3.6,
         type: inputValue.type,
     });
-
-    const [isBookmarked, bookmarks, toggleBookmark, removeBookmark] =
-        useBookmarks(currentGradientObj, "gradients");
 
     useEffect(() => {
         if (!currentKnob) {
@@ -161,8 +156,6 @@ export default function ColorGradient() {
                         title="Options"
                         icon="gradient"
                         isPrimary={true}
-                        isBookmarked={isBookmarked}
-                        toggleBookmark={toggleBookmark}
                         toolState={currentGradientObj}
                         shareCallback={() => {}}
                     >
