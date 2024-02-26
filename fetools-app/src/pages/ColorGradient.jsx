@@ -137,12 +137,12 @@ export default function ColorGradient() {
     return (
         <>
             <ToolMain>
+                TEST
                 <ToolHeading
                     title="Gradient Maker"
                     tagline="Use this tool to create gradients for any project!"
                     icon="gradient"
                 ></ToolHeading>
-
                 <ToolSectionColumns
                     isExpanded={isExpanded}
                     reverse={false}
@@ -199,7 +199,6 @@ export default function ColorGradient() {
                         />
                     </ToolPane>
                 </ToolSectionColumns>
-
                 <ToolSection
                     icon="integration_instructions"
                     title="Code Snippets"
@@ -219,7 +218,6 @@ export default function ColorGradient() {
                         />
                     </TabSwitcher>
                 </ToolSection>
-
                 <ColorGradientBookmarks
                     bookmarks={bookmarks}
                     removeBookmark={removeBookmark}
@@ -229,7 +227,6 @@ export default function ColorGradient() {
                     setGradientColors={setGradientColors}
                     toastState={toastState}
                 />
-
                 <GoDeeper
                     linksData={[
                         {
@@ -246,7 +243,6 @@ export default function ColorGradient() {
                         },
                     ]}
                 />
-
                 <Toast toastState={toastState} />
             </ToolMain>
         </>
