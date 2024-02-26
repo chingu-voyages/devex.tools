@@ -1,11 +1,24 @@
-import InputColor from "./InputColor";
-import { handleOptions } from "./TableGeneratorFN";
-
-import { TableInputs } from "./TableInputs";
-import Icon from "../Icon";
+import {
+  handleOptions,
+  hanldeColorOptions,
+  unitChangerTable,
+} from "./TableGeneratorFN";
 import { ToolPane } from "../ToolsLayout/Sections";
+import ColorInput from "./../InputComponents/ColorInput";
+import DropdownInput from "../InputComponents/DropdownInput";
+import { useRef } from "react";
+import SliderInput from "../InputComponents/SliderInput";
+import TabsInput from "../InputComponents/TabsInput";
 
 export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
+  const dropdownValueRef = useRef();
+  const dropDownOptions = ["px", "em", "rem"];
+  const ranges = [
+    { min: 0, max: 35 },
+    { min: 0, max: 35 },
+    { min: 0, max: 35 }
+  ];
+
   return (
     <ToolPane title="Options" icon="tune" isPrimary={true}>
       <div className="flex flex-col gap-8 text-sm font-bold md:aspect-video lg:justify-evenly">
@@ -14,162 +27,257 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
             Layout
           </h3>
 
-          <TableInputs
-            label="Rows"
-            icon="table_rows"
-            range={{ min: 2, max: 50 }}
-            ShowUnits={false}
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="dimensions"
-            delay={true}
+          <SliderInput
+            useEffectValue={tableConfig.dimensions.length}
+            sliderId={"Rows"}
+            defaultValue={tableConfig.dimensions.length}
+            valueTypes={[""]}
+            ranges={[{ min: 1, max: 50 }]}
+            step={1}
+            title={"Rows"}
+            iconName={"table_rows"}
+            onChange={(e) => {
+              setTimeout(() => {
+                handleOptions(
+                  e.target.value,
+                  "Rows",
+                  tableConfig,
+                  setTableConfig
+                ),
+                  250;
+              });
+            }}
           />
 
-          <TableInputs
-            label="Columns"
-            icon="view_week"
-            range={{ min: 1, max: 50 }}
-            ShowUnits={false}
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="dimensions"
-            delay={true}
-          />
-          <TableInputs
-            label="Vertical Cell Padding"
-            icon="padding"
-            range={{ min: 0, max: 100 }}
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="verticalCellPading"
-            delay={true}
-          />
-
-          <TableInputs
-            label="Horizontal Cell Padding"
-            icon="padding"
-            range={{ min: 0, max: 100 }}
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="horizontalCellPading"
-          />
-          <TableInputs
-            label="Table Width"
-            icon="width"
-            range={{ min: 0, max: 1024 }}
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="tableWidth"
+          <SliderInput
+            useEffectValue={tableConfig.dimensions[0].length}
+            sliderId={"Columns"}
+            defaultValue={tableConfig.dimensions[0].length}
+            valueTypes={[""]}
+            ranges={[{ min: 0, max: 50 }]}
+            step={1}
+            title={"Columns"}
+            iconName={"view_week"}
+            onChange={(e) => {
+              setTimeout(() => {
+                handleOptions(
+                  e.target.value,
+                  "Cols",
+                  tableConfig,
+                  setTableConfig
+                ),
+                  250;
+              });
+            }}
           />
 
-          <label className="my-1 flex h-full max-h-[51px] w-full flex-col gap-1 text-sm font-semibold">
-            Text Alignment
-            <div className="flex gap-x-2  justify-around py-2 ">
-              <Icon
-                className="cursor-pointer"
-                name="format_align_left"
-                id="left"
-                onClick={(e) =>
+          <SliderInput
+            useEffectValue={tableConfig.verticalCellPading}
+            sliderId={"vertical-cell-padding"}
+            defaultValue={tableConfig.verticalCellPading}
+            valueTypes={dropDownOptions}
+            ranges={[
+              { min: 0, max: 100 },
+              { min: 0, max: 10 },
+              { min: 0, max: 100 },
+            ]}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "verticalCellPading",
+                setTableConfig,
+                tableConfig
+              );
+            }}
+            step={1}
+            title={"Vertical Cell Padding"}
+            iconName={"padding"}
+            onChange={(e) => {
+              setTableConfig({
+                ...tableConfig,
+                verticalCellPading: Number(e.target.value),
+              });
+            }}
+          />
+
+          <SliderInput
+            useEffectValue={tableConfig.horizontalCellPading}
+            sliderId={"horizontal-cell-padding"}
+            defaultValue={tableConfig.horizontalCellPading}
+            valueTypes={dropDownOptions}
+            ranges={[
+              { min: 0, max: 100 },
+              { min: 0, max: 10 },
+              { min: 0, max: 100 },
+            ]}
+            step={1}
+            title={"Horizontal Cell Padding"}
+            iconName={"padding"}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "horizontalCellPading",
+                setTableConfig,
+                tableConfig
+              );
+            }}
+            onChange={(e) => {
+              setTableConfig({
+                ...tableConfig,
+                horizontalCellPading: Number(e.target.value),
+              });
+            }}
+          />
+
+          <SliderInput
+            useEffectValue={tableConfig.tableWidth}
+            sliderId={"table-width"}
+            defaultValue={tableConfig.tableWidth}
+            valueTypes={dropDownOptions}
+            ranges={[{ min: 0, max: 1024 }, {mi:0, max: 64}, {mi:0, max: 64}]}
+            step={1}
+            title={"table Width"}
+            iconName={"width"}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "tableWidth",
+                setTableConfig,
+                tableConfig
+              );
+            }}
+            onChange={(e) => {
+              setTableConfig({
+                ...tableConfig,
+                tableWidth: e.target.value,
+              });
+            }}
+          />
+
+          <TabsInput
+            name={"text-align"}
+            title={"Text Align"}
+            defaultOption={1}
+            options={[
+              {
+                iconName: "format_align_left",
+                value: "left",
+                onClick: (e) =>
                   handleOptions(
-                    e.target.id,
+                    e.target.value,
                     "textAlign",
                     tableConfig,
                     setTableConfig
-                  )
-                }
-              />
-              <Icon
-                className="cursor-pointer"
-                name="format_align_center"
-                id="center"
-                onClick={(e) =>
+                  ),
+              },
+              {
+                iconName: "format_align_center",
+                value: "center",
+                onClick: (e) =>
                   handleOptions(
-                    e.target.id,
+                    e.target.value,
                     "textAlign",
                     tableConfig,
                     setTableConfig
-                  )
-                }
-              />
-              <Icon
-                className="cursor-pointer"
-                name="format_align_right"
-                id="right"
-                onClick={(e) =>
+                  ),
+              },
+              {
+                iconName: "format_align_right",
+                value: "right",
+                onClick: (e) =>
                   handleOptions(
-                    e.target.id,
+                    e.target.value,
                     "textAlign",
                     tableConfig,
                     setTableConfig
-                  )
-                }
-              />
-              <Icon
-                className="cursor-pointer"
-                name="format_align_justify"
-                id="justify"
-                onClick={(e) =>
+                  ),
+              },
+              {
+                iconName: "format_align_justify",
+                value: "justify",
+                onClick: (e) =>
                   handleOptions(
-                    e.target.id,
+                    e.target.value,
                     "textAlign",
                     tableConfig,
-                    setTableConfig,
-                  )
-                }
-              />
-            </div>
-          </label>
+                    setTableConfig
+                  ),
+              },
+            ]}
+            borderAroundOptions={false}
+          />
         </section>
 
         <section className="borders flex flex-wrap justify-between [&>*]:w-[48%] gap-y-4">
           <h3 className="border-b border-[#D9D9D9] pb-1 text-[18px] font-semibold min-w-full">
             Borders
           </h3>
-          <TableInputs
-            label="Border Rounding"
-            icon="line_curve"
-            range={{ min: 0, max: 100 }}
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="borderRounding"
+
+          <SliderInput
+            useEffectValue={tableConfig.borderRounding}
+            sliderId={"border-rounding"}
+            defaultValue={tableConfig.borderRounding}
+            valueTypes={dropDownOptions}
+            ranges={ranges}
+            step={1}
+            title={"Border Rounding"}
+            iconName={"line_curve"}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "borderRounding",
+                setTableConfig,
+                tableConfig
+              );
+            }}
+            onChange={(e) => {
+              setTableConfig({
+                ...tableConfig,
+                borderRounding: e.target.value,
+              });
+            }}
           />
-          <TableInputs
-            label="Border Width"
-            icon="border_all"
-            range={{ min: 0, max: 10 }}
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="borderWidth"
+
+          <SliderInput
+            useEffectValue={tableConfig.borderWidth}
+            sliderId={"border-width"}
+            defaultValue={tableConfig.borderWidth}
+            valueTypes={dropDownOptions}
+            ranges={ranges}
+            step={1}
+            title={"Border Width"}
+            iconName={"border_all"}
+            onClickFn={(e) => {
+              unitChangerTable(
+                e,
+                "borderWidth",
+                setTableConfig,
+                tableConfig
+              );
+            }}
+            onChange={(e) => {
+              setTableConfig({
+                ...tableConfig,
+                borderWidth: e.target.value,
+              });
+            }}
           />
+
           <div className="flex justify-start items-center">
-            <label className="w-[10rem] text-sm font-semibold">
-              Border Style:
-            </label>
-            <select
-              onChange={(e) =>
-                handleOptions(
-                  e.target.value,
-                  "borderStyle",
-                  tableConfig,
-                  setTableConfig
-                )
+            <DropdownInput
+              ref={dropdownValueRef}
+              className="flex-row items-center gap-2"
+              callbackFun={() =>
+                setTableConfig({
+                  ...tableConfig,
+                  borderStyle: dropdownValueRef.current,
+                })
               }
-              name=""
-              className="h-[43px] w-full rounded-[.25rem] border border-gray-200"
-            >
-              <option value="solid"> solid </option>
-              <option value="none">none</option>
-              <option value="dotted"> dotted </option>
-              <option value="dashed solid"> dashed solid </option>
-              <option value="dashed double none"> dashed double none </option>
-              <option value="dashed groove none dotted">
-                dashed groove none dotted{" "}
-              </option>
-              <option value="dashed groove none dotted">
-                dashed groove none dotted{" "}
-              </option>
-            </select>
+              title="Border Style:"
+              dropdownOptions={["solid", "dotted", "dashed", "double", "none"]}
+            />
           </div>
+
           <div className="flex gap-2 items-center justify-end">
             <strong className>Collapse Border</strong>
             <input
@@ -191,35 +299,77 @@ export const OptionsBoxTable = ({ tableConfig, setTableConfig }) => {
           <h3 className="min-w-full border-b border-[#D9D9D9] pb-1 text-[18px] font-semibold">
             Colors
           </h3>
-          <InputColor
-            labelText="Text"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="textColor"
+
+          <ColorInput
+            title={"Text"}
+            placeholder={tableConfig.textColor}
+            id="table-text-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "textColor"
+              );
+            }}
           />
-          <InputColor
-            labelText="Background"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="bgColor"
+
+          <ColorInput
+            title={"Background"}
+            placeholder={tableConfig.bgColor}
+            id="table-background-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "bgColor"
+              );
+            }}
           />
-          <InputColor
-            labelText="Border"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="borderColor"
+
+          <ColorInput
+            title={"Border"}
+            placeholder={tableConfig.borderColor}
+            id="table-border-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "borderColor"
+              );
+            }}
           />
-          <InputColor
-            labelText="Header Text"
-            prop="headerText"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
+
+          <ColorInput
+            title={"Header Text"}
+            placeholder={tableConfig.headerText}
+            value={tableConfig.headerText}
+            id="table-header-text-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "headerText"
+              );
+            }}
           />
-          <InputColor
-            labelText="Header Background"
-            tableConfig={tableConfig}
-            setTableConfig={setTableConfig}
-            prop="headerBg"
+
+          <ColorInput
+            title={"Header Background"}
+            placeholder={tableConfig.headerBg}
+            value={tableConfig.headerBg}
+            id="table-header-background-color"
+            onChange={(e) => {
+              hanldeColorOptions(
+                e.target.value,
+                tableConfig,
+                setTableConfig,
+                "headerBg"
+              );
+            }}
           />
         </section>
       </div>

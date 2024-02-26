@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect, useRef } from "react";
 import { createColorObj, getColorString} from "./ColorPickerUtils";
 
 import alphaBckgrnd from '../../assets/transparency_background.svg'
@@ -12,15 +12,20 @@ export default function PickerHandles({
     setCurrentColor
 }){
 
+  const hueHandleRef = useRef()
+  const satHandleRef = useRef()
+  const lightHandleRef = useRef()
+  const alphaHandleRef = useRef()
+
   useEffect(()=>{
     calculateMarkerPositionOnColor()
   },[])
 
   useEffect(()=>{
-    updateHandleValues()
+    updateHandleColors()
     setCurrentColor(getColorString(colorData.color, 'hex'))
     handleQuery(getColorString(colorData.color, 'hex'))
-
+    updateHandleValues()
   },[colorData])
 
   return (
@@ -30,27 +35,33 @@ export default function PickerHandles({
           <li className="flex gap-x-3 justify-between">
             <span className="block font-bold text-sm w-[10px]">H</span>
             <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.hue.h)}°</span>
-            <input id="hue" max={360} min={0} step={1}
+            <input ref={hueHandleRef} id="hue" max={360} min={0} step={1}
             type="range"
-            value={parseInt(colorData.hue.h)}
+            defaultValue={parseInt(colorData.hue.h)}
+            onTouchStart={setActiveHandle}
+            onMouseDown={setActiveHandle}
             onChange={(e)=>handleOnChange(e, 'hue')}
             className="colorPickerSlider hueSlider flex-1 "></input>
           </li>
           <li className="flex gap-x-3 justify-evenly">
             <span className="block font-bold text-sm w-[10px]">S</span>
             <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.color.s*100)}%</span>
-            <input id="saturation" max={100} min={0} step={1}
+            <input ref={satHandleRef} id="saturation" max={100} min={0} step={1}
             type="range"
-            value={parseInt(colorData.color.s*100)}
+            defaultValue={parseInt(colorData.color.s*100)}
+            onTouchStart={setActiveHandle}
+            onMouseDown={setActiveHandle}
             onChange={(e)=>handleOnChange(e, 'saturation')}
             className="colorPickerSlider satSlider flex-1"></input>
           </li>
           <li className="flex gap-x-3 justify-evenly">
             <span className="block font-bold text-sm w-[10px]">L</span>
             <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.color.l*100)}%</span>
-            <input id="light" max={100} min={0} step={1}
+            <input ref={lightHandleRef} id="light" max={100} min={0} step={1}
             type="range"
-            value={parseInt(colorData.color.l*100)}
+            defaultValue={parseInt(colorData.color.l*100)}
+            onTouchStart={setActiveHandle}
+            onMouseDown={setActiveHandle}
             onChange={(e)=>handleOnChange(e, 'light')}
             className="colorPickerSlider lightSlider flex-1"></input>
           </li>
@@ -59,7 +70,9 @@ export default function PickerHandles({
             <span className="block font-medium text-sm text-gray-500 w-9">{parseInt(colorData.alpha*100)}%</span>
             <input id="alpha" max={100} min={0} step={1}
             type="range"
-            value={parseInt(colorData.alpha*100)}
+            defaultValue={parseInt(colorData.alpha*100)}
+            onTouchStart={setActiveHandle}
+            onMouseDown={setActiveHandle}
             onChange={(e)=>handleOnChange(e, 'alpha')}
             className="colorPickerSlider alphaSlider flex-1"></input>
           </li>
@@ -78,9 +91,44 @@ export default function PickerHandles({
       updateColorData(property, newColorObj)
     }else{
       if(property === 'saturation'){
-        colorData.color.s = (parseFloat(e.target.value/100))
+        
+        const currentSat = colorData.color.s
+        const currentVal = parseFloat(e.target.value/100)
+        
+        if(currentVal>.5 && 
+          colorData.color.l > 0.5 && 
+          (colorData.color.l > currentSat || currentSat > colorData.color.l)){
+          colorData.color.l = (colorData.color.l-.01)
+        }
+
+        if(currentVal< .5 && colorData.color.l > .5 && parseFloat(e.target.value/100) >= currentSat){
+          colorData.color.l = (colorData.color.l-.01)
+        }
+
+        if(currentSat >= 1){
+          colorData.color.l = .5
+        }
+         
+        colorData.color.s = currentVal
+
+        createColorObj(colorData.color, colorData.hue)
       } else if(property === 'light'){
-        colorData.color.l = (parseFloat(e.target.value/100))      
+        const currentLight = colorData.color.l
+        const currentVal = parseFloat(e.target.value/100)
+
+        if(currentVal>.5 && 
+          colorData.color.s > 0 && 
+          currentVal > colorData.color.l &&
+          (currentLight > colorData.color.s || colorData.color.s > currentLight)){
+          colorData.color.s = (colorData.color.s-.02)
+        }
+
+        if(colorData.color.l >= 1 || colorData.color.s <= 0){
+          colorData.color.s = 0
+        }
+         
+        colorData.color.l = currentVal
+        createColorObj(colorData.color, colorData.hue)
       }else{
         colorData.alpha = (parseFloat(e.target.value/100))
 
@@ -99,7 +147,7 @@ export default function PickerHandles({
       }
   }
 
-  function updateHandleValues(){
+  function updateHandleColors(){
     const classElement = document.querySelector('.colorPickerSliderVar')
 
     classElement.style.setProperty('--hue-thumb-color', getColorString(colorData.hue, 'hsl'))  
@@ -151,4 +199,20 @@ export default function PickerHandles({
       return rule
     }
   }
+
+  function updateHandleValues(){
+    hueHandleRef.current.value = parseInt(colorData.hue.h)
+    satHandleRef.current.value = parseInt(colorData.color.s*100)
+    lightHandleRef.current.value = parseInt(colorData.color.l*100)
+  }
+
+  function setActiveHandle(e){
+    const inputs = document.querySelectorAll('input[type=range]')
+    inputs.forEach(input=>{
+      input.classList.remove('isActive')
+    })
+
+    e.target.classList.add('isActive')
+  }
+
 }

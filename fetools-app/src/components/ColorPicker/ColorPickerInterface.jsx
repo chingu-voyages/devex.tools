@@ -90,14 +90,15 @@ export default function ColorPickerInterface({
               defaultValue={inputValues.hexColor}
               onChange={handleOnChange}
               onBlur={handleOnBlur}
-              className="h-10 text-sm font-medium text-center text-gray-700 uppercase border-2 rounded outline-none"
+              className="h-10 text-sm font-medium text-center text-gray-700 uppercase border-2 rounded 
+              outline-none focus-visible:outline-[#7F40BF]"
             ></input>
           </li>
           <li id="rgb" className="flex flex-col">
             <span className="block font-bold">RGB</span>
             <div className="flex flex-1">
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   R
                 </span>
                 <input
@@ -108,12 +109,13 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.rgb.r}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   G
                 </span>
                 <input
@@ -124,12 +126,13 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.rgb.g}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   B
                 </span>
                 <input
@@ -140,12 +143,13 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.rgb.b}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   A
                 </span>
                 <input
@@ -156,7 +160,8 @@ export default function ColorPickerInterface({
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
                   defaultValue={`${inputValues.alpha * 100}%`}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center max-[440px]:pr-4 max-[440px]:text-right
+                  text-gray-500 border-r-2 rounded-r outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10"
                 ></input>
               </div>
             </div>
@@ -165,7 +170,7 @@ export default function ColorPickerInterface({
             <span className="block font-bold">HSL</span>
             <div className="flex flex-1">
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   H
                 </span>
                 <input
@@ -176,12 +181,13 @@ export default function ColorPickerInterface({
                   defaultValue={parseInt(inputValues.hsl.h)}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   S
                 </span>
                 <input
@@ -192,12 +198,13 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.hsl.s}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   L
                 </span>
                 <input
@@ -208,12 +215,13 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.hsl.l}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   A
                 </span>
                 <input
@@ -224,7 +232,8 @@ export default function ColorPickerInterface({
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
                   defaultValue={`${inputValues.alpha * 100}%`}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  max-[440px]:pr-4 max-[440px]:text-right"
                 ></input>
               </div>
             </div>
@@ -233,7 +242,7 @@ export default function ColorPickerInterface({
             <span className="block font-bold">CMYK</span>
             <div className="flex flex-1">
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   C
                 </span>
                 <input
@@ -244,12 +253,13 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.cmyk.y}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-l-2 border-r-2 rounded-l outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   M
                 </span>
                 <input
@@ -260,12 +270,13 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.cmyk.m}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   Y
                 </span>
                 <input
@@ -276,12 +287,13 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.cmyk.y}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  " 
                 ></input>
               </div>
 
               <div className="relative w-1/4">
-                <span className="absolute block font-bold left-5 top-2 w-fit">
+                <span className="absolute block font-bold left-5 top-2 w-fit z-20 max-[440px]:left-4">
                   K
                 </span>
                 <input
@@ -292,7 +304,8 @@ export default function ColorPickerInterface({
                   defaultValue={inputValues.cmyk.k}
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
-                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2"
+                  className="w-full h-10 text-sm font-medium text-center text-gray-500 border-r-2 rounded-r outline-none border-y-2 focus-visible:outline-[#7F40BF] focus-visible:absolute focus-visible:z-10
+                  "
                 ></input>
               </div>
             </div>
@@ -329,7 +342,11 @@ export default function ColorPickerInterface({
       e.target.id === 's' ||
       e.target.id === 'l'
     ) {
-      parseInt(e.target.value);
+      value = parseInt(value);
+
+      if(isNaN(value)){
+        value=0
+      }
 
       if (e.target.id === 'h') {
         if (value > 360) {
@@ -375,6 +392,8 @@ export default function ColorPickerInterface({
         value = 100;
       } else if (value < 0) {
         value = 0;
+      } else if(value === '' || isNaN(value)){
+        value = 0
       }
     }
     setInputOnFocus(true);
@@ -403,10 +422,12 @@ export default function ColorPickerInterface({
     ) {
       setColorData(CMYKtoRgb(inputValues.cmyk));
     } else if (e.target.id === 'a') {
-      let value = e.target.value;
+      let value = parseInt(e.target.value.replace('%',''));
 
       if (value > 100) {
         value = 100;
+      } else if(isNaN(value)){
+        value = 0
       }
 
       setInputValues({

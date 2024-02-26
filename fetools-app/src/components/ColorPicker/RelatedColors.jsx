@@ -8,8 +8,14 @@ import {
 } from './ColorPickerUtils';
 import CopyButton from '../CopyButton';
 import EyeDropButton from './EyeDropButton';
+import HoverOptions from '../ToolsLayout/HoverOptions';
 
-export default function RelatedColors({ colorData, setColorData, toastState }) {
+export default function RelatedColors({ 
+  colorData, 
+  setColorData, 
+  createColorObj,
+  toastState 
+}) {
   useEffect(() => {}, [colorData]);
 
   const parentContainer = useRef(null);
@@ -73,18 +79,6 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           key={`mono-${idx}`}
           style={{ backgroundColor: color }}
           data-color={color}
-          onMouseEnter={e => {
-            if (!e.target.children[0]) {
-              return;
-            }
-            e.target.children[0].classList.remove('hidden');
-          }}
-          onMouseLeave={e => {
-            if (!e.target.children[0]) {
-              return;
-            }
-            e.target.children[0].classList.add('hidden');
-          }}
           className={`
             relative h-24 flex-1 min-w-16 max-w-50 md:w-20 
             ${idx === 0 ? 'lg:rounded-bl-lg' : ''}
@@ -95,9 +89,34 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
             ${idx === 10 ? 'max-sm:rounded-br-lg sm:max-lg:rounded-br-lg lg:rounded-r-lg' : ''}
             `}
         >
-          <span className="absolute hidden text-white right-2 top-1">
-            <CopyButton onCopy={() => color} toastState={toastState} />
-          </span>
+          <HoverOptions
+            className={`
+            absolute right-0 flex flex-col w-full h-full py-4 text-white  lg:px-1
+            ${idx === 0 ? 'lg:rounded-bl-lg ' : ''}
+            ${idx === 2 ? 'max-sm:rounded-tr-lg' : ''}
+            ${idx === 5 ? 'sm:max-lg:rounded-tr-lg' : ''}
+            ${idx === 6 ? 'sm:max-lg:rounded-bl-lg' : ''}
+            ${idx === 9 ? 'max-sm:rounded-bl-lg' : ''}
+            ${idx === 10 ? 'max-sm:rounded-br-lg sm:max-lg:rounded-br-lg lg:rounded-r-lg' : ''}
+            `}
+            heading={color}
+            headingClassName={'font-medium uppercase m-auto text-center'}
+            buttonsContainerClassName={'max-xl:mx-6'}
+            buttons={[
+              <EyeDropButton
+              key={`button-${idx}`}
+              title={'New Color Set'}
+              content={''}
+              setStateVar={()=>setColorData(createColorObj(color))}
+              newValue={color}
+              toastState={toastState}
+              />,
+              <CopyButton 
+              key={`button-${idx}`} 
+              onCopy={() => color} 
+              toastState={toastState} />
+            ]}
+          />
         </div>
       );
     });
@@ -181,53 +200,37 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
       return (
         <div
           key={`analogic-${idx}`}
-          onMouseEnter={e => {
-            const hoverOptions = e.target.querySelector('#hover-options');
-            if (!hoverOptions) {
-              return;
-            }
-            if (hoverOptions && hoverOptions.id === 'hover-options') {
-              hoverOptions.classList.remove('hidden');
-              return;
-            }
-          }}
-          onMouseLeave={e => {
-            const hoverOptions =
-              e.target.querySelector('#hover-options') || e.target;
-            if (!hoverOptions) {
-              return;
-            }
-            if (hoverOptions && hoverOptions.id === 'hover-options') {
-              hoverOptions.classList.add('hidden');
-              return;
-            }
-          }}
           style={{ backgroundColor: color }}
           data-color={color}
           className={`relative ${
             idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'
           }`}
         >
-          <span
-          id="hover-options"
-          className="absolute right-0 flex flex-col hidden w-full h-full py-8 text-white px-7"
-          >
-            <div>
-              <p className="font-medium uppercase max-sm:text-center">{color}</p>
-            </div>
-            <div className="flex">
-              <span className="flex-1 block text-2xl text-center max-sm:text-center">
-                <EyeDropButton
-                  setColorData={setColorData}
-                  newColor={color}
-                  toastState={toastState}
-                />
-              </span>
-              <span className="flex-1 block text-2xl text-left leading-0 max-sm:text-center">
-                <CopyButton onCopy={() => color} toastState={toastState} />
-              </span>
-            </div>
-          </span>
+          <HoverOptions
+            className={`
+            absolute right-0 flex flex-col w-full h-full py-8 text-white px-7
+            ${
+              idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'
+            }
+            `}
+            heading={color}
+            headingClassName={'font-medium uppercase max-sm:text-center'}
+            buttons={[
+              <EyeDropButton
+              key={`button-${idx}`}
+              title={'New Color Set'}
+              content={''}
+              setStateVar={()=>setColorData(createColorObj(color))}
+              newValue={color}
+              toastState={toastState}
+              />,
+              <CopyButton 
+              key={`button-${idx}`} 
+              onCopy={() => color} 
+              toastState={toastState} />
+            ]}
+            buttonsClassName={'text-center'}
+          />
         </div>
       );
     });
@@ -255,55 +258,51 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
         <div
           style={{ backgroundColor: complimentaryColor }}
           data-color={complimentaryColor}
-          onMouseEnter={(e)=>{
-            const hoverOptions = e.target.querySelector('#hover-options')
-            if(!hoverOptions){
-              return
-            }
-            if(hoverOptions && hoverOptions.id === 'hover-options'){
-              hoverOptions.classList.remove('hidden')
-              return
-            }
-          }}
-          onMouseLeave={(e)=>{
-            const hoverOptions = e.target.querySelector('#hover-options') || e.target
-            if(!hoverOptions){
-              return
-            }
-            if(hoverOptions && hoverOptions.id === 'hover-options'){
-              hoverOptions.classList.add('hidden')
-              return
-            }
-          }}
-          onBlur={(e)=>{
-            const hoverOptions = e.target.querySelector('#hover-options') || e.target
-            if(!hoverOptions){
-              return
-            }
-            if(hoverOptions && hoverOptions.id === 'hover-options'){
-              hoverOptions.classList.add('hidden')
-              return
-            }
-          }}
           className="relative row-span-2 rounded-r-lg"
         >
-          <span id='hover-options' className="absolute w-full h-full px-7 py-24 flex flex-col text-white right-0 hidden">
+          <HoverOptions
+            className={`
+            absolute right-0 flex flex-col w-full h-full text-white lg:px-1`}
+            heading={complimentaryColor}
+            headingClassName={'font-medium uppercase m-auto text-center'}
+            buttonsContainerClassName={'max-xl:mx-6'}
+            buttons={[
+              <EyeDropButton
+              key={`button-complimentaryColor`}
+              title={'New Color Set'}
+              content={''}
+              setStateVar={()=>setColorData(createColorObj(complimentaryColor))}
+              newValue={complimentaryColor}
+              toastState={toastState}
+              />,
+              <CopyButton 
+              key={`button-complimentaryColor`} 
+              onCopy={() => complimentaryColor} 
+              toastState={toastState} />
+            ]}
+          />
+          <span
+          id="hover-options"
+          className={`
+          absolute right-0 flex flex-col w-full h-full py-24 text-white px-7 rounded-r-lg
+          `}>
             <div>
-              <p className='font-medium uppercase max-sm:text-center'>{complimentaryColor}</p>
+              <p className="font-medium uppercase max-sm:text-center">{complimentaryColor}</p>
             </div>
-            <div className='flex'>
-              <span className='block flex-1 text-2xl text-center max-sm:text-center'>
-                <EyeDropButton
-                setColorData={setColorData}
-                newColor={complimentaryColor}
-                toastState={toastState}/>
+            <div className="flex">
+              <span className="flex-1 block text-2xl text-center max-sm:text-center">
+              <EyeDropButton
+              title={'New Color Set'}
+              content={''}
+              setStateVar={()=>setColorData(createColorObj(complimentaryColor))}
+              newValue={complimentaryColor}
+              toastState={toastState}
+              />
               </span>
-              <span className='block flex-1 text-left text-2xl leading-0 max-sm:text-center'>              
-                <CopyButton 
-                onCopy={()=>complimentaryColor} 
-                toastState={toastState}/>
+              <span className="flex-1 block text-2xl text-left leading-0 max-sm:text-center">
+                <CopyButton onCopy={() => complimentaryColor} toastState={toastState} />
               </span>
-            </div>          
+            </div>
           </span>
         </div>
       </>
@@ -319,51 +318,35 @@ export default function RelatedColors({ colorData, setColorData, toastState }) {
           key={`analogic-${idx}`}
           style={{ backgroundColor: color }}
           data-color={color}
-          onMouseEnter={e => {
-            const hoverOptions = e.target.querySelector('#hover-options');
-            if (!hoverOptions) {
-              return;
-            }
-            if (hoverOptions && hoverOptions.id === 'hover-options') {
-              hoverOptions.classList.remove('hidden');
-              return;
-            }
-          }}
-          onMouseLeave={e => {
-            const hoverOptions =
-              e.target.querySelector('#hover-options') || e.target;
-            if (!hoverOptions) {
-              return;
-            }
-            if (hoverOptions && hoverOptions.id === 'hover-options') {
-              hoverOptions.classList.add('hidden');
-              return;
-            }
-          }}
           className={`relative ${
             idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'
           }`}
         >
-          <span
-          id="hover-options"
-          className="absolute right-0 flex flex-col hidden w-full h-full py-8 text-white px-7"
-          >
-            <div>
-              <p className="font-medium uppercase max-sm:text-center">{color}</p>
-            </div>
-            <div className="flex">
-              <span className="flex-1 block text-2xl text-center max-sm:text-center">
-                <EyeDropButton
-                  setColorData={setColorData}
-                  newColor={color}
-                  toastState={toastState}
-                />
-              </span>
-              <span className="flex-1 block text-2xl text-left leading-0 max-sm:text-center">
-                <CopyButton onCopy={() => color} toastState={toastState} />
-              </span>
-            </div>
-          </span>
+          <HoverOptions
+            className={`
+            absolute right-0 flex flex-col w-full h-full py-8 text-white px-7
+            ${
+              idx === 0 ? 'rounded-tr-lg' : 'rounded-br-lg'
+            }
+            `}
+            heading={color}
+            headingClassName={'font-medium uppercase max-sm:text-center'}
+            buttons={[
+            <EyeDropButton
+            key={`button-${idx}`}
+            title={'New Color Set'}
+            content={''}
+            setStateVar={()=>setColorData(createColorObj(color))}
+            newValue={color}
+            toastState={toastState}
+            />,
+            <CopyButton 
+            key={`button-${idx}`} 
+            onCopy={() => color} 
+            toastState={toastState} />
+            ]}
+            buttonsClassName={'text-center'}
+          />
         </div>
       );
     });

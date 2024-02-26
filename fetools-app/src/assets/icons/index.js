@@ -1,4 +1,5 @@
-import AutoAwesome from './AutoAwesome.jsx';
-import Ampersand from './Ampersand.jsx';
+import AutoAwesome from "./AutoAwesome.jsx";
+import Ampersand from "./Ampersand.jsx";
+import Link from "./Link.jsx";
 
-export { AutoAwesome, Ampersand };
+export { AutoAwesome, Ampersand, Link };

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-
+import { useSearchParams } from 'react-router-dom';
 import {
   getRandomColor,
   getHexString,
@@ -9,6 +9,7 @@ import {
 
 import useToastState from '../hooks/useToastState';
 import useExpander from '../hooks/useExpander';
+import useBookmarks from "../hooks/useBookmarks";
 
 import ColorGradientSlider from '../components/ColorGradient/ColorGradientSlider';
 import ToolHeading from '../components/ToolsLayout/ToolHeading';
@@ -22,27 +23,55 @@ import {
   ToolSection,
   ToolSectionColumns,
 } from '../components/ToolsLayout/Sections';
+
 import ToolMain from '../components/ToolsLayout/ToolMain';
 import TabSwitcher from '../components/TabSwitcher';
+import { getColorString } from '../components/ColorPicker/ColorPickerUtils';
+import ColorGradientBookmarks from '../components/ColorGradient/ColorGradientBookmarks';
+
 
 export default function ColorGradient() {
   const containerRef = useRef();
 
-  const [colorsArr, setColorsArr] = useState([
-    getRandomColor(),
-    getRandomColor(),
-  ]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [gradientColors, setGradientColors] = useState([
-    {
-      ...colorsArr[0],
-      value: 0,
-    },
-    {
-      ...colorsArr[1],
-      value: 100,
-    },
-  ]);
+  const searchParamsColors = searchParams.size!==0
+  ? []
+  : false
+
+  searchParams.forEach(color=>{
+    searchParamsColors.push(getRgb(color))
+  })
+
+  const [colorsArr, setColorsArr] = useState(
+    searchParamsColors  ||
+    [
+      getRandomColor(),
+      getRandomColor(),
+    ]
+  );
+
+  const [gradientColors, setGradientColors] = useState(
+    searchParams
+    ? colorsArr.map((paramColor,idx)=>(
+      {
+        ...paramColor, 
+        value:( 
+        idx===colorsArr.length-1
+        ?100
+        :(100/(colorsArr.length-1))*idx)
+      }
+    ))
+    : colorsArr.map((color,idx)=>(
+      {
+        ...color, 
+        value: 
+        idx===colorsArr.length-1
+        ?100
+        :(100/colorsArr.length-1)*idx
+      }
+    ))
+  )
 
   const [currentKnob, setCurrentKnob] = useState(false);
 
@@ -50,20 +79,35 @@ export default function ColorGradient() {
     color: getHexString(gradientColors[0].colorStr),
     position: gradientColors[0].value,
     rotation: 25,
-    type: 'Linear',
+    type: 'linear'
   });
 
   const [codeBlockRules, setCodeBlockRules] = useState({
-    background: generateGradientRule(colorsArr),
+    background: {
+      css: `background: ${generateGradientRule(colorsArr)}`,
+      tailwind: `bg-[${generateGradientRule(colorsArr)}]`
+    }
   });
 
   const [isExpanded, toggleIsExpanded] = useExpander();
+
   const toastState = useToastState();
+
+  const [currentGradientObj, setCurrentGlobalObj ] = useState(
+    {
+      gradientColors: colorsArr,
+      rotation: (inputValue.rotation*3.6),
+      type: inputValue.type
+    }
+  )
+
+  const [isBookmarked, bookmarks, toggleBookmark, removeBookmark] = useBookmarks(currentGradientObj, "gradients");
 
   useEffect(() => {
     if (!currentKnob) {
       setCurrentKnob(containerRef.current.querySelector('.isActive'));
     }
+
   }, [currentKnob]);
 
   useEffect(() => {
@@ -72,10 +116,28 @@ export default function ColorGradient() {
 
     updateCSSValues('.gradientSlider', 'background', gradientRuleSlider);
     updateCSSValues('.gradient', 'background', gradientRule);
-    setCodeBlockRules({ ...codeBlockRules, background: getCssCode() });
+    setCodeBlockRules({ background: {
+      css: `background: ${getCssCode()}`,
+      tailwind: `bg-[${getCssCode()}]`
+    } });
+
+    setCurrentGlobalObj({
+      gradientColors: colorsArr,
+      rotation: (inputValue.rotation*3.6),
+      type: inputValue.type
+    })
   }, [inputValue, gradientColors]);
 
-  return (
+  useEffect(()=>{
+    handleQuery(colorsArr)
+    
+    if(currentKnob){
+      setInputValue({...inputValue,color: getHexString(currentKnob.dataset.color)})
+    }
+
+  },[colorsArr])
+
+    return (
     <>
       <ToolMain>
         <ToolHeading
@@ -95,39 +157,43 @@ export default function ColorGradient() {
           >
             <div
               id="show-gradient"
-              className="gradient h-full w-full min-h-64"
+              className="gradient h-[360px] w-full min-h-64"
             ></div>
           </ToolPreviewPane>
 
           <ToolPane
-            title="Options"
-            icon="gradient"
-            isPrimary={true}
-            bookmarkCallback={() => {}}
-            shareCallback={() => {}}
-          >
+          className="h-[360px]"           
+          title="Options"
+          icon="gradient"
+          isPrimary={true}
+          isBookmarked={isBookmarked}
+          toggleBookmark={toggleBookmark}
+          toolState={currentGradientObj}
+          shareCallback={() => {}}>
             <ColorGradientSlider
-              setColorsArr={setColorsArr}
-              inputValue={inputValue}
-              updateCSSValues={updateCSSValues}
-              handleColorChange={handleColorChange}
-              handleSetCurrentKnob={handleSetCurrentKnob}
-              handleSetInputValue={handleSetInputValue}
-              generateGradientRule={generateGradientRule}
-              gradientColors={gradientColors}
-              setGradientColors={setGradientColors}
+            colorsArr={colorsArr}
+            setColorsArr={setColorsArr}
+            inputValue={inputValue}
+            updateCSSValues={updateCSSValues}
+            handleColorChange={handleColorChange}
+            handleSetCurrentKnob={handleSetCurrentKnob}
+            handleSetInputValue={handleSetInputValue}
+            generateGradientRule={generateGradientRule}
+            gradientColors={gradientColors}
+            setGradientColors={setGradientColors}
+            onClickRandom={onClickRandom}
             />
             <ColorGradientInterface
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-              handleColorInputChange={handleColorInputChange}
-              handlePositionInputChange={handlePositionInputChange}
-              handleRotationInputChange={handleRotationInputChange}
-              updateValuesOnBlur={updateValuesOnBlur}
-              gradientColors={gradientColors}
-              generateGradientRule={generateGradientRule}
-              updateCSSValues={updateCSSValues}
-              onClickRandom={onClickRandom}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            handleColorInputChange={handleColorInputChange}
+            handlePositionInputChange={handlePositionInputChange}
+            handleRotationInputChange={handleRotationInputChange}
+            updateValuesOnBlur={updateValuesOnBlur}
+            gradientColors={gradientColors}
+            generateGradientRule={generateGradientRule}
+            updateCSSValues={updateCSSValues}
+            onClickRandom={onClickRandom}
             />
           </ToolPane>
         </ToolSectionColumns>
@@ -137,26 +203,57 @@ export default function ColorGradient() {
             <CodeBlock
               toastState={toastState}
               title={'CSS'}
-              code={'background'}
-              unit={codeBlockRules.background}
+              code={codeBlockRules.background.css}
+              lang='css'
             />
             <CodeBlock
               toastState={toastState}
-              title={'CSS'}
-              code={'Tailwind'}
-              unit={codeBlockRules.background}
+              title={'Tailwind'}
+              code={codeBlockRules.background.tailwind}
+              lang='tailwind'
             />
           </TabSwitcher>
         </ToolSection>
 
-        <GoDeeper
-          linksData={[{ url: '#', textValue: 'Not a link available yet' }]}
-        ></GoDeeper>
+        <ColorGradientBookmarks
+        bookmarks={bookmarks}
+        removeBookmark={removeBookmark}
+        setColorsArr={setColorsArr}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        setGradientColors={setGradientColors}
+        toastState={toastState}
+        />
+
+        <GoDeeper linksData={[
+          {
+            url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/gradient',
+            textValue: 'MDN Web Docs: CSS Gradients'
+          },
+          {
+            url: 'https://www.w3schools.com/css/css3_gradients.asp ',
+            textValue: 'W3Schools: CSS Gradients'
+          },
+          {
+            url: 'https://www.youtube.com/watch?v=4kWHW7da4U8',
+            textValue: 'CSS Gradients and repeating gradients'
+          }
+      ]}/>
 
         <Toast toastState={toastState} />
       </ToolMain>
     </>
   );
+
+  function handleQuery(gradientColorsArr) {
+    const colors = {}
+
+    gradientColorsArr.forEach(({colorStr},idx)=>{
+      colors[`color${idx}`] = getColorString(colorStr, 'hex').replace('#', '')
+    })
+
+    setSearchParams(colors);
+  }
 
   function handleSetCurrentKnob(knob) {
     setCurrentKnob(knob);
@@ -255,7 +352,7 @@ export default function ColorGradient() {
       ({ colorStr, value }) => `${colorStr} ${value}%`
     );
 
-    if (type === 'Radial' && !isSlider) {
+    if(type==='radial' && !isSlider){
       const gradientRule = `${type}-gradient(${colors.join(', ')})`;
       return gradientRule;
     }
@@ -294,4 +391,5 @@ export default function ColorGradient() {
 
     return currentStyle;
   }
+
 }

@@ -1,15 +1,16 @@
-import tinycolor from 'tinycolor2';
-import { ShadowInput } from './ShadowInput';
-
+import tinycolor from "tinycolor2";
+import ColorInput from "../InputComponents/ColorInput";
+import SliderInput from "../InputComponents/SliderInput";
 import {
   colorChanger,
   shadowPropertyValue,
   newShadow,
   switchShadow,
   removeShadow,
-} from './ShadowCreatorFN';
-import { ToolPane } from '../ToolsLayout/Sections';
-import Icon from '../Icon';
+  unitChanger,
+} from "./ShadowCreatorFN";
+import { ToolPane } from "../ToolsLayout/Sections";
+import Icon from "../Icon";
 
 const OptionsBox = ({
   ShadowsStyles,
@@ -19,85 +20,188 @@ const OptionsBox = ({
   setActiveShadow,
   ActiveShadow,
   setRemoveShadow,
+  isBookmarked,
+  bookmarks,
+  toggleBookmark,
+  removeBookmark,
+  toolState
 }) => {
-  // debugger
   let color = tinycolor(ShadowsStyles[ActiveShadow].shadowColor).toHexString();
-
   return (
-    <ToolPane title="Options" isPrimary={true} icon="tune">
+    <ToolPane
+      isBookmarked={isBookmarked}
+      bookmarks={bookmarks}
+      toggleBookmark={toggleBookmark}
+      removeBookmark={removeBookmark}
+      toolState={toolState}
+      title="Options"
+      isPrimary={true}
+      icon="tune"
+    >
       <div className="flex flex-wrap justify-between gap-y-6 [&>*]:w-[48%] mb-6">
         <div className="control color shadow-color flex items-center">
-          <div className="flex items-center border h-[43px] rounded-[.25rem] w-full">
-            <input
-              type="color"
-              value={color}
-              onChange={e => {
-                colorChanger(
-                  e,
-                  setShadowsStyles,
-                  ShadowsStyles,
-                  ActiveShadow,
-                  false
-                );
-              }}
-            />
-            <input
-              type="text"
-              className="mx-2 border-none outline-none text-start flex-1"
-              placeholder={color}
-              onChange={e => {
-                colorChanger(e, setShadowsStyles, ShadowsStyles, ActiveShadow);
-              }}
-            />
-          </div>
+          <ColorInput
+            placeholder={color}
+            value={color}
+            onChange={(e) => {
+              colorChanger(e, setShadowsStyles, ShadowsStyles, ActiveShadow);
+            }}
+          />
         </div>
 
-        <ShadowInput
-          label="Opacity"
-          icon="opacity"
-          prop="opacity"
-          ShadowsStyles={ShadowsStyles}
-          setShadowsStyles={setShadowsStyles}
-          ActiveShadow={ActiveShadow}
-          onChange={shadowPropertyValue}
-          unitOptions={['%']}
-          range={{ min: 0, max: 100 }}
+        <SliderInput
+          useEffectValue={ShadowsStyles[ActiveShadow].opacity}
+          sliderId={"opacity"}
+          defaultValue={ShadowsStyles[ActiveShadow].opacity}
+          valueTypes={[""]}
+          ranges={[{ min: 0, max: 100 }]}
+          step={1}
+          title={"Opacity"}
+          iconName={"opacity"}
+          onChange={(e) =>
+            shadowPropertyValue(
+              e,
+              setShadowsStyles,
+              ShadowsStyles,
+              "opacity",
+              ActiveShadow
+            )
+          }
         />
 
-        <ShadowInput
-          label="Horizontal Offset"
-          icon="width"
-          prop="horizontalOffset"
-          ShadowsStyles={ShadowsStyles}
-          setShadowsStyles={setShadowsStyles}
-          ActiveShadow={ActiveShadow}
-          onChange={shadowPropertyValue}
-          range={{ min: -96, max: 96 }}
+        <SliderInput
+          useEffectValue={ShadowsStyles[ActiveShadow].horizontalOffset}
+          sliderId={"horizontal-offset"}
+          defaultValue={ShadowsStyles[ActiveShadow].horizontalOffset}
+          valueTypes={["px", "em", "rem"]}
+          ranges={[
+            { min: -96, max: 96 },
+            { min: -8, max: 8 },
+            { min: -8, max: 8 },
+          ]}
+          step={1}
+          title={"horizontal Offset"}
+          iconName={"width"}
+          onClickFn={(e) => {
+            unitChanger(
+              e,
+              "horizontalOffset",
+              setShadowsStyles,
+              ShadowsStyles,
+              ActiveShadow
+            );
+          }}
+          onChange={(e) =>
+            shadowPropertyValue(
+              e,
+              setShadowsStyles,
+              ShadowsStyles,
+              "horizontalOffset",
+              ActiveShadow
+            )
+          }
         />
 
-        <ShadowInput
-          label="Vertical Offset"
-          icon="height"
-          prop="verticalOffset"
-          ShadowsStyles={ShadowsStyles}
-          setShadowsStyles={setShadowsStyles}
-          ActiveShadow={ActiveShadow}
-          onChange={shadowPropertyValue}
-          range={{ min: -96, max: 96 }}
+        <SliderInput
+          useEffectValue={ShadowsStyles[ActiveShadow].verticalOffset}
+          sliderId={"vertical-Offset"}
+          defaultValue={ShadowsStyles[ActiveShadow].verticalOffset}
+          valueTypes={["px", "em", "rem"]}
+          ranges={[
+            { min: -96, max: 96 },
+            { min: -8, max: 8 },
+            { min: -8, max: 8 },
+          ]}
+          step={1}
+          title={"Vertical Offset"}
+          iconName={"height"}
+          onClickFn={(e) => {
+            unitChanger(
+              e,
+              "verticalOffset",
+              setShadowsStyles,
+              ShadowsStyles,
+              ActiveShadow
+            );
+          }}
+          onChange={(e) =>
+            shadowPropertyValue(
+              e,
+              setShadowsStyles,
+              ShadowsStyles,
+              "verticalOffset",
+              ActiveShadow
+            )
+          }
         />
 
-        <ShadowInput
-          label="Spread"
-          icon="pan_zoom"
-          prop="spread"
-          ShadowsStyles={ShadowsStyles}
-          setShadowsStyles={setShadowsStyles}
-          ActiveShadow={ActiveShadow}
-          onChange={shadowPropertyValue}
-          range={{ min: -96, max: 96 }}
+        <SliderInput
+          useEffectValue={ShadowsStyles[ActiveShadow].spread}
+          sliderId={"spread"}
+          defaultValue={ShadowsStyles[ActiveShadow].spread}
+          valueTypes={["px", "em", "rem"]}
+          ranges={[
+            { min: 0, max: 100 },
+            { min: 1, max: 10 },
+            { min: 1, max: 10 },
+          ]}
+          step={1}
+          title={"Spread"}
+          iconName={"pan_zoom"}
+          onClickFn={(e) => {
+            unitChanger(
+              e,
+              "spread",
+              setShadowsStyles,
+              ShadowsStyles,
+              ActiveShadow
+            );
+          }}
+          onChange={(e) =>
+            shadowPropertyValue(
+              e,
+              setShadowsStyles,
+              ShadowsStyles,
+              "spread",
+              ActiveShadow
+            )
+          }
         />
 
-        <ShadowInput
+        <SliderInput
+          useEffectValue={ShadowsStyles[ActiveShadow].blur}
+          sliderId={"blur"}
+          defaultValue={ShadowsStyles[ActiveShadow].blur}
+          valueTypes={["px", "em", "rem"]}
+          ranges={[
+            { min: 0, max: 100 },
+            { min: 1, max: 10 },
+            { min: 1, max: 10 },
+          ]}
+          step={1}
+          title={"Blur"}
+          iconName={"lens_blur"}
+          onClickFn={(e) => {
+            unitChanger(
+              e,
+              "blur",
+              setShadowsStyles,
+              ShadowsStyles,
+              ActiveShadow
+            );
+          }}
+          onChange={(e) =>
+            shadowPropertyValue(
+              e,
+              setShadowsStyles,
+              ShadowsStyles,
+              "blur",
+              ActiveShadow
+            )
+          }
+        />
+
+        {/* <ShadowInput
           label="Blur"
           icon="lens_blur"
           prop="blur"
@@ -106,7 +210,7 @@ const OptionsBox = ({
           ActiveShadow={ActiveShadow}
           onChange={shadowPropertyValue}
           range={{ min: 0, max: 100 }}
-        />
+        /> */}
 
         <div className="flex min-w-full justify-end">
           <span className="flex gap-2">
@@ -114,12 +218,12 @@ const OptionsBox = ({
             <input
               type="checkbox"
               className="w-6 h-6 border-[#f5f5f5] accent-accent"
-              onChange={e => {
+              onChange={(e) => {
                 shadowPropertyValue(
                   e,
                   setShadowsStyles,
                   ShadowsStyles,
-                  'inset',
+                  "inset",
                   ActiveShadow
                 );
               }}
@@ -135,11 +239,11 @@ const OptionsBox = ({
                 <div
                   id={idx}
                   key={idx}
-                  onClick={e => {
+                  onClick={(e) => {
                     switchShadow(e, setActiveShadow, idx, ActiveShadow);
                   }}
                   className={` ${
-                    ActiveShadow === idx ? 'bg-accent text-white' : ''
+                    ActiveShadow === idx ? "bg-accent text-white" : ""
                   } flex h-8 w-8 cursor-pointer select-none items-center justify-center rounded-[.25rem] border border-solid border-[#999999)]`}
                 >
                   <span> {idx + 1} </span>

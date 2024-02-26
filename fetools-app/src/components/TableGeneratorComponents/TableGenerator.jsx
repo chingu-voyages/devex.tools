@@ -1,12 +1,14 @@
 import { handleEditCells, getCellStyle } from "./TableGeneratorFN";
-
 export const TableGenerator = ({ tableConfig, setTableConfig }) => {
+ 
+  
+ 
   return (
     <div>
       <div
         className={`overflow-hidden `}
         style={{
-          borderRadius: `${tableConfig.borderRounding}px`,
+          borderRadius:`${tableConfig.borderRounding}px`,
           width: `${tableConfig.tableWidth}px`,
           border: `${tableConfig.borderWidth}px ${tableConfig.borderStyle} ${tableConfig.borderColor}`,
           
@@ -18,7 +20,7 @@ export const TableGenerator = ({ tableConfig, setTableConfig }) => {
               {tableConfig.dimensions[0].map((col, idxCols) => (
                 <th
                   key={idxCols}
-                  style={getCellStyle(0, tableConfig)} 
+                  style={getCellStyle(0, idxCols, tableConfig)} 
                   className="min-h-8 border-black"
                 >
                   <input
@@ -46,7 +48,7 @@ export const TableGenerator = ({ tableConfig, setTableConfig }) => {
               <tr key={idxRow + 1}>
                 {row.map((col, idxCols) => (
                   <td
-                    style={getCellStyle(idxRow + 1, tableConfig)}
+                    style={getCellStyle(idxRow + 1, idxCols, tableConfig)}
                     className="min-h-8 border-black"
                     key={idxCols}
                   >

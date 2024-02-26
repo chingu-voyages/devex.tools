@@ -31,7 +31,7 @@ export default function ToastNotification({
         <Description asChild>
           <div className="relative flex">
             <span className="flex-1">{content}</span>
-            {getAddOn()}
+            {addOn?addOn():''}
           </div>
         </Description>
       </div>
@@ -46,24 +46,6 @@ export default function ToastNotification({
         return <MdColorize />;
       case "error":
         return <MdError />;
-      default:
-        break;
-    }
-  }
-
-  function getAddOn() {
-    if (!addOn) {
-      return;
-    }
-    switch (addOn.type) {
-      case "color-dot":
-        return (
-          <span
-            className="absolute right-0 bottom-2 flex-2 w-10 h-10 rounded-full"
-            style={{ backgroundColor: addOn.color }}
-          ></span>
-        );
-
       default:
         break;
     }

@@ -30,11 +30,18 @@ const Table = () => {
     borderWidth: 1,
     borderStyle: "solid",
     collapse: true,
-    textColor: "#000",
+    textColor: "#000000",
     bgColor: "#F1F1F1",
-    borderColor: "#000",
+    borderColor: "#000000",
     headerText: "#ffffff",
     headerBg: "#663399",
+    units: {
+      verticalCellPading: "px",
+      horizontalCellPading: "px",
+      tableWidth: "px",
+      borderRounding: "px",
+      borderWidth: "px",
+    },
   });
   const [isExpanded, toggleIsExpanded] = useExpander();
   const toastState = useToastState();
@@ -70,21 +77,19 @@ const Table = () => {
         title="Code Snippets"
         icon="integration_instructions"
       >
-        {/* <CodeGeneratorTable toastState={toastState} tableConfig={tableConfig}  /> */}
-
         <TabSwitcher buttons={["HTML & CSS", "Tailwind"]}>
           <CodeBlock
             title="HTML & CSS"
             toastState={toastState}
             code={generateTableCode(tableConfig)}
-            lang="html" 
+            lang="html"
           />
 
           <CodeBlock
             title="HTML & Tailwind Classes"
             toastState={toastState}
             code={generateTableCode(tableConfig, true)}
-            lang="html" 
+            lang="html"
           />
         </TabSwitcher>
       </ToolSection>
@@ -92,19 +97,16 @@ const Table = () => {
       <GoDeeper
         linksData={[
           {
-            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow",
-            textValue:
-              "box-shadow from MDN - https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow ",
+            url: "https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables/Basics",
+            textValue: "HTML Table Basics with MDN",
           },
           {
-            url: "https://www.w3schools.com/cssref/css3_pr_box-shadow.php",
-            textValue:
-              "box-shadow from W3 School - https://www.w3schools.com/cssref/css3_pr_box-shadow.php ",
+            url: "https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Styling_tables",
+            textValue: "Styling Tables with MDN",
           },
           {
-            url: "https://css-tricks.com/almanac/properties/b/box-shadow/",
-            textValue:
-              "box-shadow from Css-tricks - https://www.w3schools.com/cssref/css3_pr_box-shadow.php ",
+            url: "https://www.youtube.com/watch?v=IGBRYTpgyg4",
+            textValue: "HTML Tables Crash Course",
           },
         ]}
       />

@@ -53,7 +53,7 @@ export default function CustomPicker({
 
   useEffect(()=>{
     canvasContainerRef.current.parentElement.parentElement.parentElement.classList.remove('overflow-auto')
-  })
+  },[])
 
   return(
     <>
@@ -66,15 +66,23 @@ export default function CustomPicker({
         onDrop={handleOnDrop}
         onMouseMove={(e)=>startInterval(e,handleOnMouseMove,intervalMouseMoveRef)}
         onClick={(e)=>handleClick(e,true)}
+        onTouchStart={(e)=>(
+          handleOnTouchMove(e,false), 
+          startInterval(e,handleClick,intervalMouseClickRef))}
+        onTouchMove={(e)=>(startInterval(e,handleOnTouchMove,intervalMouseMoveRef))}
+        onTouchEnd={()=>(
+          stopInterval(intervalMouseClickRef), 
+          stopInterval(intervalMouseMoveRef), 
+          handleQuery(currentColor))}
         onMouseDown={(e)=>startInterval(e,handleClick,intervalMouseClickRef)}
         onMouseUp={()=>(
           stopInterval(intervalMouseClickRef), 
           stopInterval(intervalMouseMoveRef), 
           handleQuery(currentColor))}
-        className="relative z-0 w-full h-48 rounded-b-2xl"></canvas>
+        className="relative z-0 w-full h-48 rounded-b-2xl touch-none"></canvas>
         <div ref={markerRef} 
         className={`
-        marker absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5 mt-[-11px] ml-[-8px] pointer-events-none`}>
+        marker z-10 absolute leading-none rounded-full border-4 outline outline-1 outline-slate-600  w-5 h-5 mt-[-11px] ml-[-8px] pointer-events-none`}>
           {createPickerMarker()}
         </div>
 
@@ -226,23 +234,21 @@ export default function CustomPicker({
     } else{
       colorData.color = HexToHsl(canvasRef.current.currentColor)
 
-      handleColorChange({...colorData})
       calculateMarkerPositionOnMouse()
+      handleColorChange({...colorData})
       if(!firstClick){
         setInputOnFocus(false)
         canvasRef.current.click()
       }
     }
-
-
-    
+   
   }
 
   function startInterval(e, func, ref){
     if (ref.current) return;
     ref.current = setInterval(() => {
       func(e)
-    }, 5);
+    }, 15);
   }
 
   function stopInterval(ref){
@@ -272,16 +278,42 @@ export default function CustomPicker({
     }
   }
 
+  function handleOnTouchMove(e){
+    setMouseCoor({x: e.changedTouches['0'].clientX, y: e.changedTouches['0'].clientY})
+    trackColorOnMouse()
+
+    function trackColorOnMouse(){
+      const ColorCtx = canvasRef.current.getContext('2d')
+      const canvasRect = canvasRef.current.getBoundingClientRect()
+
+      const x = mouseCoor.x - canvasRect.left;
+      const y = mouseCoor.y - canvasRect.top;
+
+      const pixel = ColorCtx.getImageData(x,y,1,1)['data'];   // Read pixel Color
+      const rgb = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+      
+
+      setCurrentColor(getHexString(rgb))
+    }
+  }
+
   function calculateMarkerPositionOnColor(){
 
     let satValue = parseInt((colorData.color.s)*100)
     let lightValue = parseInt((colorData.color.l)*100)
 
-    let x = satValue
-    let y = 100 - (lightValue*2)
+    let x = 0
+    let y = 0
 
-    if(lightValue>=50){
+    if(satValue < 50 && lightValue >= 0){
+      x = satValue
+      y = 100 - (lightValue)
+    }else if(lightValue>=50){
       y = 0
+      x = satValue
+    } else if(lightValue<50){
+      x = satValue
+      y = 100 - (lightValue*2)
     }
 
     markerRef.current.style.top = `${y}%`
@@ -292,10 +324,27 @@ export default function CustomPicker({
   function calculateMarkerPositionOnMouse(){
     const canvasRect = canvasRef.current.getBoundingClientRect()
 
-    const x = parseInt(((mouseCoor.x - canvasRect.left)/canvasRef.current.offsetWidth)*100)
-    const y =  parseInt(((mouseCoor.y - canvasRect.top)/canvasRef.current.offsetHeight)*100)
+    let x = parseInt(((mouseCoor.x - canvasRect.left)/canvasRef.current.offsetWidth)*100)
+    let y =  parseInt(((mouseCoor.y - canvasRect.top)/canvasRef.current.offsetHeight)*100)
+
+    if(x < 0 ){
+      x=0
+    }
+
+    if(x > 100){
+      x=100
+    }
+
+    if(y < 0 ){
+      y=0
+    }
+
+    if(y > 100){
+      y=100
+    }
 
     markerRef.current.style.top = `${y}%`
     markerRef.current.style.left = `${x}%`
   }
+
 }

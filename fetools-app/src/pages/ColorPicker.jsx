@@ -1,165 +1,136 @@
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import ColorPickerTool from "../components/ColorPicker/ColorPickerTool";
+import ColorPickerInterface from "../components/ColorPicker/ColorPickerInterface";
+import RelatedColors from "../components/ColorPicker/RelatedColors";
+import Toast from "../components/Toast";
+import GoDeeper from "../components/ToolsLayout/GoDeeper";
+import ToolHeading from "../components/ToolsLayout/ToolHeading";
+import ToolMain from "../components/ToolsLayout/ToolMain";
 
-import ColorPickerTool from '../components/ColorPicker/ColorPickerTool';
-import ColorPickerInterface from '../components/ColorPicker/ColorPickerInterface';
-import RelatedColors from '../components/ColorPicker/RelatedColors';
-import Bookmark from '../components/ToolsLayout/Bookmark';
-import Toast from '../components/Toast';
-import GoDeeper from '../components/ToolsLayout/GoDeeper';
-import ToolHeading from '../components/ToolsLayout/ToolHeading';
-import ToolMain from '../components/ToolsLayout/ToolMain';
-import EyeDropButton from '../components/ColorPicker/EyeDropButton';
-import CopyButton from '../components/CopyButton';
 import {
-  ToolPane,
-  ToolSection,
-  ToolSectionColumns,
-} from '../components/ToolsLayout/Sections';
+    ToolPane,
+    ToolSection,
+    ToolSectionColumns,
+} from "../components/ToolsLayout/Sections";
 
-import { createColorObj, getColorString } from '../components/ColorPicker/ColorPickerUtils';
-import {createBookmark, checkForLocalStorage} from '../components/ToolsLayout/BookmarkUtils';
+import {
+    createColorObj,
+    getColorString,
+} from "../components/ColorPicker/ColorPickerUtils";
+import useExpander from "../hooks/useExpander";
+import useToastState from "../hooks/useToastState";
 
-import useExpander from '../hooks/useExpander';
-import useToastState from '../hooks/useToastState';
+import useBookmarks from "../hooks/useBookmarks";
+import ColorPickerBookmarks from "../components/ColorPicker/ColorPickerBookmarks";
 
 export default function ColorPicker() {
-  const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
-  const [inputOnFocus, setInputOnFocus] = useState(false);
-  const [colorData, setColorData] = useState(
-    createColorObj(searchParams.get('color')) || createColorObj()
-  );
+    const [inputOnFocus, setInputOnFocus] = useState(false);
+    const [colorData, setColorData] = useState(
+        createColorObj(searchParams.get("color")) || createColorObj()
+    );
 
-  const toastState = useToastState();
+    const [isBookmarked, bookmarks, toggleBookmark, removeBookmark] =
+        useBookmarks(colorData, "colors");
 
-  const [bookmarkLength, setBookmarkLength] = useState(checkForLocalStorage().length)
-  const [isExpanded, toggleIsExpanded] = useExpander();
+    const toastState = useToastState();
 
-  return (
-    <ToolMain>
-      <ToolHeading
-        title="Color Picker"
-        tagline="Get colors, tints, and shades, with CSS and Tailwind code you can copy and paste into your project."
-        icon="colorize"
-      ></ToolHeading>
+    const [isExpanded, toggleIsExpanded] = useExpander();
 
-      <ToolSectionColumns isExpanded={isExpanded} reverse={false}>
-        <ColorPickerTool
-          colorData={colorData}
-          handleQuery={handleQuery}
-          setColorData={setColorData}
-          inputOnFocus={inputOnFocus}
-          setInputOnFocus={setInputOnFocus}
-          isExpanded={isExpanded}
-          toggleIsExpanded={toggleIsExpanded}
-        />
+    useEffect(() => {
+        if (!searchParams.get("color")) {
+            handleQuery(getColorString(colorData.color, "hex"));
+        }
 
-        <ToolPane
-          title="Color Codes"
-          icon="integration_instructions"
-          isPrimary={true}
-          bookmarkCallback={()=>createBookmark(
-            'colors', 
-            {color: getColorString(colorData.color, 'hex')}, 
-            ['color'],
-            bookmarkLength, 
-            setBookmarkLength)}
-          shareCallback={() => {}}
-        >
-          <ColorPickerInterface
-            colorData={colorData}
-            setColorData={setColorData}
-            inputOnFocus={inputOnFocus}
-            setInputOnFocus={setInputOnFocus}
-          />
-        </ToolPane>
-      </ToolSectionColumns>
+        if (
+            getColorString(colorData.color, "hex") !==
+                `#${searchParams.get("color")}` &&
+            searchParams.get("color")
+        ) {
+            setColorData(createColorObj(searchParams.get("color")));
+        }
+    }, [searchParams]);
 
-      <ToolSection title="Related Colors" icon="palette">
-        <RelatedColors
-          colorData={colorData}
-          toastState={toastState}
-          setColorData={setColorData}
-        />
-      </ToolSection>
+    return (
+        <ToolMain>
+            <ToolHeading
+                title="Color Picker"
+                tagline="Get colors, tints, and shades, with CSS and Tailwind code you can copy and paste into your project."
+                icon="colorize"
+            ></ToolHeading>
 
-      <ToolSection title="Your Collection" icon="bookmarks">
-        <Bookmark 
-        pageName={'colors'} 
-        getStyleFromBookmark={[{styleProperty: 'backgroundColor', bookmarkProperty: 'color'}]}
-        addStyle={{width: '120px', height: '96px'}}
-        deleteProperty={'color'}
-        className={`
-        flex flex-wrap justify-start
-        min-[395px]:gap-x-5 max-[440px]:justify-between 
-        max-[550px]:justify-items-center
-        sm:justify-start gap-y-5
-        `}
-        childClassName={`rounded-md rounded-tl-none min-w-[100px] max-w-[120px]
-        `}
-        setBookmarkLength={setBookmarkLength}
-        bookmarkChildren={bookmarkChildren}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        childProperty={'color'}>
-        </Bookmark>
-      </ToolSection>
+            <ToolSectionColumns isExpanded={isExpanded} reverse={false}>
+                <ColorPickerTool
+                    colorData={colorData}
+                    handleQuery={handleQuery}
+                    setColorData={setColorData}
+                    inputOnFocus={inputOnFocus}
+                    setInputOnFocus={setInputOnFocus}
+                    isExpanded={isExpanded}
+                    toggleIsExpanded={toggleIsExpanded}
+                />
 
-      <GoDeeper linksData={[]}></GoDeeper>
-      <Toast toastState={toastState} />
-    </ToolMain>
-  );
+                <ToolPane
+                    title="Color Codes"
+                    icon="integration_instructions"
+                    isPrimary={true}
+                    isBookmarked={isBookmarked}
+                    toggleBookmark={toggleBookmark}
+                    toolState={colorData}
+                    shareCallback={() => {}}
+                >
+                    <ColorPickerInterface
+                        colorData={colorData}
+                        setColorData={setColorData}
+                        inputOnFocus={inputOnFocus}
+                        setInputOnFocus={setInputOnFocus}
+                    />
+                </ToolPane>
+            </ToolSectionColumns>
 
-  function handleQuery(color) {
-    color = color.slice(1);
-    setSearchParams({ color });
-  }
+            <ToolSection title="Related Colors" icon="palette">
+                <RelatedColors
+                    colorData={colorData}
+                    toastState={toastState}
+                    createColorObj={createColorObj}
+                    setColorData={setColorData}
+                />
+            </ToolSection>
 
-  function bookmarkChildren(color){
-    return(
-    <span
-    id="hover-options"
-    className={`absolute flex flex-col mt-10 px-9 pb-4 w-full h-min text-white hidden pointer-events-none`
-    }>
-      <div className=''>
-        <p className="font-medium uppercase">{color}</p>
-      </div>
-      <div className="flex">
-        <span className="flex-1 block text-2xl text-center pointer-events-auto">
-          <EyeDropButton
-            setColorData={setColorData}
-            newColor={color}
-            toastState={toastState}
-          />
-        </span>
-        <span className="flex-1 block text-2xl text-left leading-0 pointer-events-auto">
-          <CopyButton onCopy={() => color} toastState={toastState} />
-        </span>
-      </div>
-    </span>
-    )
-  }
+            <ColorPickerBookmarks
+                bookmarks={bookmarks}
+                removeBookmark={removeBookmark}
+                setColorData={setColorData}
+                toastState={toastState}
+            />
 
-  function onMouseEnter(e){
-    const hoverOptions = e.target.querySelector('#hover-options');
-    if (!hoverOptions) {
-      return;
+            <GoDeeper
+                linksData={[
+                    {
+                        url: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance",
+                        textValue:
+                            "MDN Web Docs: Understanding Colors and Luminance",
+                    },
+                    {
+                        url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_colors/Applying_color",
+                        textValue:
+                            "MDN Web Docs: Applying color to HTML elements using CSS",
+                    },
+                    {
+                        url: "https://www.youtube.com/watch?v=YeI6Wqn4I78",
+                        textValue:
+                            "Color theory basics: use the color wheel & color harmonies to choose colors that work well together",
+                    },
+                ]}
+            />
+            <Toast toastState={toastState} />
+        </ToolMain>
+    );
+
+    function handleQuery(color) {
+        color = color.slice(1);
+        setSearchParams({ color });
     }
-    if (hoverOptions && hoverOptions.id === 'hover-options') {
-      hoverOptions.classList.remove('hidden');
-      return;
-    }
-  }
-
-  function onMouseLeave(e){
-    const hoverOptions = e.target.querySelector('#hover-options');
-    if (!hoverOptions) {
-      return;
-    }
-    if (hoverOptions && hoverOptions.id === 'hover-options') {
-      hoverOptions.classList.add('hidden');
-      return;
-    }
-  }
 }

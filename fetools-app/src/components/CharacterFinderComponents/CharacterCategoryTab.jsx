@@ -1,7 +1,10 @@
+import Icon from "../Icon";
+
 const CharacterCategoryTab = ({
   category,
   categoryDisplayName,
-  char,
+  icon,
+  iconType,
   selectCategory,
   active = false,
 }) => {
@@ -11,13 +14,13 @@ const CharacterCategoryTab = ({
     >
       <button
         className={`${
-          active ? 'active outline outline-2' : ''
+          active ? "active outline outline-2" : ""
         } bg-white text-black py-2 sm:px-4 outlined-button focus:outline focus:ring-2 focus:ring-[#9747FF] hover:outline hover:outline-[#9747FF] hover:outline-2 max-sm:border-b-4 max-sm:border-primary sm:border border-gray-300 w-full`}
         onClick={() => selectCategory(category)}
-        style={{ minWidth: '50px' }}
+        style={{ minWidth: "50px" }}
       >
         <p className="flex justify-center text-3xl font-bold text-black">
-          {char}
+          <Icon name={icon} type={iconType} size="30" />
         </p>
         <p className="flex justify-center text-xs font-bold">
           {categoryDisplayName}
