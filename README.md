@@ -1,5 +1,4 @@
-# ![logo](https://github.com/chingu-voyages/v47-tier2-team-17/assets/90486946/a18a0db6-bcdf-4dc2-bd00-caf571d94f0f)
-
+# DevEx Tools
 
 Welcome to DevEx Tools, a comprehensive suite of utilities designed to enhance the experience of front-end developers. Our web app offers seven distinct tools aimed at streamlining your workflow and boosting your productivity. Whether you're adjusting styles with a color picker, generating CSS for gradients and shadows, looking for the perfect font, finding special characters, creating HTML tables, or converting CSS units with precision, DevEx Tools has you covered.
 
@@ -19,7 +18,7 @@ Each tool provides handy code snippets for seamless integration into your projec
 
 ## App Experience
 
-Visit DevEx Tools online [here](https://chingufetools.netlify.app/units) to experience the tools firsthand.
+Visit DevEx Tools online [here](https://chingufetools.netlify.app/units) to experience the tools firsthand. Below, you will find screenshots of the Gradient Maker page.
 
 ![Gradient Maker Example](https://github.com/chingu-voyages/v47-tier2-team-17/assets/90486946/5b1b7ff3-7dc0-47d7-b775-716c7375ecd7)
 
