@@ -14,7 +14,7 @@ DevEx Tools includes the following utilities:
 - **Unit Converter:** Convert between CSS units with ease.
 - **Font Viewer:** Preview and choose fonts that best fit your design.
 
-Each tool provides handy code snippets for seamless integration into your projects. Plus, with our "Go Deeper" section, you can explore educational links to expand your knowledge with each tool. Bookmark and save your favorite customizations to your collection for easy access later on.
+Each tool provides handy code snippets for seamless integration into your projects. Plus, with our "Go Deeper" section, you can explore educational links to expand your knowledge with each tool. You can also bookmark and save your favorite customizations to your collection for easy access later on.
 
 ## App Experience
 
