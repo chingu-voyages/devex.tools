@@ -18,7 +18,7 @@ Each tool provides handy code snippets for seamless integration into your projec
 
 ## App Experience
 
-Visit DevEx Tools online [here](https://chingufetools.netlify.app/units) to experience the tools firsthand. Below, you will find screenshots of the Gradient Maker page.
+Visit DevEx Tools online [here](https://devex.tools/) to experience the tools firsthand. Below, you will find screenshots of the Gradient Maker page.
 
 ![Gradient Maker Example](https://github.com/chingu-voyages/v47-tier2-team-17/assets/90486946/5b1b7ff3-7dc0-47d7-b775-716c7375ecd7)
 
