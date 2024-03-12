@@ -48,7 +48,7 @@ Install the project's dependencies to ensure it runs smoothly: `npm install`
 4. **Start the development server:**
 Launch the application in development mode with Vite: `npm run dev`  
 
-This command starts a local development server. Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
+This command starts a local development server. Open [http://localhost:5173](http://localhost:5173) in your browser to view the app.
 
 By following these steps, you should have a local instance of DevEx Tools running and ready for development or exploration.
 
