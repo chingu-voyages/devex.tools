@@ -18,9 +18,10 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
   } = props;
 
 
+  
   const [activeIndex, setActiveIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
-
+ 
   useEffect(()=>{
     const inputElement = document.querySelector(`#${sliderId}-input #custom-slider-input`)
 
@@ -31,6 +32,7 @@ const SliderInput = forwardRef(function SliderInput(props, ref) {
   useEffect(()=>{
     if(ref){
       ref.current = valueTypes[activeIndex]
+      
     }
     
   },[activeIndex])

@@ -47,7 +47,7 @@ function TextField({
           <input
             ref={inputRef}
             type={inputType}
-            className={`py-2 pl-3 leading-tight text-gray-400 border text-center border-black rounded w-full focus:outline-none focus:shadow-outline ${
+            className={`py-2 pl-3 leading-tight text-gray-400 border text-center border-black rounded w-full  ${
               unit ? "pr-12" : "pr-3"
             }`}
             value={value}
@@ -56,7 +56,7 @@ function TextField({
             onBlur={onBlur}
           />
           {unit && (
-            <span className="absolute inset-y-0 right-0 flex items-center px-2 mr-2 font-semibold text-gray-700 pointer-events-none">
+            <span className="absolute inset-y-0 right-0 flex items-center px-2 mr-2 font-semibold text-gray-700 pointer-events-none z-20">
               {unit}
             </span>
           )}

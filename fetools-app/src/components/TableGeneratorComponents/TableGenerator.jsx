@@ -8,9 +8,9 @@ export const TableGenerator = ({ tableConfig, setTableConfig }) => {
       <div
         className={`overflow-hidden `}
         style={{
-          borderRadius:`${tableConfig.borderRounding}px`,
-          width: `${tableConfig.tableWidth}px`,
-          border: `${tableConfig.borderWidth}px ${tableConfig.borderStyle} ${tableConfig.borderColor}`,
+          borderRadius:`${tableConfig.borderRounding}${tableConfig.units.borderRounding}`,
+          width: `${tableConfig.tableWidth}${tableConfig.units.tableWidth}`,
+          border: `${tableConfig.borderWidth}${tableConfig.units.borderWidth} ${tableConfig.borderStyle} ${tableConfig.borderColor}`,
           
         }}
       >
@@ -21,7 +21,7 @@ export const TableGenerator = ({ tableConfig, setTableConfig }) => {
                 <th
                   key={idxCols}
                   style={getCellStyle(0, idxCols, tableConfig)} 
-                  className="min-h-8 border-black"
+                  className="min-h-8  border-black"
                 >
                   <input
                       id={`${0}-${idxCols}`}
@@ -49,7 +49,7 @@ export const TableGenerator = ({ tableConfig, setTableConfig }) => {
                 {row.map((col, idxCols) => (
                   <td
                     style={getCellStyle(idxRow + 1, idxCols, tableConfig)}
-                    className="min-h-8 border-black"
+                    className="min-h-8  border-black"
                     key={idxCols}
                   >
                     <input
